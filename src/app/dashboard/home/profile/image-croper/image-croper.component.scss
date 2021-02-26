@@ -1,0 +1,76 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 50;
+}
+
+.image-croper {
+  position: fixed;
+  top: 25vh;
+  left: 30vw;
+  width: 40vw;
+  max-height: 50vw;
+  overflow-y: scroll;
+  padding: 16px;
+  z-index: 100;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  border-radius: 0.5rem;
+}
+
+.image-cropper {
+  width: auto;
+  height: 15rem;
+}
+
+.image-croper-actions {
+  text-align: right;
+}
+
+.btn-crop {
+  margin: 10px;
+}
+
+.btn-close {
+  cursor: pointer;
+}
+
+/* Small tablets to big tablets 768px - 1023px */
+@media only screen and (max-width: 1023px) {
+  .image-croper {
+    top: 20vh;
+    left: 20vw;
+    width: 60vw;
+  }
+}
+
+/* Small Phones to small tablets 481px - 767px */
+@media only screen and (max-width: 767px) {
+  .image-croper {
+    top: 15vh;
+    left: 15vh;
+    width: 70vw;
+  }
+}
+
+/* Small Phones 301px - 480px */
+@media only screen and (max-width: 480px) {
+  .image-croper {
+    top: 10vh;
+    left: 10vw;
+    width: 80vw;
+  }
+}
+
+/* Small Phones 0px - 300px */
+@media only screen and (max-width: 300px) {
+  .image-croper {
+    top: 5vh;
+    left: 5vw;
+    width: 90vw;
+  }
+}

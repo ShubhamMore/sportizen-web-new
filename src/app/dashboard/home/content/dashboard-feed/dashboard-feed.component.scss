@@ -1,0 +1,164 @@
+$dark-grey-color: #555454;
+$light-grey-color: #dad8d8;
+
+.post-card {
+  margin-bottom: 1rem;
+  border-radius: 1rem;
+  // width: 70%;
+}
+
+.profile-image {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: inline;
+
+  img {
+    background-size: cover;
+  }
+}
+
+.post-content {
+  text-align: left;
+  position: relative;
+}
+
+.profile-icon {
+  display: block;
+  float: left;
+  cursor: pointer;
+}
+
+.user-details {
+  display: block;
+  float: left;
+  padding-top: 0.3rem;
+  padding-left: 1rem;
+
+  .profile-name {
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+}
+
+.post-image {
+  margin-top: 0.5rem;
+  text-align: center;
+  position: relative;
+  width: 100%;
+  background-color: #eef3f8;
+
+  img {
+    max-height: 35rem;
+    max-width: 100%;
+    background-size: cover;
+    vertical-align: middle;
+  }
+}
+
+.save-post {
+  font-size: 1.25rem;
+}
+
+.post-description {
+  margin: 0.7rem;
+  font-weight: 600;
+}
+
+.post-details {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding-right: 1rem;
+  color: $dark-grey-color;
+  cursor: pointer;
+
+  i {
+    color: $dark-grey-color;
+  }
+}
+
+.post-actions {
+  margin-top: 0.5rem;
+}
+
+.post-action-btn {
+  background-color: $light-grey-color;
+  border-radius: 0.5rem;
+  padding: 0.2rem 0.4rem;
+  margin-right: 0.5rem;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.no-posts {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 5rem;
+}
+
+.shared-post {
+  padding: 0.25rem;
+  margin: 0 1.5rem;
+  border: 0.025rem solid #c6c6c6;
+  border-radius: 1rem;
+}
+
+.post-action {
+  font-size: 1.5rem;
+  padding: 0.025rem 0.5rem 0.5rem 0;
+}
+
+@media only screen and (max-width: 1200px) {
+  .post-card {
+    // width: 75%;
+    border-radius: 0.9rem;
+  }
+
+  .shared-post {
+    padding: 0.2rem;
+    margin: 0 1rem;
+    border: 1px solid #c6c6c6;
+    border-radius: 1rem;
+  }
+
+  .post-image {
+    img {
+      max-height: 30rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .post-card {
+    // width: 90%;
+    border-radius: 0.75rem;
+  }
+
+  .shared-post {
+    padding: 0.1rem;
+    margin: 0 0.5rem;
+    border: 1px solid #c6c6c6;
+    border-radius: 1rem;
+  }
+
+  .post-image {
+    img {
+      max-height: 25rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .post-card {
+    // width: 100%;
+    border-radius: 0.5rem;
+  }
+
+  .post-image {
+    img {
+      max-height: 20rem;
+    }
+  }
+}

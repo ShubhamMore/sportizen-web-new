@@ -1,0 +1,93 @@
+@import '~@angular/material/theming';
+
+$general-typography: mat-typography-config(
+  $font-family: '"Open Sans", "Helvetica Neue", sans-serif',
+  $body-2: mat-typography-level(14px, 24px, 600),
+);
+@include mat-core($general-typography);
+
+/* For use in src/lib/core/theming/_palette.scss */
+
+/* For use in src/lib/core/theming/_palette.scss */
+$sportizen-lite: (
+  50: #e1f7fc,
+  100: #b4eaf7,
+  200: #82ddf1,
+  300: #50cfeb,
+  400: #2bc4e7,
+  500: #05bae3,
+  600: #04b3e0,
+  700: #04abdc,
+  800: #03a3d8,
+  900: #0194d0,
+  A100: #f8fdff,
+  A200: #c5ecff,
+  A400: #92dbff,
+  A700: #79d2ff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #ffffff,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+/* For use in src/lib/core/theming/_palette.scss */
+$sportizen-dark: (
+  50: #e1eaf2,
+  100: #b5ccde,
+  200: #83aac9,
+  300: #5187b3,
+  400: #2c6ea2,
+  500: #075492,
+  600: #064d8a,
+  700: #05437f,
+  800: #043a75,
+  900: #022963,
+  A100: #93b6ff,
+  A200: #6094ff,
+  A400: #2d71ff,
+  A700: #1460ff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #ffffff,
+    A700: #ffffff,
+  ),
+);
+
+$sportizen-primary: mat-palette($sportizen-lite);
+$sportizen-accent: mat-palette($sportizen-dark, 500, 900, A100);
+$sportizen-warn: mat-palette($mat-deep-orange);
+
+$sportizen-theme: mat-light-theme(
+  (
+    color: (
+      primary: $sportizen-primary,
+      accent: $sportizen-accent,
+      warn: $sportizen-warn,
+    ),
+  )
+);
+
+@include angular-material-theme($sportizen-theme);

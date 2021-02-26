@@ -1,0 +1,195 @@
+<mat-card class="options-bar" *ngIf="!loading">
+  <div class="cover-photo-container">
+    <img
+      class="cover-photo"
+      [src]="userProfile.userCoverImageURL"
+      onerror="this.src='../../../assets/images/user.png'"
+    />
+
+    <img
+      class="profile-image"
+      [src]="userProfile.userImageURL"
+      onerror="this.src='../../../../assets/images/user.png'"
+    />
+  </div>
+
+  <div class="profile-details-container">
+    <h2>{{ userProfile.name }}</h2>
+
+    <p class="profile-id">@{{ userProfile.sportizenId }}</p>
+
+    <span class="profile-desc">{{ this.userProfile.story }}</span>
+
+    <div style="position: relative">
+      <div class="profile-stats">
+        <div>{{ 'msg_network_connections' | translate }}</div>
+        <span>632</span>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="profile-stats">
+        <div>{{ 'msg_views_to_your_profile' | translate }}</div>
+        <span>865</span>
+      </div>
+    </div>
+
+    <!-- <div class="">
+      <button mat-raised-button color="primary" class="rounded-btn">
+        <span class=""> View Profile</span>
+      </button>
+    </div> -->
+
+    <div>
+      <button
+        mat-raised-button
+        color="primary"
+        class="rounded-btn"
+        (click)="navigateTo('/dashboard/profile')"
+      >
+        <i class="fa fa-user mr-2"></i>
+        <span class="">My Profile</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="options">
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header [collapsedHeight]="'2.2rem'" [expandedHeight]="'2.2rem'">
+        <span class=""> Events</span>
+      </mat-expansion-panel-header>
+
+      <mat-list>
+        <mat-list-item class="clickable" matRipple (click)="navigateTo('/dashboard/event/new')">
+          <h3 matLine>
+            <i class="fa fa-plus-circle mr-2 icon-yellow"></i>
+            <span class="">{{ 'msg_create' | translate }}</span>
+            <span class=""> {{ 'msg_event' | translate }}</span>
+          </h3>
+        </mat-list-item>
+
+        <mat-divider></mat-divider>
+
+        <mat-list-item class="clickable" matRipple (click)="navigateTo('/dashboard/event')">
+          <h3 matLine>
+            <i class="fa fa-link mr-2 icon-grey"></i>
+            <span class=""> {{ 'msg_join' | translate }}</span>
+            <span class=""> {{ 'msg_event' | translate }}</span>
+          </h3>
+        </mat-list-item>
+
+        <mat-divider></mat-divider>
+
+        <mat-list-item class="clickable" matRipple (click)="navigateTo('/dashboard/event')">
+          <h3 matLine>
+            <i class="fa fa-eye mr-2 icon-green"></i>
+            <span class="">{{ 'msg_view' | translate }}</span>
+            <span class="">{{ 'msg_event' | translate }}</span>
+          </h3>
+        </mat-list-item>
+
+        <mat-divider></mat-divider>
+
+        <mat-list-item class="clickable" matRipple (click)="navigateTo('/dashboard/event')">
+          <h3 matLine>
+            <i class="fa fa-pencil mr-2 icon-red"></i>
+            <span class=""> {{ 'msg_manage' | translate }}</span>
+            <span class=""> {{ 'msg_event' | translate }}</span>
+          </h3>
+        </mat-list-item>
+
+        <mat-divider></mat-divider>
+      </mat-list>
+    </mat-expansion-panel>
+
+    <!-- <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header [collapsedHeight]="'2.2rem'" [expandedHeight]="'2.2rem'">
+        <span class=""> Connect to Sports Professionals</span>
+      </mat-expansion-panel-header>
+
+      <mat-list>
+        <mat-list-item class="clickable" matRipple>
+          <h3 matLine>
+            <i class="fa fa-plus-circle mr-2 icon-yellow"></i>
+            <span class="">Create Consultancy</span>
+          </h3>
+        </mat-list-item>
+
+        <mat-divider></mat-divider>
+
+        <mat-list-item class="clickable" matRipple>
+          <h3 matLine>
+            <i class="fa fa-eye mr-2 icon-green"></i>
+            <span class=""> View Event</span>
+          </h3>
+        </mat-list-item>
+
+        <mat-divider></mat-divider>
+
+        <mat-list-item class="clickable" matRipple>
+          <h3 matLine>
+            <i class="fa fa-pencil mr-2 icon-red"></i>
+            <span class=""> Manage Event</span>
+          </h3>
+        </mat-list-item>
+      </mat-list>
+    </mat-expansion-panel> -->
+
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header [collapsedHeight]="'2.2rem'" [expandedHeight]="'2.2rem'">
+        <span class="">Settings</span>
+      </mat-expansion-panel-header>
+
+      <mat-list>
+        <mat-list-item class="clickable" matRipple>
+          <h3 matLine>
+            <i class="fa fa-pencil mr-2 icon-red"></i>
+            <span class="">{{ 'msg_privacy_policy' | translate }}</span>
+          </h3>
+        </mat-list-item>
+
+        <mat-divider></mat-divider>
+
+        <mat-list-item class="clickable" matRipple>
+          <h3 matLine>
+            <i class="fa fa-phone mr-2 icon-green"></i>
+            <span class="">{{ 'msg_contact_us' | translate }}</span>
+          </h3>
+        </mat-list-item>
+
+        <mat-divider></mat-divider>
+
+        <mat-list-item class="clickable" matRipple>
+          <h3 matLine>
+            <i class="fa fa-question-circle mr-2 icon-yellow"></i>
+            <span class="">{{ 'msg_help' | translate }}</span>
+          </h3>
+        </mat-list-item>
+      </mat-list>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel [expanded]="true" class="on-mobile">
+      <mat-expansion-panel-header [collapsedHeight]="'2.2rem'" [expandedHeight]="'2.2rem'">
+        <span class="">Navigation</span>
+      </mat-expansion-panel-header>
+
+      <mat-list>
+        <mat-list-item class="clickable" matRipple (click)="navigateTo('/dashboard')">
+          <h3 matLine>
+            <i class="fa fa-home mr-2"></i>
+            <span class=""> {{ 'msg_home' | translate }}</span>
+          </h3>
+        </mat-list-item>
+
+        <mat-divider></mat-divider>
+
+        <mat-list-item class="clickable" matRipple (click)="onLogout()">
+          <h3 matLine>
+            <i class="fa fa-sign-out mr-2"></i>
+            <span class=""> {{ 'msg_logout' | translate }}</span>
+          </h3>
+        </mat-list-item>
+      </mat-list>
+    </mat-expansion-panel>
+  </div>
+</mat-card>

@@ -1,0 +1,148 @@
+<div class="container pt-3 pb-3">
+  <div class="row" *ngIf="!loading">
+    <div class="col-md-12 create-event-container">
+      <span class="float-right">
+        <span class=""> Create Event</span>
+
+        <button mat-mini-fab color="primary" title="Create Event" class="ml-2" routerLink="new">
+          <i class="fa fa-plus-circle"></i>
+        </button>
+      </span>
+
+      <h1 class="bold-text">All Events</h1>
+    </div>
+
+    <mat-card class="event-card" *ngFor="let event of events; let i = index">
+      <mat-card-content>
+        <div class="row pb-2">
+          <div class="col-md-6">
+            <mat-chip-list>
+              <mat-chip class="event-type-box">Event Type: Event</mat-chip>
+
+              <mat-chip
+                class="join-event-box"
+                *ngIf="event.createdBy != userSportizenId"
+                (click)="joinEvent(event._id)"
+              >
+                {{ event.isRegistered ? 'Registered' : 'Join Event' }}
+              </mat-chip>
+
+              <span *ngIf="event.createdBy === userSportizenId">
+                <mat-chip (click)="editEvent(event._id)">Edit</mat-chip>
+                <mat-chip class="delete-chip" (click)="deleteEvent(event._id, event.createdBy, i)">
+                  Delete
+                </mat-chip>
+              </span>
+            </mat-chip-list>
+
+            <div class="col-md-6"></div>
+          </div>
+        </div>
+
+        <div class="event-block">
+          <div class="event-block-text">
+            <div>
+              <h1>{{ event.name }}</h1>
+
+              <span class="bold-text">Created By :</span>
+              <span> {{ event.createdUser }}</span>
+              <span class="float-right">
+                <i class="fa fa-clock-o icon-blue mr-2"></i>
+                <span class="">{{ event.createdAt | amTimeAgo }}</span>
+              </span>
+            </div>
+
+            <div>
+              <div class="border-box border-box-date">
+                <div class="bold-text">
+                  <i class="fa fa-calendar mr-2 icon-yellow"></i>
+                  <span class="">Start Date :</span>
+                </div>
+
+                <div>{{ event.startDate | amCalendar }}</div>
+              </div>
+
+              <div class="border-box border-box-date">
+                <div class="bold-text">
+                  <i class="fa fa-calendar mr-2 icon-green"></i>
+                  <span class="">Last Date :</span>
+                </div>
+
+                <div>{{ event.endDate | amCalendar }}</div>
+              </div>
+
+              <div class="border-box border-box-date" *ngIf="event.time">
+                <div class="bold-text"><i class="fa fa-clock-o mr-2 icon-blue"></i>Time :</div>
+                <div>{{ event.time }}</div>
+              </div>
+            </div>
+
+            <div class="event-image-container">
+              <div class="carousel-background" *ngIf="event.images.length > 0; else noImage">
+                <div id="{{ 'event-image-' + i }}" class="carousel slide" data-ride="carousel">
+                  <ul class="carousel-indicators">
+                    <li
+                      [attr.data-target]="'#event-image-' + i"
+                      *ngFor="let image of event.images; let j = index"
+                      [attr.data-slide-to]="j"
+                      [ngClass]="j == 0 ? 'active' : ''"
+                    ></li>
+                  </ul>
+
+                  <div class="carousel-inner">
+                    <div
+                      class="carousel-item"
+                      *ngFor="let image of event.images; let k = index"
+                      [ngClass]="k == 0 ? 'item active' : 'item'"
+                    >
+                      <div class="image-container">
+                        <img class="image" src="{{ image.secureUrl }}" alt="Event" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <a
+                    class="carousel-control-prev"
+                    href="{{ '#event-image-' + i }}"
+                    data-slide="prev"
+                  >
+                    <span class="fa fa-angle-left"></span>
+                  </a>
+
+                  <a
+                    class="carousel-control-next"
+                    href="{{ '#event-image-' + i }}"
+                    data-slide="next"
+                  >
+                    <span class="fa fa-angle-right"></span>
+                  </a>
+                </div>
+              </div>
+
+              <ng-template #noImage>
+                <div class="no-image-container">No Images Available</div>
+              </ng-template>
+            </div>
+
+            <div>
+              <div class="bold-text">Description:</div>
+              <p>
+                {{ event.description }}
+              </p>
+            </div>
+
+            <span class="winning-prize-box">
+              <span class="bold-text">Winning Prize : </span>
+              <span class="">{{ event.winningPrice }} /-</span>
+            </span>
+
+            <span class="border-box entry-fees-box">
+              <span class="bold-text">Entry Fees : </span>
+              <span class="">{{ event.fees }} /-</span>
+            </span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

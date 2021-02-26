@@ -1,0 +1,96 @@
+<div class="login-container">
+  <form class="login-form-container" (submit)="login()" [formGroup]="form">
+    <h1>login</h1>
+
+    <h5>Welcome back! Please login to your account</h5>
+
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field class="full-width">
+          <mat-label for="email">Login Id</mat-label>
+
+          <input matInput type="email" name="email" id="email" formControlName="email" />
+
+          <mat-error *ngIf="form.get('email').hasError('email') && !form.hasError('required')">
+            Please enter a valid email address
+          </mat-error>
+
+          <mat-error *ngIf="form.get('email').hasError('required')"> Email is required </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field class="full-width">
+          <mat-label for="password">Password</mat-label>
+
+          <input
+            matInput
+            name="password"
+            id="password"
+            type="password"
+            formControlName="password"
+          />
+
+          <mat-error *ngIf="form.get('password').hasError('required')">
+            *Password is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row pt-5">
+      <div class="col-md-12">
+        <div class="remember-me">
+          <mat-checkbox>Remember me</mat-checkbox>
+        </div>
+
+        <div class="forgot-password">
+          <a routerLink="/forgotPassword">Forgot Password</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-5">
+      <div class="w-50 d-inline-block">
+        <button type="submit" mat-raised-button color="primary" class="login-btn">Login</button>
+      </div>
+
+      <div class="w-50 d-inline-block">
+        <button
+          type="button"
+          mat-stroked-button
+          color="primary"
+          class="login-btn"
+          routerLink="/register"
+        >
+          Sign Up
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <span class="bold-text">OR</span>
+      </div>
+    </div>
+
+    <div class="row pb-3">
+      <div class="col-md-12">
+        <div class="google-btn" (click)="signInWithGoogle()">
+          <div class="google-icon-wrapper">
+            <img
+              class="google-icon"
+              src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+            />
+          </div>
+
+          <p class="btn-text"><b>Sign in with google</b></p>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="login-container-image"></div>
+</div>

@@ -1,0 +1,17 @@
+{
+  "msg_event": "Event",
+  "msg_create": "Create",
+  "msg_join": "Join",
+  "msg_view": "View",
+  "msg_manage": "Manage",
+  "msg_privacy_policy": "Privacy Policy",
+  "msg_contact_us": "Contact Us",
+  "msg_help": "Help",
+  "msg_network_connections": "Network Connections",
+  "msg_views_to_your_profile": "Views to your profile",
+  "msg_show_all": "Show All",
+  "msg_home": "Home",
+  "msg_my_network": "My Network",
+  "msg_messages": "Messages",
+  "msg_logout": "Logout"
+}

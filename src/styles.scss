@@ -1,1 +1,351 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'assets/scss/modules/fonts';
+@import '~hamburgers/_sass/hamburgers/hamburgers.scss';
+@import '~animate.css/animate.min';
+
+$primary-color: #05bae3;
+$secondary-color: #075492;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  background-color: #fff;
+  color: #555;
+  font-family: 'Open Sans', 'sans-serif', Roboto, 'Helvetica Neue', sans-serif, 'SF Sports Night NS';
+  font-weight: 300;
+  font-size: 1rem; // 16px
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  position: relative;
+  min-height: 100vh;
+  // padding-bottom: 3rem; //48px
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  // margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+/*--DISABLE SELECTION--*/
+.disable-selection {
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer */
+  -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+  -webkit-user-select: none; /* Chrome, Safari, and Opera */
+  -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
+}
+
+/*--SCROLL BAR--*/
+/* width */
+::-webkit-scrollbar {
+  width: 0.3rem; // 4.8px
+  height: 0.3rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: transparent;
+  border-radius: 0.6rem; //9.6px
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 0.6rem; // 9.6px
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #c1c1c1;
+}
+
+/* You can add global styles to this file, and also import other style files */
+@import 'assets/scss/modules/_fonts.scss';
+@import '~hamburgers/_sass/hamburgers/hamburgers.scss';
+@import '~animate.css/animate.min';
+
+$primary-color: #05bae3;
+$secondary-color: #075492;
+
+html {
+  box-sizing: border-box;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  // margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  background-color: #fff;
+  color: #555;
+  font-family: 'Open Sans', 'sans-serif', Roboto, 'Helvetica Neue', sans-serif, 'SF Sports Night NS';
+  font-weight: 300;
+  font-size: 1rem; // 16px
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+.input-error {
+  font-size: 75%;
+  color: #f00;
+}
+
+body {
+  // background: #eeeeee;
+  position: relative;
+  min-height: 100vh;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.disable-selection {
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer */
+  -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+  -webkit-user-select: none; /* Chrome, Safari, and Opera */
+  -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
+}
+
+/*--SCROLL BAR--*/
+/* width */
+::-webkit-scrollbar {
+  width: 0.3rem; // 4.8px
+  height: 0.3rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: transparent;
+  border-radius: 0.6rem; //9.6px
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 0.6rem; // 9.6px
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #c1c1c1;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.mat-raised-button {
+  color: white !important;
+}
+
+.btm-dashed-border {
+  &::after {
+    content: '------------------';
+    display: block;
+    font-size: 2rem;
+    padding-top: 1rem;
+    color: white;
+  }
+}
+
+h5 {
+  text-align: center;
+  &::after {
+    content: ' ';
+    display: block;
+    background-color: #05bae3;
+    font-size: 2rem;
+    width: 100px;
+    height: 3px;
+    margin: 30px auto 0;
+  }
+}
+
+.clearfix::after {
+  content: '';
+  clear: both;
+  display: table;
+}
+
+.primary-color-background {
+  background-color: $primary-color;
+  color: white;
+}
+
+.rounded-btn {
+  margin-top: 0.8rem !important;
+  padding: 0rem 2rem !important;
+  width: 14rem !important;
+  border-radius: 2rem !important;
+
+  &:focus {
+    outline: none !important;
+  }
+
+  mat-spinner {
+    display: inline-block;
+    left: 10px;
+  }
+}
+
+.custom-card {
+  padding: 0 !important;
+  display: inline-block;
+  border-radius: 0 !important;
+
+  .mat-card-header {
+    background-color: $primary-color;
+    color: white;
+
+    .mat-card-header-text {
+      width: 100%;
+    }
+  }
+  .mat-card-title {
+    padding-top: 1rem;
+
+    i {
+      cursor: pointer;
+    }
+  }
+  .mat-card-content {
+    padding: 0.5rem 1rem;
+  }
+  .header-btn {
+    cursor: pointer;
+    background-color: rgba($color: #000000, $alpha: 0);
+    color: white;
+    border: 1px solid white;
+    border-radius: 0.3rem;
+    font-size: 0.8rem;
+    padding: 0.1rem 0.4rem;
+    margin-bottom: 0.7rem;
+  }
+}
+
+.semi-rounded-btn {
+  margin-top: 0.8rem !important;
+  padding: 0rem 2rem !important;
+  width: 14rem !important;
+  border-radius: 0.7rem !important;
+
+  &:focus {
+    outline: none !important;
+  }
+}
+/*Icons colors*/
+.icon-yellow {
+  color: #ffdf00;
+}
+.icon-grey {
+  color: #282c35;
+}
+.icon-light-grey {
+  color: #a3a3a3;
+}
+.icon-green {
+  color: #7fff00;
+}
+.icon-red {
+  color: #f04646;
+}
+.icon-blue {
+  color: $primary-color;
+}
+.icon-white {
+  color: white;
+}
+
+/*clickable*/
+.clickable {
+  cursor: pointer;
+}
+
+.profile-icon {
+  img {
+    background-size: cover;
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 50%;
+    border: 2px solid white;
+  }
+}
+
+*:focus {
+  outline: none !important;
+  border: 0 !important;
+}
+
+.hidden {
+  display: none;
+}
+.comment-bottom-sheet {
+  overflow: hidden !important;
+}
+
+.on-mobile {
+  display: none !important;
+}
+.on-desktop {
+  display: block !important;
+}
+
+@media only screen and (max-width: 1200px) {
+  .on-mobile {
+    display: block !important;
+  }
+  .on-desktop {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .image-croper {
+    left: auto !important;
+    width: auto !important;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .container {
+    padding: 0 !important;
+  }
+}

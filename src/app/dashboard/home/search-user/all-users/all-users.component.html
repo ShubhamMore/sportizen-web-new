@@ -1,0 +1,21 @@
+<div class="connection-list-container">
+  <h2 class="bold-text">Your Connections</h2>
+  <input type="text" class="search-bar" placeholder=" &#xf002;  Search Friends" />
+
+  <div class="connection-card" *ngFor="let searchResult of searchResults">
+    <mat-card>
+      <mat-card-content>
+        <img class="connection-photo" [src]="searchResult.userImageURL" />
+        <div class="connection-details">
+          <div class="connection-name" matTooltipHideDelay="100" [matTooltip]="searchResult.name">
+            {{ searchResult.name }}
+          </div>
+          <div class="connection-mutual-info">8 Mutual friends</div>
+          <div class="connection-btn">Unfollow</div>
+        </div>
+        <div class="clearfix"></div>
+      </mat-card-content>
+    </mat-card>
+    <div class="clearfix"></div>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="search-bar-container" *ngIf="!minified || isSearchBarOpen" [@searchBar]>
+  <input
+    type="text"
+    class="search-bar"
+    [formControl]="myControl"
+    placeholder=" &#xf002;  Search People"
+    [matAutocomplete]="auto"
+    [ngClass]="minified ? 'on-mobile' : 'on-desktop'"
+  />
+
+  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    <mat-option *ngIf="isLoading" class="is-loading">
+      <mat-spinner diameter="30"></mat-spinner>
+    </mat-option>
+
+    <ng-container *ngIf="!isLoading">
+      <mat-option
+        *ngFor="let option of filteredOptions"
+        [value]=""
+        (click)="viewProfile(option.sportizenId)"
+      >
+        <div>
+          <div class="profile-icon mr-2">
+            <img [src]="option.userImageURL" onerror="this.src='../../assets/images/user.png'" />
+          </div>
+
+          <span class="">{{ option.name }}</span>
+
+          <span class="following-tag" *ngIf="option.connectionStatus">
+            ({{ option.connectionStatus }})
+          </span>
+        </div>
+      </mat-option>
+
+      <mat-option *ngIf="filteredOptions && filteredOptions.length > 0" (click)="allFriends()">
+        <span class="">{{ 'msg_show_all' | translate }}</span>
+      </mat-option>
+    </ng-container>
+  </mat-autocomplete>
+
+  <div
+    class="search-icon-container"
+    matTooltipPosition="right"
+    matTooltipHideDelay="100"
+    matTooltip="Back"
+    (click)="toggleSearchBar()"
+    *ngIf="minified && isSearchBarOpen"
+  >
+    <i class="back-icon fa fa-arrow-circle-left icon-blue" aria-hidden="true"></i>
+  </div>
+</div>
+
+<div
+  [@searchBarIcon]
+  class="search-icon-container"
+  matTooltipPosition="right"
+  matTooltipHideDelay="100"
+  matTooltip="Search Sportizen"
+  (click)="toggleSearchBar()"
+  *ngIf="minified && !isSearchBarOpen"
+  [ngClass]="minified ? 'on-mobile' : 'on-desktop'"
+>
+  <i class="fa fa-search search-icon mr-2" aria-hidden="true"></i>
+</div>

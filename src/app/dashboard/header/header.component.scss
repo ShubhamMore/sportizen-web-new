@@ -1,0 +1,145 @@
+$grey-color: #838383;
+
+.navbar-icon-top .navbar-nav .nav-link > .fa {
+  position: relative;
+  width: 36px;
+  font-size: 24px;
+}
+
+.navbar-icon-top .navbar-nav .nav-link > .fa > .badge {
+  font-size: 0.75rem;
+  position: absolute;
+  right: 0;
+  font-family: sans-serif;
+}
+
+.navbar-icon-top .navbar-nav .nav-link > .fa {
+  top: 3px;
+  line-height: 12px;
+}
+
+.navbar-icon-top .navbar-nav .nav-link > .fa > .badge {
+  top: -10px;
+}
+
+.header-container {
+  padding: 0 2rem 0 1rem;
+  width: 100%;
+  height: 100%;
+  .navbar-logo {
+    float: left;
+    a {
+      letter-spacing: 0.2rem;
+      font-size: 2.6rem;
+      color: #fff;
+      font-family: 'SF Sports Night NS';
+      padding-top: 1rem;
+    }
+  }
+  .navbar-links {
+    float: right;
+    padding-top: 0.2rem;
+  }
+
+  .menu-icon {
+    font-size: 30px;
+    padding-right: 20px;
+    color: white;
+    cursor: pointer;
+
+    .hamburger-inner,
+    .hamburger-inner::before,
+    .hamburger-inner::after {
+      background-color: white;
+    }
+  }
+}
+.navbar {
+  padding-top: 2rem;
+  height: 4rem;
+  background-color: #05bae3;
+  .nav-link {
+    color: #fff;
+    font-size: 1.5rem;
+    padding-left: 1rem;
+  }
+  padding: 0.2rem 1rem;
+}
+
+.fixed-top {
+  z-index: 101;
+}
+
+.profile-icon {
+  padding-left: 0.5rem;
+  cursor: pointer;
+  position: relative;
+
+  img {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+
+  .profile-text {
+    position: absolute;
+    bottom: -1.2rem;
+    right: 0.2rem;
+    text-align: center;
+    color: white;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .header-container {
+    padding: 0rem;
+
+    .navbar-logo {
+      margin-top: 0.3rem;
+    }
+  }
+
+  .navbar {
+    padding: 0px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .header-container {
+    .navbar-logo {
+      margin-top: 0.3rem;
+      a {
+        font-size: 2.5rem;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .header-container {
+    .navbar-logo {
+      margin-top: 0.3rem;
+      a {
+        font-size: 2rem;
+      }
+    }
+
+    .menu-icon {
+      zoom: 80%;
+    }
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .header-container {
+    .navbar-logo {
+      margin-top: 0.3rem;
+      a {
+        font-size: 1.8rem;
+      }
+    }
+
+    .menu-icon {
+      zoom: 75%;
+    }
+  }
+}

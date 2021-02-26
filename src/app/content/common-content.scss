@@ -1,0 +1,280 @@
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+p,
+ul {
+  margin-bottom: 0;
+}
+
+.home-page {
+  background-color: #fff;
+  color: #555;
+  font-family: 'Old Standard TT', 'Arial', sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* REUSABLE COMPONENTS */
+
+.row {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+section {
+  padding: 80px 0 45px 0;
+}
+
+.box {
+  padding: 1%;
+}
+
+/* HEADER */
+header {
+  background-image: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      from(rgba(0, 0, 0, 0.8)),
+      to(rgba(0, 0, 0, 0.5))
+    ),
+    url('./../../assets/images/home.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)),
+    url('./../../assets/images/home.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  background-attachment: fixed;
+}
+
+/* HEADINGS */
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  color: #fff;
+  font-weight: 300;
+  word-spacing: 3px;
+  text-shadow: 2px 2px #ccc;
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: 1px;
+}
+
+h1,
+h2,
+h4 {
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: 240%;
+}
+
+h2 {
+  font-size: 180%;
+  text-align: center;
+  color: #000;
+  word-spacing: 2px;
+  margin-bottom: 30px;
+}
+
+h2:after {
+  display: block;
+  height: 2px;
+  background-color: #075492;
+  content: ' ';
+  width: 100px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+h3 {
+  margin-bottom: 20px;
+  font-size: 120%;
+}
+
+h4 {
+  font-size: 110%;
+  margin-bottom: 15px;
+  color: #12395d;
+  text-align: center;
+}
+
+/* BUTTONS */
+
+.btn-default:link,
+.btn-default:visited {
+  display: inline-block;
+  padding: 10px 30px;
+  text-decoration: none;
+}
+
+/* .btn-default:hover,
+.btn-default:active {
+
+} */
+
+/* SECTION CONTENT */
+
+.content {
+  font-size: 100%;
+  line-height: 150%;
+  text-align: center;
+}
+
+/* SECTION BACKGROUND */
+.section-about,
+.section-team {
+  background-image: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      from(rgba(0, 0, 0, 0.8)),
+      to(rgba(0, 0, 0, 0.5))
+    ),
+    url('./../../assets/images/about-us.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)),
+    url('./../../assets/images/about-us.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  background-attachment: fixed;
+}
+
+.section-service,
+.section-contact {
+  background-color: #fff;
+  min-height: 100vh;
+  background-attachment: fixed;
+}
+
+/* SECTION */
+.about,
+.contact,
+.service,
+.team-member {
+  /* padding-bottom: 35px; */
+}
+
+/* FOOTER */
+
+footer {
+  background-color: #333;
+  padding: 50px 0;
+}
+
+/* POINTER */
+.pointer {
+  cursor: pointer;
+}
+
+/* DISABLE SELECTION */
+.disable-selection {
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer */
+  -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+  -webkit-user-select: none; /* Chrome, Safari, and Opera */
+  -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
+}
+
+/*--SCROLL BAR--*/
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: transparent;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #c1c1c1;
+}
+
+/* Animation */
+.js--animate-about {
+  opacity: 0;
+}
+
+.js--animate-about.animated {
+  opacity: 1;
+}
+
+/* Big tablets to 1200px (Width smaller that the 1140px row) */
+@media only screen and (max-width: 1023px) {
+  .row {
+    padding: 0 2%;
+  }
+}
+
+/* Small tablets to big tablets 768px - 1023px */
+@media only screen and (max-width: 1023px) {
+  .home-page {
+    font-size: 18px;
+  }
+
+  section {
+    padding: 60px 0;
+  }
+
+  h3 {
+    font-size: 100%;
+  }
+}
+
+/* Small Phones to small tablets 481px - 767px */
+@media only screen and (max-width: 767px) {
+  .home-page {
+    font-size: 16px;
+  }
+
+  section {
+    padding: 60px 0 15px 0;
+  }
+
+  h1 {
+    font-size: 180%;
+  }
+
+  h2 {
+    font-size: 150%;
+  }
+
+  .about,
+  .contact,
+  .service,
+  .team-member {
+    padding-bottom: 25px;
+  }
+}
+
+/* Small Phones 0px - 480px */
+@media only screen and (max-width: 480px) {
+  section {
+    padding: 65px 0;
+  }
+}

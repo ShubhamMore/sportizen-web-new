@@ -1,0 +1,144 @@
+$primary-color: #05bae3;
+
+.fa-angle-left {
+  font-size: 200%;
+  color: #aaa;
+}
+
+.fa-angle-right {
+  font-size: 200%;
+  color: #aaa;
+}
+
+.event-block {
+  position: relative;
+}
+
+.event-image-container {
+  position: absolute;
+  height: 10rem;
+  width: 50%;
+  top: 0;
+  right: 0;
+}
+
+.image-container {
+  width: 100%;
+  text-align: center;
+}
+
+.event-block-text {
+  width: 50%;
+}
+
+.no-image-container {
+  width: 100%;
+  text-align: center;
+  font-weight: 700;
+  font-size: 2rem;
+  padding-top: 6rem;
+}
+
+.image {
+  margin: auto;
+  width: auto;
+  height: 15.625rem;
+}
+
+.event-footer p {
+  margin: 0;
+  margin-top: 0.5rem;
+}
+
+.event-card {
+  width: 80rem;
+  margin-top: 2rem;
+}
+
+.border-box {
+  border-radius: 0.3rem;
+  padding: 0.1rem 1rem;
+  border: $primary-color 2px solid;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.entry-fees-box {
+  text-align: center;
+}
+
+.border-box-date {
+  border-radius: 1rem;
+  margin: 1rem 0.3rem;
+  height: 5rem;
+  display: inline-block;
+  padding: 0.5rem;
+}
+
+.winning-prize-box {
+  display: inline-block;
+  background-color: lighten($color: $primary-color, $amount: 40%);
+  padding: 0.2rem 1rem;
+  width: 15rem;
+  text-align: center;
+}
+
+.event-type-box {
+  background-color: lighten($color: $primary-color, $amount: 40%);
+}
+
+.join-event-box {
+  background-color: #32cd32;
+  cursor: pointer;
+  color: white;
+}
+
+.delete-chip {
+  background-color: rgb(243, 67, 67);
+  cursor: pointer;
+  color: white;
+}
+
+@media only screen and(max-width:1200px) {
+  .event-image-container {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+  }
+
+  .event-block-text {
+    width: 100%;
+  }
+}
+@media only screen and(max-width:800px) {
+  .event-block {
+    padding: 1rem;
+  }
+
+  .winning-prize-box {
+    width: auto;
+    display: block;
+  }
+
+  .entry-fees-box {
+    width: auto;
+    display: block;
+    margin-top: 0.5rem;
+  }
+}
+
+@media only screen and(max-width:600px) {
+  .event-card {
+    margin-top: 0rem;
+  }
+}
+
+@media only screen and(max-width:480px) {
+  .create-event-container {
+    padding: 1rem 2rem;
+  }
+
+  h1 {
+    margin: 0px;
+  }
+}

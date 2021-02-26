@@ -1,0 +1,63 @@
+<div class="home-page">
+  <span class="btn-top">
+    <a class="btn-top-link" routerLink="/home">
+      <i class="arrow-up"></i>
+    </a>
+  </span>
+
+  <header id="home">
+    <nav id="nav">
+      <div class="row">
+        <div class="col-12">
+          <a class="js--home hide-logo" routerLink="/home">
+            <img class="logo" src="../assets/LOGO/white-1.png" alt="SPORTIZEN" title="" />
+          </a>
+          <ul class="main-nav js--main-nav">
+            <li><a class="js--nav-link" routerLink="/service">Our Offerings</a></li>
+            <li><a class="js--nav-link" routerLink="/about">About Us</a></li>
+            <li><a class="js--nav-link" routerLink="/contact">Contact Us</a></li>
+            <li><a class="js--nav-link" routerLink="/login">Login</a></li>
+          </ul>
+          <a class="mobile-nan-icon js--nav-icon"><i class="fa fa-list"></i></a>
+        </div>
+      </div>
+    </nav>
+    <div class="sportizen-text-box">
+      <div class="heading-primary">
+        <h1 class="heading-primary-main">
+          <img
+            class="heading-primary-logo"
+            src="../assets/LOGO/White.png"
+            alt="SPORTIZEN"
+            width="90%"
+          />
+        </h1>
+        <br />
+        <br />
+
+        <div class="heading-primary-sub">
+          A platform by Sportizens for all Sportizens out there!!
+        </div>
+      </div>
+      <a class="btn-default heading-contact-btn heading-contact-btn-animated" href="#contact"
+        >Contact Us</a
+      >
+    </div>
+  </header>
+
+  <section class="section-service js--section-service" id="service">
+    <app-service></app-service>
+  </section>
+
+  <section class="section-about js--section-about" id="about">
+    <app-about></app-about>
+  </section>
+
+  <section class="section-contact js--section-contact" id="contact">
+    <app-contact></app-contact>
+  </section>
+
+  <footer>
+    <app-footer></app-footer>
+  </footer>
+</div>

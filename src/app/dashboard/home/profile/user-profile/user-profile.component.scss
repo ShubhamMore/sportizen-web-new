@@ -1,0 +1,168 @@
+$primary-color: #05bae3;
+$secondary-color: #075492;
+$grey-color: #838383;
+
+.cover-photo-container {
+  position: relative;
+  margin-bottom: 1rem;
+  background-color: #ddd;
+
+  input {
+    display: none;
+  }
+
+  .edit-cover-photo-btn {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    border-radius: 0.3rem;
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+
+  .cover-photo {
+    height: 20rem;
+    background-size: cover;
+    width: 100%;
+  }
+}
+
+.profile-image {
+  position: absolute;
+  bottom: -4.7rem;
+  left: 50%;
+  transform: translateX(-50%);
+
+  img {
+    border: 2px solid $primary-color;
+    border-radius: 50%;
+    background-size: cover;
+    width: 9rem;
+    height: 9rem;
+  }
+
+  &:hover {
+    img {
+      background: rgba(0, 0, 0, 0.7);
+    }
+  }
+}
+
+.profile-name {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -6.3rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.profile-info-container {
+  margin-top: 10rem;
+  padding: 0 5rem;
+
+  .intro-section-title {
+    i {
+      cursor: pointer;
+    }
+  }
+
+  .photos-container {
+    .photo-box {
+      padding: 0rem;
+      padding-bottom: 0.4rem;
+      padding-right: 0.4rem;
+      .photo {
+        height: 8rem;
+        width: 100%;
+      }
+    }
+  }
+}
+
+.friend-mini-card {
+  margin-bottom: 1rem;
+
+  .friend-mini-photo {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 0.3rem;
+    background-size: cover;
+    float: left;
+  }
+
+  .friend-mini-details {
+    float: left;
+    padding-left: 1rem;
+
+    .friend-mini-name {
+      size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .friend-mini-mutual-info {
+      font-size: 0.8rem;
+    }
+
+    .friend-mini-btn {
+      cursor: pointer;
+      background-color: $primary-color;
+      color: white;
+      width: 7rem;
+      height: 1.5rem;
+      border-radius: 0.3rem;
+      text-align: center;
+      padding-top: 0.15rem;
+    }
+  }
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.8);
+  transition: opacity 0.3s;
+  z-index: 1;
+  border-radius: 50%;
+}
+
+/* When you mouse over the container, fade in the overlay icon*/
+.profile-image:hover .overlay {
+  opacity: 1;
+}
+
+.icon {
+  color: #777;
+  font-size: 500%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+@media only screen and (max-width: 1230px) {
+  .profile-info-container {
+    padding: 0 1rem;
+  }
+
+  .my-posts {
+    margin-top: 1rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .profile-info-container {
+    padding: 0 0rem;
+  }
+}

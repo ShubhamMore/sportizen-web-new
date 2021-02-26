@@ -1,0 +1,33 @@
+<button class="float-right pointer close" mat-dialog-close>X</button>
+<h2 mat-dialog-title *ngIf="likes && likes.length > 0">Likes</h2>
+
+<hr />
+
+<div mat-dialog-content>
+  <div *ngIf="likes && likes.length > 0; else noLikes">
+    <div *ngFor="let like of likes" class="like-container">
+      <div class="profile-icon">
+        <img
+          class="profile-image"
+          [src]="like.userImageURL"
+          onerror="this.src='../../../assets/images/user.png'"
+        />
+      </div>
+
+      <div class="user-details">
+        <div class="user-name">
+          <span class="">{{ like.name }}</span>
+        </div>
+
+        <div class="liked-at">
+          <i class="fa fa-clock-o icon-blue mr-2"></i>
+          <span class="">{{ like.createdAt | amTimeAgo }}</span>
+        </div>
+      </div>
+
+      <br />
+    </div>
+  </div>
+
+  <ng-template #noLikes>No Likes Yet</ng-template>
+</div>

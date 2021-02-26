@@ -3,16 +3,34 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
+
+import { HttpClientModule } from '@angular/common/http';
+import { DashboardModule } from './dashboard/dashboard.module';
+
+import { SharedModule } from './@shared/shared.module';
+import { CoreModule } from './@core/core.module';
+import { AuthenticationModule } from './authentication/authentication.module';
+
+import { Validator } from './@shared/validators';
+
+import { LoginAuthGuard } from './authentication/auth/guards/login.auth.guard';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    BrowserAnimationsModule,
+    HttpClientModule,
+    SharedModule,
+    CoreModule,
+    AuthenticationModule,
+    DashboardModule,
+    AppRoutingModule,
+    // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [LoginAuthGuard, Validator],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

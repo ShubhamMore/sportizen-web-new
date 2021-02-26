@@ -1,0 +1,60 @@
+.close {
+  font-size: 0.75rem;
+  border-radius: 100%;
+}
+
+.view-container {
+  width: auto;
+  overflow-y: auto;
+  padding: 0.5rem 1rem;
+}
+
+.profile-icon {
+  display: inline-block;
+  padding-right: 1rem;
+  vertical-align: top;
+  width: 4rem;
+}
+
+.user-details {
+  display: inline-block;
+  width: 15rem;
+}
+
+.user-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.liked-at {
+  display: block;
+}
+
+@media only screen and (max-width: 480px) {
+  .user-details {
+    width: 12rem;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .user-details {
+    width: 10rem;
+  }
+}
+
+@media only screen and (max-width: 380px) {
+  .view-container {
+    padding: 0;
+    padding-bottom: 0.5rem;
+  }
+
+  .user-details {
+    width: 10rem;
+  }
+}
+
+@media only screen and (max-width: 340px) {
+  .view-container {
+    zoom: 80%;
+  }
+}

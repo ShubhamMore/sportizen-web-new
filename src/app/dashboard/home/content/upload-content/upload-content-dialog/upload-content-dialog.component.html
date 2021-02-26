@@ -1,0 +1,57 @@
+<h1 mat-dialog-title>Post</h1>
+<mat-dialog-content>
+  <form (ngSubmit)="submitPost()" [formGroup]="form">
+    <div class="row" *ngIf="data.postImagePreview && data.postImagePreview.length > 0">
+      <span class="m-2" *ngFor="let image of data.postImagePreview; let i = index">
+        <div class="image-container">
+          <img [src]="image" class="image" [alt]="" />
+
+          <div class="middle">
+            <a class="remove" (click)="removeImage(i)">
+              <i class="fa fa-trash-o trash"></i>
+            </a>
+          </div>
+        </div>
+      </span>
+      <!-- <span class="m-2" *ngFor="let image of eventImage; let i = index">
+              <div class="image-container">
+                <img [src]="image.secureUrl" class="image" [alt]="image.imageName" />
+                <div class="middle">
+                  <a class="remove" (click)="deleteImage(event._id, image._id, i)"
+                    ><i class="fa fa-trash-o trash"></i
+                  ></a>
+                </div>
+              </div>
+            </span> -->
+    </div>
+
+    <mat-form-field class="full-width" class="description">
+      <mat-label for="description">Description</mat-label>
+      <textarea
+        rows="4"
+        matInput
+        type="text"
+        name="description"
+        id="description"
+        formControlName="description"
+      ></textarea>
+    </mat-form-field>
+
+    <button type="submit" class="hidden" #submitButton></button>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="text-right">
+  <button mat-button mat-dialog-close>Close</button>
+
+  <button
+    mat-raised-button
+    mat-dialog-close
+    color="primary"
+    (click)="submitButton.click()"
+    [disabled]="postUploading || form.invalid"
+  >
+    <span class="">Submit</span>
+    <mat-spinner [diameter]="20" *ngIf="postUploading"></mat-spinner>
+  </button>
+</mat-dialog-actions>

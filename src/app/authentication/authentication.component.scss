@@ -1,0 +1,176 @@
+.login-controls {
+  height: 2rem;
+  overflow: scroll;
+}
+
+.login-container {
+  background-color: #fff;
+  // margin-top: 3.9rem;
+
+  .login-form-container {
+    padding: 3rem 0 0 6rem;
+    width: 50%;
+    padding-right: 6rem;
+    text-align: center;
+    float: left;
+
+    h1 {
+      text-transform: uppercase;
+      display: inline-block;
+      font-weight: 800;
+      letter-spacing: 0.7rem;
+      font-size: 2rem;
+    }
+
+    h5 {
+      font-size: 1rem;
+      letter-spacing: 0.1rem;
+      font-weight: 400;
+      color: #838383;
+    }
+
+    .login-btn {
+      padding: 0.7rem 5rem;
+      border-radius: 1rem;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .login-btn .mat-raised-button {
+      color: #fff;
+    }
+
+    .row {
+      padding-top: 0.5rem;
+    }
+
+    .bold-text {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+  }
+  .remember-me {
+    float: left;
+  }
+
+  .forgot-password {
+    float: right;
+  }
+  .login-container-image {
+    overflow: hidden;
+    background-image: linear-gradient(rgba(0, 149, 255, 0.5), rgba(0, 149, 255, 0.5)),
+      url('./../../assets/images/login-image.jpg');
+    height: 95vh;
+    background-size: cover;
+    background-position: left;
+    clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  $white: #fff;
+  $google-blue: #4285f4;
+  $button-active-blue: #1669f2;
+
+  .google-btn {
+    width: 184px;
+    height: 42px;
+    cursor: pointer;
+    display: inline-block;
+    background-color: $google-blue;
+    border-radius: 2px;
+    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+
+    .google-icon-wrapper {
+      position: absolute;
+      margin-top: 1px;
+      margin-left: 1px;
+      width: 40px;
+      height: 40px;
+      border-radius: 2px;
+      background-color: $white;
+    }
+
+    .google-icon {
+      margin-top: 11px;
+      width: 18px;
+      height: 18px;
+    }
+
+    .btn-text {
+      float: right;
+      margin: 11px 11px 0 0;
+      color: $white;
+      font-size: 14px;
+      letter-spacing: 0.2px;
+      font-family: 'Roboto';
+    }
+
+    &:hover {
+      box-shadow: 0 0 6px $google-blue;
+    }
+
+    &:active {
+      background: $button-active-blue;
+    }
+  }
+}
+
+@media only screen and (max-width: 1230px) {
+  .login-container {
+    .login-form-container {
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .login-container {
+    .login-form-container {
+      width: 100%;
+    }
+  }
+
+  .login-container-image {
+    display: none;
+  }
+}
+@media only screen and (max-width: 550px) {
+  .login-container {
+    height: 100vh;
+    .login-form-container {
+      .login-btn {
+        padding: 0.5rem 3rem;
+      }
+    }
+  }
+
+  .remember-me {
+    float: left;
+  }
+
+  .forgot-password {
+    float: right;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .remember-me {
+    float: none;
+    display: block;
+  }
+
+  .forgot-password {
+    float: none;
+    display: block;
+  }
+
+  .login-container {
+    .login-form-container {
+      .login-btn {
+        padding: 0.3rem 2rem;
+      }
+    }
+  }
+}

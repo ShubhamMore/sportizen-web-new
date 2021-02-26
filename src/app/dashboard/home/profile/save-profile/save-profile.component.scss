@@ -1,0 +1,142 @@
+$primary-color: #05bae3;
+$secondary-color: #075492;
+$grey-color: #838383;
+
+.profile-container {
+  background-color: #f9f9f9;
+}
+
+.image-file-picker {
+  display: none;
+}
+
+/* Container needed to position the overlay. Adjust the width as needed */
+.img-container {
+  padding: 0.625rem;
+  position: relative;
+  width: 100%;
+  max-width: 25rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+/* Make the image to responsive */
+.profile-image {
+  width: 10rem;
+  border-radius: 50%;
+}
+
+/* The overlay effect (full height and width) - lays on top of the container and over the image */
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.8);
+  transition: opacity 0.3s;
+}
+
+/* When you mouse over the container, fade in the overlay icon*/
+.img-container:hover .overlay {
+  opacity: 1;
+}
+
+/* The icon inside the overlay is positioned in the middle vertically and horizontally */
+.icon {
+  color: #777;
+  font-size: 500%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+/* When you move the mouse over the icon, change color */
+.fa-user:hover {
+  color: #eee;
+}
+
+.btn-sports-interest {
+  background-color: $primary-color;
+  margin: 0.15rem;
+  border-radius: 2rem;
+}
+
+.input-group-text {
+  background-color: #6c757d;
+  color: #fff;
+  width: 9.5rem;
+}
+
+.mat-error {
+  display: inline-block;
+}
+
+.userProfileContainer {
+  padding: 2rem 0;
+  text-align: center;
+
+  .mat-card {
+    padding: 0;
+    display: inline-block;
+  }
+
+  .mat-card-title {
+    padding-top: 1rem;
+  }
+
+  .userProfileImage {
+    padding: 0 2rem;
+
+    h1 {
+      padding-top: 2rem;
+      font-weight: 600;
+    }
+  }
+
+  .userProfileForm {
+    text-align: center;
+    padding: 2rem 4rem;
+
+    .mat-radio-button ~ .mat-radio-button {
+      margin-left: 16px;
+      padding-top: 1rem;
+    }
+
+    ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+      background-color: white !important;
+    }
+  }
+}
+
+@media only screen and (max-width: 1230px) {
+  .userProfileContainer {
+    margin: 1rem;
+    padding: 0;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .userProfileContainer {
+    margin: 0rem;
+
+    .userProfileForm {
+      padding: 2rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .userProfileContainer {
+    .userProfileForm {
+      padding: 1rem;
+    }
+  }
+}

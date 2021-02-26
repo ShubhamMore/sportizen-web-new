@@ -1,0 +1,195 @@
+.comment-image {
+  width: 4rem;
+  height: 4rem;
+  float: left;
+}
+
+.comment-container {
+  padding: 1rem 0 1rem 0.8rem;
+  height: 80vh;
+  position: relative;
+}
+
+.comments-list-container {
+  overflow: auto;
+  height: 83%;
+}
+
+.singe-comment-container {
+  display: block;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.profile-icon {
+  vertical-align: top;
+  float: left;
+  width: 3.5rem;
+  display: inline;
+  width: 15%;
+}
+
+.profile-icon img {
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.comment-text {
+  padding-bottom: 1rem;
+  float: left;
+  width: 85%;
+
+  .name {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  .comment {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 0.4rem;
+  }
+}
+
+.comment-likes {
+  padding-top: 2rem;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+
+  span,
+  i {
+    padding-right: 0.6rem;
+  }
+}
+
+.action-links {
+  span {
+    display: inline-block;
+    cursor: pointer;
+  }
+}
+
+.comment-input {
+  float: left;
+}
+
+.loading-comments {
+  height: 7.5rem;
+}
+
+.reply-comment {
+  font-weight: 600;
+  margin-top: 0.5rem;
+  cursor: pointer;
+}
+
+.reply-profile-icon {
+  vertical-align: top;
+  float: left;
+  width: 15%;
+  display: inline;
+}
+
+.reply-profile-icon img {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}
+
+.reply-comment-text {
+  padding-bottom: 1rem;
+  float: left;
+  width: 85%;
+
+  .name {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .comment {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-top: 0.4rem;
+  }
+
+  .action-links {
+    font-size: 0.8rem;
+  }
+}
+
+.post-comment-input {
+  position: absolute;
+  width: 100%;
+  bottom: 1rem;
+  padding-right: 1rem;
+}
+
+.comment-time {
+  padding-left: 1rem;
+}
+
+.reply-comment-container {
+  position: relative;
+}
+
+.mat-bottom-sheet-container-medium {
+  min-width: 512px;
+}
+
+@media only screen and (max-width: 1280px) and (min-width: 960px) {
+  .comment-time {
+    display: block;
+  }
+
+  .profile-icon {
+    width: 20%;
+  }
+
+  .comment-text {
+    width: 80%;
+  }
+
+  .reply-profile-icon {
+    width: 20%;
+  }
+
+  .reply-comment-text {
+    width: 80%;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .comment-container {
+    padding-left: 0;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+}
+
+@media only screen and (max-width: 420px) {
+  .comments-list-container {
+    zoom: 85%;
+  }
+
+  .comment-time {
+    display: block;
+  }
+
+  .profile-icon {
+    width: 20%;
+  }
+
+  .comment-text {
+    width: 80%;
+  }
+
+  .reply-profile-icon {
+    width: 20%;
+  }
+
+  .reply-comment-text {
+    width: 80%;
+  }
+}

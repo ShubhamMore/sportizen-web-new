@@ -1,0 +1,66 @@
+<nav
+  class="navbar navbar-icon-top navbar-expand-xl"
+  *ngIf="isAuthenticated && user.userType == 'user'"
+>
+  <div class="header-container">
+    <div
+      class="navbar-header navbar-logo"
+      data-toggle="collapse"
+      data-target=".navbar-collapse.show"
+    >
+      <div
+        *ngIf="isAuthenticated"
+        class="hamburger hamburger--spin menu-icon"
+        type="button"
+        [ngClass]="isDashboardDrawerOpened() ? 'is-active' : ''"
+        (click)="toggleDashboardSideDrawer()"
+      >
+        <span class="hamburger-box">
+          <span class="hamburger-inner"></span>
+        </span>
+      </div>
+
+      <a class="navbar-brand pointer" (click)="goToHome()" *ngIf="showLogo" [@headerName]>
+        SPORTIZEN
+      </a>
+    </div>
+
+    <app-search-bar
+      *ngIf="isAuthenticated && user.userType == 'user'"
+      (emitSearchBarToggle)="toggleSearchBar($event)"
+      [minified]="true"
+    >
+    </app-search-bar>
+
+    <app-search-bar
+      *ngIf="isAuthenticated && user.userType == 'user'"
+      (emitSearchBarToggle)="toggleSearchBar($event)"
+    >
+    </app-search-bar>
+
+    <div class="collapse navbar-collapse navbar-links" id="navbarSupportedContent">
+      <ul class="navbar-nav justify-content-end" *ngIf="isAuthenticated">
+        <div class="profile-icon" [matMenuTriggerFor]="menu" *ngIf="userProfile">
+          <img
+            class="profile-image"
+            [src]="userProfile.userImageURL"
+            onerror="this.src='../../../assets/images/user.png'"
+          />
+          <div class="profile-text">Me<i class="fa fa-angle-down pl-1"></i></div>
+        </div>
+
+        <mat-menu #menu="matMenu" xPosition="before">
+          <button mat-menu-item style="outline: none" routerLink="/dashboard/profile">
+            <i class="fa fa-user"> </i>
+            Profile
+          </button>
+
+          <button mat-menu-item style="outline: none" (click)="onLogout()">
+            <i class="fa fa-sign-out"> </i>
+            Logout
+          </button>
+        </mat-menu>
+      </ul>
+    </div>
+  </div>
+</nav>

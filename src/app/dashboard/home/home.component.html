@@ -1,0 +1,34 @@
+<div class="home-page-container">
+  <mat-drawer-container class="side-nav-container" autosize>
+    <mat-drawer
+      #drawer
+      class="side-nav-drawer"
+      [opened]="screenWidth > responsiveWidth"
+      [mode]="screenWidth > responsiveWidth ? 'side' : 'over'"
+    >
+      <!-- <div class="dummy-header">&nbsp;</div> -->
+
+      <app-dashboard-side-nav></app-dashboard-side-nav>
+    </mat-drawer>
+
+    <mat-drawer-content id="dashboardContent">
+      <!-- <div class="dummy-header">&nbsp;</div> -->
+      <nav mat-tab-nav-bar mat-align-tabs="center" id="dashboardLinks" class="dashboard-links">
+        <span
+          *ngFor="let navLink of navLinks"
+          mat-tab-link
+          [routerLink]="navLink.link"
+          [matTooltip]="navLink.title"
+          (click)="changeNavLink(navLink.title)"
+          [active]="activeNavLink === navLink.title"
+        >
+          <i class="fa mr-2" [ngClass]="navLink.icon"> </i>
+        </span>
+      </nav>
+      <div class="dummy-dashboard-links">&nbsp;</div>
+      <router-outlet></router-outlet>
+    </mat-drawer-content>
+  </mat-drawer-container>
+
+  <!-- <app-dashboard-chat></app-dashboard-chat> -->
+</div>

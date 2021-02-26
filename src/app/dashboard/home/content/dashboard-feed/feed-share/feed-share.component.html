@@ -1,0 +1,34 @@
+<h1 mat-dialog-title>Post</h1>
+<mat-dialog-content>
+  <p>A preview will added to post after you share it.</p>
+  <form (ngSubmit)="submitPost()" [formGroup]="form">
+    <mat-form-field class="full-width" class="description">
+      <mat-label for="description">Description</mat-label>
+      <textarea
+        rows="4"
+        matInput
+        type="text"
+        name="description"
+        id="description"
+        formControlName="description"
+      ></textarea>
+    </mat-form-field>
+
+    <button type="submit" class="hidden" #submitButton></button>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="text-right">
+  <button mat-button mat-dialog-close>Close</button>
+
+  <button
+    mat-raised-button
+    mat-dialog-close
+    color="primary"
+    (click)="submitButton.click()"
+    [disabled]="postUploading || form.invalid"
+  >
+    <span class="">Share Now</span>
+    <mat-spinner [diameter]="20" *ngIf="postUploading"></mat-spinner>
+  </button>
+</mat-dialog-actions>

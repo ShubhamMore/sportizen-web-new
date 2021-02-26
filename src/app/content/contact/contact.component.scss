@@ -1,0 +1,101 @@
+$primary-color: #05bae3;
+$secondary-color: #075492;
+$grey-color: #838383;
+
+.contact-us-image {
+  width: 90%;
+}
+
+.description {
+  color: $grey-color;
+  padding-bottom: 1.5rem;
+}
+
+form {
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+}
+
+input,
+textarea {
+  display: block;
+  width: 100%;
+  border: 0;
+  padding: 10px 5px;
+  background: #fff no-repeat;
+  background-image: linear-gradient(to bottom, #05bae3, #05bae3),
+    linear-gradient(to bottom, #aaa, #aaa);
+  /* sizes for the 2 images (default state) */
+  background-size: 0 2px, 100% 1px;
+  /* positions for the 2 images. Change both "50%" to "0%" or "100%" and tri again */
+  background-position: 50% 100%, 50% 100%;
+  /* animation solely on background-size */
+  transition: background-size 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+}
+
+.error {
+  background-image: linear-gradient(to bottom, #c00, #c00), linear-gradient(to bottom, #c00, #c00);
+}
+
+.success {
+  background-image: linear-gradient(to bottom, #4bb543, #4bb543),
+    linear-gradient(to bottom, #4bb543, #4bb543);
+}
+
+.error-msg {
+  text-align: right;
+  font-size: 75%;
+  color: #c00;
+}
+
+input:focus,
+textarea:focus {
+  /* sizes for the 2 images (focus state) */
+  background-size: 100% 2px, 100% 1px;
+  outline: none;
+}
+
+.submit-btn {
+  background-color: #05bae3;
+  color: #fff;
+  padding: 5px 10px 3px 10px;
+  border-radius: 5px;
+  border: #05bae3;
+  transition: all 0.25s;
+}
+
+.submit-btn-animated {
+  animation: moveInBottom 1s ease-out 0.75s;
+  animation-fill-mode: backwards;
+}
+
+.submit-btn:link,
+.submit-btn:visited {
+  background-color: transparent;
+  text-transform: uppercase;
+  border: 1px solid #fff;
+  font-weight: 300;
+  border-radius: 100px;
+  color: #fff;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.submit-btn:hover {
+  /* transform: scale(1.1); */
+  transform: translateY(-3px);
+  background-color: #075492;
+  box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+}
+
+.submit-btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+}
+
+/* Big tablets to 1200px (Width smaller that the 1140px row) */
+@media only screen and (max-width: 770px) {
+  .contact-us-image {
+    display: none;
+  }
+}

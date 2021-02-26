@@ -1,0 +1,32 @@
+<mat-card>
+  <div class="container">
+    <div class="upload-text">Whats going on in your mind ? Profile Name?</div>
+  </div>
+
+  <div>
+    <input
+      class="hidden"
+      type="file"
+      name="postImage"
+      id="postImage"
+      multiple
+      #postImage
+      (change)="onImagePicked($event)"
+    />
+
+    <span class="upload-btn yellow" (click)="postImage.click()" matRipple>
+      <i class="fa fa-camera"></i>
+      <span class="upload-btn-text"> Photo </span>
+    </span>
+
+    <span class="upload-btn green" (click)="openDialog(postType.Video)" matRipple>
+      <i class="fa fa-play"></i>
+      <span class="upload-btn-text"> Video </span>
+    </span>
+
+    <span class="upload-btn blue" (click)="openDialog(postType.Text)" matRipple>
+      <i class="fa fa-text-width"></i>
+      <span class="upload-btn-text"> Text </span>
+    </span>
+  </div>
+</mat-card>

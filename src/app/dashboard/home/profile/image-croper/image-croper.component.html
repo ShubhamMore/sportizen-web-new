@@ -1,0 +1,24 @@
+<div class="backdrop" (close)="onClose()"></div>
+<div class="image-croper">
+  <span class="float-right btn-close" (click)="onClose()"><i class="fa fa-times"></i></span>
+  <h3 class="text-center">Fit Your Image</h3>
+
+  <image-cropper
+    class="image-cropper"
+    [maintainAspectRatio]="true"
+    [aspectRatio]="aspectRatio"
+    format="jpeg"
+    *ngIf="image"
+    [imageBase64]="image"
+    (imageCropped)="imageCropped($event)"
+  >
+  </image-cropper>
+
+  <hr />
+
+  <div class="image-croper-actions">
+    <button mat-raised-button class="rounded-btn" color="primary" (click)="onCrop()">
+      {{ savedBtnName }}
+    </button>
+  </div>
+</div>
