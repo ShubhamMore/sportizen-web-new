@@ -17,6 +17,7 @@ export class PostService {
   set onScreenPostId(onScreenPostId: string) {
     this._onScreenPostId = onScreenPostId;
   }
+
   getPosts() {
     const data = { api: 'getPosts', data: {} };
     return this.httpService.httpPost(data).pipe(
@@ -32,9 +33,11 @@ export class PostService {
   get postList() {
     return this._postList;
   }
+
   set postList(postList: PostModel[]) {
     this._postList = postList;
   }
+
   getMyPosts() {
     const data = { api: 'getMyPosts', data: {} };
     return this.httpService.httpPost(data).pipe(

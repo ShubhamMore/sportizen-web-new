@@ -1,5 +1,9 @@
 $grey-color: #838383;
 
+.logo {
+  height: 3rem;
+}
+
 .navbar-icon-top .navbar-nav .nav-link > .fa {
   position: relative;
   width: 36px;
@@ -33,7 +37,7 @@ $grey-color: #838383;
       font-size: 2.6rem;
       color: #fff;
       font-family: 'SF Sports Night NS';
-      padding-top: 1rem;
+      // padding-top: 1rem;
     }
   }
   .navbar-links {

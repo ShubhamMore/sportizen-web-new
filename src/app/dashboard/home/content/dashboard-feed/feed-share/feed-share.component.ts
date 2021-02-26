@@ -42,10 +42,8 @@ export class FeedShareComponent implements OnInit {
 
       this.postService.sharePost(sharedPost).subscribe((post: PostModel) => {
         this.postUploading = false;
+        this.postService.postList.unshift(post);
         this.dialogRef.close();
-        var postList = this.postService.postList;
-        postList.unshift(post);
-        this.postService.postList = postList;
       });
     }
   }

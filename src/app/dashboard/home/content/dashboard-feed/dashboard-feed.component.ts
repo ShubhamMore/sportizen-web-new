@@ -1,14 +1,15 @@
+import { User } from './../../../../authentication/auth/auth-model/user.model';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LikeType } from './../../../../enums/likeType';
-import { PostModel } from './../../../../models/post.model';
 import { ConnectionService } from './../../../../services/connection.service';
 import { PostLikeService } from './../../../../services/post-like.service';
 import { PostSaveService } from './../../../../services/post-save.service';
 import { PostViewService } from './../../../../services/post-view.service';
 import { PostService } from './../../../../services/post.service';
+import { AuthService } from './../../../../authentication/auth/auth-service/auth.service';
 import { UserProfileService } from './../../../../services/user-profile.service';
 import { FeedCommentComponent } from './feed-comment/feed-comment.component';
 import { FeedLikesComponent } from './feed-likes/feed-likes.component';
@@ -25,6 +26,8 @@ export class DashboardFeedComponent implements OnInit {
   @Input() isUserFeed: boolean;
   @Input() userId: string;
 
+  sportizenUser: string;
+
   constructor(
     public postService: PostService,
     public postLikeService: PostLikeService,
@@ -35,12 +38,19 @@ export class DashboardFeedComponent implements OnInit {
     private _router: Router,
     private route: ActivatedRoute,
     private _userProfileService: UserProfileService,
-    private _connectionService: ConnectionService
+    private _connectionService: ConnectionService,
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.loadFeed();
+    this.authService.getUser().subscribe((user: User) => {
+      if (user) {
+        this.sportizenUser = user.sportizenId;
+      }
+      this.loadFeed();
+    });
   }
+
   loadFeed() {
     if (this.isMyFeed) {
       this.postService.getMyPosts().subscribe((res: any) => {
@@ -172,6 +182,17 @@ export class DashboardFeedComponent implements OnInit {
       this._connectionService.searchedSportizenId = id;
       this.postService.onScreenPostId = postId;
       this._router.navigate(['/dashboard', 'profile', id], { relativeTo: this.route });
+    }
+  }
+
+  deletePost(post: string, createdBy: string, i: number) {
+    if (createdBy === this.sportizenUser) {
+      this.postService.deletePost(post).subscribe(
+        (res: any) => {
+          this.postService.postList.splice(i, 1);
+        },
+        (error: any) => {}
+      );
     }
   }
 }

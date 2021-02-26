@@ -13,7 +13,13 @@
       (inViewportChange)="callViewPost(post._id, post.alreadyViewed, i, $event)"
       *ngIf="post.postType === 'shared'"
     >
-      <span class="float-right post-action pointer"> ... </span>
+      <span
+        class="float-right post-action pointer"
+        [matMenuTriggerFor]="menu"
+        [matMenuTriggerData]="{ post: post._id, index: i, createdBy: post.sportizenUser }"
+      >
+        ...
+      </span>
 
       <div class="profile-icon" (click)="viewProfile(post.sportizenUser, i)">
         <img
@@ -46,7 +52,7 @@
         <img [src]="post.secureUrl" *inView />
       </div>
 
-      <div class="shared-post">
+      <div class="shared-post" *ngIf="post.sharedPost; else noSharedPost">
         <div class="profile-icon" (click)="viewProfile(post.sharedPost.sportizenUser, i)">
           <img
             class="profile-image"
@@ -153,7 +159,13 @@
       (inViewportChange)="callViewPost(post._id, post.alreadyViewed, i, $event)"
       *ngIf="post.postType !== 'shared'"
     >
-      <span class="float-right post-action pointer"> ... </span>
+      <span
+        class="float-right post-action pointer"
+        [matMenuTriggerFor]="menu"
+        [matMenuTriggerData]="{ post: post._id, index: i, createdBy: post.sportizenUser }"
+      >
+        ...
+      </span>
 
       <div class="profile-icon" (click)="viewProfile(post.sportizenUser, i)">
         <img
@@ -262,3 +274,23 @@
     <span>No Posts Uploaded</span>
   </div>
 </ng-template>
+
+<ng-template #noSharedPost
+  ><div class="shared-post">
+    <span class="no-shared-post">*This post no Longer Available</span>
+  </div>
+</ng-template>
+
+<mat-menu #menu="matMenu" xPosition="before">
+  <ng-template matMenuContent let-postId="post" let-index="index" let-createdBy="createdBy">
+    <button
+      mat-menu-item
+      style="outline: none"
+      (click)="deletePost(postId, createdBy, index)"
+      *ngIf="createdBy === sportizenUser"
+    >
+      <i class="fa fa-trash"> </i>
+      &nbsp; Delete
+    </button>
+  </ng-template>
+</mat-menu>
