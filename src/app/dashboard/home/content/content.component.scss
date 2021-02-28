@@ -6,30 +6,22 @@ $grey-color: #838383;
   text-align: center;
   padding: 1rem 1.5rem;
 
+  .upload-content {
+    margin-bottom: 1rem;
+  }
+
   .dashboard-feed {
-    display: inline-block;
+    // margin: 0;
   }
 
-  .dashboard-blog {
-    display: inline-block;
+  .stories-bar {
+    margin-top: 1rem;
   }
-}
-
-.stories-bar {
-  padding-top: 1rem;
-}
-
-.row {
-  padding-bottom: 1rem;
 }
 
 @media only screen and (max-width: 1200px) {
   .dashboard-content-container {
     padding: 0.75rem 1.5rem;
-
-    .dashboard-blog {
-      display: inline-block;
-    }
   }
 }
 
@@ -37,17 +29,10 @@ $grey-color: #838383;
   .dashboard-content-container {
     padding: 0.6rem 1rem;
   }
-
-  .dashboard-blog {
-    display: none;
-  }
 }
 
 @media only screen and (max-width: 480px) {
   .dashboard-content-container {
-    padding: 0.25rem 0rem;
-  }
-  .dashboard-blog {
-    display: none;
+    padding: 0.25rem 0.1rem;
   }
 }

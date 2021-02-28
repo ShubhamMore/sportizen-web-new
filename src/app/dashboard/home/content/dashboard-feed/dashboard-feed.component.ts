@@ -195,4 +195,8 @@ export class DashboardFeedComponent implements OnInit {
       );
     }
   }
+
+  scrolledIndexChange(event: any) {
+    console.log(event);
+  }
 }

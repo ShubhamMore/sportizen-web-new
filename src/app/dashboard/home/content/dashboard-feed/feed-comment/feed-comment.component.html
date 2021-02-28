@@ -10,32 +10,33 @@
         class="singe-comment-container"
         *ngFor="let singleComment of comments; let commentIndex = index"
       >
-        <div class="profile-icon">
-          <img
-            class="profile-image"
-            [src]="singleComment.userImageURL"
-            onerror="this.src='../../../assets/images/user.png'"
-          />
+        <div class="user-details">
+          <div class="profile-icon">
+            <img
+              class="profile-image"
+              [src]="singleComment.userImageURL"
+              onerror="this.src='../../../assets/images/user.png'"
+            />
+          </div>
+
+          <div class="user-sub-details">
+            <div class="name">{{ singleComment.name }}</div>
+
+            <div class="comment-time">
+              <i class="fa fa-clock-o icon-blue mr-2"></i>{{ singleComment.createdAt | amTimeAgo }}
+            </div>
+          </div>
         </div>
 
         <div class="comment-text">
-          <div>
-            <span class="name">{{ singleComment.name }}</span>
-
-            <span class="comment-time"
-              ><i class="fa fa-clock-o icon-blue mr-2"></i
-              >{{ singleComment.createdAt | amTimeAgo }}</span
-            >
-          </div>
-
           <div class="comment">
             {{ singleComment.comment }}
           </div>
 
           <div class="action-links">
             <span class="pr-2" (click)="replyComment(singleComment._id, singleComment.name)">
-              <i class="fa fa-reply icon-yellow pr-2" aria-hidden="true"></i>
-              <span class="">Reply</span>
+              <i class="fa fa-reply icon-yellow" aria-hidden="true"></i>
+              <span class="">&nbsp;Reply</span>
             </span>
 
             <span
@@ -45,24 +46,31 @@
               "
             >
               <i
-                [ngClass]="[
-                  singleComment.alreadyLiked
-                    ? 'fa fa-thumbs-up icon-blue pr-2'
-                    : 'fa fa-thumbs-up icon-grey pr-2'
-                ]"
+                class="fa fa-thumbs-up"
+                [ngClass]="[singleComment.alreadyLiked ? 'icon-blue' : 'icon-grey']"
                 aria-hidden="true"
               ></i>
-              <span class="">{{ singleComment.alreadyLiked ? 'Liked' : 'Like' }}</span>
+              <span class="">&nbsp;{{ singleComment.alreadyLiked ? 'Liked' : 'Like' }}</span>
             </span>
 
-            f.9po
             <span
               *ngIf="mySportizenId == singleComment.sportizenId"
               class="pr-2"
               (click)="deleteComment(singleComment._id, commentIndex)"
             >
-              <i class="fa fa-trash icon-red pr-2" aria-hidden="true"></i>
-              <span class="">Delete</span>
+              <i class="fa fa-trash icon-red" aria-hidden="true"></i>
+              <span class="">&nbsp;Delete</span>
+            </span>
+
+            <span
+              class="float-right comment-likes"
+              (click)="viewCommentLikeDetails(singleComment._id)"
+            >
+              <span
+                >{{ singleComment.postCommentLikes ? singleComment.postCommentLikes : 0 }}&nbsp;
+              </span>
+
+              <i class="fa fa-thumbs-up icon-blue" aria-hidden="true"></i>
             </span>
           </div>
 
@@ -73,7 +81,11 @@
             *ngIf="singleComment.postReplyComments"
             (click)="viewCommentDetails(singleComment._id, commentIndex)"
           >
-            <span class=""> ------- View {{ singleComment.postReplyComments }} Replies</span>
+            <span class="">
+              ------- View {{ singleComment.postReplyComments }}&nbsp;{{
+                singleComment.postReplyComments > 1 ? 'Replies' : 'Reply'
+              }}
+            </span>
           </div>
 
           <!--reply comment div start-->
@@ -83,8 +95,9 @@
                 let singleReplyComment of singleComment.replyComments;
                 let replyCommentIndex = index
               "
+              class="reply-comment-container"
             >
-              <div class="reply-comment-container">
+              <div class="reply-user-details">
                 <div class="reply-profile-icon">
                   <img
                     class="profile-image"
@@ -93,80 +106,78 @@
                   />
                 </div>
 
-                <div class="reply-comment-text">
-                  <div>
-                    <span class="name">{{ singleReplyComment.name }}</span>
+                <div class="reply-user-sub-details">
+                  <div class="name">{{ singleReplyComment.name }}</div>
 
-                    <span class="comment-time">
-                      <i class="fa fa-clock-o icon-blue mr-2"></i>
-                      <span class="">{{ singleReplyComment.createdAt | amTimeAgo }}</span>
-                    </span>
+                  <div class="comment-time">
+                    <i class="fa fa-clock-o icon-blue mr-2"></i>
+                    <span class="">{{ singleReplyComment.createdAt | amTimeAgo }}</span>
                   </div>
+                </div>
+              </div>
 
-                  <div class="comment">
-                    <span class=""> {{ singleReplyComment.replyComment }}</span>
-                  </div>
+              <div class="reply-comment-text">
+                <div class="comment">
+                  <span class=""> {{ singleReplyComment.replyComment }}</span>
+                </div>
 
-                  <div class="action-links">
-                    <span
-                      class="pr-2"
-                      (click)="replyComment(singleComment._id, singleReplyComment.name)"
+                <div class="action-links">
+                  <span
+                    class="pr-2"
+                    (click)="replyComment(singleComment._id, singleReplyComment.name)"
+                  >
+                    <i class="fa fa-reply icon-yellow" aria-hidden="true"></i>
+                    <span class="">&nbsp;Reply</span>
+                  </span>
+
+                  <span
+                    class="pr-2"
+                    (click)="
+                      likeUnlikeReplyComment(
+                        singleComment._id,
+                        singleReplyComment._id,
+                        singleReplyComment.alreadyLiked,
+                        commentIndex,
+                        replyCommentIndex
+                      )
+                    "
+                  >
+                    <i
+                      class="fa fa-thumbs-up"
+                      [ngClass]="[singleReplyComment.alreadyLiked ? 'icon-blue' : 'icon-grey']"
+                      aria-hidden="true"
                     >
-                      <i class="fa fa-reply icon-yellow pr-2" aria-hidden="true"></i>
-                      <span class="">Reply</span>
-                    </span>
-
-                    <span
-                      class="pr-2"
-                      (click)="
-                        likeUnlikeReplyComment(
-                          singleComment._id,
-                          singleReplyComment._id,
-                          singleReplyComment.alreadyLiked,
-                          commentIndex,
-                          replyCommentIndex
-                        )
-                      "
+                    </i>
+                    <span class=""
+                      >&nbsp;{{ singleReplyComment.alreadyLiked ? 'Liked' : 'Like' }}</span
                     >
-                      <i
-                        [ngClass]="[
-                          singleReplyComment.alreadyLiked
-                            ? 'fa fa-thumbs-up icon-blue pr-2'
-                            : 'fa fa-thumbs-up icon-grey pr-2'
-                        ]"
-                        aria-hidden="true"
-                      >
-                      </i>
-                      <span class="">{{ singleReplyComment.alreadyLiked ? 'Liked' : 'Like' }}</span>
-                    </span>
+                  </span>
 
-                    <span
-                      *ngIf="mySportizenId == singleReplyComment.sportizenId"
-                      class="pr-2"
-                      (click)="
-                        deleteReplyComment(singleReplyComment._id, commentIndex, replyCommentIndex)
-                      "
-                    >
-                      <i class="fa fa-trash icon-red pr-2" aria-hidden="true"></i>
-                      <span class="">Delete</span>
-                    </span>
+                  <span
+                    *ngIf="mySportizenId == singleReplyComment.sportizenId"
+                    class="pr-2"
+                    (click)="
+                      deleteReplyComment(singleReplyComment._id, commentIndex, replyCommentIndex)
+                    "
+                  >
+                    <i class="fa fa-trash icon-red" aria-hidden="true"></i>
+                    <span class="">&nbsp;Delete</span>
+                  </span>
 
-                    <span
-                      class="float-right"
-                      (click)="
-                        viewReplyCommentLikeDetails(singleComment._id, singleReplyComment._id)
-                      "
-                    >
-                      <span>
-                        {{
-                          singleReplyComment.postReplyCommentLikes
-                            ? singleReplyComment.postReplyCommentLikes
-                            : 0
-                        }}
-                      </span>
-                      <i class="fa fa-thumbs-up icon-blue pl-2" aria-hidden="true"></i>
+                  <span
+                    class="float-right reply-comment-likes"
+                    (click)="viewReplyCommentLikeDetails(singleComment._id, singleReplyComment._id)"
+                  >
+                    <span>
+                      {{
+                        singleReplyComment.postReplyCommentLikes
+                          ? singleReplyComment.postReplyCommentLikes
+                          : 0
+                      }}
+                      &nbsp;
                     </span>
-                  </div>
+                    <i class="fa fa-thumbs-up icon-blue" aria-hidden="true"></i>
+                  </span>
                 </div>
               </div>
             </div>
@@ -174,23 +185,17 @@
 
           <!--reply comment div end-->
         </div>
-
-        <span class="float-right comment-likes" (click)="viewCommentLikeDetails(singleComment._id)">
-          <span>{{ singleComment.postCommentLikes ? singleComment.postCommentLikes : 0 }}</span>
-          <i class="fa fa-thumbs-up icon-blue" aria-hidden="true"></i>
-        </span>
-
-        <div class="clearfix"></div>
       </div>
     </div>
 
-    <ng-template #noComments>You are the first one to comment</ng-template>
+    <ng-template #noComments>
+      <p class="text-center">You are the first one to comment</p>
+    </ng-template>
   </div>
 
   <div class="post-comment-input">
     <mat-form-field class="full-width">
       <mat-label>Comment</mat-label>
-
       <textarea
         rows="2"
         matInput
@@ -200,7 +205,12 @@
       ></textarea>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" class="float-right" (click)="submitComment()">
+    <button
+      mat-raised-button
+      color="primary"
+      class="float-right btn-post"
+      (click)="submitComment()"
+    >
       Post
     </button>
   </div>

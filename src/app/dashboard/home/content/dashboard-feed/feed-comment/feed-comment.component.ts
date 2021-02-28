@@ -1,13 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  Inject,
-  Input,
-  OnInit,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -18,7 +9,6 @@ import { PostCommentReplyLikeService } from './../../../../../services/post-comm
 import { PostCommentReplyService } from './../../../../../services/post-comment-reply.service';
 import { PostCommentService } from './../../../../../services/post-comment.service';
 import { UserProfileService } from './../../../../../services/user-profile.service';
-import { UserService } from './../../../../../services/user.service';
 import { FeedLikesComponent } from '../feed-likes/feed-likes.component';
 
 @Component({
@@ -63,18 +53,20 @@ export class FeedCommentComponent implements OnInit {
   }
 
   submitComment() {
-    if (this.replyCommentFlag) {
-      this.postCommentReplyService
-        .addPostCommentReply(this.data.postId, this.replyCommentId, this.postComment)
-        .subscribe((res: any) => {
-          this.commentPostedSuccessfully();
-        });
-    } else {
-      this.postCommentService
-        .addPostComment(this.data.postId, this.postComment)
-        .subscribe((res: any) => {
-          this.commentPostedSuccessfully();
-        });
+    if (this.postComment) {
+      if (this.replyCommentFlag) {
+        this.postCommentReplyService
+          .addPostCommentReply(this.data.postId, this.replyCommentId, this.postComment)
+          .subscribe((res: any) => {
+            this.commentPostedSuccessfully();
+          });
+      } else {
+        this.postCommentService
+          .addPostComment(this.data.postId, this.postComment)
+          .subscribe((res: any) => {
+            this.commentPostedSuccessfully();
+          });
+      }
     }
   }
 

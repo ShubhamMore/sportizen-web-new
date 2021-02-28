@@ -7,6 +7,9 @@
   font-weight: 300;
   font-size: 20px;
   text-rendering: optimizeLegibility;
+  .col-12 {
+    padding: 0;
+  }
 }
 
 /* LOGO */
@@ -234,6 +237,10 @@
 
 /* Small Phones 0px - 480px */
 @media only screen and (max-width: 480px) {
+  .sticky .logo {
+    height: 45px;
+  }
+
   .main-nav {
     margin-left: 0px;
   }

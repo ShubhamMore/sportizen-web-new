@@ -3,11 +3,28 @@ $secondary-color: #075492;
 $grey-color: #838383;
 
 /*css related to upload buttons*/
+
+.upload-text {
+  display: inline-block;
+  padding-bottom: 1rem;
+
+  &::after {
+    content: ' ';
+    display: block;
+    background-color: $primary-color;
+    font-size: 2rem;
+    // width: 20rem;
+    height: 1.5px;
+    margin: 4px auto 0;
+  }
+}
+
 .upload-btn {
   padding: 0.2rem 0.5rem;
   margin: 0.3rem 2rem;
   border-radius: 0.3rem;
   display: inline-block;
+  width: 7rem;
 
   i {
     padding: 0.2rem 0.5rem;
@@ -38,137 +55,158 @@ $grey-color: #838383;
   }
 }
 
-.upload-text {
-  display: inline-block;
-  padding-bottom: 1rem;
-
-  &::after {
-    content: ' ';
-    display: block;
-    background-color: $primary-color;
-    font-size: 2rem;
-    // width: 20rem;
-    height: 1.5px;
-    margin: 4px auto 0;
-  }
-}
-
 .upload-btn-text {
+  display: inline-block;
 }
 
-.preview-image {
-  position: relative;
-  width: auto;
-  height: 9.375rem;
-  border-radius: 0.325rem;
-  border: 0.0625rem solid #555;
-}
+@media only screen and (max-width: 900px) {
+  .upload-text {
+    font-size: 98%;
+    padding-bottom: 1.25rem;
 
-.preview-image img {
-  width: auto;
-  height: 100%;
-  object-fit: cover;
-}
+    &::after {
+      font-size: 2rem;
+      height: 1.5px;
+      margin: 0.5 auto 0;
+    }
+  }
 
-.remove-image {
-  display: inline;
-  position: absolute;
-  top: -0.625rem;
-  right: -0.625rem;
-  border-radius: 2rem;
-  padding: 0.0625rem 0.375rem 0.125px 0.375px;
-  text-decoration: none;
-  font-size: 100%;
-  background-color: #fff;
-  border: 0.0625rem solid #f00;
-  cursor: pointer;
-  transition: background-color 0.2s, border-color 0.2s;
-}
+  .upload-btn {
+    padding: 0.2rem 0.625rem;
+    margin: 0.5rem 2rem;
+    font-size: 98%;
+    width: 6rem;
 
-.remove {
-  color: #000;
-  transition: color 0.2s;
-}
+    i {
+      padding-right: 0.5rem;
+    }
+  }
 
-.remove-image:hover {
-  background-color: #ff0000;
-  border-color: none;
+  .yellow {
+    border: 2px solid #cfcf0b;
+  }
 
-  .remove {
-    color: #fff;
+  .green {
+    border: 2px solid green;
+  }
+
+  .blue {
+    border: 2px solid $primary-color;
   }
 }
 
-.image-container {
-  position: relative;
-  width: auto;
-  height: 9.3rem;
-}
+@media only screen and (max-width: 767px) {
+  .upload-text {
+    font-size: 95%;
+    padding-bottom: 1.125rem;
 
-.image {
-  border-radius: 0.325rem;
-  opacity: 1;
-  display: block;
-  width: auto;
-  height: 100%;
-  transition: 0.5s ease;
-  backface-visibility: hidden;
-}
+    &::after {
+      font-size: 1.875rem;
+      height: 1.5px;
+      margin: 0.5 auto 0;
+    }
+  }
 
-.middle {
-  transition: 0.5s ease;
-  opacity: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  text-align: center;
-}
+  .upload-btn {
+    padding: 0.175rem 0.615rem;
+    margin: 0.5rem 1.875rem;
+    font-size: 95%;
+    width: 4rem;
 
-.image-container:hover .image {
-  opacity: 0.3;
-}
+    i {
+      padding: 0.25rem 0.625rem;
+    }
+  }
 
-.image-container:hover .middle {
-  opacity: 1;
-}
+  .yellow {
+    border: 1.875px solid #cfcf0b;
+  }
 
-.remove {
-  color: white;
-  font-size: 100%;
-  padding: 1rem 2rem;
-}
+  .green {
+    border: 1.875px solid green;
+  }
 
-.trash {
-  font-size: 150%;
-  font-weight: 100;
-  color: #000;
-  cursor: pointer;
-  transform: scale(1);
-  transition: transform 0.2s, color 0.2s;
-}
+  .blue {
+    border: 1.875px solid $primary-color;
+  }
 
-.trash:hover {
-  transform: scale(1.2);
-  color: #ff0000;
-}
-
-.description {
-  width: 30rem;
-}
-
-@media only screen and (max-width: 1200px) {
-}
-
-@media only screen and (max-width: 992px) {
   .upload-btn-text {
     display: none;
   }
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 600px) {
+  .upload-text {
+    font-size: 90%;
+    padding-bottom: 1rem;
+
+    &::after {
+      font-size: 1.75rem;
+      height: 1.375px;
+      margin: 0.375 auto 0;
+    }
+  }
+
+  .upload-btn {
+    padding: 0.15rem 0.5rem;
+    margin: 0.45rem 1.75rem;
+    font-size: 90%;
+    width: 3rem;
+
+    i {
+      padding: 0.2rem 0.5rem;
+    }
+  }
+
+  .yellow {
+    border: 1.75px solid #cfcf0b;
+  }
+
+  .green {
+    border: 1.75px solid green;
+  }
+
+  .blue {
+    border: 1.75px solid $primary-color;
+  }
+
   .upload-btn-text {
     display: none;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .upload-text {
+    font-size: 80%;
+    padding-bottom: 1rem;
+
+    &::after {
+      font-size: 1.5rem;
+      height: 1.25px;
+      margin: 0.25 auto 0;
+    }
+  }
+
+  .upload-btn {
+    padding: 0.1rem 0.375rem;
+    margin: 0.3rem 1.5rem;
+    font-size: 80%;
+    width: 2.5rem;
+
+    i {
+      padding: 0.15rem 0.375rem;
+    }
+  }
+
+  .yellow {
+    border: 1.5px solid #cfcf0b;
+  }
+
+  .green {
+    border: 1.5px solid green;
+  }
+
+  .blue {
+    border: 1.5px solid $primary-color;
   }
 }

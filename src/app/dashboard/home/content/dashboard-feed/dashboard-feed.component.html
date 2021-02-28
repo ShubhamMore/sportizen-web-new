@@ -1,3 +1,8 @@
+<!-- <cdk-virtual-scroll-viewport
+  class="scroll-container"
+  itemSize="50"
+  (scrolledIndexChange)="scrolledIndexChange($event)"
+> -->
 <div
   class="post"
   *ngIf="postService.postList && postService.postList.length > 0; else noPostsUploaded"
@@ -11,7 +16,6 @@
       class="post-content"
       snInViewport
       (inViewportChange)="callViewPost(post._id, post.alreadyViewed, i, $event)"
-      *ngIf="post.postType === 'shared'"
     >
       <span
         class="float-right post-action pointer"
@@ -34,11 +38,9 @@
           <span class="">{{ post.userName }}</span>
         </div>
 
-        <div class="clearfix"></div>
-
-        <div class="">
+        <div class="modified-time">
           <i class="fa fa-clock-o icon-blue mr-2"></i>
-          <span class="">{{ post.modifiedAt | amTimeAgo }}</span>
+          <span>{{ post.modifiedAt | amTimeAgo }}</span>
         </div>
       </div>
 
@@ -48,52 +50,62 @@
         <span class=""> {{ post.description }}</span>
       </div>
 
-      <div class="post-image" *ngIf="post.secureUrl">
-        <img [src]="post.secureUrl" *inView />
-      </div>
+      <ng-container *ngIf="post.postType === 'shared'">
+        <div class="shared-post" *ngIf="post.sharedPost; else noSharedPost">
+          <div class="profile-icon" (click)="viewProfile(post.sharedPost.sportizenUser, i)">
+            <img
+              class="profile-image"
+              [src]="post.sharedPost.userImageURL"
+              onerror="this.src='../../../assets/images/user.png'"
+            />
+          </div>
 
-      <div class="shared-post" *ngIf="post.sharedPost; else noSharedPost">
-        <div class="profile-icon" (click)="viewProfile(post.sharedPost.sportizenUser, i)">
-          <img
-            class="profile-image"
-            [src]="post.sharedPost.userImageURL"
-            onerror="this.src='../../../assets/images/user.png'"
-          />
-        </div>
+          <div class="user-details">
+            <div class="profile-name" (click)="viewProfile(post.sharedPost.sportizenUser, i)">
+              <span class=""> {{ post.sharedPost.userName }}</span>
+            </div>
 
-        <div class="user-details">
-          <div class="profile-name" (click)="viewProfile(post.sharedPost.sportizenUser, i)">
-            <span class=""> {{ post.sharedPost.userName }}</span>
+            <div class="modified-time">
+              <i class="fa fa-clock-o icon-blue mr-2"></i>
+              <span class="">{{ post.sharedPost.modifiedAt | amTimeAgo }}</span>
+            </div>
           </div>
 
           <div class="clearfix"></div>
 
-          <div class="">
-            <i class="fa fa-clock-o icon-blue mr-2"></i>
-            <span class="">{{ post.sharedPost.modifiedAt | amTimeAgo }}</span>
+          <div class="post-description">
+            <span class=""> {{ post.sharedPost.description }}</span>
+          </div>
+
+          <div class="post-image" *ngIf="post.sharedPost.secureUrl">
+            <img [src]="post.sharedPost.secureUrl" loading="lazy" />
           </div>
         </div>
+      </ng-container>
 
-        <div class="clearfix"></div>
-
-        <div class="post-description">
-          <span class=""> {{ post.sharedPost.description }}</span>
+      <ng-container *ngIf="post.postType !== 'shared'">
+        <div class="post-image" *ngIf="post.secureUrl">
+          <img [src]="post.secureUrl" loading="lazy" />
         </div>
+      </ng-container>
 
-        <div class="post-image" *ngIf="post.sharedPost.secureUrl">
-          <img [src]="post.sharedPost.secureUrl" *inView />
-        </div>
-      </div>
-
-      <div>
+      <div class="post-details-container">
         <span class="post-details" (click)="showViewDetails(post._id)" *ngIf="post.postViews">
           <i class="fa fa-eye icon-grey" aria-hidden="true"></i>
-          <span class="">{{ post.postViews ? post.postViews : 0 }} Views</span>
+          <span class=""
+            >&nbsp;{{ post.postViews ? post.postViews : 0 }}&nbsp;{{
+              post.postViews > 1 ? 'Views' : 'View'
+            }}
+          </span>
         </span>
 
         <span class="post-details" (click)="showLikeDetails(post._id)" *ngIf="post.postLikes">
           <i class="fa fa-thumbs-up icon-grey" aria-hidden="true"></i>
-          <span class=""> {{ post.postLikes ? post.postLikes : 0 }} Likes</span>
+          <span class=""
+            >&nbsp;{{ post.postLikes ? post.postLikes : 0 }}&nbsp;{{
+              post.postLikes > 1 ? 'Likes' : 'Like'
+            }}
+          </span>
         </span>
 
         <span
@@ -102,7 +114,11 @@
           *ngIf="post.postComments"
         >
           <i class="fa fa-comment icon-grey" aria-hidden="true"></i>
-          <span class="">{{ post.postComments ? post.postComments : 0 }} Comments</span>
+          <span class=""
+            >&nbsp;{{ post.postComments ? post.postComments : 0 }}&nbsp;{{
+              post.postComments > 1 ? 'Comments' : 'Comment'
+            }}
+          </span>
         </span>
       </div>
 
@@ -115,11 +131,8 @@
           (click)="likeUnlikePost(post._id, post.alreadyLiked, i)"
         >
           <i
-            [ngClass]="[
-              post.alreadyLiked
-                ? 'fa fa-thumbs-up icon-blue pr-2'
-                : 'fa fa-thumbs-up icon-white pr-2'
-            ]"
+            class="fa fa-thumbs-up pr-2"
+            [ngClass]="[post.alreadyLiked ? 'icon-blue' : 'icon-white']"
             aria-hidden="true"
           ></i>
           <span class="">{{ post.alreadyLiked ? 'Liked' : 'Like' }}</span>
@@ -134,121 +147,15 @@
           <span class="">Comment</span>
         </span>
 
-        <span class="post-action-btn" matRipple (click)="sharePost(post.sharedPost._id)">
-          <i class="fa fa-share icon-green pr-2" aria-hidden="true"></i>
-          <span class="">Share</span>
-        </span>
-
-        <span
-          class="float-right pointer save-post"
-          (click)="saveUnsavePost(post._id, post.alreadySaved, i)"
-        >
-          <i
-            [ngClass]="[
-              post.alreadySaved ? 'fa fa-bookmark icon-blue' : 'fa fa-bookmark icon-light-grey'
-            ]"
-            aria-hidden="true"
-          ></i>
-        </span>
-      </div>
-    </mat-card-content>
-
-    <mat-card-content
-      class="post-content"
-      snInViewport
-      (inViewportChange)="callViewPost(post._id, post.alreadyViewed, i, $event)"
-      *ngIf="post.postType !== 'shared'"
-    >
-      <span
-        class="float-right post-action pointer"
-        [matMenuTriggerFor]="menu"
-        [matMenuTriggerData]="{ post: post._id, index: i, createdBy: post.sportizenUser }"
-      >
-        ...
-      </span>
-
-      <div class="profile-icon" (click)="viewProfile(post.sportizenUser, i)">
-        <img
-          class="profile-image"
-          [src]="post.userImageURL"
-          onerror="this.src='../../../assets/images/user.png'"
-        />
-      </div>
-
-      <div class="user-details">
-        <div class="profile-name" (click)="viewProfile(post.sportizenUser, i)">
-          <span class=""> {{ post.userName }}</span>
-        </div>
-
-        <div class="clearfix"></div>
-
-        <div class="">
-          <i class="fa fa-clock-o icon-blue mr-2"></i>
-          <span class="">{{ post.modifiedAt | amTimeAgo }}</span>
-        </div>
-      </div>
-
-      <div class="clearfix"></div>
-
-      <div class="post-description">
-        <span class=""> {{ post.description }}</span>
-      </div>
-
-      <div class="post-image" *ngIf="post.secureUrl">
-        <img [src]="post.secureUrl" *inView />
-      </div>
-
-      <div class="">
-        <span class="post-details" (click)="showViewDetails(post._id)" *ngIf="post.postViews">
-          <i class="fa fa-eye icon-grey" aria-hidden="true"></i>
-          <span class=""> {{ post.postViews ? post.postViews : 0 }} Views</span>
-        </span>
-
-        <span class="post-details" (click)="showLikeDetails(post._id)" *ngIf="post.postLikes">
-          <i class="fa fa-thumbs-up icon-grey" aria-hidden="true"></i>
-          <span class=""> {{ post.postLikes ? post.postLikes : 0 }} Likes</span>
-        </span>
-
-        <span
-          class="post-details"
-          (click)="openCommentsSheet(post._id, post.secureUrl)"
-          *ngIf="post.postComments"
-        >
-          <i class="fa fa-comment icon-grey" aria-hidden="true"></i>
-          <span class=""> {{ post.postComments ? post.postComments : 0 }} Comments</span>
-        </span>
-      </div>
-
-      <hr />
-
-      <div class="post-actions">
         <span
           class="post-action-btn"
           matRipple
-          (click)="likeUnlikePost(post._id, post.alreadyLiked, i)"
+          (click)="
+            sharePost(
+              post.postType === 'shared' && post.sharedPost ? post.sharedPost._id : post._id
+            )
+          "
         >
-          <i
-            [ngClass]="[
-              post.alreadyLiked
-                ? 'fa fa-thumbs-up icon-blue pr-2'
-                : 'fa fa-thumbs-up icon-white pr-2'
-            ]"
-            aria-hidden="true"
-          >
-          </i>
-          <span class="">{{ post.alreadyLiked ? 'Liked' : 'Like' }}</span>
-        </span>
-
-        <span
-          class="post-action-btn"
-          matRipple
-          (click)="openCommentsSheet(post._id, post.secureUrl)"
-        >
-          <i class="fa fa-comment icon-yellow pr-2" aria-hidden="true"></i>
-          <span class="">Comment</span>
-        </span>
-
-        <span class="post-action-btn" matRipple (click)="sharePost(post._id)">
           <i class="fa fa-share icon-green pr-2" aria-hidden="true"></i>
           <span class="">Share</span>
         </span>
@@ -268,6 +175,7 @@
     </mat-card-content>
   </mat-card>
 </div>
+<!-- </cdk-virtual-scroll-viewport> -->
 
 <ng-template #noPostsUploaded
   ><div class="no-posts">
@@ -281,9 +189,10 @@
   </div>
 </ng-template>
 
-<mat-menu #menu="matMenu" xPosition="before">
+<mat-menu class="mat-panel" #menu="matMenu" xPosition="before">
   <ng-template matMenuContent let-postId="post" let-index="index" let-createdBy="createdBy">
     <button
+      class="delete-btn"
       mat-menu-item
       style="outline: none"
       (click)="deletePost(postId, createdBy, index)"

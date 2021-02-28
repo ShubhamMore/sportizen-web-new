@@ -2,10 +2,16 @@ $primary-color: #05bae3;
 $secondary-color: #075492;
 $grey-color: #838383;
 
+.user-header {
+  padding-bottom: 1rem;
+  // box-shadow: 0px 10px;
+}
+
 .options-bar {
   padding: 0rem;
   width: 20rem;
   display: inline-block;
+  overflow-x: hidden;
 
   .cover-photo-container {
     position: relative;

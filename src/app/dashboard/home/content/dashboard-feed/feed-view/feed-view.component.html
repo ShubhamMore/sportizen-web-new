@@ -1,29 +1,35 @@
-<button class="float-right pointer close" mat-dialog-close>X</button>
-<h2 mat-dialog-title *ngIf="views && views.length > 0">Views</h2>
-<div mat-dialog-content>
-  <div *ngIf="views && views.length > 0; else noLikes">
-    <div *ngFor="let view of views" class="view-container">
-      <div class="profile-icon">
-        <img
-          class="profile-image"
-          [src]="view.userImageURL"
-          onerror="this.src='../../../assets/images/user.png'"
-        />
-      </div>
+<div class="view-container">
+  <button class="float-right pointer close" mat-dialog-close>X</button>
+  <h2 mat-dialog-title *ngIf="views && views.length > 0">Views</h2>
 
-      <div class="user-details">
-        <div class="user-name">
-          {{ view.name }}
+  <hr />
+
+  <div mat-dialog-content>
+    <div *ngIf="views && views.length > 0; else noViews">
+      <div *ngFor="let view of views" class="user-container">
+        <div class="profile-icon">
+          <img
+            class="profile-image"
+            [src]="view.userImageURL"
+            onerror="this.src='../../../assets/images/user.png'"
+          />
         </div>
 
-        <div class="liked-at pt-2">
-          <i class="fa fa-clock-o icon-blue mr-2"></i>{{ view.createdAt | amTimeAgo }}
-        </div>
-      </div>
+        <div class="user-details">
+          <div class="user-name">
+            <span class="">{{ view.name }}</span>
+          </div>
 
-      <br />
+          <div class="viewed-at">
+            <i class="fa fa-clock-o icon-blue mr-2"></i>
+            <span class="">{{ view.createdAt | amTimeAgo }}</span>
+          </div>
+        </div>
+
+        <br />
+      </div>
     </div>
-  </div>
 
-  <ng-template #noLikes>No Views Yet</ng-template>
+    <ng-template #noViews>No Views Yet</ng-template>
+  </div>
 </div>

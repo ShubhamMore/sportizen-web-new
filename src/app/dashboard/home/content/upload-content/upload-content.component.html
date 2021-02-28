@@ -9,7 +9,6 @@
       type="file"
       name="postImage"
       id="postImage"
-      multiple
       #postImage
       (change)="onImagePicked($event)"
     />
@@ -19,10 +18,10 @@
       <span class="upload-btn-text"> Photo </span>
     </span>
 
-    <span class="upload-btn green" (click)="openDialog(postType.Video)" matRipple>
+    <!-- <span class="upload-btn green" (click)="openDialog(postType.Video)" matRipple>
       <i class="fa fa-play"></i>
       <span class="upload-btn-text"> Video </span>
-    </span>
+    </span> -->
 
     <span class="upload-btn blue" (click)="openDialog(postType.Text)" matRipple>
       <i class="fa fa-text-width"></i>

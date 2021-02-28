@@ -1,144 +1,762 @@
 $primary-color: #05bae3;
 
-.fa-angle-left {
-  font-size: 200%;
-  color: #aaa;
-}
-
-.fa-angle-right {
-  font-size: 200%;
-  color: #aaa;
-}
-
-.event-block {
-  position: relative;
-}
-
-.event-image-container {
-  position: absolute;
-  height: 10rem;
-  width: 50%;
-  top: 0;
-  right: 0;
-}
-
-.image-container {
+.event-list {
   width: 100%;
-  text-align: center;
 }
 
-.event-block-text {
-  width: 50%;
-}
+.events-container {
+  padding: 1rem;
 
-.no-image-container {
-  width: 100%;
-  text-align: center;
-  font-weight: 700;
-  font-size: 2rem;
-  padding-top: 6rem;
-}
-
-.image {
-  margin: auto;
-  width: auto;
-  height: 15.625rem;
-}
-
-.event-footer p {
-  margin: 0;
-  margin-top: 0.5rem;
-}
-
-.event-card {
-  width: 80rem;
-  margin-top: 2rem;
-}
-
-.border-box {
-  border-radius: 0.3rem;
-  padding: 0.1rem 1rem;
-  border: $primary-color 2px solid;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-}
-
-.entry-fees-box {
-  text-align: center;
-}
-
-.border-box-date {
-  border-radius: 1rem;
-  margin: 1rem 0.3rem;
-  height: 5rem;
-  display: inline-block;
-  padding: 0.5rem;
-}
-
-.winning-prize-box {
-  display: inline-block;
-  background-color: lighten($color: $primary-color, $amount: 40%);
-  padding: 0.2rem 1rem;
-  width: 15rem;
-  text-align: center;
-}
-
-.event-type-box {
-  background-color: lighten($color: $primary-color, $amount: 40%);
-}
-
-.join-event-box {
-  background-color: #32cd32;
-  cursor: pointer;
-  color: white;
-}
-
-.delete-chip {
-  background-color: rgb(243, 67, 67);
-  cursor: pointer;
-  color: white;
-}
-
-@media only screen and(max-width:1200px) {
-  .event-image-container {
-    position: relative;
-
-    width: 100%;
-    height: 100%;
-  }
-
-  .event-block-text {
-    width: 100%;
-  }
-}
-@media only screen and(max-width:800px) {
-  .event-block {
+  .event-card {
+    margin: 1rem auto;
     padding: 1rem;
-  }
+    background-color: #fff;
+    border-radius: 1.5rem;
 
-  .winning-prize-box {
-    width: auto;
-    display: block;
-  }
+    .bold-text {
+      font-weight: bold;
+    }
 
-  .entry-fees-box {
-    width: auto;
-    display: block;
-    margin-top: 0.5rem;
+    .heading {
+      margin-bottom: 1rem;
+    }
+
+    .registered-user-container {
+      display: block;
+      width: 100%;
+
+      .register-user-label {
+        display: inline-block;
+        width: 9rem;
+        padding-bottom: 0.5rem;
+
+        .number-of-members {
+          color: #05bae3;
+          font-weight: bold;
+        }
+      }
+
+      .joined-users-container {
+        position: absolute;
+        display: inline-block;
+        width: 16rem;
+
+        .joined-users-image-container {
+          display: block;
+          height: 3rem;
+          padding: 0.25rem 0;
+
+          .joined-user {
+            display: inline-block;
+            width: 2.5rem;
+            height: 2.5rem;
+            // border: 1px solid #fff;
+            border-radius: 100%;
+            margin-right: -0.625rem;
+            object-fit: cover;
+            object-position: center;
+            cursor: pointer;
+            transition: all 0.2s;
+          }
+
+          .joined-user:hover {
+            transform: scale(1.1);
+          }
+
+          .more-user-container {
+            .more-joined-user {
+              display: inline-block;
+              width: 2.75rem;
+              height: 2.75rem;
+              vertical-align: middle;
+              border-radius: 100%;
+              margin-right: -0.625rem;
+              background-color: #05bae3;
+              font-size: 100%;
+              color: #fff;
+              text-align: center;
+              // object-fit: cover;
+              // object-position: center;
+              padding: 0.625rem 0;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+
+    .event-action {
+      .event-type-box {
+        background-color: lighten($color: $primary-color, $amount: 40%);
+      }
+
+      .join-event-box {
+        background-color: #32cd32;
+        cursor: pointer;
+        color: white;
+      }
+
+      .edit-chip {
+        cursor: pointer;
+      }
+
+      .delete-chip {
+        background-color: rgb(243, 67, 67);
+        cursor: pointer;
+        color: white;
+      }
+    }
+
+    .created-user {
+      margin-top: 0.625rem;
+
+      .image-container {
+        margin-right: 0.3rem;
+
+        .created-user-image {
+          width: 1.625rem;
+          height: 1.625rem;
+          // border: 1px solid #fff;
+          border-radius: 100%;
+        }
+      }
+
+      .created-at {
+        padding-right: 0;
+      }
+    }
+
+    .border-box {
+      border-radius: 0.25rem;
+      padding: 0.1rem 1rem;
+      border: $primary-color 2px solid;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+    }
+
+    .schedule-container {
+      width: 100%;
+      display: block;
+
+      .border-box-date {
+        display: inline-block;
+        width: 7.75rem;
+        border-radius: 1rem;
+        margin: 1rem 0.3rem;
+        padding: 0.5rem;
+      }
+    }
+
+    .description-container {
+      .description {
+        margin-top: 0.375rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        line-height: 1.25rem;
+        max-height: 6.25rem;
+        /* The number of lines to be displayed */
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        font-size: 95%;
+      }
+    }
+
+    .entry-winning-container {
+      margin-top: 1.5rem;
+      width: 100%;
+      display: block;
+
+      .winning-prize-box {
+        display: inline-block;
+        width: 11.5rem;
+        margin-right: 0.5rem;
+        background-color: lighten($color: $primary-color, $amount: 40%);
+        padding: 0.2rem 1rem;
+        text-align: center;
+        white-space: nowrap;
+      }
+
+      .entry-fees-box {
+        width: auto;
+        display: inline-block;
+        text-align: center;
+        white-space: nowrap;
+      }
+    }
+
+    .event-image-container {
+      width: 100%;
+      height: 20rem;
+      //   position: absolute;
+      //   height: 10rem;
+      //   width: 50%;
+      //   top: 0;
+      //   right: 0;
+
+      .image-container {
+        width: 100%;
+        height: 18rem;
+        text-align: center;
+
+        .image {
+          margin: auto;
+          width: auto;
+          height: 18rem;
+        }
+      }
+    }
+
+    .no-image-container {
+      width: 100%;
+      height: 18rem;
+      padding-top: 9rem;
+      text-align: center;
+      font-weight: 700;
+      font-size: 2rem;
+      line-height: 2.5rem;
+    }
+  }
+}
+
+@media only screen and(max-width:900px) {
+  .events-container {
+    padding: 0.75rem;
+
+    .event-card {
+      margin: 0.75rem auto;
+      border-radius: 1.5rem;
+
+      .heading {
+        margin-bottom: 1.5rem;
+      }
+
+      .registered-user-container {
+        font-size: 98%;
+
+        .register-user-label {
+          width: 8rem;
+          padding-bottom: 0.5rem;
+        }
+
+        .joined-users-container {
+          width: 13rem;
+          position: absolute;
+
+          .joined-users-image-container {
+            height: 2.75rem;
+            padding: 0.375rem 0;
+
+            .joined-user {
+              width: 2.25rem;
+              height: 2.25rem;
+              margin-right: -0.625rem;
+            }
+
+            .more-user-container {
+              .more-joined-user {
+                width: 2.375rem;
+                height: 2.375rem;
+                margin-right: -0.625rem;
+                padding: 0.625rem 0;
+              }
+            }
+          }
+        }
+      }
+
+      .event-action {
+        .join-event-box,
+        .event-type-box,
+        .edit-chip,
+        .delete-chip {
+          font-size: 98%;
+          padding: 0.5rem 0.95rem;
+        }
+      }
+
+      .created-user {
+        margin-top: 0.5rem;
+        font-size: 98%;
+
+        .image-container {
+          margin-right: 0.5rem;
+
+          .created-user-image {
+            width: 1.5rem;
+            height: 1.5rem;
+          }
+        }
+
+        .created-at {
+          padding-right: 0;
+        }
+      }
+
+      .border-box {
+        border-radius: 0.375rem;
+        padding: 0.2rem 0.75rem;
+        border: $primary-color 2px solid;
+        box-shadow: 0 2px 7.5px 0 rgba(0, 0, 0, 0.25);
+      }
+
+      .schedule-container {
+        font-size: 98%;
+
+        .border-box-date {
+          width: 6.575rem;
+          border-radius: 0.75rem;
+          margin: 0.5rem 0.245rem;
+          padding: 0.375rem;
+        }
+      }
+
+      .description-container {
+        font-size: 98%;
+
+        .description {
+          margin-top: 0.375rem;
+          line-height: 1.25rem;
+          max-height: 6.25rem;
+          font-size: 98%;
+        }
+      }
+
+      .entry-winning-container {
+        margin-top: 1.5rem;
+        font-size: 98%;
+
+        .winning-prize-box {
+          width: 10.5rem;
+          padding: 0.1rem 0.5rem;
+          margin-right: 0.5rem;
+        }
+
+        .entry-fees-box {
+          width: 10rem;
+        }
+      }
+
+      .event-image-container {
+        height: 17rem;
+
+        .image-container {
+          height: 15rem;
+
+          .image {
+            height: 15rem;
+          }
+        }
+      }
+
+      .no-image-container {
+        height: 15rem;
+        padding-top: 7.5rem;
+        text-align: center;
+        font-size: 1.5rem;
+        line-height: 1.5rem;
+      }
+    }
+  }
+}
+
+@media only screen and(max-width:767px) {
+  .events-container {
+    padding: 0.75rem;
+
+    .event-card {
+      margin: 0.75rem auto;
+      border-radius: 1.5rem;
+
+      .heading {
+        margin-bottom: 1.5rem;
+      }
+
+      .registered-user-container {
+        font-size: 95%;
+
+        .register-user-label {
+          width: 9rem;
+          padding-bottom: 0.5rem;
+        }
+
+        .joined-users-container {
+          width: 18rem;
+          position: absolute;
+
+          .joined-users-image-container {
+            height: 2.75rem;
+            padding: 0.375rem 0;
+
+            .joined-user {
+              width: 2.25rem;
+              height: 2.25rem;
+              margin-right: -0.625rem;
+            }
+
+            .more-user-container {
+              .more-joined-user {
+                width: 2.375rem;
+                height: 2.375rem;
+                margin-right: -0.625rem;
+                padding: 0.625rem 0;
+              }
+            }
+          }
+        }
+      }
+
+      .event-action {
+        .join-event-box,
+        .event-type-box,
+        .edit-chip,
+        .delete-chip {
+          font-size: 95%;
+          padding: 0.625rem 1.25rem;
+        }
+      }
+
+      .created-user {
+        margin-top: 0.375rem;
+        font-size: 95%;
+
+        .image-container {
+          margin-right: 0.375rem;
+
+          .created-user-image {
+            width: 1.5rem;
+            height: 1.5rem;
+          }
+        }
+
+        .created-at {
+          padding-right: 0;
+        }
+      }
+
+      .border-box {
+        border-radius: 0.375rem;
+        padding: 0.2rem 1rem;
+        border: $primary-color 2px solid;
+        box-shadow: 0 2px 7.5px 0 rgba(0, 0, 0, 0.25);
+      }
+
+      .schedule-container {
+        font-size: 95%;
+
+        .border-box-date {
+          width: 7.5rem;
+          border-radius: 0.75rem;
+          margin: 0.5rem 0.375rem;
+          padding: 0.5rem;
+        }
+      }
+
+      .description-container {
+        font-size: 95%;
+
+        .description {
+          margin-top: 0.25rem;
+          line-height: 1.25rem;
+          max-height: 6.25rem;
+          font-size: 95%;
+        }
+      }
+
+      .entry-winning-container {
+        margin-top: 1.25rem;
+        font-size: 95%;
+
+        .winning-prize-box {
+          width: 12rem;
+          padding: 0.1rem 0.75rem;
+          margin-right: 0.5rem;
+        }
+
+        .entry-fees-box {
+          width: 15rem;
+        }
+      }
+
+      .event-image-container {
+        height: 16rem;
+
+        .image-container {
+          height: 14rem;
+
+          .image {
+            height: 14rem;
+          }
+        }
+      }
+
+      .no-image-container {
+        display: none;
+      }
+    }
   }
 }
 
 @media only screen and(max-width:600px) {
-  .event-card {
-    margin-top: 0rem;
+  .events-container {
+    padding: 0.625rem;
+
+    .event-card {
+      margin: 0.625rem auto;
+      border-radius: 1.25rem;
+
+      .heading {
+        margin-bottom: 1.25rem;
+      }
+      .registered-user-container {
+        font-size: 90%;
+
+        .register-user-label {
+          width: 7.25rem;
+          padding-bottom: 0.375rem;
+        }
+
+        .joined-users-container {
+          width: 14rem;
+          position: absolute;
+
+          .joined-users-image-container {
+            height: 2.5rem;
+            padding: 0.25rem 0;
+
+            .joined-user {
+              width: 2rem;
+              height: 2rem;
+              margin-right: -0.5rem;
+            }
+
+            .more-user-container {
+              .more-joined-user {
+                width: 2.25rem;
+                height: 2.25rem;
+                margin-right: -0.5rem;
+                padding: 0.5rem 0;
+              }
+            }
+          }
+        }
+      }
+
+      .event-action {
+        .join-event-box,
+        .event-type-box,
+        .edit-chip,
+        .delete-chip {
+          font-size: 90%;
+          padding: 0.4rem 0.75rem;
+        }
+      }
+
+      .created-user {
+        margin-top: 0.25rem;
+        font-size: 90%;
+
+        .image-container {
+          margin-right: 0.25rem;
+
+          .created-user-image {
+            width: 1.25rem;
+            height: 1.25rem;
+          }
+        }
+
+        .created-at {
+          padding-right: 0;
+        }
+      }
+
+      .border-box {
+        border-radius: 0.25rem;
+        padding: 0.1rem 0.75rem;
+        border: $primary-color 1.75px solid;
+        box-shadow: 0 1.5px 5px 0 rgba(0, 0, 0, 0.25);
+      }
+
+      .schedule-container {
+        font-size: 90%;
+
+        .border-box-date {
+          width: 6.25rem;
+          border-radius: 0.5rem;
+          margin: 0.5rem 0.25rem;
+          padding: 0.3rem;
+        }
+      }
+
+      .description-container {
+        font-size: 90%;
+
+        .description {
+          margin-top: 0.15rem;
+          line-height: 1rem;
+          max-height: 5rem;
+          font-size: 95%;
+        }
+      }
+
+      .entry-winning-container {
+        margin-top: 1rem;
+        font-size: 90%;
+
+        .winning-prize-box {
+          width: 10rem;
+          padding: 0.075rem 0.5rem;
+          margin-right: 0.4rem;
+        }
+
+        .entry-fees-box {
+          width: 11rem;
+        }
+      }
+
+      .event-image-container {
+        height: 15rem;
+
+        .image-container {
+          height: 13rem;
+
+          .image {
+            height: 13rem;
+          }
+        }
+      }
+    }
   }
 }
 
-@media only screen and(max-width:480px) {
-  .create-event-container {
-    padding: 1rem 2rem;
-  }
+@media only screen and(max-width:400px) {
+  .events-container {
+    padding: 0.5rem;
 
-  h1 {
-    margin: 0px;
+    .event-card {
+      margin: 0.5rem auto;
+      border-radius: 1rem;
+
+      .heading {
+        margin-bottom: 1rem;
+      }
+
+      .registered-user-container {
+        font-size: 80%;
+
+        .register-user-label {
+          width: 6.5rem;
+          padding-bottom: 0.25rem;
+        }
+
+        .joined-users-container {
+          width: 9.5rem;
+          position: absolute;
+
+          .joined-users-image-container {
+            height: 1.75rem;
+            padding: 0.05rem 0;
+
+            .joined-user {
+              width: 1.5rem;
+              height: 1.5rem;
+              margin-right: -0.3rem;
+            }
+
+            .more-user-container {
+              .more-joined-user {
+                width: 1.75rem;
+                height: 1.75rem;
+                margin-right: -0.3rem;
+                padding: 0.3rem 0;
+              }
+            }
+          }
+        }
+      }
+
+      .event-action {
+        .join-event-box,
+        .event-type-box,
+        .edit-chip,
+        .delete-chip {
+          font-size: 80%;
+          padding: 0.25rem 0.625rem;
+        }
+      }
+
+      .created-user {
+        margin-top: 0.2rem;
+        font-size: 80%;
+
+        .image-container {
+          margin-right: 0.1rem;
+
+          .created-user-image {
+            width: 1rem;
+            height: 1rem;
+          }
+        }
+
+        .created-at {
+          padding-right: 0;
+        }
+      }
+
+      .border-box {
+        border-radius: 0.1rem;
+        padding: 0.05rem 0.5rem;
+        border: $primary-color 1.5px solid;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
+      }
+
+      .schedule-container {
+        font-size: 80%;
+
+        .border-box-date {
+          width: 5.25rem;
+          border-radius: 0.5rem;
+          margin: 0.5rem 0.15rem;
+          padding: 0.25rem;
+        }
+      }
+
+      .description-container {
+        font-size: 80%;
+
+        .description {
+          margin-top: 0.1rem;
+          line-height: 1rem;
+          max-height: 5rem;
+          font-size: 95%;
+        }
+      }
+
+      .entry-winning-container {
+        margin-top: 1rem;
+        font-size: 80%;
+
+        .winning-prize-box {
+          width: 8.5rem;
+          padding: 0.05rem 0.3rem;
+          margin-right: 0.25rem;
+        }
+
+        .entry-fees-box {
+          width: 8rem;
+        }
+      }
+
+      .event-image-container {
+        height: 15rem;
+
+        .image-container {
+          height: 12rem;
+
+          .image {
+            height: 12rem;
+          }
+        }
+      }
+    }
   }
 }

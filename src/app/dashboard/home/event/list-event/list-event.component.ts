@@ -17,6 +17,7 @@ export class ListEventComponent implements OnInit {
 
   constructor(
     private eventService: EventService,
+    private _userProfileService: UserProfileService,
     private userProfileService: UserProfileService,
     private router: Router,
     private route: ActivatedRoute
@@ -39,6 +40,21 @@ export class ListEventComponent implements OnInit {
   editEvent(id: string) {
     this.eventService.setEventId(id);
     this.router.navigate(['./edit'], { relativeTo: this.route });
+  }
+
+  viewProfile(id: string) {
+    if (id === this._userProfileService.getProfile().sportizenId) {
+      this.router.navigate(['/dashboard', 'profile'], { relativeTo: this.route });
+    } else {
+      this.router.navigate(['/dashboard', 'profile', id], { relativeTo: this.route });
+    }
+  }
+
+  getRegistrations(registrations: any[]) {
+    if (registrations.length > 6) {
+      return registrations.slice(0, 6);
+    }
+    return registrations;
   }
 
   getLocation() {

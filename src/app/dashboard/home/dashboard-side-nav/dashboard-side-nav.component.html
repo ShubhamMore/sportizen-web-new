@@ -1,55 +1,57 @@
 <mat-card class="options-bar" *ngIf="!loading">
-  <div class="cover-photo-container">
-    <img
-      class="cover-photo"
-      [src]="userProfile.userCoverImageURL"
-      onerror="this.src='../../../assets/images/user.png'"
-    />
+  <div class="user-header shadow-sm">
+    <div class="cover-photo-container">
+      <img
+        class="cover-photo"
+        [src]="userProfile.userCoverImageURL"
+        onerror="this.src='../../../assets/images/user.png'"
+      />
 
-    <img
-      class="profile-image"
-      [src]="userProfile.userImageURL"
-      onerror="this.src='../../../../assets/images/user.png'"
-    />
-  </div>
-
-  <div class="profile-details-container">
-    <h2>{{ userProfile.name }}</h2>
-
-    <p class="profile-id">@{{ userProfile.sportizenId }}</p>
-
-    <span class="profile-desc">{{ this.userProfile.story }}</span>
-
-    <div style="position: relative">
-      <div class="profile-stats">
-        <div>{{ 'msg_network_connections' | translate }}</div>
-        <span>632</span>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="profile-stats">
-        <div>{{ 'msg_views_to_your_profile' | translate }}</div>
-        <span>865</span>
-      </div>
+      <img
+        class="profile-image"
+        [src]="userProfile.userImageURL"
+        onerror="this.src='../../../../assets/images/user.png'"
+      />
     </div>
 
-    <!-- <div class="">
+    <div class="profile-details-container">
+      <h2>{{ userProfile.name }}</h2>
+
+      <p class="profile-id">@{{ userProfile.sportizenId }}</p>
+
+      <span class="profile-desc">{{ this.userProfile.story }}</span>
+
+      <div style="position: relative">
+        <div class="profile-stats">
+          <div>{{ 'msg_network_connections' | translate }}</div>
+          <span>632</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="profile-stats">
+          <div>{{ 'msg_views_to_your_profile' | translate }}</div>
+          <span>865</span>
+        </div>
+      </div>
+
+      <!-- <div class="">
       <button mat-raised-button color="primary" class="rounded-btn">
         <span class=""> View Profile</span>
       </button>
     </div> -->
 
-    <div>
-      <button
-        mat-raised-button
-        color="primary"
-        class="rounded-btn"
-        (click)="navigateTo('/dashboard/profile')"
-      >
-        <i class="fa fa-user mr-2"></i>
-        <span class="">My Profile</span>
-      </button>
+      <div>
+        <button
+          mat-raised-button
+          color="primary"
+          class="rounded-btn"
+          (click)="navigateTo('/dashboard/profile')"
+        >
+          <i class="fa fa-user mr-2"></i>
+          <span class="">My Profile</span>
+        </button>
+      </div>
     </div>
   </div>
 

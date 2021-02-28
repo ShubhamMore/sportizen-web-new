@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-
 import { AuthService, UserData } from './authentication/auth/auth-service/auth.service';
 
 @Component({

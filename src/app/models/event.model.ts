@@ -21,6 +21,7 @@ export class EventModel {
     public createdBy: string,
     public createdAt: string,
     public modifiedAt: string,
+    public createdUserImage?: string,
     public createdUser?: string,
     public registrations?: any[],
     public registration?: any,

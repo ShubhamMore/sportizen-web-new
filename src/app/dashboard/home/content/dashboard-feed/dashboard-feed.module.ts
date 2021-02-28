@@ -7,6 +7,7 @@ import { FeedShareComponent } from './feed-share/feed-share.component';
 import { FeedLikesComponent } from './feed-likes/feed-likes.component';
 import { FeedViewComponent } from './feed-view/feed-view.component';
 import { FeedCommentComponent } from './feed-comment/feed-comment.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,7 @@ import { FeedCommentComponent } from './feed-comment/feed-comment.component';
     FeedViewComponent,
     FeedCommentComponent,
   ],
-  imports: [SharedModule, DashboardFeedRoutingModule],
+  imports: [SharedModule, DashboardFeedRoutingModule, ScrollingModule],
   exports: [DashboardFeedComponent],
 })
 export class DashboardFeedModule {}

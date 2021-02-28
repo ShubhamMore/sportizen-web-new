@@ -1,121 +1,88 @@
-<div class="container pt-3 pb-3">
-  <div class="row" *ngIf="!loading">
-    <div class="col-md-12 create-event-container">
-      <span class="float-right">
-        <span class=""> Create Event</span>
+<div class="event-list">
+  <div class="row events-container">
+    <div class="col-12">
+      <mat-card class="event-card" *ngFor="let event of events; let i = index">
+        <mat-card-content>
+          <div class="row">
+            <div class="col-md-6">
+              <h1 class="heading">{{ event.name }}</h1>
+            </div>
 
-        <button mat-mini-fab color="primary" title="Create Event" class="ml-2" routerLink="new">
-          <i class="fa fa-plus-circle"></i>
-        </button>
-      </span>
+            <div class="col-md-6">
+              <div class="registered-user-container">
+                <div class="register-user-label">
+                  <div>
+                    <strong>Registered Users: </strong>
+                  </div>
+                  <div class="number-of-members">{{ event.registrations.length }} Members</div>
+                </div>
 
-      <h1 class="bold-text">All Events</h1>
-    </div>
+                <div class="joined-users-container">
+                  <div class="joined-users-image-container">
+                    <ng-container *ngIf="event.registrations.length > 0; else noRegistrations">
+                      <img
+                        class="joined-user"
+                        *ngFor="let user of getRegistrations(event.registrations)"
+                        [src]="user.userImageURL"
+                        [alt]="user.name"
+                        [matTooltip]="user.name"
+                        (click)="viewProfile(user.sportizenId)"
+                      />
 
-    <mat-card class="event-card" *ngFor="let event of events; let i = index">
-      <mat-card-content>
-        <div class="row pb-2">
-          <div class="col-md-6">
-            <mat-chip-list>
-              <mat-chip class="event-type-box">Event Type: Event</mat-chip>
-
-              <mat-chip
-                class="join-event-box"
-                *ngIf="event.createdBy != userSportizenId"
-                (click)="joinEvent(event._id)"
-              >
-                {{ event.isRegistered ? 'Registered' : 'Join Event' }}
-              </mat-chip>
-
-              <span *ngIf="event.createdBy === userSportizenId">
-                <mat-chip (click)="editEvent(event._id)">Edit</mat-chip>
-                <mat-chip class="delete-chip" (click)="deleteEvent(event._id, event.createdBy, i)">
-                  Delete
-                </mat-chip>
-              </span>
-            </mat-chip-list>
-
-            <div class="col-md-6"></div>
+                      <span class="more-user-container" *ngIf="event.registrations.length > 6">
+                        <span class="more-joined-user">
+                          <strong>+{{ event.registrations.length - 6 }}</strong>
+                        </span>
+                      </span>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div class="event-block">
-          <div class="event-block-text">
-            <div>
-              <h1>{{ event.name }}</h1>
+          <div class="row">
+            <div class="col-md-6 order-md-2">
+              <div class="event-image-container" *ngIf="event.images.length > 0; else noImage">
+                <div class="carousel-background">
+                  <div id="{{ 'event-image-' + i }}" class="carousel slide" data-ride="carousel">
+                    <ul class="carousel-indicators">
+                      <li
+                        [attr.data-target]="'#event-image-' + i"
+                        *ngFor="let image of event.images; let j = index"
+                        [attr.data-slide-to]="j"
+                        [ngClass]="j == 0 ? 'active' : ''"
+                      ></li>
+                    </ul>
 
-              <span class="bold-text">Created By :</span>
-              <span> {{ event.createdUser }}</span>
-              <span class="float-right">
-                <i class="fa fa-clock-o icon-blue mr-2"></i>
-                <span class="">{{ event.createdAt | amTimeAgo }}</span>
-              </span>
-            </div>
-
-            <div>
-              <div class="border-box border-box-date">
-                <div class="bold-text">
-                  <i class="fa fa-calendar mr-2 icon-yellow"></i>
-                  <span class="">Start Date :</span>
-                </div>
-
-                <div>{{ event.startDate | amCalendar }}</div>
-              </div>
-
-              <div class="border-box border-box-date">
-                <div class="bold-text">
-                  <i class="fa fa-calendar mr-2 icon-green"></i>
-                  <span class="">Last Date :</span>
-                </div>
-
-                <div>{{ event.endDate | amCalendar }}</div>
-              </div>
-
-              <div class="border-box border-box-date" *ngIf="event.time">
-                <div class="bold-text"><i class="fa fa-clock-o mr-2 icon-blue"></i>Time :</div>
-                <div>{{ event.time }}</div>
-              </div>
-            </div>
-
-            <div class="event-image-container">
-              <div class="carousel-background" *ngIf="event.images.length > 0; else noImage">
-                <div id="{{ 'event-image-' + i }}" class="carousel slide" data-ride="carousel">
-                  <ul class="carousel-indicators">
-                    <li
-                      [attr.data-target]="'#event-image-' + i"
-                      *ngFor="let image of event.images; let j = index"
-                      [attr.data-slide-to]="j"
-                      [ngClass]="j == 0 ? 'active' : ''"
-                    ></li>
-                  </ul>
-
-                  <div class="carousel-inner">
-                    <div
-                      class="carousel-item"
-                      *ngFor="let image of event.images; let k = index"
-                      [ngClass]="k == 0 ? 'item active' : 'item'"
-                    >
-                      <div class="image-container">
-                        <img class="image" src="{{ image.secureUrl }}" alt="Event" />
+                    <div class="carousel-inner">
+                      <div
+                        class="carousel-item"
+                        *ngFor="let image of event.images; let k = index"
+                        [ngClass]="k == 0 ? 'item active' : 'item'"
+                      >
+                        <div class="image-container">
+                          <img class="image" [src]="image.secureUrl" [alt]="event.name" />
+                        </div>
                       </div>
                     </div>
+
+                    <a
+                      class="carousel-control-prev"
+                      href="{{ '#event-image-' + i }}"
+                      data-slide="prev"
+                    >
+                      <span class="fa fa-angle-left"></span>
+                    </a>
+
+                    <a
+                      class="carousel-control-next"
+                      href="{{ '#event-image-' + i }}"
+                      data-slide="next"
+                    >
+                      <span class="fa fa-angle-right"></span>
+                    </a>
                   </div>
-
-                  <a
-                    class="carousel-control-prev"
-                    href="{{ '#event-image-' + i }}"
-                    data-slide="prev"
-                  >
-                    <span class="fa fa-angle-left"></span>
-                  </a>
-
-                  <a
-                    class="carousel-control-next"
-                    href="{{ '#event-image-' + i }}"
-                    data-slide="next"
-                  >
-                    <span class="fa fa-angle-right"></span>
-                  </a>
                 </div>
               </div>
 
@@ -124,25 +91,121 @@
               </ng-template>
             </div>
 
-            <div>
-              <div class="bold-text">Description:</div>
-              <p>
-                {{ event.description }}
-              </p>
+            <div class="col-md-6 order-md-1">
+              <div class="event-action">
+                <mat-chip-list>
+                  <mat-chip class="event-type-box">Event Type: {{ event.eventType }}</mat-chip>
+
+                  <mat-chip
+                    class="join-event-box"
+                    *ngIf="event.createdBy != userSportizenId"
+                    (click)="joinEvent(event._id)"
+                  >
+                    {{ event.isRegistered ? 'Registered' : 'Join Event' }}
+                  </mat-chip>
+
+                  <ng-container *ngIf="event.createdBy === userSportizenId">
+                    <mat-chip class="edit-chip" (click)="editEvent(event._id)">Edit</mat-chip>
+
+                    <mat-chip
+                      class="delete-chip"
+                      (click)="deleteEvent(event._id, event.createdBy, i)"
+                    >
+                      Delete
+                    </mat-chip>
+                  </ng-container>
+                </mat-chip-list>
+              </div>
+
+              <div class="created-user">
+                <span class="image-container">
+                  <img
+                    [src]="event.createdUserImage"
+                    [alt]="event.createdUser"
+                    class="created-user-image"
+                    onerror="'./../../../../../assets/images/user.png'"
+                  />
+                </span>
+
+                <span class=""><strong>Created By :</strong></span>
+
+                <span> {{ event.createdUser }}</span>
+
+                <span class="created-at float-right">
+                  <i class="fa fa-clock-o icon-blue mr-2"></i>
+
+                  <span class="">{{ event.createdAt | amTimeAgo }}</span>
+                </span>
+              </div>
+
+              <div class="schedule-container">
+                <div class="border-box border-box-date">
+                  <div class="bold-text">
+                    <span class="">Start Date :</span>
+                  </div>
+
+                  <div>
+                    <i class="fa fa-calendar icon-yellow"></i>
+                    {{ event.startDate | amCalendar }}
+                  </div>
+                </div>
+
+                <div class="border-box border-box-date">
+                  <div class="bold-text">
+                    <span class=""> Last Date :</span>
+                  </div>
+
+                  <div>
+                    <i class="fa fa-calendar icon-green"></i>
+                    {{ event.endDate | amCalendar }}
+                  </div>
+                </div>
+
+                <div class="border-box border-box-date">
+                  <div class="bold-text">Time :</div>
+                  <div>
+                    <i class="fa fa-clock-o icon-blue"></i>
+                    {{ event.time }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="description-container">
+                <div class="bold-text">Description :</div>
+                <p class="description">
+                  {{ event.description }}
+                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                  Ipsum has been the industry's standard dummy text ever since the 1500s, when an
+                  unknown printer took a galley of type and scrambled it to make a type specimen
+                  book. It has survived not only five centuries, but also the leap into electronic
+                  typesetting, remaining essentially unchanged. It was popularised in the 1960s with
+                  the release of Letraset sheets containing Lorem Ipsum passages, and more recently
+                  with desktop publishing software like Aldus PageMaker including versions of Lorem
+                  Ipsum
+                </p>
+              </div>
+
+              <div class="entry-winning-container">
+                <div class="winning-prize-box">
+                  <span class="bold-text">Winning Prize : </span>
+
+                  <span class="">{{ event.winningPrice }} /-</span>
+                </div>
+
+                <div class="border-box entry-fees-box">
+                  <span class="bold-text">Entry Fees : </span>
+
+                  <span class="">{{ event.fees ? event.fees + '/-' : 'free' }}</span>
+                </div>
+              </div>
             </div>
-
-            <span class="winning-prize-box">
-              <span class="bold-text">Winning Prize : </span>
-              <span class="">{{ event.winningPrice }} /-</span>
-            </span>
-
-            <span class="border-box entry-fees-box">
-              <span class="bold-text">Entry Fees : </span>
-              <span class="">{{ event.fees }} /-</span>
-            </span>
           </div>
-        </div>
-      </mat-card-content>
-    </mat-card>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
 </div>
+
+<ng-template #noRegistrations>
+  <span>You are first to Register on This Event</span>
+</ng-template>
