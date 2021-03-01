@@ -1,0 +1,135 @@
+$white: #fff;
+$google-blue: #4285f4;
+$button-active-blue: #1669f2;
+
+.auth-action-container {
+  margin-top: 1rem;
+
+  .remember-me {
+    float: left;
+  }
+
+  .forgot-password {
+    float: right;
+  }
+}
+
+.auth-btn-container {
+  padding-top: 1rem;
+  display: block;
+
+  .login-btn-container {
+    display: inline-block;
+    margin-right: 1rem;
+  }
+
+  .signup-btn-container {
+    display: inline-block;
+    margin-left: 1rem;
+  }
+}
+
+.or-container {
+  padding: 1rem;
+
+  .bold-text {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+}
+
+.google-btn-container {
+  width: 100%;
+
+  .google-btn {
+    display: block;
+    margin: 0 auto;
+    width: 13.5rem;
+    height: 2.625rem;
+    background-color: $google-blue;
+    border-radius: 0.125rem;
+    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+
+    .google-icon-wrapper {
+      display: inline-block;
+      margin: 0.0625rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 0.125rem;
+      background-color: $white;
+
+      .google-icon {
+        margin: 0.75rem;
+        width: 1rem;
+        height: 1rem;
+      }
+    }
+
+    .btn-text {
+      // display: block;
+      font-family: 'Roboto';
+      margin: 0.75rem 0.5rem;
+      color: $white;
+      font-size: 1rem;
+      white-space: nowrap;
+      letter-spacing: 0.0625rem;
+    }
+
+    &:hover {
+      box-shadow: 0 0 6px $google-blue;
+    }
+
+    &:active {
+      background: $button-active-blue;
+    }
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .auth-btn-container {
+    .login-btn-container {
+      margin-right: 0.875em;
+    }
+
+    .signup-btn-container {
+      margin-left: 0.875rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .auth-btn-container {
+    .login-btn-container {
+      margin-right: 0.75em;
+    }
+
+    .signup-btn-container {
+      margin-left: 0.75rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .auth-btn-container {
+    .login-btn-container {
+      margin-right: 0.625em;
+    }
+
+    .signup-btn-container {
+      margin-left: 0.625rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .auth-btn-container {
+    .login-btn-container {
+      margin-right: 0.5rem;
+    }
+
+    .signup-btn-container {
+      margin-left: 0.5rem;
+    }
+  }
+}

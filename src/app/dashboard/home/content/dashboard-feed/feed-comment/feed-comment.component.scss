@@ -1,7 +1,3 @@
-.mat-bottom-sheet-container-medium {
-  min-width: 25rem;
-}
-
 .loading-comments {
   padding: 1rem 0rem;
   height: 80vh;
@@ -14,7 +10,7 @@
 
   .comments-list-container {
     overflow-y: auto;
-    height: 75%;
+    height: 72.75%;
 
     .singe-comment-container {
       display: block;
@@ -54,6 +50,7 @@
       .comment-text {
         display: block;
         padding-left: 3.5rem;
+        margin-top: -0.5rem;
 
         .comment {
           font-size: 1rem;
@@ -120,6 +117,7 @@
           .reply-comment-text {
             display: block;
             padding-left: 2.375rem;
+            margin-top: -0.375rem;
 
             .comment {
               font-size: 0.8rem;
@@ -147,6 +145,7 @@
 
   .post-comment-input {
     position: absolute;
+    height: 25%;
     width: 100%;
     bottom: 1rem;
     // padding-right: 1rem;
@@ -157,73 +156,493 @@
     }
 
     .btn-post {
+      line-height: 0;
+      height: 2rem;
+      padding: 0 1rem;
     }
   }
 }
 
-// .comment-image {
-//   width: 4rem;
-//   height: 4rem;
-//   float: left;
-// }
+@media only screen and (max-width: 900px) {
+  .loading-comments {
+    padding: 1rem 0rem;
+    height: 80vh;
+  }
 
-// .comment-input {
-//   float: left;
-// }
+  .comment-container {
+    padding: 0.875rem 0rem;
 
-// @media only screen and (min-width: 900px) {
-//   .comment-time {
-//     display: block;
-//   }
+    .comments-list-container {
+      height: 74.5%;
 
-//   .profile-icon {
-//     width: 20%;
-//   }
+      .singe-comment-container {
+        .user-details {
+          .profile-icon {
+            padding-right: 0.4375rem;
+            width: 3.3125rem;
 
-//   .comment-text {
-//     width: 80%;
-//   }
+            .profile-image {
+              width: 2.875rem;
+              height: 2.875rem;
+            }
+          }
 
-//   .reply-profile-icon {
-//     width: 20%;
-//   }
+          .user-sub-details {
+            .name {
+              font-size: 1.1rem;
+            }
 
-//   .reply-comment-text {
-//     width: 80%;
-//   }
-// }
+            .comment-time {
+              font-size: 0.9rem;
+            }
+          }
+        }
 
-// @media only screen and (max-width: 767px) {
-//   .comment-container {
-//     padding-left: 0;
-//   }
-// }
+        .comment-text {
+          padding-left: 3.3125rem;
+          margin-top: -0.4375rem;
 
-// @media only screen and (max-width: 600px) {
-// }
+          .comment {
+            font-size: 0.9rem;
+            padding-right: 0.21875rem;
+          }
 
-// @media only screen and (max-width: 400px) {
-//   .comments-list-container {
-//     zoom: 85%;
-//   }
+          .action-links {
+            font-size: 0.9rem;
 
-//   .comment-time {
-//     display: block;
-//   }
+            .comment-likes {
+              padding-right: 0.4375rem;
+            }
+          }
 
-//   .profile-icon {
-//     width: 20%;
-//   }
+          .reply-comment {
+            font-size: 98%;
+          }
 
-//   .comment-text {
-//     // width: 80%;
-//   }
+          .reply-comment-container {
+            .reply-user-details {
+              .reply-profile-icon {
+                padding-right: 0.34375rem;
+                width: 2.21875rem;
 
-//   .reply-profile-icon {
-//     width: 20%;
-//   }
+                .profile-image {
+                  width: 1.875rem;
+                  height: 1.875rem;
+                }
+              }
 
-//   .reply-comment-text {
-//     width: 80%;
-//   }
-// }
+              .reply-user-sub-details {
+                .name {
+                  font-size: 0.925rem;
+                }
+
+                .comment-time {
+                  font-size: 0.725rem;
+                  margin-top: -0.28125rem;
+                }
+              }
+            }
+
+            .reply-comment-text {
+              padding-left: 2.34375rem;
+              margin-top: -0.34375rem;
+
+              .comment {
+                font-size: 0.75rem;
+                padding-right: 0.34375rem;
+              }
+
+              .action-links {
+                font-size: 0.75rem;
+                margin-top: 0rem;
+
+                .reply-comment-likes {
+                  padding-right: 0.59375rem;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .post-comment-input {
+      height: 24%;
+      bottom: 0.8125rem;
+      box-shadow: 0 -0.46875rem 0.46875rem -0.46875rem #ccc;
+
+      textarea {
+        font-size: 98%;
+      }
+
+      .btn-post {
+        font-size: 98%;
+        height: 2rem;
+        padding: 0 0.75rem;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .loading-comments {
+    padding: 1rem 0rem;
+    height: 80vh;
+  }
+
+  .comment-container {
+    padding: 0.75rem 0rem;
+
+    .comments-list-container {
+      height: 76%;
+
+      .singe-comment-container {
+        .user-details {
+          .profile-icon {
+            padding-right: 0.375rem;
+            width: 3.125rem;
+
+            .profile-image {
+              width: 2.75rem;
+              height: 2.75rem;
+            }
+          }
+
+          .user-sub-details {
+            .name {
+              font-size: 1.05rem;
+            }
+
+            .comment-time {
+              font-size: 0.85rem;
+            }
+          }
+        }
+
+        .comment-text {
+          padding-left: 3.125rem;
+          margin-top: -0.375rem;
+
+          .comment {
+            font-size: 0.8.5rem;
+            padding-right: 0.1875rem;
+          }
+
+          .action-links {
+            font-size: 0.85rem;
+
+            .comment-likes {
+              padding-right: 0.375rem;
+            }
+          }
+
+          .reply-comment {
+            font-size: 95%;
+          }
+
+          .reply-comment-container {
+            .reply-user-details {
+              .reply-profile-icon {
+                padding-right: 0.325rem;
+                width: 2.075rem;
+
+                .profile-image {
+                  width: 1.75rem;
+                  height: 1.75rem;
+                }
+              }
+
+              .reply-user-sub-details {
+                .name {
+                  font-size: 0.85rem;
+                }
+
+                .comment-time {
+                  font-size: 0.65rem;
+                  margin-top: -0.3125rem;
+                }
+              }
+            }
+
+            .reply-comment-text {
+              padding-left: 2.3125rem;
+              margin-top: -0.3125rem;
+
+              .comment {
+                font-size: 0.7rem;
+                padding-right: 0.3125rem;
+              }
+
+              .action-links {
+                font-size: 0.7rem;
+
+                .reply-comment-likes {
+                  padding-right: 0.5625rem;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .post-comment-input {
+      height: 23%;
+      bottom: 0.625rem;
+      box-shadow: 0 -0.4375rem 0.4375rem -0.4375rem #ccc;
+
+      textarea {
+        font-size: 95%;
+      }
+
+      .btn-post {
+        font-size: 95%;
+        line-height: 0;
+        height: 1.875rem;
+        padding: 0 0.75rem;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .loading-comments {
+    padding: 1rem 0rem;
+    height: 80vh;
+  }
+
+  .comment-container {
+    padding: 0.625rem 0rem;
+
+    .comments-list-container {
+      height: 76.5%;
+
+      .singe-comment-container {
+        .user-details {
+          .profile-icon {
+            padding-right: 0.3125rem;
+            width: 2.9375rem;
+
+            .profile-image {
+              width: 2.625rem;
+              height: 2.625rem;
+            }
+          }
+
+          .user-sub-details {
+            .name {
+              font-size: 1rem;
+            }
+
+            .comment-time {
+              font-size: 0.8rem;
+            }
+          }
+        }
+
+        .comment-text {
+          padding-left: 2.9375rem;
+          margin-top: -0.3125rem;
+
+          .comment {
+            font-size: 0.8rem;
+            padding-right: 0.15625rem;
+          }
+
+          .action-links {
+            font-size: 0.8rem;
+
+            .comment-likes {
+              padding-right: 0.3125rem;
+            }
+          }
+
+          .reply-comment {
+            font-size: 90%;
+          }
+
+          .reply-comment-container {
+            .reply-user-details {
+              .reply-profile-icon {
+                padding-right: 0.28125rem;
+                width: 1.90625rem;
+
+                .profile-image {
+                  width: 1.625rem;
+                  height: 1.625rem;
+                }
+              }
+
+              .reply-user-sub-details {
+                .name {
+                  font-size: 0.725rem;
+                }
+
+                .comment-time {
+                  font-size: 0.575rem;
+                  margin-top: -0.34375rem;
+                }
+              }
+            }
+
+            .reply-comment-text {
+              padding-left: 2.28125rem;
+              margin-top: -0.28125rem;
+
+              .comment {
+                font-size: 0.65rem;
+                padding-right: 0.28125rem;
+              }
+
+              .action-links {
+                font-size: 0.65rem;
+
+                .reply-comment-likes {
+                  padding-right: 0.53125rem;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .post-comment-input {
+      height: 23%;
+      bottom: 0.4375rem;
+      box-shadow: 0 -0.40625rem 0.40625rem -0.40625rem #ccc;
+
+      textarea {
+        font-size: 90%;
+      }
+
+      .btn-post {
+        font-size: 90%;
+        line-height: 0;
+        height: 1.75rem;
+        padding: 0 0.75rem;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .loading-comments {
+    padding: 1rem 0rem;
+    height: 80vh;
+  }
+
+  .comment-container {
+    padding: 0.5rem 0rem;
+
+    .comments-list-container {
+      height: 78%;
+
+      .singe-comment-container {
+        .user-details {
+          .profile-icon {
+            padding-right: 0.25rem;
+            width: 2.75rem;
+
+            .profile-image {
+              width: 2.5rem;
+              height: 2.5rem;
+            }
+          }
+
+          .user-sub-details {
+            .name {
+              font-size: 0.9rem;
+            }
+
+            .comment-time {
+              font-size: 0.7rem;
+            }
+          }
+        }
+
+        .comment-text {
+          padding-left: 2.75rem;
+          margin-top: -0.25rem;
+
+          .comment {
+            font-size: 0.7rem;
+            padding-right: 0.125rem;
+          }
+
+          .action-links {
+            font-size: 0.7rem;
+
+            .comment-likes {
+              padding-right: 0.25rem;
+            }
+          }
+
+          .reply-comment {
+            font-size: 80%;
+          }
+
+          .reply-comment-container {
+            .reply-user-details {
+              .reply-profile-icon {
+                padding-right: 0.25rem;
+                width: 1.75rem;
+
+                .profile-image {
+                  width: 1.5rem;
+                  height: 1.5rem;
+                }
+              }
+
+              .reply-user-sub-details {
+                .name {
+                  font-size: 0.7rem;
+                }
+
+                .comment-time {
+                  font-size: 0.5rem;
+                  margin-top: -0.375rem;
+                }
+              }
+            }
+
+            .reply-comment-text {
+              padding-left: 2.25rem;
+              margin-top: -0.25rem;
+
+              .comment {
+                font-size: 0.6rem;
+                padding-right: 0.25rem;
+              }
+
+              .action-links {
+                font-size: 0.6rem;
+
+                .reply-comment-likes {
+                  padding-right: 0.5rem;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .post-comment-input {
+      height: 22%;
+      bottom: 0.25rem;
+      box-shadow: 0 -0.375rem 0.375rem -0.375rem #ccc;
+
+      textarea {
+        font-size: 80%;
+      }
+
+      .btn-post {
+        font-size: 80%;
+        line-height: 0;
+        height: 1.5rem;
+        padding: 0 0.5rem;
+      }
+    }
+  }
+}

@@ -89,10 +89,10 @@ export class EventService {
       api: 'deleteEventImage',
       data: { id, imageId, index },
     };
-    return this.httpService.httpDelete(data).pipe(
+    return this.httpService.httpPost(data).pipe(
       map((response: any) => {
-        const eventIndex = this.events.findIndex((event) => event._id === id);
-        this.events[eventIndex].images.splice(index, 1);
+        // const eventIndex = this.events.findIndex((event) => event._id === id);
+        // this.events[eventIndex].images.splice(index, 1);
         return response;
       }),
       catchError((err: any) => {

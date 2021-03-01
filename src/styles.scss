@@ -113,9 +113,9 @@ h5 {
     display: block;
     background-color: #05bae3;
     font-size: 2rem;
-    width: 100px;
-    height: 3px;
-    margin: 30px auto 0;
+    width: 7.5rem;
+    height: 0.1875rem;
+    margin: 1.5rem auto 0;
   }
 }
 
@@ -249,7 +249,39 @@ h5 {
 }
 
 .comment-bottom-sheet {
+  // margin-left: 465px !important;
+  position: absolute;
+  bottom: 0px;
+  width: 25rem;
+  right: calc(50vw - 12.5rem);
   overflow: hidden !important;
+  min-width: 0% !important;
+  z-index: 0 !important;
+
+  @media screen and (max-width: 900px) {
+    width: 24rem;
+    right: calc(50vw - 12rem);
+  }
+
+  @media screen and (max-width: 767px) {
+    width: 23rem;
+    right: calc(50vw - 11.5rem);
+  }
+
+  @media screen and (max-width: 600px) {
+    width: 22rem;
+    right: calc(50vw - 11rem);
+  }
+
+  @media screen and (max-width: 400px) {
+    width: 20rem;
+    right: calc(50vw - 10rem);
+  }
+
+  @media screen and (max-width: 320px) {
+    right: 0%;
+    width: 100%;
+  }
 }
 
 .on-mobile {
@@ -270,7 +302,7 @@ h5 {
   }
 }
 
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 900px) {
   .image-croper {
     left: auto !important;
     width: auto !important;

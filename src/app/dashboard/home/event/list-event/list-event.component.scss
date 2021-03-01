@@ -1,5 +1,55 @@
 $primary-color: #05bae3;
 
+.create-event {
+  width: auto;
+  height: 2.5rem;
+
+  .btn-create-event {
+    text-decoration: none;
+    position: fixed;
+    display: inline-flex;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 9999;
+    font-size: 1.25rem;
+    text-align: center;
+    align-items: center;
+    outline: none;
+    background-color: #07bae3;
+    color: #fff;
+    cursor: pointer;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0rem;
+    border-radius: 2.5rem;
+    overflow: hidden;
+    transition: all 0.25s;
+
+    .icon {
+      padding: 0 0.875rem;
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    .text {
+      white-space: nowrap;
+      display: none;
+      font-size: 1rem;
+      padding-right: 0.875rem;
+    }
+  }
+
+  .btn-create-event:hover {
+    width: 9.5rem;
+    transform: scale(1.025);
+
+    .text {
+      display: inline;
+    }
+  }
+}
+
 .event-list {
   width: 100%;
 }

@@ -33,8 +33,6 @@ export class SaveEventComponent implements OnInit, OnDestroy {
   eventImageFiles: File[];
   eventImagePreview: string[];
 
-  eventImage: EventImageModel[];
-
   states: any[];
   cities: any[];
   city: any;
@@ -60,7 +58,6 @@ export class SaveEventComponent implements OnInit, OnDestroy {
 
     this.eventImageFiles = [];
     this.eventImagePreview = [];
-    this.eventImage = [];
 
     const id = this.eventService.getEventId();
 
@@ -145,8 +142,6 @@ export class SaveEventComponent implements OnInit, OnDestroy {
 
           this.changeCity(event.city);
 
-          this.eventImage = event.images;
-
           this.form.get('sport').disable();
           this.form.get('registrationType').disable();
           this.form.get('fees').disable();
@@ -203,8 +198,12 @@ export class SaveEventComponent implements OnInit, OnDestroy {
   }
 
   deleteImage(id: string, imageId: string, i: number) {
+    this.loading = true;
+    console.log(id, i);
     this.eventService.deleteEventImage(id, imageId, i).subscribe(
       (res: any) => {
+        console.log(res, i, this.event.images.length);
+        this.event.images.splice(i, 1);
         this.loading = false;
       },
       (error: any) => {
@@ -258,7 +257,7 @@ export class SaveEventComponent implements OnInit, OnDestroy {
             this.form.reset();
           } else {
             this.event = resEvent;
-            this.eventImage = resEvent.images;
+            this.event.images = resEvent.images;
           }
           this.savingRecord = false;
           this.eventImageFiles = [];

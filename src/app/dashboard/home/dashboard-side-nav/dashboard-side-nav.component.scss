@@ -24,6 +24,7 @@ $grey-color: #838383;
       width: 100%;
     }
   }
+
   .profile-image {
     position: absolute;
     width: 5rem;
@@ -41,6 +42,7 @@ $grey-color: #838383;
 
   .profile-details-container {
     text-align: center;
+
     h2 {
       margin-bottom: 0rem;
       font-weight: 600;
@@ -54,9 +56,9 @@ $grey-color: #838383;
         display: block;
         background-color: $primary-color;
         font-size: 2rem;
-        width: 30px;
-        height: 1.5px;
-        margin: 4px auto 0;
+        width: 3rem;
+        height: 0.125rem;
+        margin: 0.25rem auto 0;
       }
     }
 
@@ -98,21 +100,47 @@ $grey-color: #838383;
 
   mat-expansion-panel {
     margin-top: 1rem;
-
-    border-radius: 0rem;
+    border-radius: 0.125rem;
 
     mat-expansion-panel-header {
       background-color: $primary-color;
       color: white;
+
       &:hover {
         background-color: darken($primary-color, 5%);
       }
     }
+
     ::ng-deep .mat-expansion-indicator:after {
       color: white !important;
     }
+
     ::ng-deep .mat-expansion-panel-body {
       padding: 0;
     }
+  }
+}
+
+@media only screen and(max-width:900px) {
+  .options-bar {
+    font-size: 95%;
+  }
+}
+
+@media only screen and(max-width:767px) {
+  .options-bar {
+    font-size: 95%;
+  }
+}
+
+@media only screen and(max-width:600px) {
+  .options-bar {
+    font-size: 90%;
+  }
+}
+
+@media only screen and(max-width:400px) {
+  .options-bar {
+    font-size: 80%;
   }
 }

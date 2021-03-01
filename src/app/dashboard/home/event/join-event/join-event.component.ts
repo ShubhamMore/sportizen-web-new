@@ -22,6 +22,7 @@ export class JoinEventComponent implements OnInit, OnDestroy {
 
   constructor(
     private eventService: EventService,
+    private _userProfileService: UserProfileService,
     private eventTeamRegistrationService: EventTeamRegistrationService,
     private eventPlayerRegistrationService: EventPlayerRegistrationService,
     private userProfileService: UserProfileService,
@@ -124,6 +125,21 @@ export class JoinEventComponent implements OnInit, OnDestroy {
     });
   }
 
+  getRegistrations(registrations: any[]) {
+    if (registrations.length > 6) {
+      return registrations.slice(0, 6);
+    }
+    return registrations;
+  }
+
+  viewProfile(id: string) {
+    if (id === this._userProfileService.getProfile().sportizenId) {
+      this.router.navigate(['/dashboard', 'profile'], { relativeTo: this.route });
+    } else {
+      this.router.navigate(['/dashboard', 'profile', id], { relativeTo: this.route });
+    }
+  }
+
   private addTeamMember(teamMember: any) {
     const teamMembers = this.getTeamMembers();
     teamMembers.push(this.newTeamMember(teamMember));
@@ -160,6 +176,7 @@ export class JoinEventComponent implements OnInit, OnDestroy {
         this.eventPlayerRegistrationService.registerPlayer(joinEventData).subscribe(
           (res: any) => {
             this.event.registration = res;
+            this.router.navigate(['../'], { relativeTo: this.route });
           },
           (error: any) => {}
         );
@@ -175,13 +192,16 @@ export class JoinEventComponent implements OnInit, OnDestroy {
         this.eventTeamRegistrationService.registerTeam(joinEventData).subscribe(
           (res: any) => {
             this.event.registration = res;
+            this.router.navigate(['../'], { relativeTo: this.route });
           },
           (error: any) => {}
         );
       } else {
         joinEventData._id = this.event.registration._id;
         this.eventTeamRegistrationService.updateTeamRegistration(joinEventData).subscribe(
-          (res: any) => {},
+          (res: any) => {
+            this.router.navigate(['../'], { relativeTo: this.route });
+          },
           (error: any) => {}
         );
       }

@@ -1,3 +1,4 @@
+import { environment } from './../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -28,7 +29,7 @@ import { LoginAuthGuard } from './authentication/auth/guards/login.auth.guard';
     AuthenticationModule,
     DashboardModule,
     AppRoutingModule,
-    // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [LoginAuthGuard, Validator],
   bootstrap: [AppComponent],

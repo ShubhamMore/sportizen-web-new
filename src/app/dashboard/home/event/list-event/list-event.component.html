@@ -1,3 +1,10 @@
+<span class="create-event">
+  <a class="btn-create-event shadow-sm" routerLink="/dashboard/event/new">
+    <span class="icon">+</span>
+    <span class="text">Create Event</span>
+  </a>
+</span>
+
 <div class="event-list">
   <div class="row events-container">
     <div class="col-12">
@@ -161,7 +168,7 @@
                   </div>
                 </div>
 
-                <div class="border-box border-box-date">
+                <div class="border-box border-box-date" *ngIf="event.time">
                   <div class="bold-text">Time :</div>
                   <div>
                     <i class="fa fa-clock-o icon-blue"></i>

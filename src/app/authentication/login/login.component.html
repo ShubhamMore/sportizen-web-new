@@ -1,8 +1,8 @@
-<div class="login-container">
-  <form class="login-form-container" (submit)="login()" [formGroup]="form">
+<div class="auth-container">
+  <form class="auth-form-container" (submit)="login()" [formGroup]="form">
     <h1>login</h1>
 
-    <h5>Welcome back! Please login to your account</h5>
+    <h5>Welcome back! Please Login to Your Account</h5>
 
     <div class="row">
       <div class="col-md-12">
@@ -40,44 +40,45 @@
       </div>
     </div>
 
-    <div class="row pt-5">
-      <div class="col-md-12">
+    <div class="row">
+      <div class="col-12 auth-action-container">
         <div class="remember-me">
           <mat-checkbox>Remember me</mat-checkbox>
         </div>
-
         <div class="forgot-password">
-          <a routerLink="/forgotPassword">Forgot Password</a>
+          <a routerLink="/forgot-password">Forgot Password</a>
         </div>
-      </div>
-    </div>
-
-    <div class="pt-5">
-      <div class="w-50 d-inline-block">
-        <button type="submit" mat-raised-button color="primary" class="login-btn">Login</button>
-      </div>
-
-      <div class="w-50 d-inline-block">
-        <button
-          type="button"
-          mat-stroked-button
-          color="primary"
-          class="login-btn"
-          routerLink="/register"
-        >
-          Sign Up
-        </button>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-12 auth-btn-container">
+        <div class="login-btn-container">
+          <button type="submit" mat-raised-button color="primary" class="auth-btn">Login</button>
+        </div>
+
+        <div class="signup-btn-container">
+          <button
+            type="button"
+            mat-stroked-button
+            color="primary"
+            class="auth-btn"
+            routerLink="/register"
+          >
+            Sign Up
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 or-container">
         <span class="bold-text">OR</span>
       </div>
     </div>
 
-    <div class="row pb-3">
-      <div class="col-md-12">
+    <div class="row">
+      <div class="col-12 google-btn-container">
         <div class="google-btn" (click)="signInWithGoogle()">
           <div class="google-icon-wrapper">
             <img
@@ -86,11 +87,11 @@
             />
           </div>
 
-          <p class="btn-text"><b>Sign in with google</b></p>
+          <span class="btn-text"><strong>Sign in with google</strong></span>
         </div>
       </div>
     </div>
   </form>
 
-  <div class="login-container-image"></div>
+  <div class="auth-container-image"></div>
 </div>
