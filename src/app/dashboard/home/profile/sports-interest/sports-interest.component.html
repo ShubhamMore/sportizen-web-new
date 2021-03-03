@@ -1,25 +1,27 @@
-<div class="backdrop" (close)="onClose()"></div>
+<div class="backdrop" (click)="onClose()"></div>
+
 <div class="sports-interest">
   <span class="float-right btn-close" (click)="onClose()">X</span>
 
   <h3 class="text-center">Select Your Sports Interest</h3>
 
-  <hr />
-
-  <span *ngFor="let curSport of sports">
-    <button
-      class="btn btn-sports-interest"
-      [ngClass]="!isSportsInterest(curSport._id) ? 'btn-outline-info' : 'btn-info'"
+  <mat-chip-list>
+    <mat-chip
+      *ngFor="let curSport of sports"
+      class="btn-sports-interest"
+      [ngClass]="!isSportsInterest(curSport._id) ? 'btn-sports-outline' : 'btn-sports'"
       (click)="toggleSportsInterest(curSport._id)"
     >
-      <span> {{ curSport.sport }}&nbsp;&nbsp;</span>
-      <i class="fa" [ngClass]="!isSportsInterest(curSport._id) ? 'fa-plus' : 'fa-minus'"></i>
-    </button>
-  </span>
+      {{ curSport.sport }}
+      <mat-icon class="icon">
+        {{ !isSportsInterest(curSport._id) ? 'add' : ' remove' }}
+      </mat-icon>
+    </mat-chip>
+  </mat-chip-list>
 
   <hr />
 
   <div class="sports-interest-actions">
-    <button class="btn btn-primary" (click)="onSave()">Save</button>
+    <button mat-raised-button class="btn-save" color="primary" (click)="onSave()">Save</button>
   </div>
 </div>

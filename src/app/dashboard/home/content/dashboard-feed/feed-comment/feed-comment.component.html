@@ -20,7 +20,7 @@
           </div>
 
           <div class="user-sub-details">
-            <div class="name">{{ singleComment.name }}</div>
+            <div class="name">{{ singleComment.name | capitalizeEachWord }}</div>
 
             <div class="comment-time">
               <i class="fa fa-clock-o icon-blue mr-2"></i>{{ singleComment.createdAt | amTimeAgo }}
@@ -107,7 +107,7 @@
                 </div>
 
                 <div class="reply-user-sub-details">
-                  <div class="name">{{ singleReplyComment.name }}</div>
+                  <div class="name">{{ singleReplyComment.name | capitalizeEachWord }}</div>
 
                   <div class="comment-time">
                     <i class="fa fa-clock-o icon-blue mr-2"></i>

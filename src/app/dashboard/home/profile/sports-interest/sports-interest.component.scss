@@ -9,76 +9,255 @@ $grey-color: #838383;
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.75);
-  z-index: 50;
+  z-index: 9998;
 }
 
 .sports-interest {
-  position: fixed;
-  top: 30vh;
-  left: 25vw;
-  width: 50vw;
-  padding: 1rem;
-  z-index: 100;
-  background: #fff;
-  // box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.25);
+  position: absolute;
+  width: 30rem;
+  height: auto;
   overflow-y: scroll;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  padding: 1rem;
+  z-index: 9999;
+  background: #fff;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.25);
   border-radius: 0.5rem;
-}
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 
-.sports-interest-actions {
-  text-align: right;
-}
+  h3 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
 
-.btn-sports-interest {
-  margin: 0.15rem;
-  border-radius: 2rem;
-}
+  .btn-close {
+    font-weight: bold;
+    cursor: pointer;
+  }
 
-.btn-info {
-  background-color: $primary-color;
-}
+  .btn-sports-interest {
+    font-size: 1rem;
+    cursor: pointer;
 
-.btn-outline-info:hover {
-  background-color: $primary-color;
-}
+    .icon {
+      margin-left: 0.5rem;
+      height: 1.25rem;
+      width: 1.25rem;
+      font-size: 1.25rem;
+    }
+  }
 
-.btn-close {
-  cursor: pointer;
-}
+  .btn-sports {
+    background-color: $primary-color;
+    color: #fff;
+  }
 
-/* Small tablets to big tablets 768px - 1023px */
-@media only screen and (max-width: 1023px) {
-  .sports-interest {
-    top: 25vh;
-    left: 20vw;
-    width: 60vw;
+  .btn-sports-outline {
+    background-color: #fff;
+    border: 1px solid $secondary-color;
+    color: #075492;
+  }
+
+  hr {
+    margin: 1rem 0;
+    background-color: #05bae3;
+    color: #05bae3;
+  }
+
+  .sports-interest-actions {
+    margin-top: 1rem;
+    text-align: right;
+
+    .btn-save {
+      width: 6rem !important;
+      height: 2rem !important;
+      font-size: 1rem;
+      line-height: 1rem;
+      padding: 0rem 2rem !important;
+      border-radius: 2rem !important;
+    }
   }
 }
 
-/* Small Phones to small tablets 481px - 767px */
+@media only screen and (max-width: 900px) {
+  .sports-interest {
+    width: 27.5rem;
+    padding: 0.875rem;
+    border-radius: 0.4375rem;
+
+    h3 {
+      font-size: 0.95rem;
+      margin-bottom: 0.875rem;
+    }
+
+    .btn-close {
+      font-size: 0.95rem;
+    }
+
+    .btn-sports-interest {
+      font-size: 0.95rem;
+
+      .icon {
+        margin-left: 0.4325rem;
+        height: 1.1875rem;
+        width: 1.1875rem;
+        font-size: 1.1875rem;
+      }
+    }
+
+    hr {
+      margin: 0.875rem 0;
+    }
+
+    .sports-interest-actions {
+      margin-top: 0.875rem;
+
+      .btn-save {
+        width: 5.5rem !important;
+        height: 1.875rem !important;
+        font-size: 0.9375rem;
+        line-height: 0.9375rem;
+        padding: 0rem 1.75rem !important;
+        border-radius: 1.875rem !important;
+      }
+    }
+  }
+}
+
 @media only screen and (max-width: 767px) {
   .sports-interest {
-    top: 20vh;
-    left: 15vh;
-    width: 70vw;
+    width: 25rem;
+    padding: 0.75rem;
+    border-radius: 0.375rem;
+
+    h3 {
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .btn-close {
+      font-size: 0.9rem;
+    }
+
+    .btn-sports-interest {
+      font-size: 0.9rem;
+
+      .icon {
+        margin-left: 0.375rem;
+        height: 1.125rem;
+        width: 1.125rem;
+        font-size: 1.125rem;
+      }
+    }
+
+    hr {
+      margin: 0.75rem 0;
+    }
+
+    .sports-interest-actions {
+      margin-top: 0.75rem;
+
+      .btn-save {
+        width: 5rem !important;
+        height: 1.75rem !important;
+        font-size: 0.875rem;
+        line-height: 0.875rem;
+        padding: 0rem 1.5rem !important;
+        border-radius: 1.75rem !important;
+      }
+    }
   }
 }
 
-/* Small Phones 301px - 480px */
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 600px) {
   .sports-interest {
-    top: 15vh;
-    left: 10vw;
-    width: 80vw;
+    width: 22.5rem;
+    padding: 0.625rem;
+    border-radius: 0.3125rem;
+
+    h3 {
+      font-size: 0.85rem;
+      margin-bottom: 0.625rem;
+    }
+
+    .btn-close {
+      font-size: 0.85rem;
+    }
+
+    .btn-sports-interest {
+      font-size: 0.85rem;
+
+      .icon {
+        margin-left: 0.3125rem;
+        height: 1.0625rem;
+        width: 1.0625rem;
+        font-size: 1.0625rem;
+      }
+    }
+
+    hr {
+      margin: 0.625rem 0;
+    }
+
+    .sports-interest-actions {
+      margin-top: 0.625rem;
+
+      .btn-save {
+        width: 4.5rem !important;
+        height: 1.625rem !important;
+        font-size: 0.8125rem;
+        line-height: 0.8125rem;
+        padding: 0rem 1.25rem !important;
+        border-radius: 1.625rem !important;
+      }
+    }
   }
 }
 
-/* Small Phones 0px - 300px */
-@media only screen and (max-width: 300px) {
+@media only screen and (max-width: 400px) {
   .sports-interest {
-    top: 10vh;
-    left: 5vw;
-    width: 90vw;
+    width: 20rem;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+
+    h3 {
+      font-size: 0.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .btn-close {
+      font-size: 0.8rem;
+    }
+
+    .btn-sports-interest {
+      font-size: 0.8rem;
+
+      .icon {
+        margin-left: 0.25rem;
+        height: 1rem;
+        width: 1rem;
+        font-size: 1rem;
+      }
+    }
+
+    hr {
+      margin: 0.5rem 0;
+    }
+
+    .sports-interest-actions {
+      margin-top: 0.5rem;
+
+      .btn-save {
+        width: 4rem !important;
+        height: 1.5rem !important;
+        font-size: 0.75rem;
+        line-height: 0.75rem;
+        padding: 0rem 1rem !important;
+        border-radius: 1.5rem !important;
+      }
+    }
   }
 }

@@ -1,10 +1,11 @@
 <div class="profile-details-container">
   <div class="cover-photo-container">
-    <div class="edit-cover-photo-btn" (click)="coverPicPicker.click()">
-      <i class="fa fa-edit mr-1"></i>Edit Cover Picture
-    </div>
+    <input type="file" #coverImagePicker (change)="onImagePicked($event, true)" />
 
-    <input type="file" #coverPicPicker (change)="onImagePicked($event, true)" />
+    <div class="edit-cover-photo-btn" (click)="coverImagePicker.click()">
+      <i class="fa fa-edit"></i>
+      &nbsp;Edit Cover Picture
+    </div>
 
     <img
       class="cover-photo"
@@ -13,55 +14,61 @@
     />
 
     <div class="profile-image">
-      <input type="file" #profilePicPicker (change)="onImagePicked($event, false)" />
+      <div class="edit-img-container">
+        <input type="file" #profileImagePicker (change)="onImagePicked($event, false)" />
 
-      <div class="edit-img-container mx-auto">
         <img [src]="profileImagePreview" onerror="this.src='../../../../assets/images/user.png'" />
 
-        <div class="overlay">
-          <span class="icon" title="User Profile" (click)="profilePicPicker.click()">
-            <i class="fa fa-pencil"></i>
-          </span>
+        <div class="edit-image-icon" (click)="profileImagePicker.click()">
+          <i class="fa fa-camera" aria-hidden="true"></i>
         </div>
       </div>
     </div>
 
-    <div class="profile-name">{{ userProfile.name }}</div>
+    <div class="profile-name">{{ userProfile.name | capitalizeEachWord }}</div>
+  </div>
 
-    <div class="edit-profile-btn float-right">
-      <button mat-raised-button color="primary" class="semi-rounded-btn" (click)="editProfile()">
-        <i class="fa fa-edit mr-2"></i>
-        Edit Profile
-      </button>
-    </div>
+  <div class="edit-profile-btn float-right">
+    <button mat-raised-button color="primary" class="semi-rounded-btn" (click)="editProfile()">
+      <i class="fa fa-edit"></i>
+      <span class="edit-profile-text">&nbsp;Edit Profile</span>
+    </button>
   </div>
 
   <div class="profile-info-container">
     <div class="row">
       <div class="col-md-5">
-        <mat-card class="custom-card">
+        <mat-card class="user-info-card">
           <mat-card-header>
-            <mat-card-title class="intro-section-title">
-              <span>Intro Section</span>
-              <span class="float-right">
+            <mat-card-title>
+              <span class="header-title">About Me</span>
+              <span class="float-right pointer">
                 <i class="fa fa-edit" *ngIf="!storyEdit" (click)="editStory()"></i>
                 <i class="fa fa-save" *ngIf="storyEdit" (click)="saveStory()"></i>
               </span>
             </mat-card-title>
           </mat-card-header>
-
           <mat-card-content>
-            <mat-form-field class="full-width" *ngIf="storyEdit">
+            <mat-form-field class="edit-profile-story" *ngIf="storyEdit">
               <textarea rows="4" maxlength="500" matInput [(ngModel)]="story"></textarea>
             </mat-form-field>
-            <span *ngIf="!storyEdit">{{ userProfile.story }}</span>
+            <p *ngIf="!storyEdit" class="profile-info">
+              {{ userProfile.story }} Lorem Ipsum is simply dummy text of the printing and
+              typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever
+              since the 1500s, when an unknown printer took a galley of type and scrambled it to
+              make a type specimen book. It has survived not only five centuries, but also the leap
+              into electronic typesetting, remaining essentially unchanged. It was popularised in
+              the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and
+              more recently with desktop publishing software like Aldus PageMaker including versions
+              of Lorem Ipsum.
+            </p>
           </mat-card-content>
         </mat-card>
 
-        <mat-card class="custom-card mt-4">
+        <mat-card class="user-info-card">
           <mat-card-header>
             <mat-card-title>
-              <span>Photos</span>
+              <span class="header-title">Photos</span>
               <span class="float-right">
                 <div class="header-btn">See All</div>
               </span>
@@ -69,168 +76,122 @@
           </mat-card-header>
 
           <mat-card-content>
-            <div class="row photos-container">
-              <div class="col-md-4 photo-box">
-                <img class="photo" src="https://picsum.photos/200" />
-              </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="photos-container">
+                  <div class="photo-box">
+                    <img class="photo" src="https://picsum.photos/200" />
+                  </div>
 
-              <div class="col-md-4 photo-box">
-                <img class="photo" src="https://picsum.photos/200" />
-              </div>
+                  <div class="photo-box">
+                    <img class="photo" src="https://picsum.photos/200" />
+                  </div>
 
-              <div class="col-md-4 photo-box">
-                <img class="photo" src="https://picsum.photos/200" />
-              </div>
+                  <div class="photo-box">
+                    <img class="photo" src="https://picsum.photos/200" />
+                  </div>
 
-              <div class="col-md-4 photo-box">
-                <img class="photo" src="https://picsum.photos/200" />
+                  <div class="photo-box">
+                    <img class="photo" src="https://picsum.photos/200" />
+                  </div>
+                </div>
               </div>
             </div>
           </mat-card-content>
         </mat-card>
 
-        <mat-card class="custom-card mt-4">
+        <mat-card class="user-info-card">
           <mat-card-header>
             <mat-card-title>
-              <span>621 Followers</span>
-              <span class="float-right">
-                <div class="header-btn">
-                  <i class="fa fa-plus"></i>
-                  Add Friends
-                </div>
-              </span>
+              <span class="header-title">632 Followers</span>
             </mat-card-title>
           </mat-card-header>
-
           <mat-card-content
             ><div class="row">
-              <div class="col-md-6">
+              <div class="col-12">
                 <div class="friend-mini-card">
                   <img class="friend-mini-photo" src="https://picsum.photos/200" />
-
                   <div class="friend-mini-details">
                     <div class="friend-mini-name">John Doe</div>
-                    <div class="friend-mini-mutual-info">8 mutual friends</div>
+                    <div class="friend-mini-mutual-info">999 mutual friends</div>
                     <div class="friend-mini-btn">Unfollow</div>
                   </div>
-
-                  <div class="clearfix"></div>
                 </div>
-              </div>
 
-              <div class="col-md-6">
                 <div class="friend-mini-card">
                   <img class="friend-mini-photo" src="https://picsum.photos/200" />
-
                   <div class="friend-mini-details">
                     <div class="friend-mini-name">John Doe</div>
-                    <div class="friend-mini-mutual-info">8 mutual friends</div>
+                    <div class="friend-mini-mutual-info">999 mutual friends</div>
                     <div class="friend-mini-btn">Unfollow</div>
                   </div>
-
-                  <div class="clearfix"></div>
                 </div>
-              </div>
 
-              <div class="col-md-6">
                 <div class="friend-mini-card">
                   <img class="friend-mini-photo" src="https://picsum.photos/200" />
-
                   <div class="friend-mini-details">
                     <div class="friend-mini-name">John Doe</div>
-                    <div class="friend-mini-mutual-info">8 mutual friends</div>
+                    <div class="friend-mini-mutual-info">999 mutual friends</div>
                     <div class="friend-mini-btn">Unfollow</div>
                   </div>
-
-                  <div class="clearfix"></div>
                 </div>
-              </div>
 
-              <div class="col-md-6">
                 <div class="friend-mini-card">
                   <img class="friend-mini-photo" src="https://picsum.photos/200" />
-
                   <div class="friend-mini-details">
                     <div class="friend-mini-name">John Doe</div>
-                    <div class="friend-mini-mutual-info">8 mutual friends</div>
+                    <div class="friend-mini-mutual-info">999 mutual friends</div>
                     <div class="friend-mini-btn">Unfollow</div>
                   </div>
-
-                  <div class="clearfix"></div>
                 </div>
               </div>
             </div>
           </mat-card-content>
         </mat-card>
 
-        <mat-card class="custom-card mt-4">
+        <mat-card class="user-info-card">
           <mat-card-header>
             <mat-card-title>
-              <span>632 Following</span>
-              <span class="float-right">
-                <div class="header-btn">
-                  <i class="fa fa-plus"></i>
-                  Add Friends
-                </div>
-              </span>
+              <span class="header-title">632 Followings</span>
             </mat-card-title>
           </mat-card-header>
-
-          <mat-card-content>
-            <div class="row">
-              <div class="col-md-6">
+          <mat-card-content
+            ><div class="row">
+              <div class="col-12">
                 <div class="friend-mini-card">
                   <img class="friend-mini-photo" src="https://picsum.photos/200" />
-
                   <div class="friend-mini-details">
-                    <div class="friend-mini-name">John Doe</div>
+                    <div class="friend-mini-name">Krishnamurti Vishwakarma</div>
                     <div class="friend-mini-mutual-info">8 mutual friends</div>
                     <div class="friend-mini-btn">Unfollow</div>
                   </div>
-
-                  <div class="clearfix"></div>
                 </div>
-              </div>
 
-              <div class="col-md-6">
                 <div class="friend-mini-card">
                   <img class="friend-mini-photo" src="https://picsum.photos/200" />
-
                   <div class="friend-mini-details">
                     <div class="friend-mini-name">John Doe</div>
                     <div class="friend-mini-mutual-info">8 mutual friends</div>
                     <div class="friend-mini-btn">Unfollow</div>
                   </div>
-
-                  <div class="clearfix"></div>
                 </div>
-              </div>
 
-              <div class="col-md-6">
                 <div class="friend-mini-card">
                   <img class="friend-mini-photo" src="https://picsum.photos/200" />
-
                   <div class="friend-mini-details">
                     <div class="friend-mini-name">John Doe</div>
                     <div class="friend-mini-mutual-info">8 mutual friends</div>
                     <div class="friend-mini-btn">Unfollow</div>
                   </div>
-
-                  <div class="clearfix"></div>
                 </div>
-              </div>
 
-              <div class="col-md-6">
                 <div class="friend-mini-card">
                   <img class="friend-mini-photo" src="https://picsum.photos/200" />
-
                   <div class="friend-mini-details">
                     <div class="friend-mini-name">John Doe</div>
                     <div class="friend-mini-mutual-info">8 mutual friends</div>
                     <div class="friend-mini-btn">Unfollow</div>
                   </div>
-
-                  <div class="clearfix"></div>
                 </div>
               </div>
             </div>

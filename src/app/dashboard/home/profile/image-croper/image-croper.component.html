@@ -1,7 +1,11 @@
-<div class="backdrop" (close)="onClose()"></div>
+<div class="backdrop" (click)="onClose()"></div>
+
 <div class="image-croper">
-  <span class="float-right btn-close" (click)="onClose()"><i class="fa fa-times"></i></span>
-  <h3 class="text-center">Fit Your Image</h3>
+  <span class="float-right pointer" (click)="onClose()">
+    <i class="fa fa-times"></i>
+  </span>
+
+  <h3>Fit Your Image</h3>
 
   <image-cropper
     class="image-cropper"
@@ -14,10 +18,8 @@
   >
   </image-cropper>
 
-  <hr />
-
   <div class="image-croper-actions">
-    <button mat-raised-button class="rounded-btn" color="primary" (click)="onCrop()">
+    <button mat-raised-button class="btn-save" color="primary" (click)="onCrop()">
       {{ savedBtnName }}
     </button>
   </div>

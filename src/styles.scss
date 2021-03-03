@@ -303,14 +303,29 @@ h5 {
 }
 
 @media only screen and (max-width: 900px) {
-  .image-croper {
-    left: auto !important;
-    width: auto !important;
-  }
 }
 
 @media only screen and (max-width: 480px) {
   .container {
     padding: 0 !important;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  /*--SCROLL BAR--*/
+  /* width */
+  ::-webkit-scrollbar {
+    width: 0.125rem; // 4.8px
+    height: 0.125rem;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    border-radius: 0.25rem; //9.6px
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    border-radius: 0.25rem; // 9.6px
   }
 }

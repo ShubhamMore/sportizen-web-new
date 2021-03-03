@@ -1,9 +1,9 @@
 import { Validator } from '../../../../@shared/validators';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SportService } from '../../../../services/sport.service';
 import { SportModel } from '../../../../models/sport.model';
 import { environment } from '../../../../../environments/environment';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder, NgForm } from '@angular/forms';
 import { UserProfileModel } from '../../../../models/user-profile.model';
 import { UserProfileService } from '../../../../services/user-profile.service';
 import { EncryptService } from '../../../../services/shared-services/encrypt.service';
@@ -18,6 +18,8 @@ import { DashboardSideDrawerService } from '../../../../services/dashboard-side-
   styleUrls: ['./save-profile.component.scss'],
 })
 export class SaveProfileComponent implements OnInit {
+  @ViewChild('changePasswordFormDirective') private changePasswordFormDirective: NgForm;
+
   form: FormGroup;
   changePasswordForm: FormGroup;
 
@@ -61,13 +63,17 @@ export class SaveProfileComponent implements OnInit {
     this.interestedSports = this.userProfile.sportsInterest;
     this.getInterestSports();
     this.form = new FormGroup({
+      firstName: new FormControl(this.userProfile.name.split(' ')[0], {
+        validators: [Validators.required],
+      }),
+      lastName: new FormControl(this.userProfile.name.split(' ')[1], {
+        validators: [Validators.required],
+      }),
       birthDate: new FormControl(new Date(this.userProfile.birthDate), {
         validators: [Validators.required],
       }),
       gender: new FormControl(this.userProfile.gender, { validators: [Validators.required] }),
-      name: new FormControl(this.userProfile.name, { validators: [Validators.required] }),
       story: new FormControl(this.userProfile.story, {}),
-      userName: new FormControl(this.userProfile.name, { validators: [Validators.required] }),
       emailId: new FormControl(this.userProfile.email, {
         validators: [Validators.required, Validators.email],
       }),
@@ -76,7 +82,7 @@ export class SaveProfileComponent implements OnInit {
       }),
     });
 
-    this.changePasswordForm = this.formBuilder.group(
+    this.changePasswordForm = new FormGroup(
       {
         oldPassword: new FormControl(null, {}),
         password: new FormControl(null, {
@@ -185,14 +191,17 @@ export class SaveProfileComponent implements OnInit {
       this.loading = true;
       const profile = new FormData();
       profile.append('_id', this.userProfile._id);
+      profile.append('name', this.form.value.firstName + ' ' + this.form.value.lastName);
       profile.append('birthDate', this.form.value.birthDate);
       profile.append('story', this.form.value.story);
       profile.append('phoneNo', this.form.value.phoneNo);
       profile.append('gender', this.form.value.gender);
       profile.append('sportsInterest', this.interestedSports.join(','));
+
       if (this.profileImage) {
         profile.append('profileImage', this.profileImage);
       }
+
       this.userProfileService.saveProfile(profile).subscribe(
         (updatedUserProfile: UserProfileModel) => {
           this.userProfileService.setProfile(updatedUserProfile);
@@ -210,8 +219,6 @@ export class SaveProfileComponent implements OnInit {
 
   changePassword() {
     if (this.form.valid && !this.form.hasError('invalidPassword')) {
-      this.loading = true;
-
       const data = { api: '', data: {} };
       if (this.userProfile.userProvider === 'SPORTIZEN') {
         data.api = 'changePassword';
@@ -230,7 +237,7 @@ export class SaveProfileComponent implements OnInit {
 
       this.httpService.httpPost(data).subscribe(
         (res: any) => {
-          this.changePasswordForm.reset();
+          this.changePasswordFormDirective.resetForm();
           this.userProfile.userProvider = 'SPORTIZEN';
           this.userProfileService.setProfile(this.userProfile);
           this.loading = false;

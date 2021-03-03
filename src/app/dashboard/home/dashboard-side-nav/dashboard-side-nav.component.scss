@@ -20,8 +20,9 @@ $grey-color: #838383;
 
     .cover-photo {
       height: 10rem;
-      background-size: cover;
       width: 100%;
+      background-size: cover;
+      object-fit: cover;
     }
   }
 

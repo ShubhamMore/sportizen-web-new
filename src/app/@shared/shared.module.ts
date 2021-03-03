@@ -13,12 +13,14 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { LoadingContentComponent } from './loading-content/loading-content.component';
 
+import { CapitalizeEachWordPipe } from './pipe/capitalize-each-word.pipe';
+
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/local_', '.json');
 }
 
 @NgModule({
-  declarations: [LoadingContentComponent],
+  declarations: [LoadingContentComponent, CapitalizeEachWordPipe],
   imports: [
     CommonModule,
     FormsModule,
@@ -36,6 +38,9 @@ export function createTranslateLoader(http: HttpClient) {
   ],
   exports: [
     LoadingContentComponent,
+
+    CapitalizeEachWordPipe,
+
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

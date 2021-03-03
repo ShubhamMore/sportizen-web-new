@@ -6,25 +6,36 @@ $button-active-blue: #1669f2;
   background-color: #fff;
   height: calc(100vh - 3.75rem);
 
+  position: relative;
+
   .auth-form-container {
-    vertical-align: middle;
+    // vertical-align: baseline;
     padding: 1.5rem 5rem;
     width: 50%;
     text-align: center;
-    float: left;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
 
     h1 {
       text-transform: uppercase;
       font-weight: 800;
-      letter-spacing: 0.75rem;
       font-size: 2rem;
+      letter-spacing: 0.75rem;
+      margin-bottom: 1rem;
     }
 
     h5 {
       font-size: 1rem;
       letter-spacing: 0.125rem;
+      margin-bottom: 1rem;
       font-weight: 400;
       color: #838383;
+
+      &::after {
+        margin: 1.5rem auto 0;
+      }
     }
 
     .auth-btn {
@@ -42,7 +53,9 @@ $button-active-blue: #1669f2;
   }
 
   .auth-container-image {
+    float: right;
     overflow: hidden;
+    width: 50%;
     background-image: linear-gradient(rgba(0, 149, 255, 0.5), rgba(0, 149, 255, 0.5)),
       url('./../../assets/images/login-image.jpg');
     height: calc(100vh - 3.75rem);
@@ -62,8 +75,26 @@ $button-active-blue: #1669f2;
 
 @media only screen and (max-width: 900px) {
   .auth-container {
+    font-size: 98%;
+
     .auth-form-container {
       padding: 1.5rem;
+
+      h1 {
+        font-size: 1.875rem;
+        letter-spacing: 0.6875rem;
+        margin-bottom: 0.875rem;
+      }
+
+      h5 {
+        font-size: 0.9375rem;
+        letter-spacing: 0.1875rem;
+        margin-bottom: 0.875rem;
+
+        &::after {
+          margin: 1.375rem auto 0;
+        }
+      }
 
       .auth-btn {
         padding: 0.5rem 3rem;
@@ -75,8 +106,26 @@ $button-active-blue: #1669f2;
 
 @media only screen and (max-width: 767px) {
   .auth-container {
+    font-size: 95%;
+
     .auth-form-container {
       width: 100%;
+
+      h1 {
+        font-size: 1.75rem;
+        letter-spacing: 0.625rem;
+        margin-bottom: 0.75rem;
+      }
+
+      h5 {
+        font-size: 0.875rem;
+        letter-spacing: 0.1125rem;
+        margin-bottom: 0.75rem;
+
+        &::after {
+          margin: 1.25rem auto 0;
+        }
+      }
     }
   }
 
@@ -86,8 +135,26 @@ $button-active-blue: #1669f2;
 }
 @media only screen and (max-width: 600px) {
   .auth-container {
+    font-size: 90%;
+
     .auth-form-container {
       padding: 1.5rem;
+
+      h1 {
+        font-size: 1.625rem;
+        letter-spacing: 0.6125rem;
+        margin-bottom: 0.625rem;
+      }
+
+      h5 {
+        font-size: 0.8125rem;
+        letter-spacing: 0.10625rem;
+        margin-bottom: 0.625rem;
+
+        &::after {
+          margin: 1.125rem auto 0;
+        }
+      }
 
       .auth-btn {
         padding: 0.5rem 2.5rem;
@@ -99,8 +166,26 @@ $button-active-blue: #1669f2;
 
 @media only screen and (max-width: 400px) {
   .auth-container {
+    font-size: 80%;
+
     .auth-form-container {
       padding: 1.5rem;
+
+      h1 {
+        font-size: 1.5rem;
+        letter-spacing: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      h5 {
+        font-size: 0.75rem;
+        letter-spacing: 0.1rem;
+        margin-bottom: 0.5rem;
+
+        &::after {
+          margin: 1rem auto 0;
+        }
+      }
 
       .auth-btn {
         padding: 0.5rem 2.5rem;

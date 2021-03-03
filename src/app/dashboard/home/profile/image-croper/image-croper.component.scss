@@ -5,72 +5,166 @@
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.75);
-  z-index: 50;
+  z-index: 9998;
 }
 
 .image-croper {
-  position: fixed;
-  top: 25vh;
-  left: 30vw;
-  width: 40vw;
-  max-height: 50vw;
+  position: absolute;
+  width: 30rem;
+  height: auto;
   overflow-y: scroll;
-  padding: 16px;
-  z-index: 100;
+  padding: 1rem;
+  z-index: 9999;
   background: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.25);
   border-radius: 0.5rem;
-}
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 
-.image-cropper {
-  width: auto;
-  height: 15rem;
-}
+  h3 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
 
-.image-croper-actions {
-  text-align: right;
-}
+  .image-cropper {
+    width: auto;
+    max-height: 15rem;
+  }
 
-.btn-crop {
-  margin: 10px;
-}
+  .image-croper-actions {
+    margin-top: 1rem;
+    text-align: right;
 
-.btn-close {
-  cursor: pointer;
-}
-
-/* Small tablets to big tablets 768px - 1023px */
-@media only screen and (max-width: 1023px) {
-  .image-croper {
-    top: 20vh;
-    left: 20vw;
-    width: 60vw;
+    .btn-save {
+      width: 6rem !important;
+      height: 2rem !important;
+      font-size: 1rem;
+      line-height: 1rem;
+      padding: 0rem 2rem !important;
+      border-radius: 2rem !important;
+    }
   }
 }
 
-/* Small Phones to small tablets 481px - 767px */
+@media only screen and (max-width: 900px) {
+  .image-croper {
+    width: 27.5rem;
+    padding: 0.875rem;
+    border-radius: 0.4375rem;
+
+    h3 {
+      font-size: 0.95rem;
+      margin-bottom: 0.875rem;
+    }
+
+    .image-cropper {
+      max-height: 13.75rem;
+    }
+
+    .image-croper-actions {
+      margin-top: 0.875rem;
+
+      .btn-save {
+        width: 5.5rem !important;
+        height: 1.875rem !important;
+        font-size: 0.9375rem;
+        line-height: 0.9375rem;
+        padding: 0rem 1.75rem !important;
+        border-radius: 1.875rem !important;
+      }
+    }
+  }
+}
+
 @media only screen and (max-width: 767px) {
   .image-croper {
-    top: 15vh;
-    left: 15vh;
-    width: 70vw;
+    width: 25rem;
+    padding: 0.75rem;
+    border-radius: 0.375rem;
+
+    h3 {
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .image-cropper {
+      max-height: 12.5rem;
+    }
+
+    .image-croper-actions {
+      margin-top: 0.75rem;
+
+      .btn-save {
+        width: 5rem !important;
+        height: 1.75rem !important;
+        font-size: 0.875rem;
+        line-height: 0.875rem;
+        padding: 0rem 1.5rem !important;
+        border-radius: 1.75rem !important;
+      }
+    }
   }
 }
 
-/* Small Phones 301px - 480px */
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 600px) {
   .image-croper {
-    top: 10vh;
-    left: 10vw;
-    width: 80vw;
+    width: 22.5rem;
+    padding: 0.625rem;
+    border-radius: 0.3125rem;
+
+    h3 {
+      font-size: 0.85rem;
+      margin-bottom: 0.625rem;
+    }
+
+    .image-cropper {
+      max-height: 11.25rem;
+    }
+
+    .image-croper-actions {
+      margin-top: 0.625rem;
+
+      .btn-save {
+        width: 4.5rem !important;
+        height: 1.625rem !important;
+        font-size: 0.8125rem;
+        line-height: 0.8125rem;
+        padding: 0rem 1.25rem !important;
+        border-radius: 1.625rem !important;
+      }
+    }
   }
 }
 
-/* Small Phones 0px - 300px */
-@media only screen and (max-width: 300px) {
+@media only screen and (max-width: 400px) {
   .image-croper {
-    top: 5vh;
-    left: 5vw;
-    width: 90vw;
+    width: 20rem;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+
+    h3 {
+      font-size: 0.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .image-cropper {
+      max-height: 10rem;
+    }
+
+    .image-croper-actions {
+      margin-top: 0.5rem;
+
+      .btn-save {
+        width: 4rem !important;
+        height: 1.5rem !important;
+        font-size: 0.75rem;
+        line-height: 0.75rem;
+        padding: 0rem 1rem !important;
+        border-radius: 1.5rem !important;
+      }
+    }
   }
 }

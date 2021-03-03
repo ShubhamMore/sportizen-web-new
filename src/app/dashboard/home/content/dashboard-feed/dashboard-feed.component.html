@@ -35,7 +35,7 @@
 
       <div class="user-details">
         <div class="profile-name" (click)="viewProfile(post.sportizenUser, i)">
-          <span class="">{{ post.userName }}</span>
+          <span class="">{{ post.userName | capitalizeEachWord }}</span>
         </div>
 
         <div class="modified-time">
@@ -62,7 +62,7 @@
 
           <div class="user-details">
             <div class="profile-name" (click)="viewProfile(post.sharedPost.sportizenUser, i)">
-              <span class=""> {{ post.sharedPost.userName }}</span>
+              <span class=""> {{ post.sharedPost.userName | capitalizeEachWord }}</span>
             </div>
 
             <div class="modified-time">

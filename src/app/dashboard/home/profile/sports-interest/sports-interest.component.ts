@@ -21,6 +21,7 @@ export class SportsInterestComponent implements OnInit {
   }
 
   toggleSportsInterest(id: string) {
+    console.log(this.sportsInterest.includes(id));
     if (this.sportsInterest.includes(id)) {
       const i = this.sportsInterest.indexOf(id);
       this.sportsInterest.splice(i, 1);
