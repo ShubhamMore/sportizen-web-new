@@ -4,7 +4,7 @@ $button-active-blue: #1669f2;
 
 .auth-container {
   background-color: #fff;
-  height: calc(100vh - 3.75rem);
+  height: calc(100vh - 4rem);
 
   position: relative;
 
@@ -58,7 +58,7 @@ $button-active-blue: #1669f2;
     width: 50%;
     background-image: linear-gradient(rgba(0, 149, 255, 0.5), rgba(0, 149, 255, 0.5)),
       url('./../../assets/images/login-image.jpg');
-    height: calc(100vh - 3.75rem);
+    height: calc(100vh - 4rem);
     background-size: cover;
     background-position: left;
     clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%);
@@ -75,6 +75,7 @@ $button-active-blue: #1669f2;
 
 @media only screen and (max-width: 900px) {
   .auth-container {
+    height: calc(100vh - 3.75rem);
     font-size: 98%;
 
     .auth-form-container {
@@ -101,11 +102,16 @@ $button-active-blue: #1669f2;
         border-radius: 1rem;
       }
     }
+
+    .auth-container-image {
+      height: calc(100vh - 3.75rem);
+    }
   }
 }
 
 @media only screen and (max-width: 767px) {
   .auth-container {
+    height: calc(100vh - 3.5rem);
     font-size: 95%;
 
     .auth-form-container {
@@ -135,6 +141,7 @@ $button-active-blue: #1669f2;
 }
 @media only screen and (max-width: 600px) {
   .auth-container {
+    height: calc(100vh - 3.25rem);
     font-size: 90%;
 
     .auth-form-container {
@@ -166,6 +173,7 @@ $button-active-blue: #1669f2;
 
 @media only screen and (max-width: 400px) {
   .auth-container {
+    height: calc(100vh - 3rem);
     font-size: 80%;
 
     .auth-form-container {

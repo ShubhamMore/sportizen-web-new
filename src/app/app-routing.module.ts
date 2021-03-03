@@ -1,3 +1,4 @@
+import { UserAuthGuard } from './authentication/auth/guards/user.auth.guard';
 import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -20,7 +21,7 @@ const appRoutes: Routes = [
       {
         path: 'dashboard',
         loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
-        canActivate: [],
+        canActivate: [UserAuthGuard],
       },
 
       {

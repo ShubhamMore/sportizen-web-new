@@ -32,7 +32,7 @@ export class LoginAuthGuard implements CanActivate {
         } else if (user.userType === 'user') {
           return this.router.createUrlTree(['/dashboard']);
         } else {
-          return this.router.createUrlTree(['/']);
+          return this.router.createUrlTree(['/login']);
         }
       })
       // tap(isAuth => {
