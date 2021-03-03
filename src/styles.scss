@@ -257,7 +257,7 @@ input::-webkit-inner-spin-button {
   }
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 833px) {
   .on-mobile {
     display: block !important;
   }
@@ -265,7 +265,9 @@ input::-webkit-inner-spin-button {
   .on-desktop {
     display: none !important;
   }
+}
 
+@media only screen and (max-width: 767px) {
   /*--SCROLL BAR--*/
   /* width */
   ::-webkit-scrollbar {
