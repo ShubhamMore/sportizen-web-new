@@ -1,5 +1,17 @@
 $primary-color: #05bae3;
 
+.row {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+
+  .col-md-6,
+  .col-12 {
+    margin: 0;
+    padding: 0;
+  }
+}
+
 .events-container {
   padding: 1rem;
 

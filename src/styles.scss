@@ -107,6 +107,15 @@ input::-webkit-inner-spin-button {
   display: table;
 }
 
+.profile-icon {
+  border-radius: 50%;
+
+  img,
+  .profile-image {
+    border-radius: 50%;
+  }
+}
+
 .mat-raised-button {
   color: white !important;
 }

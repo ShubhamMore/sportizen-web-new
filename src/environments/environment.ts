@@ -5,7 +5,6 @@
 export const environment = {
   production: false,
   encKey: 'b417cf7714f5c803ac31ea7ea4ee3a11',
-  // backend: 'https://api.sportizen.in/',
   backend: 'http://127.0.0.1:3000/',
   logo: '../assets/images/sportizen-white.png',
   title: 'SPORTIZEN',

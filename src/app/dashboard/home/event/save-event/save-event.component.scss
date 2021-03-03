@@ -1,3 +1,15 @@
+.row {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+
+  .col-md-6,
+  .col-12 {
+    margin: 0;
+    padding: 0;
+  }
+}
+
 ::ng-deep .mat-card-header-text {
   margin: 0px;
 }
