@@ -16,43 +16,45 @@
     <ng-container *ngIf="!isLoading">
       <mat-option
         *ngFor="let option of filteredOptions"
-        [value]=""
+        [value]="option"
         (click)="viewProfile(option.sportizenId)"
       >
-        <div>
-          <div class="profile-icon mr-2">
-            <img [src]="option.userImageURL" onerror="this.src='../../assets/images/user.png'" />
-          </div>
-
-          <span class="">{{ option.name }}</span>
-
-          <span class="following-tag" *ngIf="option.connectionStatus">
-            ({{ option.connectionStatus }})
-          </span>
-        </div>
+        <img
+          class="profile-icon"
+          aria-hidden
+          [src]="option.userImageURL"
+          [alt]="option.name"
+          onerror="this.src='../../assets/images/user.png'"
+        />
+        <span class="profile-name">{{ option.name | capitalizeEachWord }}</span>
+        <span class="profile-name" *ngIf="option.connectionStatus">|</span>
+        <small class="following-tag" *ngIf="option.connectionStatus">{{
+          option.connectionStatus | capitalizeEachWord
+        }}</small>
       </mat-option>
 
       <mat-option *ngIf="filteredOptions && filteredOptions.length > 0" (click)="allFriends()">
-        <span class="">{{ 'msg_show_all' | translate }}</span>
+        <span class="show-all">{{ 'msg_show_all' | translate }}</span>
       </mat-option>
     </ng-container>
   </mat-autocomplete>
 
   <div
-    class="search-icon-container"
+    class="back-icon-container"
     matTooltipPosition="right"
     matTooltipHideDelay="100"
     matTooltip="Back"
     (click)="toggleSearchBar()"
     *ngIf="minified && isSearchBarOpen"
   >
-    <i class="back-icon fa fa-arrow-circle-left icon-blue" aria-hidden="true"></i>
+    <mat-icon class="back-icon icon-blue">arrow_back</mat-icon>
+    <!-- <i class="back-icon fa fa-arrow-circle-left icon-blue" aria-hidden="true"></i> -->
   </div>
 </div>
 
 <div
   [@searchBarIcon]
-  class="search-icon-container"
+  class="search-icon-container float-right"
   matTooltipPosition="right"
   matTooltipHideDelay="100"
   matTooltip="Search Sportizen"
@@ -60,5 +62,5 @@
   *ngIf="minified && !isSearchBarOpen"
   [ngClass]="minified ? 'on-mobile' : 'on-desktop'"
 >
-  <i class="fa fa-search search-icon mr-2" aria-hidden="true"></i>
+  <i class="fa fa-search search-icon" aria-hidden="true"></i>
 </div>

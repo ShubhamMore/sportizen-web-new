@@ -19,6 +19,7 @@ import { UserProfileService } from './../../../services/user-profile.service';
           width: 100,
         })
       ),
+
       transition('void => *', [
         style({
           opacity: 0,
@@ -26,6 +27,7 @@ import { UserProfileService } from './../../../services/user-profile.service';
         }),
         animate(300),
       ]),
+
       transition('* => void', [
         animate(
           300,
@@ -36,6 +38,7 @@ import { UserProfileService } from './../../../services/user-profile.service';
         ),
       ]),
     ]),
+
     trigger('searchBarIcon', [
       state(
         'in',
@@ -45,6 +48,7 @@ import { UserProfileService } from './../../../services/user-profile.service';
           height: 100,
         })
       ),
+
       transition('void => *', [
         style({
           opacity: 0,
@@ -53,6 +57,7 @@ import { UserProfileService } from './../../../services/user-profile.service';
         }),
         animate(300),
       ]),
+
       transition('* => void', [
         animate(
           300,
@@ -73,7 +78,7 @@ export class SearchBarComponent implements OnInit {
   filteredOptions: any;
 
   myControl = new FormControl();
-  options: string[] = ['One', 'Two', 'Three'];
+  options: any[];
   isLoading: boolean;
   searchKeyWord: string;
   isSearchBarOpen: boolean = false;
@@ -87,11 +92,12 @@ export class SearchBarComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = false;
+    this.options = [];
     this.myControl.valueChanges
       .pipe(
         debounceTime(300),
         tap(() => (this.isLoading = true)),
-        switchMap((value) => {
+        switchMap((value: string) => {
           this.searchKeyWord = value;
           return this.connectionService
             .getSearchResults(value)
@@ -101,12 +107,6 @@ export class SearchBarComponent implements OnInit {
       .subscribe((users: any) => (this.filteredOptions = users));
 
     this.emitSearchBarToggle.emit(true);
-  }
-
-  private _filter(value: any): any {
-    const filterValue = value.toLowerCase();
-
-    return this.options.filter((option: any) => option.toLowerCase().indexOf(filterValue) === 0);
   }
 
   allFriends() {

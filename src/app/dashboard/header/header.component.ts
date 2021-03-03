@@ -22,6 +22,7 @@ import { User } from '../../authentication/auth/auth-model/user.model';
           width: 100,
         })
       ),
+
       transition('void => *', [
         style({
           opacity: 0,
@@ -29,6 +30,7 @@ import { User } from '../../authentication/auth/auth-model/user.model';
         }),
         animate(300),
       ]),
+
       transition('* => void', [
         animate(
           300,

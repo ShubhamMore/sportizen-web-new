@@ -10,6 +10,11 @@ $secondary-color: #075492;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
+  &:focus {
+    outline: none !important;
+    border: 0 !important;
+  }
 }
 
 html,
@@ -34,25 +39,15 @@ body {
   // padding-bottom: 3rem; //48px
 }
 
-.input-error {
-  font-size: 75%;
-  color: #f00;
-}
-
 /* Firefox */
 input[type='number'] {
   -moz-appearance: textfield;
-}
-
-.pointer {
-  cursor: pointer;
 }
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
-  // margin: 0;
 }
 
 .disable-selection {
@@ -87,36 +82,23 @@ input::-webkit-inner-spin-button {
   background: #c1c1c1;
 }
 
+.input-error {
+  font-size: 75%;
+  color: #f00;
+}
+
+/*clickable*/
+.pointer,
+.clickable {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
 .full-width {
   width: 100%;
-}
-
-.mat-raised-button {
-  color: white !important;
-}
-
-.btm-dashed-border {
-  &::after {
-    content: '------------------';
-    display: block;
-    font-size: 2rem;
-    padding-top: 1rem;
-    color: white;
-  }
-}
-
-h5 {
-  text-align: center;
-
-  &::after {
-    content: ' ';
-    display: block;
-    background-color: #05bae3;
-    font-size: 2rem;
-    width: 7.5rem;
-    height: 0.1875rem;
-    margin: 1.5rem auto 0;
-  }
 }
 
 .clearfix::after {
@@ -125,9 +107,8 @@ h5 {
   display: table;
 }
 
-.primary-color-background {
-  background-color: $primary-color;
-  color: white;
+.mat-raised-button {
+  color: white !important;
 }
 
 .rounded-btn {
@@ -142,45 +123,7 @@ h5 {
 
   mat-spinner {
     display: inline-block;
-    left: 10px;
-  }
-}
-
-.custom-card {
-  padding: 0 !important;
-  display: inline-block;
-  border-radius: 0 !important;
-
-  .mat-card-header {
-    background-color: $primary-color;
-    color: white;
-
-    .mat-card-header-text {
-      width: 100%;
-    }
-  }
-
-  .mat-card-title {
-    padding-top: 1rem;
-
-    i {
-      cursor: pointer;
-    }
-  }
-
-  .mat-card-content {
-    padding: 0.5rem 1rem;
-  }
-
-  .header-btn {
-    cursor: pointer;
-    background-color: rgba($color: #000000, $alpha: 0);
-    color: white;
-    border: 1px solid white;
-    border-radius: 0.3rem;
-    font-size: 0.8rem;
-    padding: 0.1rem 0.4rem;
-    margin-bottom: 0.7rem;
+    left: 7rem;
   }
 }
 
@@ -222,30 +165,6 @@ h5 {
 
 .icon-white {
   color: white;
-}
-
-/*clickable*/
-.clickable {
-  cursor: pointer;
-}
-
-.profile-icon {
-  img {
-    background-size: cover;
-    width: 3.2rem;
-    height: 3.2rem;
-    border-radius: 50%;
-    border: 2px solid white;
-  }
-}
-
-*:focus {
-  outline: none !important;
-  border: 0 !important;
-}
-
-.hidden {
-  display: none;
 }
 
 .comment-bottom-sheet {
@@ -292,7 +211,53 @@ h5 {
   display: block !important;
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1080px) {
+  // .on-mobile {
+  //   display: block !important;
+  // }
+
+  // .on-desktop {
+  //   display: none !important;
+  // }
+
+  /*--SCROLL BAR--*/
+  /* width */
+  ::-webkit-scrollbar {
+    width: 0.278125rem; // 4.8px
+    height: 0.278125rem;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    border-radius: 0.55625rem; //9.6px
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    border-radius: 0.55625rem; // 9.6px
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  /*--SCROLL BAR--*/
+  /* width */
+  ::-webkit-scrollbar {
+    width: 0.25625rem; // 4.8px
+    height: 0.25625rem;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    border-radius: 0.5125rem; //9.6px
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    border-radius: 0.5125rem; // 9.6px
+  }
+}
+
+@media only screen and (max-width: 767px) {
   .on-mobile {
     display: block !important;
   }
@@ -300,14 +265,45 @@ h5 {
   .on-desktop {
     display: none !important;
   }
+
+  /*--SCROLL BAR--*/
+  /* width */
+  ::-webkit-scrollbar {
+    width: 0.2125rem; // 4.8px
+    height: 0.2125rem;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    border-radius: 0.425rem; //9.6px
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    border-radius: 0.425rem; // 9.6px
+  }
 }
 
-@media only screen and (max-width: 900px) {
-}
-
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 600px) {
   .container {
     padding: 0 !important;
+  }
+
+  /*--SCROLL BAR--*/
+  /* width */
+  ::-webkit-scrollbar {
+    width: 0.16875rem; // 4.8px
+    height: 0.16875rem;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    border-radius: 0.3375rem; //9.6px
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    border-radius: 0.3375rem; // 9.6px
   }
 }
 

@@ -1,153 +1,215 @@
 $grey-color: #838383;
 
-.logo {
-  height: 3rem;
-}
-
-.navbar-icon-top .navbar-nav .nav-link > .fa {
-  position: relative;
-  width: 36px;
-  font-size: 24px;
-}
-
-.navbar-icon-top .navbar-nav .nav-link > .fa > .badge {
-  font-size: 0.75rem;
-  position: absolute;
-  right: 0;
-  font-family: sans-serif;
-}
-
-.navbar-icon-top .navbar-nav .nav-link > .fa {
-  top: 3px;
-  line-height: 12px;
-}
-
-.navbar-icon-top .navbar-nav .nav-link > .fa > .badge {
-  top: -10px;
-}
-
-.header-container {
-  padding: 0 2rem 0 1rem;
-  width: 100%;
-  height: 100%;
-  .navbar-logo {
-    float: left;
-    a {
-      letter-spacing: 0.2rem;
-      font-size: 2.6rem;
-      color: #fff;
-      font-family: 'SF Sports Night NS';
-      // padding-top: 1rem;
-    }
-  }
-  .navbar-links {
-    float: right;
-    padding-top: 0.2rem;
-  }
-
-  .menu-icon {
-    font-size: 30px;
-    padding-right: 20px;
-    color: white;
-    cursor: pointer;
-
-    .hamburger-inner,
-    .hamburger-inner::before,
-    .hamburger-inner::after {
-      background-color: white;
-    }
-  }
-}
 .navbar {
   padding-top: 2rem;
   height: 4rem;
   background-color: #05bae3;
-  .nav-link {
-    color: #fff;
-    font-size: 1.5rem;
-    padding-left: 1rem;
-  }
   padding: 0.2rem 1rem;
-}
 
-.fixed-top {
-  z-index: 101;
-}
-
-.profile-icon {
-  padding-left: 0.5rem;
-  cursor: pointer;
-  position: relative;
-
-  img {
-    width: 2.2rem;
-    height: 2.2rem;
-  }
-
-  .profile-text {
-    position: absolute;
-    bottom: -1.2rem;
-    right: 0.2rem;
-    text-align: center;
-    color: white;
-  }
-}
-
-@media only screen and (max-width: 1200px) {
   .header-container {
-    padding: 0rem;
+    padding: 0 1rem;
+    width: 100%;
+    height: 100%;
 
     .navbar-logo {
-      margin-top: 0.3rem;
+      margin-top: 0.125rem;
+      float: left;
+
+      a {
+        letter-spacing: 0.2rem;
+        font-size: 2.5rem;
+        color: #fff;
+        font-family: 'SF Sports Night NS';
+      }
+
+      .menu-icon {
+        font-size: 2rem;
+        right: 1.5rem;
+        color: white;
+        cursor: pointer;
+
+        .hamburger-inner,
+        .hamburger-inner::before,
+        .hamburger-inner::after {
+          background-color: white;
+        }
+      }
+
+      .logo {
+        margin-top: 0;
+        height: 3rem;
+      }
+    }
+
+    .navbar-links {
+      float: right;
+      padding-top: 0.25rem;
+
+      .profile-icon {
+        padding-left: 0.5rem;
+        cursor: pointer;
+        position: relative;
+
+        img {
+          width: 2.25rem;
+          height: 2.25rem;
+          background-size: cover;
+          border-radius: 50%;
+          border: 2px solid white;
+        }
+
+        .profile-text {
+          position: absolute;
+          bottom: -1.2rem;
+          right: 0.2rem;
+          text-align: center;
+          color: white;
+        }
+      }
     }
   }
+}
 
+@media only screen and (max-width: 900px) {
   .navbar {
-    padding: 0px;
+    padding-top: 1.75rem;
+    height: 3.75rem;
+    padding: 0 0.875rem;
+
+    .header-container {
+      padding: 0 0.875rem;
+
+      .navbar-logo {
+        margin-top: 0.0625rem;
+
+        a {
+          letter-spacing: 0.375rem;
+          font-size: 2.25rem;
+        }
+
+        .menu-icon {
+          font-size: 1.875rem;
+          right: 1.25rem;
+        }
+
+        .logo {
+          margin-top: -0.0625rem;
+          height: 2.875rem;
+        }
+      }
+    }
   }
 }
 
-@media only screen and (max-width: 480px) {
-  .header-container {
-    .navbar-logo {
-      margin-top: 0.3rem;
-      a {
-        font-size: 2.5rem;
+@media only screen and (max-width: 767px) {
+  .navbar {
+    padding-top: 1.5rem;
+    height: 3.5rem;
+    padding: 0 0.75rem;
+
+    .header-container {
+      padding: 0 0.75rem;
+
+      .navbar-logo {
+        margin-top: 0rem;
+
+        a {
+          letter-spacing: 0.25rem;
+          font-size: 2rem;
+        }
+
+        .menu-icon {
+          font-size: 1.75rem;
+          right: 1rem;
+        }
+
+        .logo {
+          margin-top: -0.125rem;
+          height: 2.75rem;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .navbar {
+    padding-top: 1.25rem;
+    height: 3.25rem;
+    padding: 0 0.625rem;
+
+    .header-container {
+      padding: 0 0.625rem;
+
+      .navbar-logo {
+        margin-top: -0.0625rem;
+
+        a {
+          letter-spacing: 0.125rem;
+          font-size: 1.875rem;
+        }
+
+        .menu-icon {
+          font-size: 1.625rem;
+          right: 0.875rem;
+        }
+
+        .logo {
+          margin-top: -0.1875rem;
+          height: 2.625rem;
+        }
       }
     }
   }
 }
 
 @media only screen and (max-width: 400px) {
-  .header-container {
-    .navbar-logo {
-      margin-top: 0.3rem;
-      a {
-        font-size: 2rem;
-      }
-    }
+  .navbar {
+    padding-top: 1rem;
+    height: 3rem;
+    padding: 0 0.5rem;
 
-    .menu-icon {
-      zoom: 80%;
+    .header-container {
+      padding: 0 0.5rem;
+
+      .navbar-logo {
+        margin-top: -0.125rem;
+
+        a {
+          letter-spacing: 0.1rem;
+          font-size: 1.75rem;
+        }
+
+        .menu-icon {
+          font-size: 1.5rem;
+          right: 0rem;
+        }
+
+        .logo {
+          margin-top: -0.25rem;
+          height: 2.5rem;
+        }
+      }
     }
   }
 }
 
-@media only screen and (max-width: 350px) {
-  .logo {
-    height: 2.5rem;
-  }
+// @media only screen and (max-width: 350px) {
 
-  .header-container {
-    .navbar-logo {
-      margin-top: 0.3rem;
-      a {
-        font-size: 1.8rem;
-      }
-    }
+//   .logo {
+//     height: 2.5rem;
+//   }
 
-    .menu-icon {
-      zoom: 75%;
-    }
-  }
-}
+//   .header-container {
+//     .navbar-logo {
+//       margin-top: 0.3rem;
+//       a {
+//         font-size: 1.8rem;
+//       }
+//     }
+
+//     .menu-icon {
+//       zoom: 75%;
+//     }
+//   }
+// }
