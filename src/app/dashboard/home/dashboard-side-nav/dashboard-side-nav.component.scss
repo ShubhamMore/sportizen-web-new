@@ -98,8 +98,6 @@ $grey-color: #838383;
           padding-top: 0.25rem;
           position: absolute;
           left: 50%;
-          // margin-left: ;
-          // top: 10;
         }
       }
 
@@ -121,7 +119,7 @@ $grey-color: #838383;
 
           mat-spinner {
             display: inline-block;
-            left: 10px;
+            left: 50%;
           }
         }
       }

@@ -1,10 +1,13 @@
 <div class="like-container">
-  <button class="float-right pointer close" mat-dialog-close>X</button>
+  <span class="float-right pointer close" mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </span>
+
   <h2 mat-dialog-title *ngIf="likes && likes.length > 0">Likes</h2>
 
   <hr />
 
-  <div mat-dialog-content>
+  <div mat-dialog-content class="mat-dialog-container-1">
     <div *ngIf="likes && likes.length > 0; else noLikes">
       <div *ngFor="let like of likes" class="user-container">
         <div class="profile-icon">

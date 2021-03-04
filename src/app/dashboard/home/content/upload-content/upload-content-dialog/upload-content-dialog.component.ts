@@ -31,6 +31,7 @@ export class UploadContentDialogComponent implements OnInit {
       description: new FormControl(null),
     });
   }
+
   submitPost(): void {
     if (this.form.valid) {
       this.postUploading = true;

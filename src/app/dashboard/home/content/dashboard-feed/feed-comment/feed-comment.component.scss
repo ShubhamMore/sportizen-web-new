@@ -1,3 +1,29 @@
+::ng-deep .mat-bottom-sheet-container {
+  // @media screen and (max-width: 1200px) {
+  padding: 0.5rem 1rem;
+  // }
+
+  @media screen and (max-width: 900px) {
+    padding: 0.4375rem 0.875rem;
+  }
+
+  @media screen and (max-width: 767px) {
+    padding: 0.375rem 0.75rem;
+  }
+
+  @media screen and (max-width: 600px) {
+    padding: 0.3125rem 0.625rem;
+  }
+
+  @media screen and (max-width: 400px) {
+    padding: 0.25rem 0.5rem;
+  }
+
+  @media screen and (max-width: 320px) {
+    padding: 0.125rem 0.25rem;
+  }
+}
+
 .loading-comments {
   padding: 1rem 0rem;
   height: 80vh;

@@ -13,21 +13,24 @@
     </mat-drawer>
 
     <mat-drawer-content id="dashboardContent">
-      <!-- <div class="dummy-header">&nbsp;</div> -->
-      <nav mat-tab-nav-bar mat-align-tabs="center" id="dashboardLinks" class="dashboard-links">
-        <span
-          *ngFor="let navLink of navLinks"
-          mat-tab-link
-          [routerLink]="navLink.link"
-          [matTooltip]="navLink.title"
-          (click)="changeNavLink(navLink.title)"
-          [active]="activeNavLink === navLink.title"
-        >
-          <i class="fa mr-2" [ngClass]="navLink.icon"> </i>
-        </span>
+      <nav id="dashboardLinks" class="dashboard-links-container">
+        <ul class="dashboard-links">
+          <li
+            *ngFor="let navLink of navLinks"
+            class="dashboard-link"
+            [routerLink]="navLink.link"
+            [matTooltip]="navLink.title"
+            (click)="changeNavLink(navLink.title)"
+            [ngClass]="activeNavLink === navLink.title ? 'active' : 'inactive '"
+          >
+            <i class="fa" [ngClass]="navLink.icon"> </i>
+          </li>
+        </ul>
       </nav>
-      <div class="dummy-dashboard-links">&nbsp;</div>
-      <router-outlet></router-outlet>
+
+      <div class="router-outlet">
+        <router-outlet></router-outlet>
+      </div>
     </mat-drawer-content>
   </mat-drawer-container>
 

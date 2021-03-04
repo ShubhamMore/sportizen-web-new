@@ -59,14 +59,14 @@ export class UserProfileComponent implements OnInit {
     if (this.connectionStatus === ConnectionStatus.following) {
       this.connectionService.unfollowConnection(this.userProfileId).subscribe((res: any) => {
         this.setConnectionStatus(ConnectionStatus.notConnected);
-        this.snackBar.open('Unfollowed', null, {
+        this.snackBar.open(`You unfollowed  ${this.userProfile.name}`, null, {
           duration: 2000,
         });
       });
     } else {
       this.connectionService.sendConnectionRequest(this.userProfileId).subscribe((res: any) => {
         this.setConnectionStatus(res.status);
-        this.snackBar.open('Follow Request Sent Successfully', null, {
+        this.snackBar.open(`You are now following ${this.userProfile.name}`, null, {
           duration: 2000,
         });
       });

@@ -206,7 +206,7 @@ export class SaveProfileComponent implements OnInit {
         (updatedUserProfile: UserProfileModel) => {
           this.userProfileService.setProfile(updatedUserProfile);
           this.loading = false;
-          this._snackBar.open('Profile Updated Successfully', null, {
+          this._snackBar.open('Profile Details Updated Successfully', null, {
             duration: 2000,
           });
         },
@@ -240,6 +240,9 @@ export class SaveProfileComponent implements OnInit {
           this.changePasswordFormDirective.resetForm();
           this.userProfile.userProvider = 'SPORTIZEN';
           this.userProfileService.setProfile(this.userProfile);
+          this._snackBar.open('New Password updated Successfully', null, {
+            duration: 2000,
+          });
           this.loading = false;
         },
         (error: any) => {

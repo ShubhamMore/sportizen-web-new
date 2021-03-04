@@ -2,21 +2,14 @@
   <div class="col-12">
     <mat-card class="event-card" *ngIf="!loading">
       <mat-card-header>
-        <div class="mat-card-header-text">
-          <div class="row">
-            <div class="col-12">
-              <div class="header-title">
-                <i class="fa fa-plus-circle"></i>
-                &nbsp;
-                <span>Create Event</span>
+        <mat-card-title>
+          <i class="fa fa-plus-circle"></i>
+          <span>&nbsp;{{ editingMode ? 'Edit' : 'Create' }} Event</span>
 
-                <span class="float-right">
-                  <i class="fa fa-close close-icon" (click)="close()"></i>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
+          <span class="float-right pointer">
+            <mat-icon (click)="close()">close</mat-icon>
+          </span>
+        </mat-card-title>
       </mat-card-header>
 
       <mat-card-content>
@@ -305,12 +298,12 @@
                   <button
                     type="button"
                     mat-raised-button
-                    class="rounded-btn"
+                    class="event-btn"
                     color="primary"
                     (click)="eventImages.click()"
                   >
-                    <i class="fa fa-plus-circle mr-2"></i>
-                    <span class="">Add Images</span>
+                    <i class="fa fa-plus-circle"></i>
+                    <span>&nbsp;Add Images</span>
                   </button>
 
                   <ng-template #noImagePicked>
@@ -367,11 +360,11 @@
                     mat-raised-button
                     color="primary"
                     type="submit"
-                    class="rounded-btn"
+                    class="event-btn"
                     [disabled]="savingRecord"
                   >
                     <span class=""> {{ editingMode ? 'Save' : 'Create' }}</span>
-                    <mat-spinner [diameter]="20" *ngIf="savingRecord"></mat-spinner>
+                    <!-- <mat-spinner [diameter]="20" *ngIf="savingRecord"></mat-spinner> -->
                   </button>
                 </div>
               </div>

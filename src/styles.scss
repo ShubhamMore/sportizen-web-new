@@ -117,14 +117,22 @@ input::-webkit-inner-spin-button {
 }
 
 .mat-raised-button {
-  color: white !important;
+  color: #fff !important;
+  // line-height: 0 !important;
 }
 
 .rounded-btn {
   margin-top: 0.8rem !important;
   padding: 0rem 2rem !important;
   width: 14rem !important;
+  height: 2.5rem;
+  font-size: 1rem;
+  line-height: 1rem;
   border-radius: 2rem !important;
+
+  .icon {
+    font-size: 0.8rem;
+  }
 
   &:focus {
     outline: none !important;
@@ -132,7 +140,7 @@ input::-webkit-inner-spin-button {
 
   mat-spinner {
     display: inline-block;
-    left: 7rem;
+    left: 50%;
   }
 }
 
@@ -140,7 +148,10 @@ input::-webkit-inner-spin-button {
   margin-top: 0.8rem !important;
   padding: 0rem 2rem !important;
   width: 14rem !important;
-  border-radius: 0.7rem !important;
+  height: 2.5rem;
+  font-size: 1rem;
+  line-height: 1rem;
+  border-radius: 0.75rem !important;
 
   &:focus {
     outline: none !important;
@@ -264,6 +275,26 @@ input::-webkit-inner-spin-button {
   ::-webkit-scrollbar-thumb {
     border-radius: 0.5125rem; // 9.6px
   }
+
+  .rounded-btn {
+    margin-top: 0.75rem !important;
+    padding: 0rem 1.75rem !important;
+    width: 13.5rem !important;
+    height: 2.375rem;
+    font-size: 0.9375rem;
+    line-height: 0.9375rem;
+    border-radius: 1.875rem !important;
+  }
+
+  .semi-rounded-btn {
+    margin-top: 0.75rem !important;
+    padding: 0rem 1.75rem !important;
+    width: 13.5rem !important;
+    height: 2.375rem;
+    font-size: 0.9375rem;
+    line-height: 0.9375rem;
+    border-radius: 0.6875rem !important;
+  }
 }
 
 @media only screen and (max-width: 833px) {
@@ -293,6 +324,26 @@ input::-webkit-inner-spin-button {
   ::-webkit-scrollbar-thumb {
     border-radius: 0.425rem; // 9.6px
   }
+
+  .rounded-btn {
+    margin-top: 0.7rem !important;
+    padding: 0rem 1.5rem !important;
+    width: 13rem !important;
+    height: 2.25rem;
+    font-size: 0.875rem;
+    line-height: 0.875rem;
+    border-radius: 1.75rem !important;
+  }
+
+  .semi-rounded-btn {
+    margin-top: 0.7rem !important;
+    padding: 0rem 1.5rem !important;
+    width: 13rem !important;
+    height: 2.25rem;
+    font-size: 0.875rem;
+    line-height: 0.875rem;
+    border-radius: 0.625rem !important;
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -316,6 +367,26 @@ input::-webkit-inner-spin-button {
   ::-webkit-scrollbar-thumb {
     border-radius: 0.3375rem; // 9.6px
   }
+
+  .rounded-btn {
+    margin-top: 0.65rem !important;
+    padding: 0rem 1.25rem !important;
+    width: 12.5rem !important;
+    height: 2.125rem;
+    font-size: 0.8125rem;
+    line-height: 0.8125rem;
+    border-radius: 1.625rem !important;
+  }
+
+  .semi-rounded-btn {
+    margin-top: 0.65rem !important;
+    padding: 0rem 1.25rem !important;
+    width: 12.5rem !important;
+    height: 2.125rem;
+    font-size: 0.8125rem;
+    line-height: 0.8125rem;
+    border-radius: 0.5625rem !important;
+  }
 }
 
 @media only screen and (max-width: 400px) {
@@ -334,5 +405,29 @@ input::-webkit-inner-spin-button {
   /* Handle */
   ::-webkit-scrollbar-thumb {
     border-radius: 0.25rem; // 9.6px
+  }
+
+  .rounded-btn {
+    margin-top: 0.6rem !important;
+    padding: 0rem 1rem !important;
+    width: 12rem !important;
+    height: 2rem;
+    font-size: 0.75rem;
+    line-height: 0.75rem;
+    border-radius: 1.5rem !important;
+
+    .icon {
+      font-size: 0.6rem;
+    }
+  }
+
+  .semi-rounded-btn {
+    margin-top: 0.6rem !important;
+    padding: 0rem 1rem !important;
+    width: 12rem !important;
+    height: 2rem;
+    font-size: 0.75rem;
+    line-height: 0.75rem;
+    border-radius: 0.5rem !important;
   }
 }

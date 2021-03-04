@@ -3,7 +3,6 @@ import { MatDrawer } from '@angular/material/sidenav';
 import { DashboardSideDrawerService } from './../../services/dashboard-side-drawer.service';
 
 import * as $ from 'jquery';
-import { title } from 'process';
 
 class NavTabLink {
   constructor(public link: string, public title: string, public icon: string) {}
@@ -43,7 +42,7 @@ export class HomeComponent implements OnInit {
     ];
     this.activeNavLink = this.navLinks[0].title;
 
-    this.responsiveWidth = 1230;
+    this.responsiveWidth = 1200;
     this.loading = true;
   }
 
