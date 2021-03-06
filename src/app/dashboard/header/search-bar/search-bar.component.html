@@ -16,7 +16,7 @@
     <ng-container *ngIf="!isLoading">
       <mat-option
         *ngFor="let option of filteredOptions"
-        [value]="option"
+        value=""
         (click)="viewProfile(option.sportizenId)"
       >
         <img

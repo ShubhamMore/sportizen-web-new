@@ -103,44 +103,20 @@
         <mat-card class="user-info-card">
           <mat-card-header>
             <mat-card-title>
-              <span class="header-title">632 Followers</span>
+              <span class="header-title">{{ followers.length }} Followers</span>
             </mat-card-title>
           </mat-card-header>
           <mat-card-content
-            ><div class="row">
+            ><div class="row" *ngIf="followers.length > 0; else noFollowers">
               <div class="col-12">
-                <div class="friend-mini-card">
-                  <img class="friend-mini-photo" src="https://picsum.photos/200" />
+                <div class="friend-mini-card" *ngFor="let follower of followers; let i = index">
+                  <img class="friend-mini-photo" [src]="follower.userImageURL" />
                   <div class="friend-mini-details">
-                    <div class="friend-mini-name">John Doe</div>
-                    <div class="friend-mini-mutual-info">999 mutual friends</div>
-                    <div class="friend-mini-btn">Unfollow</div>
-                  </div>
-                </div>
-
-                <div class="friend-mini-card">
-                  <img class="friend-mini-photo" src="https://picsum.photos/200" />
-                  <div class="friend-mini-details">
-                    <div class="friend-mini-name">John Doe</div>
-                    <div class="friend-mini-mutual-info">999 mutual friends</div>
-                    <div class="friend-mini-btn">Unfollow</div>
-                  </div>
-                </div>
-
-                <div class="friend-mini-card">
-                  <img class="friend-mini-photo" src="https://picsum.photos/200" />
-                  <div class="friend-mini-details">
-                    <div class="friend-mini-name">John Doe</div>
-                    <div class="friend-mini-mutual-info">999 mutual friends</div>
-                    <div class="friend-mini-btn">Unfollow</div>
-                  </div>
-                </div>
-
-                <div class="friend-mini-card">
-                  <img class="friend-mini-photo" src="https://picsum.photos/200" />
-                  <div class="friend-mini-details">
-                    <div class="friend-mini-name">John Doe</div>
-                    <div class="friend-mini-mutual-info">999 mutual friends</div>
+                    <div class="friend-mini-name">{{ follower.name | capitalizeEachWord }}</div>
+                    <div class="friend-mini-mutual-info">
+                      {{ follower.mutuleConnections ? follower.mutuleConnections : 0 }} Mutual
+                      Friends
+                    </div>
                     <div class="friend-mini-btn">Unfollow</div>
                   </div>
                 </div>
@@ -152,45 +128,21 @@
         <mat-card class="user-info-card">
           <mat-card-header>
             <mat-card-title>
-              <span class="header-title">632 Followings</span>
+              <span class="header-title">{{ followings.length }} Followings</span>
             </mat-card-title>
           </mat-card-header>
           <mat-card-content
-            ><div class="row">
+            ><div class="row" *ngIf="followings.length > 0; else noFollowings">
               <div class="col-12">
-                <div class="friend-mini-card">
-                  <img class="friend-mini-photo" src="https://picsum.photos/200" />
+                <div class="friend-mini-card" *ngFor="let following of followings; let i = index">
+                  <img class="friend-mini-photo" [src]="following.userImageURL" />
                   <div class="friend-mini-details">
-                    <div class="friend-mini-name">Krishnamurti Vishwakarma</div>
-                    <div class="friend-mini-mutual-info">8 mutual friends</div>
-                    <div class="friend-mini-btn">Unfollow</div>
-                  </div>
-                </div>
-
-                <div class="friend-mini-card">
-                  <img class="friend-mini-photo" src="https://picsum.photos/200" />
-                  <div class="friend-mini-details">
-                    <div class="friend-mini-name">John Doe</div>
-                    <div class="friend-mini-mutual-info">8 mutual friends</div>
-                    <div class="friend-mini-btn">Unfollow</div>
-                  </div>
-                </div>
-
-                <div class="friend-mini-card">
-                  <img class="friend-mini-photo" src="https://picsum.photos/200" />
-                  <div class="friend-mini-details">
-                    <div class="friend-mini-name">John Doe</div>
-                    <div class="friend-mini-mutual-info">8 mutual friends</div>
-                    <div class="friend-mini-btn">Unfollow</div>
-                  </div>
-                </div>
-
-                <div class="friend-mini-card">
-                  <img class="friend-mini-photo" src="https://picsum.photos/200" />
-                  <div class="friend-mini-details">
-                    <div class="friend-mini-name">John Doe</div>
-                    <div class="friend-mini-mutual-info">8 mutual friends</div>
-                    <div class="friend-mini-btn">Unfollow</div>
+                    <div class="friend-mini-name">{{ following.name | capitalizeEachWord }}</div>
+                    <div class="friend-mini-mutual-info">
+                      {{ following.mutuleConnections ? following.mutuleConnections : 0 }} Mutual
+                      Friends
+                    </div>
+                    <div class="friend-mini-btn">Remove</div>
                   </div>
                 </div>
               </div>
@@ -226,3 +178,19 @@
   [customSavedBtnName]="'Save'"
 >
 </app-image-croper>
+
+<ng-template #noFollowers>
+  <div class="row">
+    <div class="col-12">
+      <p class="text-center">No Followers</p>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noFollowings>
+  <div class="row">
+    <div class="col-12">
+      <p class="text-center">No Followings</p>
+    </div>
+  </div>
+</ng-template>

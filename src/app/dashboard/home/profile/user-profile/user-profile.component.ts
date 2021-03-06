@@ -6,6 +6,14 @@ import { UserProfileModel } from './../../../../models/user-profile.model';
 import { ConnectionService } from './../../../../services/connection.service';
 import { UserProfileService } from './../../../../services/user-profile.service';
 
+interface Connection {
+  name: string;
+  email: string;
+  userImageURL: string;
+  mutuleConnections: string;
+  sportizenId: string;
+}
+
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -16,6 +24,9 @@ export class UserProfileComponent implements OnInit {
   userProfile: UserProfileModel;
   loading: boolean;
   connectionStatus: string;
+  followers: Connection[];
+  followings: Connection[];
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private userProfileService: UserProfileService,
@@ -32,6 +43,8 @@ export class UserProfileComponent implements OnInit {
     this.connectionStatus = '';
 
     this.userProfileId = this.connectionService.searchedSportizenId;
+    this.followers = [];
+    this.followings = [];
 
     if (this.userProfileId) {
       this.userProfileService
@@ -39,13 +52,32 @@ export class UserProfileComponent implements OnInit {
         .subscribe((userProfile: UserProfileModel) => {
           this.userProfile = userProfile;
           this.setConnectionStatus(userProfile.connection);
-
+          this.getFollowers();
+          this.getFollowings();
           this.loading = false;
         });
     }
   }
 
-  setConnectionStatus(connectionStatus) {
+  getFollowers() {
+    this.userProfileService.getUserFollowers(this.userProfile.sportizenId).subscribe(
+      (followers: Connection[]) => {
+        this.followers = followers;
+      },
+      (error: any) => {}
+    );
+  }
+
+  getFollowings() {
+    this.userProfileService.getUserFollowings(this.userProfile.sportizenId).subscribe(
+      (followings: Connection[]) => {
+        this.followings = followings;
+      },
+      (error: any) => {}
+    );
+  }
+
+  setConnectionStatus(connectionStatus: any) {
     if (connectionStatus === ConnectionStatus.following) {
       this.connectionStatus = ConnectionStatus.following;
     } else if (connectionStatus === ConnectionStatus.pending) {

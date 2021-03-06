@@ -5,6 +5,14 @@ import { UserProfileModel } from './../../../../models/user-profile.model';
 import { DashboardSideDrawerService } from './../../../../services/dashboard-side-drawer.service';
 import { UserProfileService } from './../../../../services/user-profile.service';
 
+interface Connection {
+  name: string;
+  email: string;
+  userImageURL: string;
+  mutuleConnections: string;
+  sportizenId: string;
+}
+
 @Component({
   selector: 'app-profile-details',
   templateUrl: './profile-details.component.html',
@@ -22,6 +30,8 @@ export class ProfileDetailsComponent implements OnInit {
   coverImage: File;
   storyEdit: boolean;
   story: string;
+  followers: Connection[];
+  followings: Connection[];
 
   constructor(
     private userProfileService: UserProfileService,
@@ -37,6 +47,28 @@ export class ProfileDetailsComponent implements OnInit {
     this.userProfile = this.userProfileService.getProfile();
     this.profileImagePreview = this.userProfile.userImageURL;
     this.coverImagePreview = this.userProfile.userCoverImageURL;
+    this.followers = [];
+    this.followings = [];
+    this.getFollowers();
+    this.getFollowings();
+  }
+
+  getFollowers() {
+    this.userProfileService.getMyFollowers().subscribe(
+      (followers: Connection[]) => {
+        this.followers = followers;
+      },
+      (error: any) => {}
+    );
+  }
+
+  getFollowings() {
+    this.userProfileService.getMyFollowings().subscribe(
+      (followings: Connection[]) => {
+        this.followings = followings;
+      },
+      (error: any) => {}
+    );
   }
 
   onImagePicked(event: Event, isCoverPic: boolean): any {

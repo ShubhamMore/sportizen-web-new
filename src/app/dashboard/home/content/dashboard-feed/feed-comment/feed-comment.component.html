@@ -65,6 +65,7 @@
             <span
               class="float-right comment-likes"
               (click)="viewCommentLikeDetails(singleComment._id)"
+              *ngIf="singleComment.postCommentLikes > 0"
             >
               <span
                 >{{ singleComment.postCommentLikes ? singleComment.postCommentLikes : 0 }}&nbsp;
@@ -167,6 +168,7 @@
                   <span
                     class="float-right reply-comment-likes"
                     (click)="viewReplyCommentLikeDetails(singleComment._id, singleReplyComment._id)"
+                    *ngIf="singleReplyComment.postReplyCommentLikes > 0"
                   >
                     <span>
                       {{

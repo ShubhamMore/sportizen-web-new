@@ -39,6 +39,54 @@ export class UserProfileService {
     );
   }
 
+  getMyFollowers() {
+    const data = { api: 'getMyFollowers', data: {} };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      })
+    );
+  }
+
+  getMyFollowings() {
+    const data = { api: 'getMyFollowings', data: {} };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      })
+    );
+  }
+
+  getUserFollowers(sportizenId: string) {
+    const data = { api: 'getUserFollowers', data: { user: sportizenId } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      })
+    );
+  }
+
+  getUserFollowings(sportizenId: string) {
+    const data = { api: 'getUserFollowings', data: { user: sportizenId } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      })
+    );
+  }
+
   getUserProfile(id: string) {
     const data = { api: 'getUserProfile', data: { sportizenId: id } };
     return this.httpService.httpPost(data).pipe(
@@ -50,6 +98,7 @@ export class UserProfileService {
       })
     );
   }
+
   saveProfileImage(profile: FormData) {
     const data = { api: 'saveProfileImage', data: profile };
     return this.httpService.httpPost(data).pipe(
@@ -61,6 +110,7 @@ export class UserProfileService {
       })
     );
   }
+
   saveCoverImage(profile: FormData) {
     const data = { api: 'saveCoverImage', data: profile };
     return this.httpService.httpPost(data).pipe(
