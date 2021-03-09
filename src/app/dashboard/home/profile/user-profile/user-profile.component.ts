@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ConnectionStatus } from './../../../../enums/connectionStatus';
 import { UserProfileModel } from './../../../../models/user-profile.model';
 import { ConnectionService } from './../../../../services/connection.service';
@@ -31,7 +31,9 @@ export class UserProfileComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private userProfileService: UserProfileService,
     private connectionService: ConnectionService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.activatedRoute.params.subscribe((param: Params) => {
       this.ngOnInit();
@@ -56,6 +58,14 @@ export class UserProfileComponent implements OnInit {
           this.getFollowings();
           this.loading = false;
         });
+    }
+  }
+
+  viewProfile(id: string) {
+    if (id === this.userProfileService.getProfile().sportizenId) {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    } else {
+      this.router.navigate(['../../', 'profile', id], { relativeTo: this.route });
     }
   }
 

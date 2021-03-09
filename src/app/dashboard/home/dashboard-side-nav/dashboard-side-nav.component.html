@@ -19,13 +19,13 @@
 
       <p class="profile-id">@{{ userProfile.sportizenId }}</p>
 
-      <span class="profile-desc">{{ this.userProfile.story }}</span>
+      <span class="profile-desc">{{ userProfile.story }}</span>
 
       <div class="profile-status-container">
         <div class="profile-status">
           <div>{{ 'msg_network_connections' | translate }}</div>
 
-          <span>632</span>
+          <span>{{ userProfile.followersCount ? userProfile.followersCount : 0 }}</span>
         </div>
 
         <div class="divider"></div>
@@ -33,7 +33,7 @@
         <div class="profile-status">
           <div>{{ 'msg_views_to_your_profile' | translate }}</div>
 
-          <span>865</span>
+          <span>{{ userProfile.followingsCount ? userProfile.followingsCount : 0 }}</span>
         </div>
       </div>
 

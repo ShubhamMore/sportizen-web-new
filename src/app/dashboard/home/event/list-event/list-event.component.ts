@@ -1,3 +1,4 @@
+import { ConnectionService } from './../../../../services/connection.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EventService } from './../../../../services/event.service';
@@ -19,6 +20,7 @@ export class ListEventComponent implements OnInit {
     private eventService: EventService,
     private _userProfileService: UserProfileService,
     private userProfileService: UserProfileService,
+    private connectionService: ConnectionService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -44,9 +46,10 @@ export class ListEventComponent implements OnInit {
 
   viewProfile(id: string) {
     if (id === this._userProfileService.getProfile().sportizenId) {
-      this.router.navigate(['/dashboard', 'profile'], { relativeTo: this.route });
+      this.router.navigate(['../../', 'profile'], { relativeTo: this.route });
     } else {
-      this.router.navigate(['/dashboard', 'profile', id], { relativeTo: this.route });
+      this.connectionService.searchedSportizenId = id;
+      this.router.navigate(['../../', 'profile', id], { relativeTo: this.route });
     }
   }
 

@@ -81,7 +81,7 @@ export class SearchBarComponent implements OnInit {
   options: any[];
   isLoading: boolean;
   searchKeyWord: string;
-  isSearchBarOpen: boolean = false;
+  isSearchBarOpen: boolean;
 
   constructor(
     private router: Router,
@@ -92,6 +92,7 @@ export class SearchBarComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = false;
+    this.isSearchBarOpen = false;
     this.options = [];
     this.myControl.valueChanges
       .pipe(
@@ -117,10 +118,10 @@ export class SearchBarComponent implements OnInit {
 
   viewProfile(id: string) {
     if (id === this.userProfileService.getProfile().sportizenId) {
-      this.router.navigate(['/dashboard', 'profile'], { relativeTo: this.route });
+      this.router.navigate(['../../', 'profile'], { relativeTo: this.route });
     } else {
       this.connectionService.searchedSportizenId = id;
-      this.router.navigate(['/dashboard', 'profile', id], { relativeTo: this.route });
+      this.router.navigate(['../../', 'profile', id], { relativeTo: this.route });
     }
   }
 

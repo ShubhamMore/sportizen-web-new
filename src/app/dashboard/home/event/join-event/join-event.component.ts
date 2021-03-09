@@ -1,3 +1,4 @@
+import { ConnectionService } from './../../../../services/connection.service';
 import { EventTeamRegistrationService } from './../../../../services/event-team-registration.service';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -26,6 +27,7 @@ export class JoinEventComponent implements OnInit, OnDestroy {
     private eventTeamRegistrationService: EventTeamRegistrationService,
     private eventPlayerRegistrationService: EventPlayerRegistrationService,
     private userProfileService: UserProfileService,
+    private connectionService: ConnectionService,
     private router: Router,
     private location: Location,
     private route: ActivatedRoute
@@ -134,9 +136,10 @@ export class JoinEventComponent implements OnInit, OnDestroy {
 
   viewProfile(id: string) {
     if (id === this._userProfileService.getProfile().sportizenId) {
-      this.router.navigate(['/dashboard', 'profile'], { relativeTo: this.route });
+      this.router.navigate(['../../', 'profile'], { relativeTo: this.route });
     } else {
-      this.router.navigate(['/dashboard', 'profile', id], { relativeTo: this.route });
+      this.connectionService.searchedSportizenId = id;
+      this.router.navigate(['../../', 'profile', id], { relativeTo: this.route });
     }
   }
 

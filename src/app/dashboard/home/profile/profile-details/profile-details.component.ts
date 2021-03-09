@@ -1,3 +1,4 @@
+import { ConnectionService } from './../../../../services/connection.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -37,6 +38,7 @@ export class ProfileDetailsComponent implements OnInit {
     private userProfileService: UserProfileService,
     private dashboardSideDrawerService: DashboardSideDrawerService,
     private _snackBar: MatSnackBar,
+    private connectionService: ConnectionService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -51,6 +53,15 @@ export class ProfileDetailsComponent implements OnInit {
     this.followings = [];
     this.getFollowers();
     this.getFollowings();
+  }
+
+  viewProfile(id: string) {
+    if (id === this.userProfileService.getProfile().sportizenId) {
+      this.router.navigate(['../../', 'profile'], {});
+    } else {
+      this.connectionService.searchedSportizenId = id;
+      this.router.navigate(['../../', 'profile', id], {});
+    }
   }
 
   getFollowers() {

@@ -94,7 +94,12 @@
                 <div class="friend-mini-card" *ngFor="let follower of followers; let i = index">
                   <img class="friend-mini-photo" [src]="follower.userImageURL" />
                   <div class="friend-mini-details">
-                    <div class="friend-mini-name">{{ follower.name | capitalizeEachWord }}</div>
+                    <div
+                      class="friend-mini-name pointer"
+                      (click)="viewProfile(follower.sportizenId)"
+                    >
+                      {{ follower.name | capitalizeEachWord }}
+                    </div>
                     <div class="friend-mini-mutual-info">
                       {{ follower.mutuleConnections ? follower.mutuleConnections : 0 }} Mutual
                       Friends
@@ -119,7 +124,12 @@
                 <div class="friend-mini-card" *ngFor="let following of followings; let i = index">
                   <img class="friend-mini-photo" [src]="following.userImageURL" />
                   <div class="friend-mini-details">
-                    <div class="friend-mini-name">{{ following.name | capitalizeEachWord }}</div>
+                    <div
+                      class="friend-mini-name pointer"
+                      (click)="viewProfile(following.sportizenId)"
+                    >
+                      {{ following.name | capitalizeEachWord }}
+                    </div>
                     <div class="friend-mini-mutual-info">
                       {{ following.mutuleConnections ? following.mutuleConnections : 0 }} Mutual
                       Friends
