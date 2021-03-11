@@ -1,6 +1,9 @@
 <mat-card>
   <div class="container">
-    <div class="upload-text">Whats going on in your mind ? Profile Name?</div>
+    <div class="upload-text">
+      Whats going on in your mind ?
+      <span *ngIf="profileName">{{ profileName | capitalizeEachWord }}?</span>
+    </div>
   </div>
 
   <div>

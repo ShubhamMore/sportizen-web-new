@@ -11,6 +11,38 @@ export class UserProfileService {
   private userProfile: UserProfileModel;
   private userProfileSubject = new BehaviorSubject<UserProfileModel>(null);
 
+  setProfile(userProfile: any) {
+    this.userProfile = userProfile;
+    this.userProfileSubject.next(userProfile);
+  }
+
+  setStory(story: string) {
+    this.userProfile.story = story;
+  }
+
+  getProfile() {
+    return this.userProfile;
+  }
+
+  getProfileSubject() {
+    return this.userProfileSubject;
+  }
+
+  getUserEmail() {
+    return this.userProfile.email;
+  }
+
+  getUserSportizenId() {
+    return this.userProfile.sportizenId;
+  }
+
+  isProfileCompleted(): boolean {
+    if (this.userProfile.profileCompleted === '0') {
+      return false;
+    }
+    return true;
+  }
+
   constructor(private httpService: HttpService) {}
 
   saveProfile(profile: FormData) {
@@ -133,37 +165,5 @@ export class UserProfileService {
         return throwError(err);
       })
     );
-  }
-
-  setProfile(userProfile: any) {
-    this.userProfile = userProfile;
-    this.userProfileSubject.next(this.userProfile);
-  }
-
-  setStory(story: string) {
-    this.userProfile.story = story;
-  }
-
-  getProfile() {
-    return this.userProfile;
-  }
-
-  getProfileSubject() {
-    return this.userProfileSubject;
-  }
-
-  getUserEmail() {
-    return this.userProfile.email;
-  }
-
-  getUserSportizenId() {
-    return this.userProfile.sportizenId;
-  }
-
-  isProfileCompleted(): boolean {
-    if (this.userProfile.profileCompleted === '0') {
-      return false;
-    }
-    return true;
   }
 }

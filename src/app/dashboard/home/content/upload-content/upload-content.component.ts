@@ -1,3 +1,5 @@
+import { UserProfileModel } from './../../../../models/user-profile.model';
+import { UserProfileService } from './../../../../services/user-profile.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PostType } from './../../../../enums/postType';
@@ -12,17 +14,23 @@ export class UploadContentComponent implements OnInit {
   invalidImage: boolean;
   postImageFiles: File[];
   postImagePreview: string[];
+  profileName: string;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, public userProfileService: UserProfileService) {}
 
   ngOnInit(): void {
     this.invalidImage = false;
     this.postImageFiles = [];
     this.postImagePreview = [];
+    this.userProfileService.getProfileSubject().subscribe((userProfile: UserProfileModel) => {
+      if (userProfile) {
+        this.profileName = userProfile.name;
+      }
+    });
   }
 
   openDialog(postType: PostType): void {
-    const data = { postType: postType };
+    const data = { postType };
 
     if (postType === PostType.Image) {
       data['postImageFiles'] = this.postImageFiles;
@@ -30,7 +38,7 @@ export class UploadContentComponent implements OnInit {
     }
 
     const dialogRef = this.dialog.open(UploadContentDialogComponent, {
-      data: data,
+      data,
     });
 
     dialogRef.afterClosed().subscribe((result) => {});

@@ -15,8 +15,9 @@ export class ConnectionService {
     this._searchedSportizenId = sportizenId;
   }
 
-  getSearchResults(searchKey: string) {
-    const data = { api: 'searchNewConnections', data: { searchName: searchKey } };
+  getSearchResults(searchName: string, limit?: number) {
+    console.log(searchName);
+    const data = { api: 'searchNewConnections', data: { searchName, limit } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

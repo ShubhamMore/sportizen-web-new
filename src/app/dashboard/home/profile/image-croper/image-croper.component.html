@@ -12,8 +12,8 @@
     [maintainAspectRatio]="true"
     [aspectRatio]="aspectRatio"
     format="jpeg"
-    *ngIf="image"
-    [imageBase64]="image"
+    *ngIf="data.image"
+    [imageBase64]="data.image"
     (imageCropped)="imageCropped($event)"
   >
   </image-cropper>

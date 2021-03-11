@@ -1,34 +1,35 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
 
+export interface ImageCroperData {
+  image: string;
+  customAspectRatio: number;
+  customSavedBtnName: string;
+}
 @Component({
   selector: 'app-image-croper',
   templateUrl: './image-croper.component.html',
   styleUrls: ['./image-croper.component.scss'],
 })
 export class ImageCroperComponent implements OnInit {
-  @Input() image: string;
-  @Input() customAspectRatio: number;
-  @Input() customSavedBtnName: string;
-
   croppedImage: string;
   aspectRatio: number;
   savedBtnName: string;
 
-  // tslint:disable-next-line: no-output-native
-  @Output() close = new EventEmitter<void>();
-  @Output() crop = new EventEmitter<string>();
-
-  constructor() {}
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: ImageCroperData,
+    public dialogRef: MatDialogRef<ImageCroperComponent>
+  ) {}
 
   ngOnInit(): void {
     this.croppedImage = '';
     this.aspectRatio = 1;
     this.savedBtnName = 'Crop';
-    if (this.customAspectRatio) {
-      this.aspectRatio = this.customAspectRatio;
+    if (this.data.customAspectRatio) {
+      this.aspectRatio = this.data.customAspectRatio;
     }
-    if (this.customSavedBtnName) {
-      this.savedBtnName = this.customSavedBtnName;
+    if (this.data.customSavedBtnName) {
+      this.savedBtnName = this.data.customSavedBtnName;
     }
   }
 
@@ -37,10 +38,10 @@ export class ImageCroperComponent implements OnInit {
   }
 
   onCrop() {
-    this.crop.emit(this.croppedImage);
+    this.dialogRef.close(this.croppedImage);
   }
 
   onClose() {
-    this.close.emit();
+    this.dialogRef.close();
   }
 }

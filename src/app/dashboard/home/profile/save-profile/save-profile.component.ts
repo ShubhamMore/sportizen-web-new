@@ -1,3 +1,6 @@
+import { SportsInterestComponent } from './../sports-interest/sports-interest.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ImageCroperComponent } from './../image-croper/image-croper.component';
 import { Validator } from '../../../../@shared/validators';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SportService } from '../../../../services/sport.service';
@@ -23,7 +26,6 @@ export class SaveProfileComponent implements OnInit {
   form: FormGroup;
   changePasswordForm: FormGroup;
 
-  imageCropping: boolean;
   imagePreview: string;
   profileImage: File;
   invalidImage: boolean;
@@ -46,6 +48,7 @@ export class SaveProfileComponent implements OnInit {
     private validator: Validator,
     private userService: UserService,
     private _snackBar: MatSnackBar,
+    public dialog: MatDialog,
     private dashboardSideDrawerService: DashboardSideDrawerService
   ) {}
 
@@ -56,7 +59,6 @@ export class SaveProfileComponent implements OnInit {
     });
 
     this.addSportInterest = false;
-    this.imageCropping = false;
 
     this.userProfile = this.userProfileService.getProfile();
     this.profileImagePreview = this.userProfile.userImageURL;
@@ -126,20 +128,28 @@ export class SaveProfileComponent implements OnInit {
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePreview = reader.result as string;
-        this.imageCropping = true;
+        const dialogRef = this.dialog.open(ImageCroperComponent, {
+          data: {
+            image: this.imagePreview,
+          },
+          maxHeight: '90vh',
+        });
+
+        dialogRef.afterClosed().subscribe((data: any) => {
+          if (data) {
+            this.saveCroppedImage(data);
+          } else {
+            this.imagePreview = null;
+          }
+        });
       };
       reader.readAsDataURL(files[i]);
     }
   }
 
-  closeImageCropping() {
-    this.imagePreview = null;
-    this.imageCropping = false;
-  }
-
   saveCroppedImage(e: any) {
     this.profileImagePreview = e;
-    this.closeImageCropping();
+    this.imagePreview = null;
     this.profileImage = this.dataURLtoFile(
       this.profileImagePreview as string,
       this.userProfile.email.split('@')[0]
@@ -168,22 +178,31 @@ export class SaveProfileComponent implements OnInit {
   }
 
   sportsInterest() {
-    this.addSportInterest = true;
+    const dialogRef = this.dialog.open(SportsInterestComponent, {
+      data: {
+        sportsInterest: this.interestedSports,
+      },
+      maxHeight: '90vh',
+    });
+
+    dialogRef.afterClosed().subscribe((data: any) => {
+      if (data) {
+        this.saveSportsInterest(data);
+      } else {
+        this.addSportInterest = false;
+      }
+    });
   }
 
   saveSportsInterest(e: any) {
     this.interestedSports = e;
     this.getInterestSports();
-    this.closeSportsInterest();
+    this.addSportInterest = false;
   }
 
   removeInterestedSport(i: number) {
     this.interestedSports.splice(i, 1);
     this.getInterestSports();
-  }
-
-  closeSportsInterest() {
-    this.addSportInterest = false;
   }
 
   saveUserProfile() {

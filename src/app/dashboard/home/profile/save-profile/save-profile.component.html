@@ -332,17 +332,3 @@
     </mat-card-content>
   </mat-card>
 </div>
-
-<app-sports-interest
-  *ngIf="addSportInterest"
-  [sportsInterest]="interestedSports"
-  (close)="closeSportsInterest()"
-  (save)="saveSportsInterest($event)"
-></app-sports-interest>
-
-<app-image-croper
-  *ngIf="imageCropping"
-  [image]="imagePreview"
-  (close)="closeImageCropping()"
-  (crop)="saveCroppedImage($event)"
-></app-image-croper>

@@ -1,3 +1,5 @@
+import { MatDialog } from '@angular/material/dialog';
+import { ImageCroperComponent } from './../image-croper/image-croper.component';
 import { ConnectionService } from './../../../../services/connection.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -23,8 +25,6 @@ export class ProfileDetailsComponent implements OnInit {
   userProfile: UserProfileModel;
   invalidImage: boolean;
   imagePreview: string;
-  profilePicCropping: boolean;
-  coverPicCropping: boolean;
   profileImagePreview: string;
   coverImagePreview: string;
   profileImage: File;
@@ -38,6 +38,7 @@ export class ProfileDetailsComponent implements OnInit {
     private userProfileService: UserProfileService,
     private dashboardSideDrawerService: DashboardSideDrawerService,
     private _snackBar: MatSnackBar,
+    public dialog: MatDialog,
     private connectionService: ConnectionService,
     private router: Router,
     private route: ActivatedRoute
@@ -99,10 +100,39 @@ export class ProfileDetailsComponent implements OnInit {
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePreview = reader.result as string;
-        if (isCoverPic) {
-          this.coverPicCropping = true;
+        if (!isCoverPic) {
+          const dialogRef = this.dialog.open(ImageCroperComponent, {
+            data: {
+              image: this.imagePreview,
+              customSavedBtnName: 'Save',
+            },
+            maxHeight: '90vh',
+          });
+
+          dialogRef.afterClosed().subscribe((data: any) => {
+            if (data) {
+              this.saveCroppedProfileImage(data);
+            } else {
+              this.imagePreview = null;
+            }
+          });
         } else {
-          this.profilePicCropping = true;
+          const dialogRef = this.dialog.open(ImageCroperComponent, {
+            data: {
+              image: this.imagePreview,
+              customSavedBtnName: 'Save',
+              customAspectRatio: 3,
+            },
+            maxHeight: '90vh',
+          });
+
+          dialogRef.afterClosed().subscribe((data: any) => {
+            if (data) {
+              this.saveCroppedCoverImage(data);
+            } else {
+              this.imagePreview = null;
+            }
+          });
         }
       };
       reader.readAsDataURL(files[i]);
@@ -113,15 +143,9 @@ export class ProfileDetailsComponent implements OnInit {
     this.router.navigate(['./edit'], { relativeTo: this.route });
   }
 
-  closeImageCropping() {
-    this.imagePreview = null;
-    this.profilePicCropping = false;
-    this.coverPicCropping = false;
-  }
-
   saveCroppedProfileImage(e: any) {
     this.profileImagePreview = e;
-    this.closeImageCropping();
+    this.imagePreview = null;
     this.profileImage = this.dataURLtoFile(
       this.profileImagePreview as string,
       this.userProfile.email.split('@')[0]
@@ -145,7 +169,7 @@ export class ProfileDetailsComponent implements OnInit {
 
   saveCroppedCoverImage(e: any) {
     this.coverImagePreview = e;
-    this.closeImageCropping();
+    this.imagePreview = null;
     this.coverImage = this.dataURLtoFile(
       this.coverImagePreview as string,
       this.userProfile.email.split('@')[0]

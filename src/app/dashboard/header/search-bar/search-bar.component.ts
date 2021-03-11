@@ -93,15 +93,16 @@ export class SearchBarComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = false;
     this.isSearchBarOpen = false;
+    this.searchKeyWord = '';
     this.options = [];
     this.myControl.valueChanges
       .pipe(
         debounceTime(300),
         tap(() => (this.isLoading = true)),
-        switchMap((value: string) => {
-          this.searchKeyWord = value;
+        switchMap((key: string) => {
+          this.searchKeyWord = key;
           return this.connectionService
-            .getSearchResults(value)
+            .getSearchResults(key, 6)
             .pipe(finalize(() => (this.isLoading = false)));
         })
       )
@@ -111,17 +112,15 @@ export class SearchBarComponent implements OnInit {
   }
 
   allFriends() {
-    this.router.navigate(['/dashboard', 'search', this.searchKeyWord], {
-      relativeTo: this.route,
-    });
+    this.router.navigate(['/dashboard', 'search', this.searchKeyWord], {});
   }
 
   viewProfile(id: string) {
     if (id === this.userProfileService.getProfile().sportizenId) {
-      this.router.navigate(['../../', 'profile'], { relativeTo: this.route });
+      this.router.navigate(['/dashboard', 'profile'], {});
     } else {
       this.connectionService.searchedSportizenId = id;
-      this.router.navigate(['../../', 'profile', id], { relativeTo: this.route });
+      this.router.navigate(['/dashboard', 'profile', id], {});
     }
   }
 
