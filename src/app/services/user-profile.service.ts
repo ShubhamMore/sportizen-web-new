@@ -46,8 +46,6 @@ export class UserProfileService {
   constructor(private httpService: HttpService) {}
 
   saveProfile(profile: FormData) {
-    console.log('save');
-
     const data = { api: 'saveUserProfile', data: profile };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {

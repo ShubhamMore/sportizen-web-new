@@ -140,7 +140,6 @@ export class DashboardFeedComponent implements OnInit {
   }
 
   sharePost(postId: string) {
-    console.log(postId);
     const dialogRef = this.dialog.open(FeedShareComponent, {
       data: { postId: postId },
       maxHeight: '90vh',
@@ -162,10 +161,6 @@ export class DashboardFeedComponent implements OnInit {
   }
 
   callViewPost(postId: string, alreadyViewed: boolean, postIndex: number, event: any) {
-    if (event) {
-      console.log(postId);
-    }
-
     if (!alreadyViewed) {
       this.postViewService.viewPost(postId).subscribe((res: any) => {
         this.postService.postList[postIndex].alreadyViewed = true;
@@ -196,7 +191,5 @@ export class DashboardFeedComponent implements OnInit {
     }
   }
 
-  scrolledIndexChange(event: any) {
-    console.log(event);
-  }
+  scrolledIndexChange(event: any) {}
 }

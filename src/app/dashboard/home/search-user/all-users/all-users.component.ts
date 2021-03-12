@@ -1,6 +1,7 @@
+import { UserProfileService } from './../../../../services/user-profile.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ConnectionService } from './../../../../services/connection.service';
 
 @Component({
@@ -9,23 +10,40 @@ import { ConnectionService } from './../../../../services/connection.service';
   styleUrls: ['./all-users.component.scss'],
 })
 export class AllUsersComponent implements OnInit {
-  searchResults: any;
+  searchResults: any[];
+  sportizenId: string;
+  searchKeyword: string;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
+    private userProfileService: UserProfileService,
     private connectionService: ConnectionService,
     public snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
+    this.sportizenId = this.userProfileService.getProfile().sportizenId;
+
     this.route.params.subscribe((param: Params) => {
       const searchKeyword = param.searchKeyword;
+      this.searchKeyword = searchKeyword;
+      this.searchResults = [];
       if (searchKeyword) {
-        this.connectionService.getSearchResults(searchKeyword).subscribe((res: any) => {
+        this.connectionService.getSearchResults(searchKeyword).subscribe((res: any[]) => {
           this.searchResults = res;
         });
       }
     });
+  }
+
+  viewProfile(id: string) {
+    if (id === this.sportizenId) {
+      this.router.navigate(['/dashboard', 'profile'], {});
+    } else {
+      this.connectionService.searchedSportizenId = id;
+      this.router.navigate(['/dashboard', 'profile', id], {});
+    }
   }
 
   followUnfollow(name: string, sportizenId: string, connectionStatus: string, i: number) {

@@ -36,7 +36,6 @@ export class DashboardSideNavComponent implements OnInit, OnDestroy {
         this.loading = false;
         this.userProfileService.setProfile(this.userProfile);
         if (this.userProfile.profileCompleted === '0') {
-          // console.log('please complete ur profile');
           this.router.navigate(['/edit-profile'], { relativeTo: this.route });
         }
 

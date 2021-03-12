@@ -12,8 +12,9 @@ interface Connection {
   name: string;
   email: string;
   userImageURL: string;
-  mutuleConnections: string;
   sportizenId: string;
+  mutuleConnections?: string;
+  connectionStatus?: string;
 }
 
 @Component({
@@ -78,6 +79,30 @@ export class ProfileDetailsComponent implements OnInit {
     this.userProfileService.getMyFollowings().subscribe(
       (followings: Connection[]) => {
         this.followings = followings;
+      },
+      (error: any) => {}
+    );
+  }
+
+  unfollow(name: string, sportizenId: string, i: number) {
+    this.connectionService.unfollowConnection(sportizenId).subscribe(
+      (res: any) => {
+        this.followers.splice(i);
+        this._snackBar.open(`You unfollowed  ${name}`, null, {
+          duration: 2000,
+        });
+      },
+      (error: any) => {}
+    );
+  }
+
+  remove(name: string, sportizenId: string, i: number) {
+    this.connectionService.removeFollowerConnection(sportizenId).subscribe(
+      (res: any) => {
+        this.followings.splice(i);
+        this._snackBar.open(`You Removed ${name}`, null, {
+          duration: 2000,
+        });
       },
       (error: any) => {}
     );
@@ -190,6 +215,7 @@ export class ProfileDetailsComponent implements OnInit {
       );
     }
   }
+
   editStory() {
     this.story = this.userProfile.story;
     this.storyEdit = true;

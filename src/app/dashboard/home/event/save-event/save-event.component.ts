@@ -158,7 +158,6 @@ export class SaveEventComponent implements OnInit, OnDestroy {
   }
 
   changeState(name: string) {
-    console.log(name);
     this.cities = this.countryService.getCities(name);
   }
 
@@ -199,10 +198,8 @@ export class SaveEventComponent implements OnInit, OnDestroy {
 
   deleteImage(id: string, imageId: string, i: number) {
     this.loading = true;
-    console.log(id, i);
     this.eventService.deleteEventImage(id, imageId, i).subscribe(
       (res: any) => {
-        console.log(res, i, this.event.images.length);
         this.event.images.splice(i, 1);
         this.loading = false;
       },

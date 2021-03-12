@@ -3,14 +3,16 @@
     <img
       class="cover-photo"
       [src]="userProfile.userCoverImageURL"
-      onerror="this.src='../../../../assets/images/user.png'"
+      loading="lazy"
+      onerror="this.src='../../../../../assets/images/cover-image.jpg'"
     />
 
     <div class="profile-image">
       <div class="edit-img-container">
         <img
           [src]="userProfile.userImageURL"
-          onerror="this.src='../../../../assets/images/user.png'"
+          loading="lazy"
+          onerror="this.src='../../../../../assets/images/user.png'"
         />
       </div>
     </div>
@@ -62,19 +64,19 @@
               <div class="col-12">
                 <div class="photos-container">
                   <div class="photo-box">
-                    <img class="photo" src="https://picsum.photos/200" />
+                    <img class="photo" src="https://picsum.photos/200" loading="lazy" />
                   </div>
 
                   <div class="photo-box">
-                    <img class="photo" src="https://picsum.photos/200" />
+                    <img class="photo" src="https://picsum.photos/200" loading="lazy" />
                   </div>
 
                   <div class="photo-box">
-                    <img class="photo" src="https://picsum.photos/200" />
+                    <img class="photo" src="https://picsum.photos/200" loading="lazy" />
                   </div>
 
                   <div class="photo-box">
-                    <img class="photo" src="https://picsum.photos/200" />
+                    <img class="photo" src="https://picsum.photos/200" loading="lazy" />
                   </div>
                 </div>
               </div>
@@ -92,7 +94,12 @@
             ><div class="row" *ngIf="followers.length > 0; else noFollowers">
               <div class="col-12">
                 <div class="friend-mini-card" *ngFor="let follower of followers; let i = index">
-                  <img class="friend-mini-photo" [src]="follower.userImageURL" />
+                  <img
+                    class="friend-mini-photo"
+                    [src]="follower.userImageURL"
+                    loading="lazy"
+                    onerror="this.src='./../../../../../assets/images/user.png'"
+                  />
                   <div class="friend-mini-details">
                     <div
                       class="friend-mini-name pointer"
@@ -100,11 +107,27 @@
                     >
                       {{ follower.name | capitalizeEachWord }}
                     </div>
-                    <div class="friend-mini-mutual-info">
+                    <div
+                      class="friend-mini-mutual-info"
+                      *ngIf="follower.sportizenId !== sportizenId"
+                    >
                       {{ follower.mutuleConnections ? follower.mutuleConnections : 0 }} Mutual
                       Friends
                     </div>
-                    <div class="friend-mini-btn">Unfollow</div>
+                    <div
+                      class="friend-mini-btn"
+                      *ngIf="follower.sportizenId !== sportizenId"
+                      [ngClass]="
+                        follower.connectionStatus === 'following' ? 'connected' : 'not-connected'
+                      "
+                      (click)="
+                        follower.connectionStatus === 'following'
+                          ? unfollowUser(follower.name, follower.sportizenId, i)
+                          : followUser(follower.name, follower.sportizenId, i)
+                      "
+                    >
+                      {{ follower.connectionStatus === 'following' ? 'Unfollow' : 'Follow' }}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -122,7 +145,12 @@
             ><div class="row" *ngIf="followings.length > 0; else noFollowings">
               <div class="col-12">
                 <div class="friend-mini-card" *ngFor="let following of followings; let i = index">
-                  <img class="friend-mini-photo" [src]="following.userImageURL" />
+                  <img
+                    class="friend-mini-photo"
+                    [src]="following.userImageURL"
+                    loading="lazy"
+                    onerror="this.src='./../../../../../assets/images/user.png'"
+                  />
                   <div class="friend-mini-details">
                     <div
                       class="friend-mini-name pointer"
@@ -130,11 +158,27 @@
                     >
                       {{ following.name | capitalizeEachWord }}
                     </div>
-                    <div class="friend-mini-mutual-info">
+                    <div
+                      class="friend-mini-mutual-info"
+                      *ngIf="following.sportizenId !== sportizenId"
+                    >
                       {{ following.mutuleConnections ? following.mutuleConnections : 0 }} Mutual
                       Friends
                     </div>
-                    <div class="friend-mini-btn">Remove</div>
+                    <div
+                      class="friend-mini-btn"
+                      *ngIf="following.sportizenId !== sportizenId"
+                      [ngClass]="
+                        following.connectionStatus === 'following' ? 'connected' : 'not-connected'
+                      "
+                      (click)="
+                        following.connectionStatus === 'following'
+                          ? unfollowUser(following.name, following.sportizenId, i)
+                          : followUser(following.name, following.sportizenId, i)
+                      "
+                    >
+                      {{ following.connectionStatus === 'following' ? 'Unfollow' : 'Follow' }}
+                    </div>
                   </div>
                 </div>
               </div>

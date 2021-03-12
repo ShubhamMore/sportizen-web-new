@@ -212,13 +212,22 @@ $grey-color: #838383;
 
         .friend-mini-btn {
           cursor: pointer;
-          background-color: $primary-color;
           text-align: center;
-          color: #fff;
           width: 7rem;
           height: 1.5rem;
           line-height: 1.5rem;
           border-radius: 0.25rem;
+        }
+
+        .connected {
+          background-color: white;
+          color: $primary-color;
+          border: 1px solid $primary-color;
+        }
+
+        .not-connected {
+          background-color: $primary-color;
+          color: white;
         }
       }
     }

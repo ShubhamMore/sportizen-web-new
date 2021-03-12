@@ -10,14 +10,19 @@
     <img
       class="cover-photo"
       [src]="coverImagePreview"
-      onerror="this.src='../../../../assets/images/user.png'"
+      loading="lazy"
+      onerror="this.src='../../../../../assets/images/cover-image.jpg'"
     />
 
     <div class="profile-image">
       <div class="edit-img-container">
         <input type="file" #profileImagePicker (change)="onImagePicked($event, false)" />
 
-        <img [src]="profileImagePreview" onerror="this.src='../../../../assets/images/user.png'" />
+        <img
+          [src]="profileImagePreview"
+          onerror="this.src='../../../../../assets/images/user.png'"
+          loading="lazy"
+        />
 
         <div class="edit-image-icon" (click)="profileImagePicker.click()">
           <i class="fa fa-camera" aria-hidden="true"></i>
@@ -80,19 +85,19 @@
               <div class="col-12">
                 <div class="photos-container">
                   <div class="photo-box">
-                    <img class="photo" src="https://picsum.photos/200" />
+                    <img class="photo" src="https://picsum.photos/200" loading="lazy" />
                   </div>
 
                   <div class="photo-box">
-                    <img class="photo" src="https://picsum.photos/200" />
+                    <img class="photo" src="https://picsum.photos/200" loading="lazy" />
                   </div>
 
                   <div class="photo-box">
-                    <img class="photo" src="https://picsum.photos/200" />
+                    <img class="photo" src="https://picsum.photos/200" loading="lazy" />
                   </div>
 
                   <div class="photo-box">
-                    <img class="photo" src="https://picsum.photos/200" />
+                    <img class="photo" src="https://picsum.photos/200" loading="lazy" />
                   </div>
                 </div>
               </div>
@@ -110,7 +115,12 @@
             ><div class="row" *ngIf="followers.length > 0; else noFollowers">
               <div class="col-12">
                 <div class="friend-mini-card" *ngFor="let follower of followers; let i = index">
-                  <img class="friend-mini-photo" [src]="follower.userImageURL" />
+                  <img
+                    class="friend-mini-photo"
+                    [src]="follower.userImageURL"
+                    loading="lazy"
+                    onerror="this.src='./../../../../../assets/images/user.png'"
+                  />
                   <div class="friend-mini-details">
                     <div
                       class="friend-mini-name pointer"
@@ -122,7 +132,12 @@
                       {{ follower.mutuleConnections ? follower.mutuleConnections : 0 }} Mutual
                       Friends
                     </div>
-                    <div class="friend-mini-btn">Unfollow</div>
+                    <div
+                      class="friend-mini-btn connected"
+                      (click)="unfollow(follower.name, follower.sportizenId, i)"
+                    >
+                      Unfollow
+                    </div>
                   </div>
                 </div>
               </div>
@@ -140,7 +155,12 @@
             ><div class="row" *ngIf="followings.length > 0; else noFollowings">
               <div class="col-12">
                 <div class="friend-mini-card" *ngFor="let following of followings; let i = index">
-                  <img class="friend-mini-photo" [src]="following.userImageURL" />
+                  <img
+                    class="friend-mini-photo"
+                    [src]="following.userImageURL"
+                    loading="lazy"
+                    onerror="this.src='./../../../../../assets/images/user.png'"
+                  />
                   <div class="friend-mini-details">
                     <div
                       class="friend-mini-name pointer"
@@ -152,7 +172,12 @@
                       {{ following.mutuleConnections ? following.mutuleConnections : 0 }} Mutual
                       Friends
                     </div>
-                    <div class="friend-mini-btn">Remove</div>
+                    <div
+                      class="friend-mini-btn connected"
+                      (click)="remove(following.name, following.sportizenId, i)"
+                    >
+                      Remove
+                    </div>
                   </div>
                 </div>
               </div>

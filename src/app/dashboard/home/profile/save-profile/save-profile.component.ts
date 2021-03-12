@@ -54,9 +54,7 @@ export class SaveProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    navigator.geolocation.getCurrentPosition((location) => {
-      // console.log(location);
-    });
+    navigator.geolocation.getCurrentPosition((location) => {});
 
     this.addSportInterest = false;
 

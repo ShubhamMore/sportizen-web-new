@@ -326,7 +326,7 @@
                         class="image-container"
                         *ngFor="let image of eventImagePreview; let i = index"
                       >
-                        <img [src]="image" class="image" [alt]="" />
+                        <img [src]="image" class="image" [alt]=""  loading="lazy"/>
 
                         <div class="middle">
                           <a class="remove" (click)="removeImage(i)"
@@ -340,7 +340,7 @@
                           class="image-container"
                           *ngFor="let image of event.images; let i = index"
                         >
-                          <img [src]="image.secureUrl" class="image" [alt]="image.imageName" />
+                          <img [src]="image.secureUrl" class="image" [alt]="image.imageName"  loading="lazy"/>
 
                           <div class="middle">
                             <a class="remove" (click)="deleteImage(event._id, image._id, i)">

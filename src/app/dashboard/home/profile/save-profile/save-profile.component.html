@@ -12,7 +12,13 @@
           <div class="img-container">
             <input type="file" #filePicker (change)="onImagePicked($event)" />
 
-            <img class="profile-image" [src]="profileImagePreview" [alt]="userProfile.name" />
+            <img
+              class="profile-image"
+              [src]="profileImagePreview"
+              [alt]="userProfile.name"
+              loading="lazy"
+              onerror="this.src='./../../../../../assets/images/user.png'"
+            />
 
             <div class="edit-image-icon" (click)="filePicker.click()">
               <i class="fa fa-camera" aria-hidden="true"></i>

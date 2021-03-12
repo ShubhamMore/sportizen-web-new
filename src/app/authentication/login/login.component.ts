@@ -85,7 +85,6 @@ export class LoginComponent implements OnInit {
   }
 
   signInWithGoogle(): void {
-    // this.googleAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then((x) => console.log(x));
     this.googleAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then((user) => {
       this.loading = true;
       this.userService.checkUser(user.email).subscribe(

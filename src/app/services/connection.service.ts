@@ -16,7 +16,6 @@ export class ConnectionService {
   }
 
   getSearchResults(searchName: string, limit?: number) {
-    console.log(searchName);
     const data = { api: 'searchNewConnections', data: { searchName, limit } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
@@ -42,6 +41,18 @@ export class ConnectionService {
 
   unfollowConnection(followedUserId: string) {
     const data = { api: 'unfollowConnection', data: { followedUser: followedUserId } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      })
+    );
+  }
+
+  removeFollowerConnection(primaryUserId: string) {
+    const data = { api: 'removeFollowerConnection', data: { primaryUser: primaryUserId } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

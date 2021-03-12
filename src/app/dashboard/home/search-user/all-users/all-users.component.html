@@ -1,21 +1,25 @@
 <div class="connection-list-container">
-  <h2 class="bold-text">Your Connections</h2>
+  <h2 class="bold-text">Search Results for '{{ searchKeyword }}'</h2>
   <!-- <input type="text" class="search-bar" placeholder="Search Friends" /> -->
   <div class="row">
     <div class="col-12">
       <div class="connection-card" *ngFor="let searchResult of searchResults; let i = index">
         <mat-card>
           <mat-card-content>
-            <img class="connection-photo" [src]="searchResult.userImageURL" />
+            <img
+              class="connection-photo"
+              [src]="searchResult.userImageURL"
+              loading="lazy"
+              onerror="this.src='./../../../../../assets/images/user.png'"
+            />
             <div class="connection-details">
-              <div
-                class="connection-name"
-                matTooltipHideDelay="100"
-                [matTooltip]="searchResult.name"
-              >
-                {{ searchResult.name }}
+              <div class="connection-name pointer" (click)="viewProfile(searchResult.sportizenId)">
+                {{ searchResult.name | capitalizeEachWord }}
               </div>
-              <div class="connection-mutual-info">8 Mutual friends</div>
+              <div class="connection-mutual-info">
+                {{ searchResult.mutuleConnections ? searchResult.mutuleConnections : 0 }} Mutual
+                friends
+              </div>
               <div
                 class="connection-btn"
                 [ngClass]="
