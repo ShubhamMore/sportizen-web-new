@@ -48,19 +48,35 @@ export class AllUsersComponent implements OnInit {
 
   followUnfollow(name: string, sportizenId: string, connectionStatus: string, i: number) {
     if (connectionStatus === 'following') {
-      this.connectionService.unfollowConnection(sportizenId).subscribe((res: any) => {
-        this.searchResults[i].connectionStatus = 'not-connected';
-        this.snackBar.open(`You unfollowed  ${name}`, null, {
-          duration: 2000,
-        });
-      });
+      this.connectionService.unfollowConnection(sportizenId).subscribe(
+        (res: any) => {
+          this.searchResults[i].connectionStatus = 'not-connected';
+          this.snackBar.open(`You unfollowed  ${name}`, null, {
+            duration: 2000,
+          });
+        },
+        (error: any) => {
+          this.snackBar.open(error, null, {
+            duration: 2000,
+            panelClass: ['error-snackbar'],
+          });
+        }
+      );
     } else {
-      this.connectionService.sendConnectionRequest(sportizenId).subscribe((res: any) => {
-        this.searchResults[i].connectionStatus = res.status;
-        this.snackBar.open(`You are now following ${name}`, null, {
-          duration: 2000,
-        });
-      });
+      this.connectionService.sendConnectionRequest(sportizenId).subscribe(
+        (res: any) => {
+          this.searchResults[i].connectionStatus = res.status;
+          this.snackBar.open(`You are now following ${name}`, null, {
+            duration: 2000,
+          });
+        },
+        (error: any) => {
+          this.snackBar.open(error, null, {
+            duration: 2000,
+            panelClass: ['error-snackbar'],
+          });
+        }
+      );
     }
   }
 }

@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserProfileModel } from './../../../../models/user-profile.model';
 import { DashboardSideDrawerService } from './../../../../services/dashboard-side-drawer.service';
 import { UserProfileService } from './../../../../services/user-profile.service';
+import * as $ from 'jquery';
 
 interface Connection {
   name: string;
@@ -38,7 +39,7 @@ export class ProfileDetailsComponent implements OnInit {
   constructor(
     private userProfileService: UserProfileService,
     private dashboardSideDrawerService: DashboardSideDrawerService,
-    private _snackBar: MatSnackBar,
+    private snackBar: MatSnackBar,
     public dialog: MatDialog,
     private connectionService: ConnectionService,
     private router: Router,
@@ -49,6 +50,9 @@ export class ProfileDetailsComponent implements OnInit {
     this.storyEdit = false;
     this.dashboardSideDrawerService.close();
     this.userProfile = this.userProfileService.getProfile();
+    if (!this.userProfile.story) {
+      this.storyEdit = true;
+    }
     this.profileImagePreview = this.userProfile.userImageURL;
     this.coverImagePreview = this.userProfile.userCoverImageURL;
     this.followers = [];
@@ -88,11 +92,17 @@ export class ProfileDetailsComponent implements OnInit {
     this.connectionService.unfollowConnection(sportizenId).subscribe(
       (res: any) => {
         this.followers.splice(i, 1);
-        this._snackBar.open(`You unfollowed  ${name}`, null, {
+        this.snackBar.open(`You unfollowed  ${name}`, null, {
           duration: 2000,
+          panelClass: ['success-snackbar'],
         });
       },
-      (error: any) => {}
+      (error: any) => {
+        this.snackBar.open(error, null, {
+          duration: 2000,
+          panelClass: ['error-snackbar'],
+        });
+      }
     );
   }
 
@@ -100,11 +110,17 @@ export class ProfileDetailsComponent implements OnInit {
     this.connectionService.removeFollowerConnection(sportizenId).subscribe(
       (res: any) => {
         this.followings.splice(i, 1);
-        this._snackBar.open(`You Removed ${name}`, null, {
+        this.snackBar.open(`You Removed ${name}`, null, {
           duration: 2000,
+          panelClass: ['success-snackbar'],
         });
       },
-      (error: any) => {}
+      (error: any) => {
+        this.snackBar.open(error, null, {
+          duration: 2000,
+          panelClass: ['error-snackbar'],
+        });
+      }
     );
   }
 
@@ -183,11 +199,17 @@ export class ProfileDetailsComponent implements OnInit {
       this.userProfileService.saveProfileImage(profile).subscribe(
         (updatedUserProfile: UserProfileModel) => {
           this.userProfileService.setProfile(updatedUserProfile);
-          this._snackBar.open('Profile Photo Updated Successfully', null, {
+          this.snackBar.open('Profile Photo Updated Successfully', null, {
             duration: 2000,
+            panelClass: ['success-snackbar'],
           });
         },
-        (error: any) => {}
+        (error: any) => {
+          this.snackBar.open(error, null, {
+            duration: 2000,
+            panelClass: ['error-snackbar'],
+          });
+        }
       );
     }
   }
@@ -207,11 +229,17 @@ export class ProfileDetailsComponent implements OnInit {
       this.userProfileService.saveCoverImage(profile).subscribe(
         (updatedUserProfile: UserProfileModel) => {
           this.userProfileService.setProfile(updatedUserProfile);
-          this._snackBar.open('Cover Photo Updated Successfully', null, {
+          this.snackBar.open('Cover Photo Updated Successfully', null, {
             duration: 2000,
+            panelClass: ['success-snackbar'],
           });
         },
-        (error: any) => {}
+        (error: any) => {
+          this.snackBar.open(error, null, {
+            duration: 2000,
+            panelClass: ['error-snackbar'],
+          });
+        }
       );
     }
   }
@@ -222,17 +250,30 @@ export class ProfileDetailsComponent implements OnInit {
   }
 
   saveStory() {
-    const profile: any = { _id: this.userProfile._id, story: this.story };
-    this.userProfileService.saveUserStory(profile).subscribe(
-      (updatedUserProfile: UserProfileModel) => {
-        this.userProfileService.setStory(this.story);
-        this._snackBar.open('Intro Section Updated Successfully', null, {
-          duration: 2000,
-        });
-      },
-      (error: any) => {}
-    );
-    this.storyEdit = false;
+    if (this.story) {
+      const profile: any = { _id: this.userProfile._id, story: this.story };
+      this.userProfileService.saveUserStory(profile).subscribe(
+        (updatedUserProfile: UserProfileModel) => {
+          this.userProfileService.setStory(this.story);
+          this.snackBar.open('Story Updated Successfully', null, {
+            duration: 2000,
+            panelClass: ['success-snackbar'],
+          });
+          this.storyEdit = false;
+        },
+        (error: any) => {
+          this.snackBar.open(error, null, {
+            duration: 2000,
+            panelClass: ['error-snackbar'],
+          });
+        }
+      );
+    } else {
+      this.snackBar.open('Story id Required', null, {
+        duration: 2000,
+        panelClass: ['error-snackbar'],
+      });
+    }
   }
 
   dataURLtoFile(dataURL: string, filename: string) {

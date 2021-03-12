@@ -231,6 +231,16 @@ $grey-color: #838383;
         }
       }
     }
+
+    .connection-container[max-width~='320px'] {
+      .friend-mini-card {
+        width: 100%;
+        .friend-mini-details {
+          display: none;
+          width: calc(100% - 3rem);
+        }
+      }
+    }
   }
 }
 

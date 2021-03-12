@@ -18,7 +18,6 @@ export class ListEventComponent implements OnInit {
 
   constructor(
     private eventService: EventService,
-    private _userProfileService: UserProfileService,
     private userProfileService: UserProfileService,
     private connectionService: ConnectionService,
     private router: Router,
@@ -45,7 +44,7 @@ export class ListEventComponent implements OnInit {
   }
 
   viewProfile(id: string) {
-    if (id === this._userProfileService.getProfile().sportizenId) {
+    if (id === this.userProfileService.getProfile().sportizenId) {
       this.router.navigate(['../../', 'profile'], { relativeTo: this.route });
     } else {
       this.connectionService.searchedSportizenId = id;

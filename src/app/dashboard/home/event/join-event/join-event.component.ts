@@ -23,7 +23,6 @@ export class JoinEventComponent implements OnInit, OnDestroy {
 
   constructor(
     private eventService: EventService,
-    private _userProfileService: UserProfileService,
     private eventTeamRegistrationService: EventTeamRegistrationService,
     private eventPlayerRegistrationService: EventPlayerRegistrationService,
     private userProfileService: UserProfileService,
@@ -135,7 +134,7 @@ export class JoinEventComponent implements OnInit, OnDestroy {
   }
 
   viewProfile(id: string) {
-    if (id === this._userProfileService.getProfile().sportizenId) {
+    if (id === this.userProfileService.getProfile().sportizenId) {
       this.router.navigate(['../../', 'profile'], { relativeTo: this.route });
     } else {
       this.connectionService.searchedSportizenId = id;

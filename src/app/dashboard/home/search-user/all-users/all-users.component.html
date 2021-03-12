@@ -1,6 +1,6 @@
 <div class="connection-list-container">
   <h2 class="bold-text">Search Results for '{{ searchKeyword }}'</h2>
-  <!-- <input type="text" class="search-bar" placeholder="Search Friends" /> -->
+  <!-- <input type="text" class="search-bar" placeholder="Search Sportizen" /> -->
   <div class="row">
     <div class="col-12">
       <div class="connection-card" *ngFor="let searchResult of searchResults; let i = index">
@@ -18,7 +18,7 @@
               </div>
               <div class="connection-mutual-info">
                 {{ searchResult.mutuleConnections ? searchResult.mutuleConnections : 0 }} Mutual
-                friends
+                Sportizen
               </div>
               <div
                 class="connection-btn"

@@ -33,16 +33,17 @@ export class DashboardFeedComponent implements OnInit {
     public postLikeService: PostLikeService,
     public postSaveService: PostSaveService,
     private postViewService: PostViewService,
-    private _commentsSheet: MatBottomSheet,
+    private commentsSheet: MatBottomSheet,
     public dialog: MatDialog,
-    private _router: Router,
+    private router: Router,
     private route: ActivatedRoute,
-    private _userProfileService: UserProfileService,
-    private _connectionService: ConnectionService,
+    private userProfileService: UserProfileService,
+    private connectionService: ConnectionService,
     public authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    // tslint:disable-next-line: deprecation
     this.authService.getUser().subscribe((user: User) => {
       if (user) {
         this.sportizenUser = user.sportizenId;
@@ -130,7 +131,7 @@ export class DashboardFeedComponent implements OnInit {
   }
 
   openCommentsSheet(postId: string, imageUrl: string) {
-    this._commentsSheet.open(FeedCommentComponent, {
+    this.commentsSheet.open(FeedCommentComponent, {
       panelClass: 'comment-bottom-sheet',
       data: {
         postId,
@@ -141,21 +142,21 @@ export class DashboardFeedComponent implements OnInit {
 
   sharePost(postId: string) {
     const dialogRef = this.dialog.open(FeedShareComponent, {
-      data: { postId: postId },
+      data: { postId },
       maxHeight: '90vh',
     });
   }
 
   showLikeDetails(postId: string) {
     const dialogRef = this.dialog.open(FeedLikesComponent, {
-      data: { likeType: LikeType.Post, postId: postId },
+      data: { likeType: LikeType.Post, postId },
       maxHeight: '90vh',
     });
   }
 
   showViewDetails(postId: string) {
     const dialogRef = this.dialog.open(FeedViewComponent, {
-      data: { likeType: LikeType.Post, postId: postId },
+      data: { likeType: LikeType.Post, postId },
       maxHeight: '90vh',
     });
   }
@@ -171,12 +172,12 @@ export class DashboardFeedComponent implements OnInit {
   }
 
   viewProfile(id: string, postId: any) {
-    if (id === this._userProfileService.getProfile().sportizenId) {
-      this._router.navigate(['/dashboard', 'profile'], { relativeTo: this.route });
+    if (id === this.userProfileService.getProfile().sportizenId) {
+      this.router.navigate(['/dashboard', 'profile'], { relativeTo: this.route });
     } else {
-      this._connectionService.searchedSportizenId = id;
+      this.connectionService.searchedSportizenId = id;
       this.postService.onScreenPostId = postId;
-      this._router.navigate(['/dashboard', 'profile', id], { relativeTo: this.route });
+      this.router.navigate(['/dashboard', 'profile', id], { relativeTo: this.route });
     }
   }
 

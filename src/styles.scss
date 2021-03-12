@@ -157,6 +157,14 @@ input::-webkit-inner-spin-button {
     outline: none !important;
   }
 }
+// snackbar
+.success-snackbar {
+  color: #7ec735;
+}
+
+.error-snackbar {
+  color: #f04646;
+}
 
 /*Icons colors*/
 .icon-yellow {

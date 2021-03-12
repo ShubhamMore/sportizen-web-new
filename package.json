@@ -49,6 +49,7 @@
     "bson": "^4.2.2",
     "compression": "^1.7.4",
     "crypto-js": "^4.0.0",
+    "css-element-queries": "^1.2.3",
     "env-cmd": "^10.1.0",
     "express": "^4.17.1",
     "font-awesome": "^4.7.0",

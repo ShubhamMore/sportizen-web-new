@@ -20,9 +20,9 @@ interface Connection {
   styleUrls: ['./user-profile.component.scss'],
 })
 export class UserProfileComponent implements OnInit {
+  loading: boolean;
   userProfileId: string;
   userProfile: UserProfileModel;
-  loading: boolean;
   connectionStatus: string;
   followers: Connection[];
   followings: Connection[];
@@ -36,6 +36,7 @@ export class UserProfileComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
+    // tslint:disable-next-line: deprecation
     this.activatedRoute.params.subscribe((param: Params) => {
       this.ngOnInit();
     });
@@ -46,21 +47,27 @@ export class UserProfileComponent implements OnInit {
 
     this.connectionStatus = '';
     this.sportizenId = this.userProfileService.getProfile().sportizenId;
-    this.userProfileId = this.connectionService.searchedSportizenId;
     this.followers = [];
     this.followings = [];
+    // tslint:disable-next-line: deprecation
+    this.activatedRoute.params.subscribe((param: Params) => {
+      this.userProfileId = param.id;
 
-    if (this.userProfileId) {
-      this.userProfileService
-        .getUserProfile(this.userProfileId)
-        .subscribe((userProfile: UserProfileModel) => {
-          this.userProfile = userProfile;
-          this.setConnectionStatus(userProfile.connection);
-          this.getFollowers();
-          this.getFollowings();
-          this.loading = false;
-        });
-    }
+      if (this.userProfileId) {
+        this.userProfileService
+          .getUserProfile(this.userProfileId)
+          .subscribe((userProfile: UserProfileModel) => {
+            this.userProfile = userProfile;
+
+            this.setConnectionStatus(userProfile.connection);
+
+            this.getFollowers();
+            this.getFollowings();
+
+            this.loading = false;
+          });
+      }
+    });
   }
 
   viewProfile(id: string) {
@@ -110,9 +117,15 @@ export class UserProfileComponent implements OnInit {
 
         this.snackBar.open(`You are now following ${name}`, null, {
           duration: 2000,
+          panelClass: ['success-snackbar'],
         });
       },
-      (error: any) => {}
+      (error: any) => {
+        this.snackBar.open(error, null, {
+          duration: 2000,
+          panelClass: ['error-snackbar'],
+        });
+      }
     );
   }
 
@@ -137,9 +150,15 @@ export class UserProfileComponent implements OnInit {
 
         this.snackBar.open(`You unfollowed  ${name}`, null, {
           duration: 2000,
+          panelClass: ['success-snackbar'],
         });
       },
-      (error: any) => {}
+      (error: any) => {
+        this.snackBar.open(error, null, {
+          duration: 2000,
+          panelClass: ['error-snackbar'],
+        });
+      }
     );
   }
 
@@ -155,19 +174,35 @@ export class UserProfileComponent implements OnInit {
 
   follow() {
     if (this.connectionStatus === ConnectionStatus.following) {
-      this.connectionService.unfollowConnection(this.userProfileId).subscribe((res: any) => {
-        this.setConnectionStatus(ConnectionStatus.notConnected);
-        this.snackBar.open(`You unfollowed  ${this.userProfile.name}`, null, {
-          duration: 2000,
-        });
-      });
+      this.connectionService.unfollowConnection(this.userProfileId).subscribe(
+        (res: any) => {
+          this.setConnectionStatus(ConnectionStatus.notConnected);
+          this.snackBar.open(`You unfollowed  ${this.userProfile.name}`, null, {
+            duration: 2000,
+          });
+        },
+        (error: any) => {
+          this.snackBar.open(error, null, {
+            duration: 2000,
+            panelClass: ['error-snackbar'],
+          });
+        }
+      );
     } else {
-      this.connectionService.sendConnectionRequest(this.userProfileId).subscribe((res: any) => {
-        this.setConnectionStatus(res.status);
-        this.snackBar.open(`You are now following ${this.userProfile.name}`, null, {
-          duration: 2000,
-        });
-      });
+      this.connectionService.sendConnectionRequest(this.userProfileId).subscribe(
+        (res: any) => {
+          this.setConnectionStatus(res.status);
+          this.snackBar.open(`You are now following ${this.userProfile.name}`, null, {
+            duration: 2000,
+          });
+        },
+        (error: any) => {
+          this.snackBar.open(error, null, {
+            duration: 2000,
+            panelClass: ['error-snackbar'],
+          });
+        }
+      );
     }
   }
 }

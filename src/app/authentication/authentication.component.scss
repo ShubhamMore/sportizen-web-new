@@ -178,6 +178,9 @@ $button-active-blue: #1669f2;
 
     .auth-form-container {
       padding: 1.5rem;
+      top: 40%;
+      -ms-transform: translateY(-40%);
+      transform: translateY(-40%);
 
       h1 {
         font-size: 1.5rem;

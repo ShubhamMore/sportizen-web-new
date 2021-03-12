@@ -134,6 +134,7 @@ export class AuthService {
 
   autoLogin(userData: UserData) {
     this.loadUser(userData);
+    // tslint:disable-next-line: deprecation
     this.http.post(environment.backend + 'autoLogin', {}).subscribe(
       (response: any) => {},
       (err: any) => {
@@ -144,6 +145,7 @@ export class AuthService {
   }
 
   logout() {
+    // tslint:disable-next-line: deprecation
     return this.http.post(environment.backend + 'logout', {}).subscribe(
       (res: any) => {
         this.user.next(null);
@@ -166,6 +168,7 @@ export class AuthService {
   }
 
   logoutAll() {
+    // tslint:disable-next-line: deprecation
     return this.http.post(environment.backend + 'logoutAll', {}).subscribe(
       (res: any) => {
         this.user.next(null);

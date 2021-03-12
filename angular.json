@@ -43,6 +43,8 @@
               "src/assets/vendor/js/html5shiv.min.js",
               "src/assets/vendor/js/selectivizr.min.js",
               "node_modules/waypoints/lib/jquery.waypoints.min.js",
+              "node_modules/css-element-queries/src/ResizeSensor.js",
+              "node_modules/css-element-queries/src/ElementQueries.js",
               "src/assets/vendor/js/script.js"
             ]
           },
