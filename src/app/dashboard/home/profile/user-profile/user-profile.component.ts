@@ -5,7 +5,6 @@ import { ConnectionStatus } from './../../../../enums/connectionStatus';
 import { UserProfileModel } from './../../../../models/user-profile.model';
 import { ConnectionService } from './../../../../services/connection.service';
 import { UserProfileService } from './../../../../services/user-profile.service';
-
 interface Connection {
   name: string;
   email: string;
@@ -44,6 +43,7 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
+
     this.connectionStatus = '';
     this.sportizenId = this.userProfileService.getProfile().sportizenId;
     this.userProfileId = this.connectionService.searchedSportizenId;
@@ -89,10 +89,16 @@ export class UserProfileComponent implements OnInit {
     );
   }
 
-  followUser(name: string, sportizenId: string, followIndex: number) {
+  followUser(name: string, sportizenId: string) {
     this.connectionService.sendConnectionRequest(sportizenId).subscribe(
       (res: any) => {
-        this.followers[followIndex].connectionStatus = res.status;
+        const followerIndex = this.followers.findIndex(
+          (follower: Connection) => follower.sportizenId === sportizenId
+        );
+
+        if (followerIndex >= 0) {
+          this.followers[followerIndex].connectionStatus = res.status;
+        }
 
         const followingIndex = this.followings.findIndex(
           (following: Connection) => following.sportizenId === sportizenId
@@ -110,17 +116,23 @@ export class UserProfileComponent implements OnInit {
     );
   }
 
-  unfollowUser(name: string, sportizenId: string, followingIndex: number) {
+  unfollowUser(name: string, sportizenId: string) {
     this.connectionService.unfollowConnection(sportizenId).subscribe(
       (res: any) => {
-        this.followings[followingIndex].connectionStatus = 'not-connected';
-
         const followerIndex = this.followers.findIndex(
           (follower: Connection) => follower.sportizenId === sportizenId
         );
 
         if (followerIndex >= 0) {
           this.followers[followerIndex].connectionStatus = 'not-connected';
+        }
+
+        const followingIndex = this.followings.findIndex(
+          (following: Connection) => following.sportizenId === sportizenId
+        );
+
+        if (followingIndex >= 0) {
+          this.followings[followingIndex].connectionStatus = 'not-connected';
         }
 
         this.snackBar.open(`You unfollowed  ${name}`, null, {

@@ -87,7 +87,7 @@ export class ProfileDetailsComponent implements OnInit {
   unfollow(name: string, sportizenId: string, i: number) {
     this.connectionService.unfollowConnection(sportizenId).subscribe(
       (res: any) => {
-        this.followers.splice(i);
+        this.followers.splice(i, 1);
         this._snackBar.open(`You unfollowed  ${name}`, null, {
           duration: 2000,
         });
@@ -99,7 +99,7 @@ export class ProfileDetailsComponent implements OnInit {
   remove(name: string, sportizenId: string, i: number) {
     this.connectionService.removeFollowerConnection(sportizenId).subscribe(
       (res: any) => {
-        this.followings.splice(i);
+        this.followings.splice(i, 1);
         this._snackBar.open(`You Removed ${name}`, null, {
           duration: 2000,
         });

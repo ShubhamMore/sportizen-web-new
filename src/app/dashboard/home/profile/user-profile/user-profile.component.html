@@ -122,8 +122,8 @@
                       "
                       (click)="
                         follower.connectionStatus === 'following'
-                          ? unfollowUser(follower.name, follower.sportizenId, i)
-                          : followUser(follower.name, follower.sportizenId, i)
+                          ? unfollowUser(follower.name, follower.sportizenId)
+                          : followUser(follower.name, follower.sportizenId)
                       "
                     >
                       {{ follower.connectionStatus === 'following' ? 'Unfollow' : 'Follow' }}
@@ -173,8 +173,8 @@
                       "
                       (click)="
                         following.connectionStatus === 'following'
-                          ? unfollowUser(following.name, following.sportizenId, i)
-                          : followUser(following.name, following.sportizenId, i)
+                          ? unfollowUser(following.name, following.sportizenId)
+                          : followUser(following.name, following.sportizenId)
                       "
                     >
                       {{ following.connectionStatus === 'following' ? 'Unfollow' : 'Follow' }}
