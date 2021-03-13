@@ -1,12 +1,12 @@
 <div class="view-container">
-  <span class="float-right pointer close" mat-dialog-close>
-    <mat-icon>close</mat-icon>
-  </span>
-  <h2 mat-dialog-title *ngIf="views && views.length > 0">Views</h2>
-
-  <hr />
-
   <div mat-dialog-content>
+    <span class="float-right pointer close" mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </span>
+    <h2 mat-dialog-title *ngIf="views && views.length > 0">Views</h2>
+
+    <hr />
+
     <div *ngIf="views && views.length > 0; else noViews">
       <div *ngFor="let view of views" class="user-container">
         <div class="profile-icon">

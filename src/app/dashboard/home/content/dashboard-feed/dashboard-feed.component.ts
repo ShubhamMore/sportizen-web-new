@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from './../../../../authentication/auth/auth-model/user.model';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -15,6 +16,7 @@ import { FeedCommentComponent } from './feed-comment/feed-comment.component';
 import { FeedLikesComponent } from './feed-likes/feed-likes.component';
 import { FeedViewComponent } from './feed-view/feed-view.component';
 import { FeedShareComponent } from './feed-share/feed-share.component';
+import { ConfirmComponent } from 'src/app/@shared/confirm/confirm.component';
 
 @Component({
   selector: 'app-dashboard-feed',
@@ -35,6 +37,7 @@ export class DashboardFeedComponent implements OnInit {
     private postViewService: PostViewService,
     private commentsSheet: MatBottomSheet,
     public dialog: MatDialog,
+    public snackBar: MatSnackBar,
     private router: Router,
     private route: ActivatedRoute,
     private userProfileService: UserProfileService,
@@ -183,12 +186,32 @@ export class DashboardFeedComponent implements OnInit {
 
   deletePost(post: string, createdBy: string, i: number) {
     if (createdBy === this.sportizenUser) {
-      this.postService.deletePost(post).subscribe(
-        (res: any) => {
-          this.postService.postList.splice(i, 1);
-        },
-        (error: any) => {}
-      );
+      const dialogRef = this.dialog.open(ConfirmComponent, {
+        data: { message: 'Do yoy really want to delete this Post?' },
+        maxHeight: '90vh',
+        disableClose: true,
+      });
+
+      // tslint:disable-next-line: deprecation
+      dialogRef.afterClosed().subscribe((confirm: boolean) => {
+        if (confirm) {
+          this.postService.deletePost(post).subscribe(
+            (res: any) => {
+              this.postService.postList.splice(i, 1);
+              this.snackBar.open('Post Deleted Successfully!', null, {
+                duration: 2000,
+                panelClass: ['success-snackbar'],
+              });
+            },
+            (error: any) => {
+              this.snackBar.open(error, null, {
+                duration: 2000,
+                panelClass: ['error-snackbar'],
+              });
+            }
+          );
+        }
+      });
     }
   }
 

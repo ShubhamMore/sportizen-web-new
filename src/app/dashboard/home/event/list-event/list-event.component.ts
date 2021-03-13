@@ -1,9 +1,10 @@
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmComponent } from 'src/app/@shared/confirm/confirm.component';
 import { ConnectionService } from './../../../../services/connection.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EventService } from './../../../../services/event.service';
 import { UserProfileService } from './../../../../services/user-profile.service';
-import { AuthService } from './../../../../authentication/auth/auth-service/auth.service';
 import { EventModel } from './../../../../models/event.model';
 
 @Component({
@@ -18,6 +19,7 @@ export class ListEventComponent implements OnInit {
 
   constructor(
     private eventService: EventService,
+    private dialog: MatDialog,
     private userProfileService: UserProfileService,
     private connectionService: ConnectionService,
     private router: Router,
@@ -83,18 +85,26 @@ export class ListEventComponent implements OnInit {
 
   deleteEvent(id: string, createdUser: string, i: number) {
     if (this.userSportizenId === createdUser) {
-      const confirm = window.confirm('DO you really want to delete This Event');
-      if (confirm) {
-        this.loading = true;
-        this.eventService.deleteEvent(id).subscribe(
-          (res: any) => {
-            this.events.splice(i, 1);
-          },
-          (error: any) => {
-            this.loading = false;
-          }
-        );
-      }
+      const dialogRef = this.dialog.open(ConfirmComponent, {
+        data: { message: 'Do you really want to delete This Event?' },
+        maxHeight: '90vh',
+        disableClose: true,
+      });
+
+      // tslint:disable-next-line: deprecation
+      dialogRef.afterClosed().subscribe((confirm: boolean) => {
+        if (confirm) {
+          this.loading = true;
+          this.eventService.deleteEvent(id).subscribe(
+            (res: any) => {
+              this.events.splice(i, 1);
+            },
+            (error: any) => {
+              this.loading = false;
+            }
+          );
+        }
+      });
     }
   }
 

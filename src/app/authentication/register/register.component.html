@@ -1,5 +1,10 @@
 <div class="auth-container">
-  <form class="auth-form-container" (submit)="register()" [formGroup]="form">
+  <form
+    class="auth-form-container"
+    (submit)="register()"
+    [formGroup]="form"
+    #registerFormDirective="ngForm"
+  >
     <h1>signup</h1>
 
     <h5>Please Create Your Account</h5>

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpService } from '../../services/shared-services/http.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
 
 @Component({
   selector: 'app-forgot-password',
@@ -9,11 +9,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./forgot-password.component.scss'],
 })
 export class ForgotPasswordComponent implements OnInit {
-  form: FormGroup;
+  @ViewChild('forgotPasswordFormDirective') forgotPasswordFormDirective: FormGroupDirective;
 
   loading: boolean;
+  form: FormGroup;
 
-  constructor(private httpService: HttpService, private router: Router) {}
+  constructor(private httpService: HttpService, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.loading = true;
@@ -39,14 +40,27 @@ export class ForgotPasswordComponent implements OnInit {
 
       this.httpService.httpPost(data).subscribe(
         (res: any) => {
+          this.forgotPasswordFormDirective.resetForm();
           this.form.reset();
+          this.snackBar.open('Reset Password Link Send Successfully!', null, {
+            duration: 2000,
+            panelClass: ['success-snackbar'],
+          });
           this.loading = false;
         },
         (error: any) => {
+          this.snackBar.open(error, null, {
+            duration: 2000,
+            panelClass: ['error-snackbar'],
+          });
           this.loading = false;
         }
       );
     } else {
+      this.snackBar.open('Enter Valid Email Address', null, {
+        duration: 2000,
+        panelClass: ['error-snackbar'],
+      });
     }
   }
 }

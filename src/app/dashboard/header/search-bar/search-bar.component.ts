@@ -112,7 +112,9 @@ export class SearchBarComponent implements OnInit {
   }
 
   allFriends() {
-    this.router.navigate(['/dashboard', 'search', this.searchKeyWord], {});
+    this.router.navigate(['/dashboard', 'search', this.searchKeyWord], {
+      relativeTo: this.route,
+    });
   }
 
   viewProfile(id: string) {

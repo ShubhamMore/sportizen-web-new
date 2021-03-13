@@ -1,0 +1,19 @@
+<div class="confirm-container">
+  <mat-dialog-content>
+    <h3 class="confirm-message">{{ message }}</h3>
+
+    <button
+      type="button"
+      class="ok-btn float-right"
+      mat-raised-button
+      color="primary"
+      (click)="onConfirm()"
+    >
+      Ok
+    </button>
+
+    <button type="button" class="cancel-btn" mat-button mat-dialog-close>Cancel</button>
+
+    <br />
+  </mat-dialog-content>
+</div>

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -18,9 +19,10 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  form: FormGroup;
+  @ViewChild('loginFormDirective') loginFormDirective: FormGroupDirective;
+
   loading: boolean;
-  error: string = null;
+  form: FormGroup;
 
   user: SocialUser;
   authObs: Observable<AuthResponseData>;
@@ -30,13 +32,15 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private googleAuthService: GoogleAuthService,
     private router: Router,
+    private snackBar: MatSnackBar,
     private encryptService: EncryptService,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.loading = true;
-    this.googleAuthService.authState.subscribe((user) => {
+    // tslint:disable-next-line: deprecation
+    this.googleAuthService.authState.subscribe((user: any) => {
       this.user = user;
     });
     this.form = new FormGroup({
@@ -53,6 +57,11 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (!this.form.valid) {
+      this.snackBar.open('Invalid Login Credentials', null, {
+        duration: 2000,
+        panelClass: ['error-snackbar'],
+      });
+
       return;
     }
 
@@ -66,26 +75,44 @@ export class LoginComponent implements OnInit {
   }
 
   authSubscribe() {
+    // tslint:disable-next-line: deprecation
     this.authObs.subscribe(
       (res: any) => {
         this.loading = false;
+
         if (res.userType === 'user') {
+          this.snackBar.open('Login Successful!', null, {
+            duration: 2000,
+            panelClass: ['success-snackbar'],
+          });
+
           this.router.navigate(['/dashboard'], { relativeTo: this.route });
         } else {
+          this.snackBar.open('Invalid User', null, {
+            duration: 2000,
+            panelClass: ['error-snackbar'],
+          });
+
           this.router.navigate(['/login'], {
             relativeTo: this.route,
           });
         }
+
+        this.loginFormDirective.resetForm();
         this.form.reset();
       },
       (error: any) => {
+        this.snackBar.open(error, null, {
+          duration: 2000,
+          panelClass: ['error-snackbar'],
+        });
         this.loading = false;
       }
     );
   }
 
   signInWithGoogle(): void {
-    this.googleAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then((user) => {
+    this.googleAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then((user: any) => {
       this.loading = true;
       this.userService.checkUser(user.email).subscribe(
         (res: any) => {
@@ -111,6 +138,10 @@ export class LoginComponent implements OnInit {
           this.loading = false;
         },
         (error: any) => {
+          this.snackBar.open(error, null, {
+            duration: 2000,
+            panelClass: ['error-snackbar'],
+          });
           this.loading = false;
         }
       );

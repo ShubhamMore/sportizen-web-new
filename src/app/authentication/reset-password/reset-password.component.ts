@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, Validators, FormGroup, FormGroupDirective } from '@angular/forms';
 import { Params, ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from '../../services/shared-services/http.service';
 import { EncryptService } from '../../services/shared-services/encrypt.service';
@@ -12,9 +13,9 @@ import { Validator } from '../../@shared/validators';
   styleUrls: ['./reset-password.component.scss'],
 })
 export class ResetPasswordComponent implements OnInit {
-  form: FormGroup;
-
+  @ViewChild('resetFormDirective') resetFormDirective: FormGroupDirective;
   loading: boolean;
+  form: FormGroup;
 
   token: string;
   user: string;
@@ -24,13 +25,13 @@ export class ResetPasswordComponent implements OnInit {
     private roure: ActivatedRoute,
     private encryptService: EncryptService,
     private router: Router,
-    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar,
     private validator: Validator
   ) {}
 
   ngOnInit() {
     this.loading = true;
-    this.form = this.formBuilder.group(
+    this.form = new FormGroup(
       {
         password: new FormControl(null, {
           validators: [Validators.required],
@@ -44,10 +45,15 @@ export class ResetPasswordComponent implements OnInit {
       }
     );
 
+    // tslint:disable-next-line: deprecation
     this.roure.queryParams.subscribe((params: Params) => {
       if (params.key === undefined) {
+        this.router.navigate(['/page-not-found'], { relativeTo: this.roure });
+        this.snackBar.open('Invalid Token', null, {
+          duration: 2000,
+          panelClass: ['error-snackbar'],
+        });
       } else {
-        this.router.navigate(['/page_not_found'], { relativeTo: this.roure });
         this.token = params.key;
 
         const data = { api: 'validateToken', data: { token: this.token } };
@@ -57,14 +63,24 @@ export class ResetPasswordComponent implements OnInit {
             if (valid) {
               this.loading = false;
             } else {
-              this.router.navigate(['/page_not_found'], {
+              this.router.navigate(['/page-not-found'], {
                 relativeTo: this.roure,
+              });
+
+              this.snackBar.open('Invalid Token', null, {
+                duration: 2000,
+                panelClass: ['error-snackbar'],
               });
             }
           },
           (error: any) => {
-            this.router.navigate(['/page_not_found'], {
+            this.router.navigate(['/page-not-found'], {
               relativeTo: this.roure,
+            });
+
+            this.snackBar.open(error, null, {
+              duration: 2000,
+              panelClass: ['error-snackbar'],
             });
           }
         );
@@ -73,6 +89,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   reset() {
+    this.form.markAllAsTouched();
     if (this.form.valid && !this.form.hasError('invalidPassword')) {
       this.loading = true;
 
@@ -84,15 +101,32 @@ export class ResetPasswordComponent implements OnInit {
 
       const data = { api: 'resetPassword', data: resetPassword };
       this.httpService.httpPost(data).subscribe(
-        (val: any) => {
+        (res: any) => {
           this.form.reset();
+
+          this.resetFormDirective.resetForm();
+
+          this.snackBar.open('Password Set Successfully', null, {
+            duration: 2000,
+            panelClass: ['success-snackbar'],
+          });
+
           this.router.navigate(['/login'], { relativeTo: this.roure });
         },
         (error: any) => {
+          this.snackBar.open(error, null, {
+            duration: 2000,
+            panelClass: ['error-snackbar'],
+          });
+
           this.loading = false;
         }
       );
     } else {
+      this.snackBar.open('Invalid Form Data', null, {
+        duration: 2000,
+        panelClass: ['error-snackbar'],
+      });
     }
   }
 }

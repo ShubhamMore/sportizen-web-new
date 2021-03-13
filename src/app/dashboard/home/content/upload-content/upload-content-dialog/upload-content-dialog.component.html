@@ -1,13 +1,13 @@
 <div class="upload-container">
-  <span class="float-right pointer close" mat-dialog-close>
-    <mat-icon>close</mat-icon>
-  </span>
-
-  <h2 mat-dialog-title>Post</h2>
-
-  <hr />
-
   <mat-dialog-content>
+    <span class="float-right pointer close" mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </span>
+
+    <h2 mat-dialog-title>Post</h2>
+
+    <hr />
+
     <ng-container *ngIf="data.postImagePreview && data.postImagePreview.length > 0">
       <div class="image-container" *ngFor="let image of data.postImagePreview; let i = index">
         <img [src]="image" class="image" [alt]="" loading="lazy" />

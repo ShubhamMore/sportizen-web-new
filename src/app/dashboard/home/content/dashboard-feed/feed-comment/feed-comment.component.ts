@@ -1,3 +1,4 @@
+import { ConfirmComponent } from 'src/app/@shared/confirm/confirm.component';
 import { ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
@@ -41,15 +42,18 @@ export class FeedCommentComponent implements OnInit {
   ngOnInit(): void {
     this.mySportizenId = this.userProfileService.getProfile().sportizenId;
     this.commentsLoading = true;
+    this.comments = [];
     this.getComments();
   }
 
   private getComments() {
-    this.postCommentService.getPostComments(this.data.postId).subscribe((res: any) => {
-      this.comments = res;
-      this.commentsLoading = false;
-      this.changeDetectorRef.markForCheck();
-    });
+    this.postCommentService
+      .getPostComments(this.data.postId)
+      .subscribe((comments: CommentModel[]) => {
+        this.comments = comments;
+        this.commentsLoading = false;
+        this.changeDetectorRef.markForCheck();
+      });
   }
 
   submitComment() {
@@ -97,44 +101,62 @@ export class FeedCommentComponent implements OnInit {
   }
 
   deleteComment(id: string, index: number) {
-    if (window.confirm('Do you really want to delete this Comment')) {
-      this.postCommentService.deletePostComment(id).subscribe(
-        (res: any) => {
-          this.comments.splice(index, 1);
-          this.changeDetectorRef.markForCheck();
-          this.snackBar.open('Comment Deleted Successfully', null, {
-            duration: 2000,
-            panelClass: ['success-snackbar'],
-          });
-        },
-        (error: any) => {
-          this.snackBar.open(error, null, {
-            duration: 2000,
-            panelClass: ['error-snackbar'],
-          });
-        }
-      );
-    }
+    const dialogRef = this.dialog.open(ConfirmComponent, {
+      data: { message: 'Do you really want to delete this Comment?' },
+      maxHeight: '90vh',
+      disableClose: true,
+    });
+
+    // tslint:disable-next-line: deprecation
+    dialogRef.afterClosed().subscribe((confirm: boolean) => {
+      if (confirm) {
+        this.postCommentService.deletePostComment(id).subscribe(
+          (res: any) => {
+            this.comments.splice(index, 1);
+            this.changeDetectorRef.markForCheck();
+            this.snackBar.open('Comment Deleted Successfully', null, {
+              duration: 2000,
+              panelClass: ['success-snackbar'],
+            });
+          },
+          (error: any) => {
+            this.snackBar.open(error, null, {
+              duration: 2000,
+              panelClass: ['error-snackbar'],
+            });
+          }
+        );
+      }
+    });
   }
 
   deleteReplyComment(id: string, commentIndex: number, replyCommentIndex: number) {
-    if (window.confirm('Do you really want to delete this Comment')) {
-      this.postCommentReplyService.deletePostCommentReply(id).subscribe(
-        (res: any) => {
-          this.comments[commentIndex].replyComments.splice(replyCommentIndex, 1);
-          this.changeDetectorRef.markForCheck();
-          this.snackBar.open('Reply Comment Deleted Successfully', null, {
-            duration: 2000,
-          });
-        },
-        (error: any) => {
-          this.snackBar.open(error, null, {
-            duration: 2000,
-            panelClass: ['error-snackbar'],
-          });
-        }
-      );
-    }
+    const dialogRef = this.dialog.open(ConfirmComponent, {
+      data: { message: 'Do you really want to delete this Comment?' },
+      maxHeight: '90vh',
+      disableClose: true,
+    });
+
+    // tslint:disable-next-line: deprecation
+    dialogRef.afterClosed().subscribe((confirm: boolean) => {
+      if (confirm) {
+        this.postCommentReplyService.deletePostCommentReply(id).subscribe(
+          (res: any) => {
+            this.comments[commentIndex].replyComments.splice(replyCommentIndex, 1);
+            this.changeDetectorRef.markForCheck();
+            this.snackBar.open('Reply Comment Deleted Successfully', null, {
+              duration: 2000,
+            });
+          },
+          (error: any) => {
+            this.snackBar.open(error, null, {
+              duration: 2000,
+              panelClass: ['error-snackbar'],
+            });
+          }
+        );
+      }
+    });
   }
 
   likeUnlikeComment(commentId: string, alreadyLiked: boolean, index: number): void {

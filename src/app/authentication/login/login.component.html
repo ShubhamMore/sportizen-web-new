@@ -1,5 +1,10 @@
 <div class="auth-container">
-  <form class="auth-form-container" (submit)="login()" [formGroup]="form">
+  <form
+    class="auth-form-container"
+    (submit)="login()"
+    [formGroup]="form"
+    #loginFormDirective="ngForm"
+  >
     <h1>login</h1>
 
     <h5>Welcome back! Please Login to Your Account</h5>

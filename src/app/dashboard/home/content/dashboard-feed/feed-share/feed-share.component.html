@@ -1,13 +1,13 @@
 <div class="upload-container">
-  <span class="float-right pointer close" mat-dialog-close>
-    <mat-icon>close</mat-icon>
-  </span>
-
-  <h2 mat-dialog-title>Share Post</h2>
-
-  <hr />
-
   <mat-dialog-content>
+    <span class="float-right pointer close" mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </span>
+
+    <h2 mat-dialog-title>Share Post</h2>
+
+    <hr />
+
     <form (ngSubmit)="submitPost()" [formGroup]="form">
       <span class="share-post-label">A preview will added to post after you share it..</span>
 

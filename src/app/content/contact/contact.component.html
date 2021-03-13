@@ -18,7 +18,7 @@
       <p>We endeavor to answer within 24 hours.</p>
     </div>
 
-    <form (submit)="sendMessage()" [formGroup]="form">
+    <form (submit)="sendMessage()" [formGroup]="form" #formDirective="ngForm">
       <input
         placeholder="Name"
         type="text"
