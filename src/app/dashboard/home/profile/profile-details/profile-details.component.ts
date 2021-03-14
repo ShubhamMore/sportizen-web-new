@@ -1,3 +1,5 @@
+import { ImageModelComponent } from '../image-model/image-model.component';
+import { PostGalleryService } from './../../../../services/post-gallery.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageCroperComponent } from './../image-croper/image-croper.component';
 import { ConnectionService } from './../../../../services/connection.service';
@@ -7,7 +9,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserProfileModel } from './../../../../models/user-profile.model';
 import { DashboardSideDrawerService } from './../../../../services/dashboard-side-drawer.service';
 import { UserProfileService } from './../../../../services/user-profile.service';
-import * as $ from 'jquery';
 
 interface Connection {
   name: string;
@@ -35,10 +36,12 @@ export class ProfileDetailsComponent implements OnInit {
   story: string;
   followers: Connection[];
   followings: Connection[];
+  gallery: any[];
 
   constructor(
     private userProfileService: UserProfileService,
     private dashboardSideDrawerService: DashboardSideDrawerService,
+    private postGalleryService: PostGalleryService,
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
     private connectionService: ConnectionService,
@@ -55,8 +58,11 @@ export class ProfileDetailsComponent implements OnInit {
     }
     this.profileImagePreview = this.userProfile.userImageURL;
     this.coverImagePreview = this.userProfile.userCoverImageURL;
+    this.gallery = [];
     this.followers = [];
     this.followings = [];
+
+    this.getGallery();
     this.getFollowers();
     this.getFollowings();
   }
@@ -68,6 +74,22 @@ export class ProfileDetailsComponent implements OnInit {
       this.connectionService.searchedSportizenId = id;
       this.router.navigate(['../../', 'profile', id], {});
     }
+  }
+
+  openImageModel(image: any) {
+    const dialogRef = this.dialog.open(ImageModelComponent, {
+      data: { image },
+      maxHeight: '90vh',
+    });
+  }
+
+  getGallery() {
+    this.postGalleryService.getMyPostGallery(6).subscribe(
+      (gallery: any[]) => {
+        this.gallery = gallery;
+      },
+      (error: any) => {}
+    );
   }
 
   getFollowers() {

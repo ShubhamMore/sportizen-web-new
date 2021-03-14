@@ -1,3 +1,6 @@
+import { ImageModelComponent } from '../image-model/image-model.component';
+import { MatDialog } from '@angular/material/dialog';
+import { PostGalleryService } from './../../../../services/post-gallery.service';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -26,18 +29,20 @@ export class UserProfileComponent implements OnInit {
   connectionStatus: string;
   followers: Connection[];
   followings: Connection[];
+  gallery: any[];
   sportizenId: string;
 
   constructor(
-    private activatedRoute: ActivatedRoute,
+    private postGalleryService: PostGalleryService,
     private userProfileService: UserProfileService,
     private connectionService: ConnectionService,
     private snackBar: MatSnackBar,
+    public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute
   ) {
     // tslint:disable-next-line: deprecation
-    this.activatedRoute.params.subscribe((param: Params) => {
+    this.route.params.subscribe((param: Params) => {
       this.ngOnInit();
     });
   }
@@ -47,10 +52,11 @@ export class UserProfileComponent implements OnInit {
 
     this.connectionStatus = '';
     this.sportizenId = this.userProfileService.getProfile().sportizenId;
+    this.gallery = [];
     this.followers = [];
     this.followings = [];
     // tslint:disable-next-line: deprecation
-    this.activatedRoute.params.subscribe((param: Params) => {
+    this.route.params.subscribe((param: Params) => {
       this.userProfileId = param.id;
 
       if (this.userProfileId) {
@@ -60,7 +66,7 @@ export class UserProfileComponent implements OnInit {
             this.userProfile = userProfile;
 
             this.setConnectionStatus(userProfile.connection);
-
+            this.getGallery();
             this.getFollowers();
             this.getFollowings();
 
@@ -76,6 +82,22 @@ export class UserProfileComponent implements OnInit {
     } else {
       this.router.navigate(['../../', 'profile', id], { relativeTo: this.route });
     }
+  }
+
+  getGallery() {
+    this.postGalleryService.getUserPostGallery(this.userProfile.sportizenId, 6).subscribe(
+      (gallery: any[]) => {
+        this.gallery = gallery;
+      },
+      (error: any) => {}
+    );
+  }
+
+  openImageModel(image: any) {
+    const dialogRef = this.dialog.open(ImageModelComponent, {
+      data: { image },
+      maxHeight: '90vh',
+    });
   }
 
   getFollowers() {

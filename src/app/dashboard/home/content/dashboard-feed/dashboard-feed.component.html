@@ -46,8 +46,28 @@
 
       <div class="clearfix"></div>
 
-      <div class="post-description">
-        <span class=""> {{ post.description }}</span>
+      <div class="post-description" *ngIf="post.description">
+        <span id="less-description-{{ i }}" class="">
+          {{ getDescriptionLess(post.description) }}
+
+          <span
+            class="display-block more-less-content"
+            *ngIf="post.description.length > 150"
+            (click)="toggleDescription(i, true)"
+          >
+            Read More
+          </span>
+        </span>
+
+        <span
+          id="more-description-{{ i }}"
+          class="display-none"
+          *ngIf="post.description.length > 150"
+        >
+          {{ post.description }}
+
+          <span class="more-less-content" (click)="toggleDescription(i, false)"> Read Less </span>
+        </span>
       </div>
 
       <ng-container *ngIf="post.postType === 'shared'">
@@ -74,7 +94,29 @@
           <div class="clearfix"></div>
 
           <div class="post-description">
-            <span class=""> {{ post.sharedPost.description }}</span>
+            <span id="less-description-{{ i }}-shared" class="">
+              {{ getDescriptionLess(post.sharedPost.description) }}
+
+              <span
+                class="display-block more-less-content"
+                *ngIf="post.sharedPost.description.length > 150"
+                (click)="toggleDescription(i + '-shared', true)"
+              >
+                Read More
+              </span>
+            </span>
+
+            <span
+              id="more-description-{{ i }}-shared"
+              class="display-none"
+              *ngIf="post.sharedPost.description.length > 150"
+            >
+              {{ post.sharedPost.description }}
+
+              <span class="more-less-content" (click)="toggleDescription(i + '-shared', false)">
+                Read Less
+              </span>
+            </span>
           </div>
 
           <div class="post-image" *ngIf="post.sharedPost.secureUrl">

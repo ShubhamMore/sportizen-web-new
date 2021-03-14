@@ -3,14 +3,30 @@ $light-grey-color: #dad8d8;
 
 .scroll-container {
   padding-right: 1rem;
-  height: 1000px;
+  height: 60rem;
 }
 
 hr {
   margin: 0.5rem 0;
 }
 
+.more-less-content {
+  color: #787878;
+  cursor: pointer;
+}
+
+.display-block {
+  display: inline;
+}
+
+.display-none {
+  display: none;
+}
+
 .post {
+  // height: 80%;
+  // overflow: scroll;
+
   .post-card {
     margin-bottom: 1rem;
     border-radius: 1rem;
@@ -82,7 +98,7 @@ hr {
 
       .shared-post {
         padding: 0.25rem;
-        margin: 0 0.15rem;
+        margin: 0.15rem;
         border: 0.025rem solid #c6c6c6;
         border-radius: 1rem;
 
@@ -190,6 +206,7 @@ hr {
 }
 
 .delete-btn {
+  //
 }
 
 @media only screen and (max-width: 900px) {
@@ -239,7 +256,7 @@ hr {
         }
 
         .shared-post {
-          margin: 0 0.145rem;
+          margin: 0.145rem;
           border-radius: 0.95rem;
 
           .profile-icon {
@@ -361,7 +378,7 @@ hr {
         }
 
         .shared-post {
-          margin: 0 0.14125rem;
+          margin: 0.14125rem;
           border-radius: 0.9rem;
 
           .profile-icon {
@@ -483,7 +500,7 @@ hr {
         }
 
         .shared-post {
-          margin: 0 0.1375rem;
+          margin: 0.1375rem;
           border-radius: 0.85rem;
 
           .profile-icon {
@@ -605,7 +622,7 @@ hr {
         }
 
         .shared-post {
-          margin: 0 0.125rem;
+          margin: 0.125rem;
           border-radius: 0.75rem;
 
           .profile-icon {

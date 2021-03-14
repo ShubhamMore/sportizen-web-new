@@ -17,6 +17,7 @@ import { FeedLikesComponent } from './feed-likes/feed-likes.component';
 import { FeedViewComponent } from './feed-view/feed-view.component';
 import { FeedShareComponent } from './feed-share/feed-share.component';
 import { ConfirmComponent } from 'src/app/@shared/confirm/confirm.component';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-dashboard-feed',
@@ -119,6 +120,27 @@ export class DashboardFeedComponent implements OnInit {
       this.postSaveService.unsavePost(postId).subscribe((res: any) => {
         this.updateBookmarkIcon(postId, alreadySaved, postIndex);
       });
+    }
+  }
+
+  getDescriptionLess(description: string) {
+    if (description.length >= 150) {
+      return description.substring(0, 150) + '...';
+    }
+    return description;
+  }
+
+  toggleDescription(id: number | string, toggle: boolean) {
+    if (toggle) {
+      $('#less-description-' + id).removeClass('display-block');
+      $('#less-description-' + id).addClass('display-none');
+      $('#more-description-' + id).removeClass('display-none');
+      $('#more-description-' + id).addClass('display-block');
+    } else {
+      $('#less-description-' + id).removeClass('display-none');
+      $('#less-description-' + id).addClass('display-block');
+      $('#more-description-' + id).removeClass('display-block');
+      $('#more-description-' + id).addClass('display-none');
     }
   }
 

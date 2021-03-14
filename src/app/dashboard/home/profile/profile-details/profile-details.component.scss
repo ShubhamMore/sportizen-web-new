@@ -176,6 +176,12 @@ $grey-color: #838383;
           height: 7.5rem;
           width: 7.5rem;
           object-fit: cover;
+          transition: opacity 0.125s;
+        }
+
+        .photo:hover {
+          opacity: 0.75;
+          cursor: pointer;
         }
       }
     }

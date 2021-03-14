@@ -1,0 +1,67 @@
+$primary-color: #05bae3;
+$secondary-color: #075492;
+
+::ng-deep .mat-dialog-container {
+  padding: 0px !important;
+  overflow-x: hidden;
+}
+
+.image-container {
+  position: relative;
+  width: auto;
+  max-height: 75vh;
+
+  .image {
+    position: relative;
+    border-radius: 0.325rem;
+    opacity: 1;
+    display: block;
+    max-width: 100%;
+    max-height: 75vh;
+    object-fit: cover;
+    backface-visibility: hidden;
+    margin: 0 auto;
+  }
+}
+// @media only screen and (max-width: 900px) {
+//   .image-container {
+//     max-height: 13rem;
+
+//     .image {
+//       border-radius: 0.5rem;
+//       max-height: 13rem;
+//     }
+//   }
+// }
+
+// @media only screen and (max-width: 767px) {
+//   .image-container {
+//     max-height: 12rem;
+
+//     .image {
+//       max-height: 12rem;
+//     }
+//   }
+// }
+
+// @media only screen and (max-width: 600px) {
+//   .image-container {
+//     max-height: 11rem;
+
+//     .image {
+//       border-radius: 0.375rem;
+//       max-height: 11rem;
+//     }
+//   }
+// }
+
+// @media only screen and (max-width: 400px) {
+//   .image-container {
+//     max-height: 10rem;
+
+//     .image {
+//       border-radius: 0.325rem;
+//       max-height: 10rem;
+//     }
+//   }
+// }

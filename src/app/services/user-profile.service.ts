@@ -69,8 +69,8 @@ export class UserProfileService {
     );
   }
 
-  getMyFollowers() {
-    const data = { api: 'getMyFollowers', data: {} };
+  getMyFollowers(limit?: number) {
+    const data = { api: 'getMyFollowers', data: { limit } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -81,8 +81,8 @@ export class UserProfileService {
     );
   }
 
-  getMyFollowings() {
-    const data = { api: 'getMyFollowings', data: {} };
+  getMyFollowings(limit?: number) {
+    const data = { api: 'getMyFollowings', data: { limit } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -93,8 +93,8 @@ export class UserProfileService {
     );
   }
 
-  getUserFollowers(sportizenId: string) {
-    const data = { api: 'getUserFollowers', data: { user: sportizenId } };
+  getUserFollowers(sportizenId: string, limit?: number) {
+    const data = { api: 'getUserFollowers', data: { user: sportizenId, limit } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -105,8 +105,8 @@ export class UserProfileService {
     );
   }
 
-  getUserFollowings(sportizenId: string) {
-    const data = { api: 'getUserFollowings', data: { user: sportizenId } };
+  getUserFollowings(sportizenId: string, limit?: number) {
+    const data = { api: 'getUserFollowings', data: { user: sportizenId, limit } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

@@ -1,3 +1,9 @@
+<div id="myModal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="img01" />
+  <div id="caption"></div>
+</div>
+
 <div class="profile-details-container" *ngIf="!loading">
   <div class="cover-photo-container">
     <img
@@ -42,7 +48,7 @@
           </mat-card-content>
         </mat-card>
 
-        <!-- <mat-card class="user-info-card">
+        <mat-card class="user-info-card">
           <mat-card-header>
             <mat-card-title>
               <span class="header-title">Photos</span>
@@ -53,29 +59,22 @@
           </mat-card-header>
 
           <mat-card-content>
-            <div class="row">
+            <div class="row" *ngIf="gallery.length > 0; else noGallery">
               <div class="col-12">
                 <div class="photos-container">
-                  <div class="photo-box">
-                    <img class="photo" src="https://picsum.photos/200" loading="lazy" />
-                  </div>
-
-                  <div class="photo-box">
-                    <img class="photo" src="https://picsum.photos/200" loading="lazy" />
-                  </div>
-
-                  <div class="photo-box">
-                    <img class="photo" src="https://picsum.photos/200" loading="lazy" />
-                  </div>
-
-                  <div class="photo-box">
-                    <img class="photo" src="https://picsum.photos/200" loading="lazy" />
+                  <div class="photo-box" *ngFor="let galleryImage of gallery; let i = index">
+                    <img
+                      class="photo"
+                      [src]="galleryImage.secureUrl"
+                      loading="lazy"
+                      (click)="openImageModel(galleryImage.secureUrl)"
+                    />
                   </div>
                 </div>
               </div>
             </div>
           </mat-card-content>
-        </mat-card> -->
+        </mat-card>
 
         <mat-card class="user-info-card">
           <mat-card-header>
@@ -201,6 +200,14 @@
   <div class="row">
     <div class="col-12">
       <p class="text-center">No Followings</p>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noGallery>
+  <div class="row">
+    <div class="col-12">
+      <p class="text-center">No Gallery</p>
     </div>
   </div>
 </ng-template>

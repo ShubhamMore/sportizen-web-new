@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material/material.module';
 import { MomentModule } from 'ngx-moment';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { SharedRoutingModule } from './shared-routing.module';
 
@@ -35,6 +36,7 @@ export function createTranslateLoader(http: HttpClient) {
         deps: [HttpClient],
       },
     }),
+    InfiniteScrollModule,
     SharedRoutingModule,
   ],
   exports: [
@@ -49,6 +51,7 @@ export function createTranslateLoader(http: HttpClient) {
     MaterialModule,
     MomentModule,
     TranslateModule,
+    InfiniteScrollModule,
     SharedRoutingModule,
   ],
 })
