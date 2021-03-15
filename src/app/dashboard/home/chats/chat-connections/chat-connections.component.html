@@ -1,0 +1,20 @@
+<div class="connections-container">
+  <div class="connection-header">
+    <span>Sportizen</span>
+  </div>
+  <div class="connection-body">
+    <div class="connection-user" *ngFor="let connection of connections">
+      <span class="profile-icon-container">
+        <img
+          class="profile-icon"
+          aria-hidden
+          [src]="connection.userImageURL"
+          [alt]="connection.name"
+          onerror="this.src='../../../../../assets/images/user.png'"
+        />
+        <span class="online"></span>
+      </span>
+      <span class="profile-name">{{ connection.name | capitalizeEachWord }}</span>
+    </div>
+  </div>
+</div>

@@ -69,6 +69,18 @@ export class UserProfileService {
     );
   }
 
+  getMyConnections(limit?: number) {
+    const data = { api: 'getMyConnections', data: { limit } };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      })
+    );
+  }
+
   getMyFollowers(limit?: number) {
     const data = { api: 'getMyFollowers', data: { limit } };
     return this.httpService.httpPost(data).pipe(

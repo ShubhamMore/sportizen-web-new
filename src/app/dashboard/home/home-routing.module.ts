@@ -23,6 +23,11 @@ const routes: Routes = [
       },
 
       {
+        path: 'chat',
+        loadChildren: () => import('./chats/chats.module').then((m) => m.ChatsModule),
+      },
+
+      {
         path: 'search',
         loadChildren: () =>
           import('./search-user/search-user.module').then((m) => m.SearchUserModule),

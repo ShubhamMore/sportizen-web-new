@@ -61,7 +61,12 @@
                       [ngClass]="k == 0 ? 'item active' : 'item'"
                     >
                       <div class="image-container">
-                        <img class="image" [src]="image.secureUrl" [alt]="event.name"  loading="lazy"/>
+                        <img
+                          class="image"
+                          [src]="image.secureUrl"
+                          [alt]="event.name"
+                          loading="lazy"
+                        />
                       </div>
                     </div>
                   </div>
