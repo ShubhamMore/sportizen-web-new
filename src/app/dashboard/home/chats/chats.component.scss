@@ -16,5 +16,219 @@
     width: calc(100% - 20rem);
     height: calc(100vh - 7rem);
     display: inline-block;
+
+    .no-user-container {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -40%);
+
+      .no-user {
+        position: relative;
+        width: 10rem;
+        height: 12rem;
+
+        .no-user-image {
+          width: 10rem;
+          height: 10rem;
+        }
+
+        .no-user-text {
+          position: absolute;
+          font-size: 2rem;
+          font-weight: bold;
+          text-transform: uppercase;
+          color: #787878;
+          width: 12.5rem;
+          top: 6.25rem;
+          left: -1.25rem;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .chat-container {
+    height: calc(100vh - 6.75rem);
+
+    .chat-connections {
+      height: calc(100vh - 6.75rem);
+      width: 18rem;
+    }
+
+    .chat-messages {
+      width: calc(100% - 18rem);
+      height: calc(100vh - 6.75rem);
+
+      .no-user-container {
+        .no-user {
+          width: 9.5rem;
+          height: 11.5rem;
+
+          .no-user-image {
+            width: 9.5rem;
+            height: 9.5rem;
+          }
+
+          .no-user-text {
+            font-size: 1.875rem;
+            width: 12rem;
+            top: 6.25rem;
+            left: -1.25rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .chat-container {
+    height: calc(100vh - 6rem);
+
+    .chat-connections {
+      height: calc(100vh - 6rem);
+      width: 16rem;
+    }
+
+    .chat-messages {
+      width: calc(100% - 16rem);
+      height: calc(100vh - 6rem);
+
+      .no-user-container {
+        .no-user {
+          width: 9rem;
+          height: 11rem;
+
+          .no-user-image {
+            width: 9rem;
+            height: 9rem;
+          }
+
+          .no-user-text {
+            font-size: 1.75rem;
+            width: 11.5rem;
+            top: 6rem;
+            left: -1rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .chat-container {
+    height: calc(100vh - 5.5rem);
+
+    .chat-connections {
+      height: calc(100vh - 5.5rem);
+      width: 14rem;
+    }
+
+    .chat-messages {
+      width: calc(100% - 14rem);
+      height: calc(100vh - 5.5rem);
+
+      .no-user-container {
+        .no-user {
+          width: 8.5rem;
+          height: 10.5rem;
+
+          .no-user-image {
+            width: 8.5rem;
+            height: 8.5rem;
+          }
+
+          .no-user-text {
+            font-size: 1.625rem;
+            width: 11rem;
+            top: 5.5rem;
+            left: -0.5rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .chat-container {
+    .chat-connections {
+      width: 12rem;
+    }
+
+    .chat-messages {
+      width: calc(100% - 12rem);
+
+      .no-user-container {
+        .no-user {
+          width: 8rem;
+          height: 10rem;
+
+          .no-user-image {
+            width: 8rem;
+            height: 8rem;
+          }
+
+          .no-user-text {
+            font-size: 1.5rem;
+            width: 10.5rem;
+            top: 5rem;
+            left: -0.25rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .chat-container {
+    .chat-connections {
+      width: 11rem;
+    }
+
+    .chat-messages {
+      width: calc(100% - 11rem);
+    }
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  .chat-container {
+    .chat-connections {
+      width: 10.5rem;
+    }
+
+    .chat-messages {
+      width: calc(100% - 10.5rem);
+    }
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .chat-container {
+    height: calc(100vh - 5rem);
+
+    .chat-connections {
+      position: relative;
+      display: block;
+      height: calc(100vh - 5rem);
+      width: 100%;
+    }
+
+    .chat-messages {
+      position: relative;
+      display: none;
+
+      width: 100%;
+      height: calc(100vh - 5rem);
+
+      .no-user-container {
+        display: none;
+      }
+    }
   }
 }

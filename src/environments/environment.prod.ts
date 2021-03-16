@@ -5,6 +5,6 @@ export const environment = {
   // backend: 'http://127.0.0.1:3000/',
   logo: '../assets/images/sportizen-white.png',
   title: 'SPORTIZEN',
-  SOCKET_ENDPOINT: '',
+  SOCKET_ENDPOINT: 'https://api.sportizen.in/sportizen-chat',
   oauthClientID: '106169972032-l24bd52bmddd6ok8oalhvf9ta2tavatm.apps.googleusercontent.com',
 };

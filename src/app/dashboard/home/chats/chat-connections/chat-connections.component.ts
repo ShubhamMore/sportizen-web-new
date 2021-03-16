@@ -1,4 +1,5 @@
-import { UserProfileService } from './../../../../services/user-profile.service';
+import { SocketioService } from './../../../../services/socket.service';
+import { ChatService, ChatMember } from './../@services/chat.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,19 +8,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./chat-connections.component.scss'],
 })
 export class ChatConnectionsComponent implements OnInit {
-  connections: any[];
+  chatMembers: ChatMember[];
 
-  constructor(private userProfileService: UserProfileService) {}
+  socket: any;
+
+  constructor(private chatService: ChatService, private socketioService: SocketioService) {}
 
   ngOnInit(): void {
-    this.connections = [];
+    this.chatMembers = [];
 
-    this.userProfileService.getMyConnections().subscribe(
-      (connections: any[]) => {
-        console.log(connections);
-        this.connections = connections;
+    this.socket = this.socketioService.getSocket();
+
+    this.chatService.getMyConnections().subscribe(
+      (chatMembers: ChatMember[]) => {
+        this.chatMembers = chatMembers;
       },
       (error: any) => {}
     );
+  }
+
+  chatMember(chatMember: ChatMember) {
+    this.chatService.setChatMember(chatMember);
   }
 }

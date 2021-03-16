@@ -1,6 +1,9 @@
 <div class="message-container">
   <div class="connection-header">
     <div class="connection-user">
+      <span class="back-icon-container" (click)="backToChatMembers()">
+        <mat-icon class="back-icon">arrow_back</mat-icon>
+      </span>
       <span class="profile-icon-container">
         <img
           class="profile-icon"
@@ -9,37 +12,54 @@
           [alt]="user.name"
           onerror="this.src='../../../../../assets/images/user.png'"
         />
-        <span class="online"></span>
+        <span class="online" *ngIf="user.isOnline"></span>
       </span>
       <span class="profile-name">{{ user.name | capitalizeEachWord }}</span>
     </div>
   </div>
 
-  <div class="messages">
-    <div class="message-container user-message">
-      <div class="message">
-        user messageuser messageuser messageuser messageuser messageuser messageuser messageuser
-        messageuser messageuser messageuser messageuser messageuser messageuser messageuser
-        messageuser messageuser messageuser messageuser messageuser messageuser messageuser
-        messageuser message
-        <span class="message-time"> &nbsp;<small>1 min ago</small> </span>
+  <div class="messages" (scroll)="scrolled($event)" #messageScrollContainer>
+    <ng-container *ngIf="!messageLoading; else loadingMessages">
+      <div
+        class="message-container"
+        *ngFor="let message of messages; let i = index"
+        [ngClass]="message.senderId === sportizenId ? 'my-message' : 'user-message'"
+        #messageElement
+      >
+        <div class="message">
+          {{ message.message }}
+          <span class="message-time">
+            &nbsp;<small>{{ message.date | amTimeAgo }}</small>
+          </span>
+        </div>
       </div>
-    </div>
-    <div class="message-container my-message">
-      <div class="message">
-        my Message
-        <span class="message-time"> &nbsp;<small>1 min ago</small> </span>
-      </div>
-    </div>
-    <div class="message-container user-message">
-      <div class="message">
-        user message
-
-        <span class="message-time"> &nbsp;<small>1 min ago</small> </span>
-      </div>
-    </div>
+    </ng-container>
   </div>
-  <div class="input-message">
-    <input class="input-text" type="text" placeholder="Message" />
+
+  <div class="input-message-container">
+    <textarea
+      type="text"
+      class="input-message"
+      [(ngModel)]="message"
+      placeholder="...type message"
+      rows="1"
+    ></textarea>
+
+    <div
+      class="send-icon-container"
+      matTooltipPosition="right"
+      matTooltipHideDelay="100"
+      matTooltip="Send"
+      (click)="send()"
+      *ngIf="!messageLoading"
+    >
+      <mat-icon class="send-icon icon-blue">send</mat-icon>
+    </div>
   </div>
 </div>
+
+<ng-template #loadingMessages>
+  <div class="loading-message-container">
+    <mat-spinner diameter="25"></mat-spinner>
+  </div>
+</ng-template>

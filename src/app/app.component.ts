@@ -1,3 +1,4 @@
+import { SocketioService } from './services/socket.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService, UserData } from './authentication/auth/auth-service/auth.service';
@@ -10,7 +11,11 @@ import { AuthService, UserData } from './authentication/auth/auth-service/auth.s
 export class AppComponent implements OnInit {
   title = 'SPORTIZEN';
 
-  constructor(private authService: AuthService, public translate: TranslateService) {
+  constructor(
+    private authService: AuthService,
+    public translate: TranslateService,
+    private socketioService: SocketioService
+  ) {
     translate.setDefaultLang('en');
     // this.translate.use(language);
   }
@@ -22,5 +27,6 @@ export class AppComponent implements OnInit {
     }
 
     this.authService.autoLogin(userData);
+    this.socketioService.setupSocketConnection();
   }
 }

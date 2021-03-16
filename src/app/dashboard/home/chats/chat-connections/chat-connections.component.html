@@ -3,18 +3,18 @@
     <span>Sportizen</span>
   </div>
   <div class="connection-body">
-    <div class="connection-user" *ngFor="let connection of connections">
+    <div class="connection-user" *ngFor="let member of chatMembers" (click)="chatMember(member)">
       <span class="profile-icon-container">
         <img
           class="profile-icon"
           aria-hidden
-          [src]="connection.userImageURL"
-          [alt]="connection.name"
+          [src]="member.userImageURL"
+          [alt]="member.name"
           onerror="this.src='../../../../../assets/images/user.png'"
         />
         <span class="online"></span>
       </span>
-      <span class="profile-name">{{ connection.name | capitalizeEachWord }}</span>
+      <span class="profile-name">{{ member.name | capitalizeEachWord }}</span>
     </div>
   </div>
 </div>
