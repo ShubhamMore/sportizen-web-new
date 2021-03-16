@@ -27,8 +27,8 @@ const appRoutes: Routes = [
       {
         path: 'page-not-found',
         loadChildren: () =>
-          import('./@shared/page-not-found/page-not-found-routing.module').then(
-            (m) => m.PageNotFoundRoutingModule
+          import('./@shared/page-not-found/page-not-found.module').then(
+            (m) => m.PageNotFoundModule
           ),
       },
 
