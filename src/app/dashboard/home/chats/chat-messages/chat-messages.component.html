@@ -25,6 +25,14 @@
         *ngFor="let message of messages; let i = index"
         [ngClass]="message.senderId === sportizenId ? 'my-message' : 'user-message'"
         #messageElement
+        (contextmenu)="
+          onRightClick($event, {
+            messageId: message._id,
+            senderId: message.senderId,
+            receiverId: message.receiverId,
+            index: i
+          })
+        "
       >
         <div class="message">
           {{ message.message }}
@@ -63,3 +71,28 @@
     <mat-spinner diameter="25"></mat-spinner>
   </div>
 </ng-template>
+
+<div
+  style="visibility: hidden; position: fixed"
+  [style.left]="menuTopLeftPosition.x"
+  [style.top]="menuTopLeftPosition.y"
+  [matMenuTriggerFor]="messageMenu"
+></div>
+
+<mat-menu class="" #messageMenu="matMenu">
+  <ng-template class="" matMenuContent let-message="menuData">
+    <button
+      mat-menu-item
+      (click)="deleteMessageForBoth(message)"
+      *ngIf="message.senderId === sportizenId"
+      class=""
+    >
+      <i class="fa fa-trash"> </i>
+      <span>&nbsp;Delete For Both</span>
+    </button>
+    <button mat-menu-item (click)="deleteMessage(message)" class="">
+      <i class="fa fa-trash"> </i>
+      <span>&nbsp;Delete</span>
+    </button>
+  </ng-template>
+</mat-menu>

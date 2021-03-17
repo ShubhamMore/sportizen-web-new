@@ -9,6 +9,7 @@ import { UploadContentDialogComponent } from './upload-content/upload-content-di
 
 @NgModule({
   declarations: [ContentComponent, UploadContentComponent, UploadContentDialogComponent],
+  entryComponents: [UploadContentDialogComponent],
   imports: [SharedModule, DashboardFeedModule, ContentRoutingModule],
 })
 export class ContentModule {}

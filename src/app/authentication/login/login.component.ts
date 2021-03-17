@@ -8,7 +8,7 @@ import { environment } from '../../../environments/environment';
 import { AuthService, AuthResponseData } from '../auth/auth-service/auth.service';
 import { EncryptService } from '../../services/shared-services/encrypt.service';
 
-import { AuthService as GoogleAuthService } from 'angularx-social-login';
+import { SocialAuthService as GoogleAuthService } from 'angularx-social-login';
 import { SocialUser } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
 import { UserService } from '../../services/user.service';

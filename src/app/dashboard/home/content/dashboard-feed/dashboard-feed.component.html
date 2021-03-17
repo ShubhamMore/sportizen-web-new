@@ -234,14 +234,12 @@
 <mat-menu class="mat-panel" #menu="matMenu" xPosition="before">
   <ng-template matMenuContent let-postId="post" let-index="index" let-createdBy="createdBy">
     <button
-      class="delete-btn"
       mat-menu-item
-      style="outline: none"
       (click)="deletePost(postId, createdBy, index)"
       *ngIf="createdBy === sportizenUser"
     >
       <i class="fa fa-trash"> </i>
-      &nbsp; Delete
+      <span>&nbsp;Delete</span>
     </button>
   </ng-template>
 </mat-menu>

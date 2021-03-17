@@ -3,15 +3,17 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './../authentication/auth/auth-interpreter/auth-interceptor.service';
 
 import { SocialLoginModule } from 'angularx-social-login';
-import { AuthServiceConfig, GoogleLoginProvider } from 'angularx-social-login';
+import { SocialAuthServiceConfig, GoogleLoginProvider } from 'angularx-social-login';
 import { environment } from './../../environments/environment';
 
-const config = new AuthServiceConfig([
-  {
-    id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider(environment.oauthClientID),
-  },
-]);
+const config = {
+  providers: [
+    {
+      id: GoogleLoginProvider.PROVIDER_ID,
+      provider: new GoogleLoginProvider(environment.oauthClientID),
+    },
+  ],
+} as SocialAuthServiceConfig;
 
 export function provideConfig() {
   return config;
@@ -27,7 +29,7 @@ export function provideConfig() {
       multi: true,
     },
     {
-      provide: AuthServiceConfig,
+      provide: 'SocialAuthServiceConfig',
       useFactory: provideConfig,
     },
   ],

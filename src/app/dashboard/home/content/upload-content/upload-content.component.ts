@@ -22,6 +22,7 @@ export class UploadContentComponent implements OnInit {
     this.invalidImage = false;
     this.postImageFiles = [];
     this.postImagePreview = [];
+    // tslint:disable-next-line: deprecation
     this.userProfileService.getProfileSubject().subscribe((userProfile: UserProfileModel) => {
       if (userProfile) {
         this.profileName = userProfile.name;
@@ -29,23 +30,26 @@ export class UploadContentComponent implements OnInit {
     });
   }
 
+  public get postType(): typeof PostType {
+    return PostType;
+  }
+
   openDialog(postType: PostType): void {
-    const data = { postType };
+    const data: { postType: PostType; postImageFiles?: File[]; postImagePreview?: string[] } = {
+      postType,
+    };
 
     if (postType === PostType.Image) {
-      data['postImageFiles'] = this.postImageFiles;
-      data['postImagePreview'] = this.postImagePreview;
+      data.postImageFiles = this.postImageFiles;
+      data.postImagePreview = this.postImagePreview;
     }
 
     const dialogRef = this.dialog.open(UploadContentDialogComponent, {
       data,
     });
 
+    // tslint:disable-next-line: deprecation
     dialogRef.afterClosed().subscribe((result) => {});
-  }
-
-  public get postType(): typeof PostType {
-    return PostType;
   }
 
   onImagePicked(event: Event): any {

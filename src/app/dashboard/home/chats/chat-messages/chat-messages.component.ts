@@ -10,6 +10,14 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { UserProfileService } from 'src/app/services/user-profile.service';
+import { MatMenuTrigger } from '@angular/material/menu';
+
+interface DeleteMessageData {
+  messageId: string;
+  senderId: string;
+  receiverId: string;
+  index: number;
+}
 
 @Component({
   selector: 'app-chat-messages',
@@ -19,6 +27,12 @@ import { UserProfileService } from 'src/app/services/user-profile.service';
 export class ChatMessagesComponent implements OnInit, AfterViewInit {
   @ViewChild('messageScrollContainer', { static: false }) private messageScrollFrame: ElementRef;
   @ViewChildren('messageElement') private messageElements: QueryList<any>;
+
+  // we create an object that contains coordinates
+  menuTopLeftPosition = { x: '0', y: '0' };
+
+  // reference to the MatMenuTrigger in the DOM
+  @ViewChild(MatMenuTrigger, { static: true }) matMenuTrigger: MatMenuTrigger;
 
   private messageScrollContainer: any;
 
@@ -120,5 +134,54 @@ export class ChatMessagesComponent implements OnInit, AfterViewInit {
     } else {
       this.message = null;
     }
+  }
+
+  onRightClick(event: MouseEvent, menuData: DeleteMessageData) {
+    // preventDefault avoids to show the visualization of the right-click menu of the browser
+    event.preventDefault();
+
+    // we record the mouse position in our object
+    this.menuTopLeftPosition.x = event.clientX + 'px';
+    this.menuTopLeftPosition.y = event.clientY + 'px';
+
+    // we open the menu
+    // we pass to the menu the information about our object
+    this.matMenuTrigger.menuData = { menuData };
+
+    // we open the menu
+    this.matMenuTrigger.openMenu();
+  }
+
+  deleteMessage(message: DeleteMessageData) {
+    if (message.senderId === this.sportizenId) {
+      this.chatService
+        .deleteMessageForSender(message.messageId, message.senderId, message.receiverId)
+        .subscribe(
+          (res: any) => {
+            this.messages.splice(message.index, 1);
+          },
+          (error: any) => {}
+        );
+    } else {
+      this.chatService
+        .deleteMessageForReceiver(message.messageId, message.senderId, message.receiverId)
+        .subscribe(
+          (res: any) => {
+            this.messages.splice(message.index, 1);
+          },
+          (error: any) => {}
+        );
+    }
+  }
+
+  deleteMessageForBoth(message: DeleteMessageData) {
+    this.chatService
+      .deleteMessageForBoth(message.messageId, message.senderId, message.receiverId)
+      .subscribe(
+        (res: any) => {
+          this.messages.splice(message.index, 1);
+        },
+        (error: any) => {}
+      );
   }
 }

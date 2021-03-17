@@ -18,6 +18,12 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     FeedCommentComponent,
   ],
   imports: [SharedModule, DashboardFeedRoutingModule, ScrollingModule],
+  entryComponents: [
+    FeedShareComponent,
+    FeedLikesComponent,
+    FeedViewComponent,
+    FeedCommentComponent,
+  ],
   exports: [DashboardFeedComponent],
 })
 export class DashboardFeedModule {}

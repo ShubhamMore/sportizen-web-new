@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material/material.module';
+
 import { MomentModule } from 'ngx-moment';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
@@ -18,7 +19,7 @@ import { CapitalizeEachWordPipe } from './pipe/capitalize-each-word.pipe';
 import { ConfirmComponent } from './confirm/confirm.component';
 
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/local_', '.json');
+  return new TranslateHttpLoader(http, './assets/i18n/locale_', '.json');
 }
 
 @NgModule({
@@ -28,7 +29,6 @@ export function createTranslateLoader(http: HttpClient) {
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    MomentModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -36,6 +36,7 @@ export function createTranslateLoader(http: HttpClient) {
         deps: [HttpClient],
       },
     }),
+    MomentModule,
     InfiniteScrollModule,
     SharedRoutingModule,
   ],
@@ -49,8 +50,8 @@ export function createTranslateLoader(http: HttpClient) {
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    MomentModule,
     TranslateModule,
+    MomentModule,
     InfiniteScrollModule,
     SharedRoutingModule,
   ],

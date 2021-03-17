@@ -1,6 +1,44 @@
 $dark-grey-color: #555454;
 $light-grey-color: #dad8d8;
 
+::ng-deep .mat-menu-panel {
+  padding: 0 !important;
+  min-width: 0rem !important;
+  min-height: 0rem !important;
+
+  .mat-menu-content {
+    padding: 0 !important;
+
+    .mat-menu-item {
+      padding: 0.25rem 0.5rem !important;
+      height: 2rem;
+      font-size: 0.8rem;
+      line-height: 0.8rem;
+
+      @media screen and (max-width: 900px) {
+        padding: 0.2125rem 0.4375rem !important;
+        height: 1.875rem;
+        font-size: 0.775rem;
+        line-height: 0.775rem;
+      }
+
+      @media screen and (max-width: 767px) {
+        padding: 0.2rem 0.375rem !important;
+        height: 1.75rem;
+        font-size: 0.75rem;
+        line-height: 0.75rem;
+      }
+
+      @media screen and (max-width: 600px) {
+        padding: 0.1875rem 0.3125rem !important;
+        height: 1.625rem;
+        font-size: 0.625rem;
+        line-height: 0.625rem;
+      }
+    }
+  }
+}
+
 .scroll-container {
   padding-right: 1rem;
   height: 60rem;
@@ -205,10 +243,6 @@ hr {
   }
 }
 
-.delete-btn {
-  //
-}
-
 @media only screen and (max-width: 900px) {
   .post {
     .post-card {
@@ -324,10 +358,6 @@ hr {
     .no-shared-post {
       font-size: 88.2%;
     }
-  }
-
-  .delete-btn {
-    font-size: 98%;
   }
 }
 
@@ -447,10 +477,6 @@ hr {
       font-size: 85.5%;
     }
   }
-
-  .delete-btn {
-    font-size: 95%;
-  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -569,10 +595,6 @@ hr {
       font-size: 81%;
     }
   }
-
-  .delete-btn {
-    font-size: 90%;
-  }
 }
 
 @media only screen and (max-width: 400px) {
@@ -690,9 +712,5 @@ hr {
     .no-shared-post {
       font-size: 72%;
     }
-  }
-
-  .delete-btn {
-    font-size: 80%;
   }
 }
