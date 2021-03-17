@@ -55,12 +55,29 @@ hr {
     .user-name {
       font-size: 1.2rem;
       font-weight: 600;
+
+      .no-user-name {
+        display: block;
+        content: ' ';
+        background-image: linear-gradient(to right bottom, #ddd, #eee);
+        height: 1.2rem;
+        width: 75%;
+        margin: 0.25rem 0rem;
+      }
     }
 
     .liked-at {
       display: block;
       font-size: 1rem;
       margin-top: 0rem;
+
+      .no-like-at {
+        display: block;
+        content: ' ';
+        background-color: #eee;
+        height: 1rem;
+        width: 50%;
+      }
     }
   }
 }
@@ -106,11 +123,20 @@ hr {
 
       .user-name {
         font-size: 1.15rem;
+
+        .no-user-name {
+          height: 1.15rem;
+          margin: 0.21875rem 0rem;
+        }
       }
 
       .liked-at {
         font-size: 0.95rem;
         margin-top: -0.125rem;
+
+        .no-like-at {
+          height: 0.95rem;
+        }
       }
     }
   }
@@ -157,11 +183,20 @@ hr {
 
       .user-name {
         font-size: 1.1rem;
+
+        .no-user-name {
+          height: 1.1rem;
+          margin: 0.1875rem 0rem;
+        }
       }
 
       .liked-at {
         font-size: 0.9rem;
         margin-top: -0.15rem;
+
+        .no-like-at {
+          height: 0.9rem;
+        }
       }
     }
   }
@@ -209,11 +244,20 @@ hr {
 
       .user-name {
         font-size: 1rem;
+
+        .no-user-name {
+          height: 1rem;
+          margin: 0.15625rem 0rem;
+        }
       }
 
       .liked-at {
         font-size: 0.8rem;
         margin-top: -0.25rem;
+
+        .no-like-at {
+          height: 0.8rem;
+        }
       }
     }
   }
@@ -261,11 +305,20 @@ hr {
 
       .user-name {
         font-size: 0.9rem;
+
+        .no-user-name {
+          height: 1rem;
+          margin: 0.125rem 0rem;
+        }
       }
 
       .liked-at {
         font-size: 0.7rem;
         margin-top: -0.35rem;
+
+        .no-like-at {
+          height: 0.7rem;
+        }
       }
     }
   }

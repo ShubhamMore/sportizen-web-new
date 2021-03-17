@@ -8,30 +8,56 @@
 
     <hr />
 
-    <div *ngIf="likes && likes.length > 0; else noLikes">
-      <div *ngFor="let like of likes" class="user-container">
+    <div *ngIf="loading; else loadingLikes">
+      <ng-container *ngIf="likes && likes.length > 0; else noLikes">
+        <div *ngFor="let like of likes" class="user-container">
+          <div class="profile-icon">
+            <img
+              class="profile-image"
+              [src]="like.userImageURL"
+              onerror="this.src='../../../assets/images/user.png'"
+            />
+          </div>
+
+          <div class="user-details">
+            <div class="user-name">
+              <span class="">{{ like.name | capitalizeEachWord }}</span>
+            </div>
+
+            <div class="liked-at">
+              <i class="fa fa-clock-o icon-blue mr-2"></i>
+              <span class="">{{ like.createdAt | amTimeAgo }}</span>
+            </div>
+          </div>
+
+          <br />
+        </div>
+      </ng-container>
+    </div>
+
+    <ng-template #loadingLikes>
+      <div class="user-container">
         <div class="profile-icon">
           <img
             class="profile-image"
-            [src]="like.userImageURL"
-            onerror="this.src='../../../assets/images/user.png'"
+            src="../../../../../../assets/images/loading-user.png"
+            onerror="this.src='../../../../../../assets/images/user.png'"
           />
         </div>
 
         <div class="user-details">
           <div class="user-name">
-            <span class="">{{ like.name | capitalizeEachWord }}</span>
+            <span class="no-user-name"> </span>
           </div>
 
           <div class="liked-at">
-            <i class="fa fa-clock-o icon-blue mr-2"></i>
-            <span class="">{{ like.createdAt | amTimeAgo }}</span>
+            <span class="no-like-at"> </span>
           </div>
         </div>
 
         <br />
       </div>
-    </div>
+    </ng-template>
 
     <ng-template #noLikes>
       <p class="text-center">No Likes Yet</p>

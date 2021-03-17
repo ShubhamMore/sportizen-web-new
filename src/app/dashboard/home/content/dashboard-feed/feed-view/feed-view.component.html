@@ -7,30 +7,56 @@
 
     <hr />
 
-    <div *ngIf="views && views.length > 0; else noViews">
-      <div *ngFor="let view of views" class="user-container">
+    <div *ngIf="!loading; else loadingViews">
+      <ng-container *ngIf="views && views.length > 0; else noViews">
+        <div *ngFor="let view of views" class="user-container">
+          <div class="profile-icon">
+            <img
+              class="profile-image"
+              [src]="view.userImageURL"
+              onerror="this.src='../../../assets/images/user.png'"
+            />
+          </div>
+
+          <div class="user-details">
+            <div class="user-name">
+              <span class="">{{ view.name | capitalizeEachWord }}</span>
+            </div>
+
+            <div class="viewed-at">
+              <i class="fa fa-clock-o icon-blue mr-2"></i>
+              <span class="">{{ view.createdAt | amTimeAgo }}</span>
+            </div>
+          </div>
+
+          <br />
+        </div>
+      </ng-container>
+    </div>
+
+    <ng-template #loadingViews>
+      <div class="user-container">
         <div class="profile-icon">
           <img
             class="profile-image"
-            [src]="view.userImageURL"
-            onerror="this.src='../../../assets/images/user.png'"
+            src="../../../../../../assets/images/loading-user.png"
+            onerror="this.src='../../../../../../assets/images/user.png'"
           />
         </div>
 
         <div class="user-details">
           <div class="user-name">
-            <span class="">{{ view.name | capitalizeEachWord }}</span>
+            <span class="no-user-name"> </span>
           </div>
 
           <div class="viewed-at">
-            <i class="fa fa-clock-o icon-blue mr-2"></i>
-            <span class="">{{ view.createdAt | amTimeAgo }}</span>
+            <span class="no-viewed-at"> </span>
           </div>
         </div>
 
         <br />
       </div>
-    </div>
+    </ng-template>
 
     <ng-template #noViews>No Views Yet</ng-template>
   </div>

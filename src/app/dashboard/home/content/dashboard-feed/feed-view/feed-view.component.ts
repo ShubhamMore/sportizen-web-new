@@ -13,6 +13,7 @@ export interface ViewDialogData {
   styleUrls: ['./feed-view.component.scss'],
 })
 export class FeedViewComponent implements OnInit {
+  loading: boolean;
   views: PostViewModel[];
 
   constructor(
@@ -22,27 +23,29 @@ export class FeedViewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
     this.postViewService.getPostViews(this.data.postId).subscribe((res: any) => {
       this.views = res;
+      this.loading = false;
     });
 
-    function isElementInViewport(el: any) {
-      // Special bonus for those using jQuery
-      if (typeof jQuery === 'function' && el instanceof jQuery) {
-        el = el[0];
-      }
+    // function isElementInViewport(el: any) {
+    //   // Special bonus for those using jQuery
+    //   if (typeof jQuery === 'function' && el instanceof jQuery) {
+    //     el = el[0];
+    //   }
 
-      const rect = el.getBoundingClientRect();
+    //   const rect = el.getBoundingClientRect();
 
-      return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <=
-          (window.innerHeight ||
-            document.documentElement.clientHeight) /* or $(window).height() */ &&
-        rect.right <=
-          (window.innerWidth || document.documentElement.clientWidth) /* or $(window).width() */
-      );
-    }
+    //   return (
+    //     rect.top >= 0 &&
+    //     rect.left >= 0 &&
+    //     rect.bottom <=
+    //       (window.innerHeight ||
+    //         document.documentElement.clientHeight) /* or $(window).height() */ &&
+    //     rect.right <=
+    //       (window.innerWidth || document.documentElement.clientWidth) /* or $(window).width() */
+    //   );
+    // }
   }
 }

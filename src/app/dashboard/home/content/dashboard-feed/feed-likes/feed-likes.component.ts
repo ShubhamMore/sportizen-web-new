@@ -19,6 +19,7 @@ export interface LikeDialogData {
   styleUrls: ['./feed-likes.component.scss'],
 })
 export class FeedLikesComponent implements OnInit {
+  loading: boolean;
   likes: LikeModel[];
 
   constructor(
@@ -30,22 +31,26 @@ export class FeedLikesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
     this.likes = [];
     if (this.data.likeType === LikeType.Post) {
       this.postLikeService.getPostLikes(this.data.postId).subscribe((res: any) => {
         this.likes = res;
+        this.loading = false;
       });
     } else if (this.data.likeType === LikeType.PostComment) {
       this.postCommentLikeService
         .getCommentLikes(this.data.postId, this.data.commentId)
         .subscribe((res: any) => {
           this.likes = res;
+          this.loading = false;
         });
     } else if (this.data.likeType === LikeType.PostReplyComment) {
       this.postCommentReplyLikeService
         .getReplyCommentLikes(this.data.postId, this.data.commentId, this.data.replyCommentId)
         .subscribe((res: any) => {
           this.likes = res;
+          this.loading = false;
         });
     }
   }
