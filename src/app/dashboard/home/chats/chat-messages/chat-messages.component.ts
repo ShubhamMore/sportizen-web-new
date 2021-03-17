@@ -13,9 +13,9 @@ import { UserProfileService } from 'src/app/services/user-profile.service';
 import { MatMenuTrigger } from '@angular/material/menu';
 
 interface DeleteMessageData {
-  messageId: string;
-  senderId: string;
-  receiverId: string;
+  message: string;
+  sender: string;
+  receiver: string;
   index: number;
 }
 
@@ -83,6 +83,7 @@ export class ChatMessagesComponent implements OnInit, AfterViewInit {
     });
 
     this.listenMessages();
+    this.listenDeleteMessages();
   }
 
   ngAfterViewInit() {
@@ -113,13 +114,25 @@ export class ChatMessagesComponent implements OnInit, AfterViewInit {
     return position > height - threshold;
   }
 
-  scrolled(event: any): void {
+  scrolled(event?: any): void {
     this.isNearBottom = this.isUserNearBottom();
   }
 
   private listenMessages() {
     this.socket.on('message', (message: any) => {
       this.messages.push(message);
+    });
+  }
+
+  private listenDeleteMessages() {
+    this.socket.on('deleteMessage', (message: DeleteMessageData) => {
+      if (message.sender === this.user.sportizenId) {
+        const messageIndex = this.messages.findIndex((msg: Message) => msg._id === message.message);
+
+        if (messageIndex >= 0) {
+          this.messages.splice(messageIndex, 1);
+        }
+      }
     });
   }
 
@@ -153,9 +166,9 @@ export class ChatMessagesComponent implements OnInit, AfterViewInit {
   }
 
   deleteMessage(message: DeleteMessageData) {
-    if (message.senderId === this.sportizenId) {
+    if (message.sender === this.sportizenId) {
       this.chatService
-        .deleteMessageForSender(message.messageId, message.senderId, message.receiverId)
+        .deleteMessageForSender(message.message, message.sender, message.receiver)
         .subscribe(
           (res: any) => {
             this.messages.splice(message.index, 1);
@@ -164,7 +177,7 @@ export class ChatMessagesComponent implements OnInit, AfterViewInit {
         );
     } else {
       this.chatService
-        .deleteMessageForReceiver(message.messageId, message.senderId, message.receiverId)
+        .deleteMessageForReceiver(message.message, message.sender, message.receiver)
         .subscribe(
           (res: any) => {
             this.messages.splice(message.index, 1);
@@ -176,7 +189,7 @@ export class ChatMessagesComponent implements OnInit, AfterViewInit {
 
   deleteMessageForBoth(message: DeleteMessageData) {
     this.chatService
-      .deleteMessageForBoth(message.messageId, message.senderId, message.receiverId)
+      .deleteMessageForBoth(message.message, message.sender, message.receiver)
       .subscribe(
         (res: any) => {
           this.messages.splice(message.index, 1);

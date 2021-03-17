@@ -27,9 +27,9 @@
         #messageElement
         (contextmenu)="
           onRightClick($event, {
-            messageId: message._id,
-            senderId: message.senderId,
-            receiverId: message.receiverId,
+            message: message._id,
+            sender: message.senderId,
+            receiver: message.receiverId,
             index: i
           })
         "
@@ -84,7 +84,7 @@
     <button
       mat-menu-item
       (click)="deleteMessageForBoth(message)"
-      *ngIf="message.senderId === sportizenId"
+      *ngIf="message.sender === sportizenId"
       class=""
     >
       <i class="fa fa-trash"> </i>
