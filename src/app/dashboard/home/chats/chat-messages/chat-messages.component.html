@@ -15,7 +15,7 @@
         <span class="online" *ngIf="user.isOnline"></span>
       </span>
       <span class="profile-name">{{ user.name | capitalizeEachWord }}</span>
-      <span class="user-action" [matMenuTriggerFor]="optionMenu"> ... </span>
+      <span class="user-action" (click)="onOptionClick($event, null)"> ... </span>
     </div>
   </div>
 
@@ -27,7 +27,7 @@
         [ngClass]="message.senderId === sportizenId ? 'my-message' : 'user-message'"
         #messageElement
         (contextmenu)="
-          onRightClick($event, {
+          onOptionClick($event, {
             message: message._id,
             sender: message.senderId,
             receiver: message.receiverId,
@@ -85,22 +85,17 @@
     <button
       mat-menu-item
       (click)="deleteMessageForBoth(message)"
-      *ngIf="message.sender === sportizenId"
+      *ngIf="message && message.sender === sportizenId"
       class=""
     >
       <i class="fa fa-trash"> </i>
       <span>&nbsp;Delete For Both</span>
     </button>
-    <button mat-menu-item (click)="deleteMessage(message)" class="">
+    <button mat-menu-item (click)="deleteMessage(message)" *ngIf="message" class="">
       <i class="fa fa-trash"> </i>
       <span>&nbsp;Delete</span>
     </button>
-  </ng-template>
-</mat-menu>
-
-<mat-menu class="" #optionMenu="matMenu">
-  <ng-template class="" matMenuContent>
-    <button mat-menu-item (click)="deleteAllMessages()" class="" *ngIf="user">
+    <button mat-menu-item (click)="deleteAllMessages()" *ngIf="!message && user" class="">
       <span>Clear All Chats</span>
     </button>
   </ng-template>

@@ -152,7 +152,7 @@ export class ChatMessagesComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onRightClick(event: MouseEvent, menuData: DeleteMessageData) {
+  onOptionClick(event: MouseEvent, menuData?: DeleteMessageData) {
     // preventDefault avoids to show the visualization of the right-click menu of the browser
     event.preventDefault();
 
@@ -162,7 +162,7 @@ export class ChatMessagesComponent implements OnInit, AfterViewInit {
 
     // we open the menu
     // we pass to the menu the information about our object
-    this.matMenuTrigger.menuData = { menuData };
+    this.matMenuTrigger.menuData = menuData ? { menuData } : null;
 
     // we open the menu
     this.matMenuTrigger.openMenu();
