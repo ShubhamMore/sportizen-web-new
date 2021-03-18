@@ -56,6 +56,18 @@ export class ChatService {
     );
   }
 
+  deleteAllMessages(receiver: string) {
+    const data = { api: 'deleteAllMessages', data: { receiver } };
+    return this.httpService.httpPost(data).pipe(
+      map((messages: Message[]) => {
+        return messages;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      })
+    );
+  }
+
   deleteMessageForBoth(message: string, sender: string, receiver: string) {
     const data = { api: 'deleteMessageForBoth', data: { message, sender, receiver } };
     return this.httpService.httpPost(data).pipe(

@@ -40,6 +40,7 @@ export function createTranslateLoader(http: HttpClient) {
     InfiniteScrollModule,
     SharedRoutingModule,
   ],
+  entryComponents: [ConfirmComponent],
   exports: [
     LoadingContentComponent,
     ConfirmComponent,

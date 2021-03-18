@@ -15,6 +15,7 @@
         <span class="online" *ngIf="user.isOnline"></span>
       </span>
       <span class="profile-name">{{ user.name | capitalizeEachWord }}</span>
+      <span class="user-action" [matMenuTriggerFor]="optionMenu"> ... </span>
     </div>
   </div>
 
@@ -93,6 +94,14 @@
     <button mat-menu-item (click)="deleteMessage(message)" class="">
       <i class="fa fa-trash"> </i>
       <span>&nbsp;Delete</span>
+    </button>
+  </ng-template>
+</mat-menu>
+
+<mat-menu class="" #optionMenu="matMenu">
+  <ng-template class="" matMenuContent>
+    <button mat-menu-item (click)="deleteAllMessages()" class="" *ngIf="user">
+      <span>Clear All Chats</span>
     </button>
   </ng-template>
 </mat-menu>

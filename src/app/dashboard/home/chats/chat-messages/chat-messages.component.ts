@@ -11,6 +11,8 @@ import {
 } from '@angular/core';
 import { UserProfileService } from 'src/app/services/user-profile.service';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { ConfirmComponent } from 'src/app/@shared/confirm/confirm.component';
+import { MatDialog } from '@angular/material/dialog';
 
 interface DeleteMessageData {
   message: string;
@@ -50,6 +52,7 @@ export class ChatMessagesComponent implements OnInit, AfterViewInit {
 
   constructor(
     private chatService: ChatService,
+    private dialog: MatDialog,
     private socketioService: SocketioService,
     private userProfileService: UserProfileService
   ) {}
@@ -196,5 +199,25 @@ export class ChatMessagesComponent implements OnInit, AfterViewInit {
         },
         (error: any) => {}
       );
+  }
+
+  deleteAllMessages() {
+    const dialogRef = this.dialog.open(ConfirmComponent, {
+      data: { message: 'Do you want to delete All Conversation?' },
+      maxHeight: '90vh',
+      disableClose: true,
+    });
+
+    // tslint:disable-next-line: deprecation
+    dialogRef.afterClosed().subscribe((confirm: boolean) => {
+      if (confirm) {
+        this.chatService.deleteAllMessages(this.user.sportizenId).subscribe(
+          (res: any) => {
+            this.messages = [];
+          },
+          (error: any) => {}
+        );
+      }
+    });
   }
 }
