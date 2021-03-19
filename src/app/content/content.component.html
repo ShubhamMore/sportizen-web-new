@@ -1,15 +1,18 @@
 <div class="home-page">
   <span class="btn-top">
-    <a class="btn-top-link" routerLink="/home">
+    <a class="btn-top-link" routerLink="/home" [queryParams]="{ id: 'home' }">
       <i class="arrow-up"></i>
     </a>
   </span>
 
-  <header id="home">
+  <header class="home" id="home">
     <nav id="nav">
       <div class="row">
         <div class="col-12">
-          <a class="js--home hide-logo" routerLink="/home">
+          <a class="mobile-nan-icon js--nav-icon" (click)="navIconClick()">
+            <i class="fa fa-list"></i>
+          </a>
+          <a class="js--home hide-logo" routerLink="/home" [queryParams]="{ id: 'home' }">
             <img
               class="logo"
               src="../assets/LOGO/white-1.png"
@@ -19,12 +22,23 @@
             />
           </a>
           <ul class="main-nav js--main-nav">
-            <li><a class="js--nav-link" routerLink="/service">Our Offerings</a></li>
-            <li><a class="js--nav-link" routerLink="/about">About Us</a></li>
-            <li><a class="js--nav-link" routerLink="/contact">Contact Us</a></li>
+            <li>
+              <a class="js--nav-link" routerLink="/home" [queryParams]="{ id: 'service' }"
+                >Our Offerings</a
+              >
+            </li>
+            <li>
+              <a class="js--nav-link" routerLink="/home" [queryParams]="{ id: 'about' }"
+                >About Us</a
+              >
+            </li>
+            <li>
+              <a class="js--nav-link" routerLink="/home" [queryParams]="{ id: 'contact' }"
+                >Contact Us</a
+              >
+            </li>
             <li><a class="js--nav-link" routerLink="/login">Login</a></li>
           </ul>
-          <a class="mobile-nan-icon js--nav-icon"><i class="fa fa-list"></i></a>
         </div>
       </div>
     </nav>
@@ -63,7 +77,7 @@
     <app-contact></app-contact>
   </section>
 
-  <footer>
+  <footer class="section-footer js--section-footer" id="footer">
     <app-footer></app-footer>
   </footer>
 </div>

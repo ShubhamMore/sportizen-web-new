@@ -32,12 +32,6 @@ const appRoutes: Routes = [
           ),
       },
 
-      {
-        path: ':id',
-        loadChildren: () => import('./content/content.module').then((m) => m.ContentModule),
-        canActivate: [LoginAuthGuard],
-      },
-
       { path: '**', redirectTo: 'page-not-found' },
     ],
   },

@@ -2,16 +2,16 @@
   <div class="col-md-6 col-sm-10 col-12 mx-auto">
     <ul class="footer-nav">
       <li>
-        <a href="#service">Our Offerings</a>
+        <a routerLink="/home" [queryParams]="{ id: 'service' }">Our Offerings</a>
       </li>
       <li>
-        <a href="#about">About Us</a>
+        <a routerLink="/home" [queryParams]="{ id: 'about' }">About Us</a>
       </li>
       <!-- <li>
         <a href="#team">Team</a>
       </li> -->
       <li>
-        <a href="#contact">Contact Us</a>
+        <a routerLink="/home" [queryParams]="{ id: 'contact' }">Contact Us</a>
       </li>
     </ul>
   </div>

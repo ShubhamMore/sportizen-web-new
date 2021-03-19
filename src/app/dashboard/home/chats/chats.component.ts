@@ -19,25 +19,21 @@ export class ChatsComponent implements OnInit {
     $(document).ready(() => {
       $(window).resize(() => {
         if (this.user) {
-          $(document).ready(() => {
-            if ($(window).width() <= 400) {
-              $('.chat-connections').css('display', 'none');
-              $('.chat-messages').css('display', 'block');
-            } else {
-              $('.chat-connections').css('display', 'inline-block');
-              $('.chat-messages').css('display', 'inline-block');
-            }
-          });
+          if ($(window).width() <= 400) {
+            $('.chat-connections').css('display', 'none');
+            $('.chat-messages').css('display', 'block');
+          } else {
+            $('.chat-connections').css('display', 'inline-block');
+            $('.chat-messages').css('display', 'inline-block');
+          }
         } else {
-          $(document).ready(() => {
-            if ($(window).width() <= 400) {
-              $('.chat-connections').css('display', 'block');
-              $('.chat-messages').css('display', 'none');
-            } else {
-              $('.chat-connections').css('display', 'inline-block');
-              $('.chat-messages').css('display', 'inline-block');
-            }
-          });
+          if ($(window).width() <= 400) {
+            $('.chat-connections').css('display', 'block');
+            $('.chat-messages').css('display', 'none');
+          } else {
+            $('.chat-connections').css('display', 'inline-block');
+            $('.chat-messages').css('display', 'inline-block');
+          }
         }
       });
     });
@@ -46,25 +42,21 @@ export class ChatsComponent implements OnInit {
     this.chatService.getChatMember().subscribe((chatMember: ChatMember) => {
       if (chatMember) {
         this.user = chatMember;
-        $(document).ready(() => {
-          if ($(window).width() <= 400) {
-            $('.chat-connections').css('display', 'none');
-            $('.chat-messages').css('display', 'block');
-          } else {
-            $('.chat-connections').css('display', 'inline-block');
-            $('.chat-messages').css('display', 'inline-block');
-          }
-        });
+        if ($(window).width() <= 400) {
+          $('.chat-connections').css('display', 'none');
+          $('.chat-messages').css('display', 'block');
+        } else {
+          $('.chat-connections').css('display', 'inline-block');
+          $('.chat-messages').css('display', 'inline-block');
+        }
       } else {
-        $(document).ready(() => {
-          if ($(window).width() <= 400) {
-            $('.chat-connections').css('display', 'block');
-            $('.chat-messages').css('display', 'none');
-          } else {
-            $('.chat-connections').css('display', 'inline-block');
-            $('.chat-messages').css('display', 'inline-block');
-          }
-        });
+        if ($(window).width() <= 400) {
+          $('.chat-connections').css('display', 'block');
+          $('.chat-messages').css('display', 'none');
+        } else {
+          $('.chat-connections').css('display', 'inline-block');
+          $('.chat-messages').css('display', 'inline-block');
+        }
       }
     });
   }
