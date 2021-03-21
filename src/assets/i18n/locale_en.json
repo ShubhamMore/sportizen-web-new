@@ -13,5 +13,6 @@
   "msg_home": "Home",
   "msg_my_network": "My Network",
   "msg_messages": "Messages",
-  "msg_logout": "Logout"
+  "msg_logout": "Logout",
+  "msg_event_type":"Event Type"
 }

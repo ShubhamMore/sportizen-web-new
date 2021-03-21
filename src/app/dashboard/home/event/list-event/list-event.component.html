@@ -107,7 +107,8 @@
               <div class="event-action">
                 <mat-chip-list>
                   <mat-chip class="event-type-box"
-                    >Event Type: {{ event.eventType | capitalizeEachWord }}</mat-chip
+                    >{{ 'msg_event_type' | translate }}:
+                    {{ event.eventType | capitalizeEachWord }}</mat-chip
                   >
 
                   <mat-chip
