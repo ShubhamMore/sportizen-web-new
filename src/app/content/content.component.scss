@@ -312,6 +312,7 @@
   }
 
   .main-nav li {
+    display: block;
     width: 100%;
     margin: 0rem;
   }
@@ -326,9 +327,13 @@
 
   .sticky .main-nav {
     margin: 0rem;
+    float: left;
+    display: none;
+    width: 100%;
   }
 
   .sticky .main-nav li {
+    display: block;
     width: 100%;
     margin: 0rem;
   }

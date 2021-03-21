@@ -76,9 +76,9 @@ export class ContentComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.route.queryParams.subscribe((param: Params) => {
-      if (param.id) {
-        const element = document.getElementById(param.id);
+    this.route.fragment.subscribe((fragment: string) => {
+      if (fragment) {
+        const element = document.getElementById(fragment);
         element.scrollIntoView();
       }
     });
