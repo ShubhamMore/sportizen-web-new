@@ -16,8 +16,6 @@ import { LoadingContentComponent } from './loading-content/loading-content.compo
 import { CapitalizeEachWordPipe } from './pipe/capitalize-each-word.pipe';
 import { ConfirmComponent } from './confirm/confirm.component';
 
-
-
 @NgModule({
   declarations: [LoadingContentComponent, CapitalizeEachWordPipe, ConfirmComponent],
   imports: [
@@ -32,12 +30,12 @@ import { ConfirmComponent } from './confirm/confirm.component';
   ],
   entryComponents: [ConfirmComponent],
   exports: [
+    CommonModule,
     LoadingContentComponent,
     ConfirmComponent,
 
     CapitalizeEachWordPipe,
 
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,

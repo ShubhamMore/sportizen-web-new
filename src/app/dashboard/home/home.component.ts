@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
     this.navLinks = [
       new NavTabLink('/dashboard', 'Home', 'fa-home'),
       new NavTabLink('/dashboard/event', 'Events', 'fa-trophy'),
-      new NavTabLink('/dashboard', 'Blogs', 'fa-newspaper-o'),
+      new NavTabLink('/dashboard/blog', 'Blogs', 'fa-newspaper-o'),
       new NavTabLink('/dashboard/chat', 'Messages', 'fa-comment'),
       new NavTabLink('/dashboard', 'Notifications', 'fa-bell'),
       new NavTabLink('/dashboard', 'My Network', 'fa-users'),

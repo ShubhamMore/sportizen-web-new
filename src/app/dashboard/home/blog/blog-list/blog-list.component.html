@@ -1,0 +1,74 @@
+<span class="create-blog">
+  <a class="btn-create-blog shadow-sm" routerLink="new">
+    <span class="icon">+</span>
+
+    <span class="text">Write Blog</span>
+  </a>
+</span>
+
+<div class="blogs-container">
+  <!-- <div class="primary-blog" (click)="openBlog('1')">
+    <img src="https://picsum.photos/1500/600" />
+    <div class="blog-details">
+      <div class="blog-details-header">
+        <span class="bold-text">Category</span>
+        <span>Date</span>
+        <span class="bold-text">Blog by</span>
+      </div>
+      <div>
+        <h2>Blog Title</h2>
+      </div>
+      <div>Hello Text</div>
+    </div>
+  </div> -->
+
+  <div class="blog" *ngFor="let blog of blogsList; let i = index" (click)="openBlog(blog._id)">
+    <div class="blog-image-container" *ngIf="blog.images.length > 0">
+      <div class="carousel-background">
+        <div id="{{ 'blog-image-' + i }}" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            <div
+              class="carousel-item"
+              *ngFor="let image of blog.images; let k = index"
+              [ngClass]="k == 0 ? 'item active' : 'item'"
+            >
+              <div class="blog-image">
+                <img class="image" [src]="image.secureUrl" [alt]="blog.title" loading="lazy" />
+              </div>
+            </div>
+          </div>
+
+          <a class="carousel-control-prev" href="{{ '#blog-image-' + i }}" data-slide="prev">
+            <span class="fa fa-angle-left"></span>
+          </a>
+
+          <a class="carousel-control-next" href="{{ '#blog-image-' + i }}" data-slide="next">
+            <span class="fa fa-angle-right"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="blog-details">
+      <div class="blog-details-header">
+        <span class="created-user">{{ blog.createdUser }}</span>
+
+        <span class="created-at">{{ blog.createdAt }}</span>
+      </div>
+
+      <div>
+        <h2 class="blog-title">{{ blog.title }}</h2>
+      </div>
+
+      <div>
+        <div class="blog-subtitle">
+          {{ blog.subtitle }}
+        </div>
+      </div>
+
+      <div class="blog-description">
+        {{ blog.description }}
+      </div>
+    </div>
+  </div>
+</div>

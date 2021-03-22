@@ -1,0 +1,352 @@
+.blog-container {
+  margin: 1rem 0;
+  text-align: center;
+
+  -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein 1s; /* Firefox < 16 */
+  -ms-animation: fadein 1s; /* Internet Explorer */
+  -o-animation: fadein 1s; /* Opera < 12.1 */
+  animation: fadein 1s;
+
+  .blog-image-container {
+    display: block;
+    position: relative;
+    margin-bottom: 6.25rem;
+    width: 100%;
+
+    .image {
+      background-size: cover;
+      object-fit: cover;
+      max-height: 25rem;
+      min-width: 60%;
+      max-width: 100%;
+      width: auto;
+    }
+
+    .blog-info {
+      position: absolute;
+      bottom: -6.25rem;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      color: black;
+      font-weight: 600;
+      letter-spacing: 0.2rem;
+
+      .profile-image-container {
+        .profile-image {
+          background-size: cover;
+          width: 7.5rem;
+          height: 7.5rem;
+          border-radius: 50%;
+          border: 2px solid #05bae3;
+        }
+
+        .created-user {
+          font-size: 1.25rem;
+          font-weight: 700;
+        }
+
+        .created-at {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+
+  .blog-content {
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+
+    .blog-title {
+      font-weight: 900;
+      color: black;
+      font-size: 2rem;
+      letter-spacing: 0.5rem;
+      margin: 0;
+    }
+
+    .blog-subtitle {
+      font-size: 1.5rem;
+      margin: 0.5rem;
+    }
+
+    .blog-description {
+      color: black;
+      font-size: 1.125rem;
+      line-height: 1.5rem;
+      padding: 0 1rem;
+    }
+  }
+}
+
+@media screen and(max-width:900px) {
+  .blog-container {
+    margin: 0.875rem 0;
+
+    .blog-image-container {
+      margin-bottom: 5.9375rem;
+
+      .image {
+        max-height: 23.75rem;
+        min-width: 63.75%;
+      }
+
+      .blog-info {
+        bottom: -5.75rem;
+        letter-spacing: 0.175rem;
+
+        .profile-image-container {
+          .profile-image {
+            width: 6.875rem;
+            height: 6.875rem;
+            border: 1.75px solid #05bae3;
+          }
+
+          .created-user {
+            font-size: 1.1875rem;
+          }
+
+          .created-at {
+            font-size: 0.95rem;
+          }
+        }
+      }
+    }
+
+    .blog-content {
+      width: 90%;
+
+      .blog-title {
+        font-size: 1.9375rem;
+        letter-spacing: 0.4375rem;
+      }
+
+      .blog-subtitle {
+        font-size: 1.4375rem;
+      }
+
+      .blog-description {
+        font-size: 1.125rem;
+        line-height: 1.4375rem;
+        padding: 0 0.875rem;
+      }
+    }
+  }
+}
+
+@media screen and(max-width:767px) {
+  .blog-container {
+    margin: 0.75rem 0;
+
+    .blog-image-container {
+      margin-bottom: 5.625rem;
+
+      .image {
+        max-height: 22.5rem;
+        min-width: 67.5%;
+      }
+
+      .blog-info {
+        bottom: -5.5rem;
+        letter-spacing: 0.15rem;
+
+        .profile-image-container {
+          .profile-image {
+            width: 6.25rem;
+            height: 6.25rem;
+            border: 1.5px solid #05bae3;
+          }
+
+          .created-user {
+            font-size: 1.125rem;
+          }
+
+          .created-at {
+            font-size: 0.9rem;
+          }
+        }
+      }
+    }
+
+    .blog-content {
+      width: 95%;
+
+      .blog-title {
+        font-size: 1.875rem;
+        letter-spacing: 0.375rem;
+      }
+
+      .blog-subtitle {
+        font-size: 1.375rem;
+      }
+
+      .blog-description {
+        font-size: 1.0625rem;
+        line-height: 1.375rem;
+        padding: 0 0.75rem;
+      }
+    }
+  }
+}
+
+@media screen and(max-width:600px) {
+  .blog-container {
+    margin: 0.625rem 0;
+
+    .blog-image-container {
+      margin-bottom: 5.3125rem;
+
+      .image {
+        max-height: 21.25rem;
+        min-width: 71.25%;
+      }
+
+      .blog-info {
+        bottom: -5.5rem;
+        letter-spacing: 0.125rem;
+
+        .profile-image-container {
+          .profile-image {
+            width: 5.625rem;
+            height: 5.625rem;
+            border: 1.25px solid #05bae3;
+          }
+
+          .created-user {
+            font-size: 1.0625rem;
+          }
+
+          .created-at {
+            font-size: 0.85rem;
+          }
+        }
+      }
+    }
+
+    .blog-content {
+      width: 98%;
+
+      .blog-title {
+        font-size: 1.8125rem;
+        letter-spacing: 0.3125rem;
+      }
+
+      .blog-subtitle {
+        font-size: 1.3125rem;
+      }
+
+      .blog-description {
+        font-size: 1rem;
+        line-height: 1.3125rem;
+        padding: 0 0.625rem;
+      }
+    }
+  }
+}
+
+@media screen and(max-width:400px) {
+  .blog-container {
+    margin: 0.5rem 0;
+
+    .blog-image-container {
+      margin-bottom: 5rem;
+
+      .image {
+        max-height: 20rem;
+        min-width: 75%;
+      }
+
+      .blog-info {
+        bottom: -5.5rem;
+        letter-spacing: 0.1rem;
+
+        .profile-image-container {
+          .profile-image {
+            width: 5rem;
+            height: 5rem;
+            border: 1px solid #05bae3;
+          }
+
+          .created-user {
+            font-size: 1rem;
+          }
+
+          .created-at {
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+
+    .blog-content {
+      width: 100%;
+
+      .blog-title {
+        font-size: 1.75rem;
+        letter-spacing: 0.25rem;
+      }
+
+      .blog-subtitle {
+        font-size: 1.25rem;
+      }
+
+      .blog-description {
+        font-size: 1rem;
+        line-height: 1.25rem;
+        padding: 0 0.5rem;
+      }
+    }
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

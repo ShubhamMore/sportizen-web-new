@@ -6,7 +6,8 @@ import { HttpService } from './shared-services/http.service';
 @Injectable({ providedIn: 'root' })
 export class ConnectionService {
   constructor(private httpService: HttpService) {}
-  private _searchedSportizenId: string = null;
+  // tslint:disable-next-line: variable-name
+  private _searchedSportizenId: string;
 
   get searchedSportizenId(): string {
     return this._searchedSportizenId;

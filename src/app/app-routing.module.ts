@@ -28,20 +28,20 @@ const appRoutes: Routes = [
         canActivate: [UserAuthGuard],
       },
       {
-        path:'blogs',
-        component:BlogsComponent
+        path: 'blogs',
+        component: BlogsComponent,
       },
       {
-        path:'blogDetails',
-        component:BlogDetailsComponent
+        path: 'blogDetails',
+        component: BlogDetailsComponent,
       },
       {
-        path:'saveBlog',
-        component:SaveBlogComponent
+        path: 'saveBlog',
+        component: SaveBlogComponent,
       },
       {
-        path:'myBlogs',
-        component:MyBlogsComponent
+        path: 'myBlogs',
+        component: MyBlogsComponent,
       },
       {
         path: 'page-not-found',

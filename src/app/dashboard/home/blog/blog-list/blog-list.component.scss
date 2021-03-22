@@ -1,0 +1,342 @@
+.create-blog {
+  width: auto;
+  height: 2.5rem;
+
+  .btn-create-blog {
+    text-decoration: none;
+    position: fixed;
+    display: inline-flex;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 9999;
+    font-size: 1.25rem;
+    text-align: center;
+    align-items: center;
+    outline: none;
+    background-color: #07bae3;
+    color: #fff;
+    cursor: pointer;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0rem;
+    border-radius: 2.5rem;
+    overflow: hidden;
+    transition: all 0.25s;
+
+    .icon {
+      padding: 0 0.875rem;
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    .text {
+      white-space: nowrap;
+      display: none;
+      font-size: 1rem;
+      padding-right: 0.875rem;
+    }
+  }
+
+  .btn-create-blog:hover {
+    width: 9.5rem;
+    transform: scale(1.025);
+
+    .text {
+      display: inline;
+    }
+  }
+}
+
+.blogs-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 1rem 0rem;
+
+  .blog {
+    cursor: pointer;
+    width: 45%;
+    margin: 0.5rem;
+    position: relative;
+    padding-bottom: 5rem;
+    transition: transform 0.5s ease;
+
+    .blog-image-container {
+      width: 100%;
+
+      .blog-image {
+        width: 100%;
+        overflow: hidden;
+        text-align: center;
+
+        .image {
+          background-size: fit;
+          width: 100%;
+          max-height: 20rem;
+          object-fit: cover;
+        }
+      }
+    }
+
+    .blog-details {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-height: 13rem;
+      position: absolute;
+      bottom: 0;
+      left: 2.5%;
+      width: 75%;
+      background-color: #fff;
+      border: 0.5px solid #05bae3;
+      box-shadow: 1px 1px 2px #05bae3;
+      border-radius: 0rem 0.5rem 0.5rem 0.5rem;
+      padding: 0.5rem 1rem;
+      text-align: center;
+
+      .blog-details-header {
+        display: flex;
+        justify-content: space-around;
+
+        .created-user {
+          font-size: 1rem;
+          font-weight: 700;
+        }
+
+        .created-at {
+          font-size: 1rem;
+          font-weight: 700;
+        }
+      }
+
+      .blog-title {
+        font-weight: 700;
+        font-size: 1.5rem;
+        letter-spacing: 0.2rem;
+        margin: 0;
+      }
+
+      .blog-subtitle {
+        font-size: 1rem;
+        font-weight: 700;
+        margin: 0.5rem 1rem;
+      }
+
+      .blog-description {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        line-height: 1.25rem;
+        max-height: 6.25rem;
+        /* The number of lines to be displayed */
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+      }
+    }
+  }
+
+  .blog:hover {
+    transform: scale(1.05);
+  }
+}
+
+@media screen and(max-width:900px) {
+  .blogs-container {
+    margin: 0.875rem 0rem;
+
+    .blog {
+      padding-bottom: 4.75rem;
+
+      .blog-image-container {
+        .blog-image {
+          .image {
+            max-height: 18.75rem;
+          }
+        }
+      }
+
+      .blog-details {
+        width: 85%;
+        max-height: 12rem;
+        border-radius: 0rem 0.4375rem 0.4375rem 0.4375rem;
+        padding: 0.4375rem 0.9375rem;
+
+        .blog-details-header {
+          .created-user {
+            font-size: 0.95rem;
+          }
+
+          .created-at {
+            font-size: 0.95rem;
+          }
+        }
+
+        .blog-title {
+          font-size: 1.4375rem;
+          letter-spacing: 0.175rem;
+        }
+
+        .blog-subtitle {
+          margin: 0.4375rem 0.95rem;
+        }
+
+        .blog-description {
+          font-size: 98%;
+          line-height: 1.125rem;
+          max-height: 6.125rem;
+        }
+      }
+    }
+  }
+}
+
+@media screen and(max-width:767px) {
+  .blogs-container {
+    margin: 0.75rem 0rem;
+
+    .blog {
+      width: 80%;
+      padding-bottom: 4.5rem;
+
+      .blog-image-container {
+        .blog-image {
+          .image {
+            max-height: 17.5rem;
+          }
+        }
+      }
+
+      .blog-details {
+        max-height: 12rem;
+        border-radius: 0rem 0.375rem 0.375rem 0.375rem;
+        padding: 0.375rem 0.875rem;
+
+        .blog-details-header {
+          .created-user {
+            font-size: 0.9rem;
+          }
+
+          .created-at {
+            font-size: 0.9rem;
+          }
+        }
+
+        .blog-title {
+          font-size: 1.375rem;
+          letter-spacing: 0.15rem;
+        }
+
+        .blog-subtitle {
+          margin: 0.5rem 1rem;
+        }
+
+        .blog-description {
+          font-size: 95%;
+          line-height: 1rem;
+          max-height: 6rem;
+        }
+      }
+    }
+  }
+}
+
+@media screen and(max-width:600px) {
+  .blogs-container {
+    margin: 0.625rem 0rem;
+
+    .blog {
+      width: 90%;
+      padding-bottom: 4.25rem;
+
+      .blog-image-container {
+        .blog-image {
+          .image {
+            max-height: 16.25rem;
+          }
+        }
+      }
+
+      .blog-details {
+        max-height: 11rem;
+        border-radius: 0rem 0.3125rem 0.3125rem 0.3125rem;
+        padding: 0.3125rem 0.8125rem;
+
+        .blog-details-header {
+          .created-user {
+            font-size: 0.85rem;
+          }
+
+          .created-at {
+            font-size: 0.85rem;
+          }
+        }
+
+        .blog-title {
+          font-size: 1.3125rem;
+          letter-spacing: 0.125rem;
+        }
+
+        .blog-subtitle {
+          margin: 0.375rem 1rem;
+        }
+
+        .blog-description {
+          font-size: 90%;
+          line-height: 1rem;
+          max-height: 6rem;
+        }
+      }
+    }
+  }
+}
+
+@media screen and(max-width:400px) {
+  .blogs-container {
+    margin: 0.5rem 0rem;
+
+    .blog {
+      width: 100%;
+      padding-bottom: 4rem;
+
+      .blog-image-container {
+        .blog-image {
+          .image {
+            max-height: 15rem;
+          }
+        }
+      }
+
+      .blog-details {
+        max-height: 11rem;
+        border-radius: 0rem 0.25rem 0.25rem 0.25rem;
+        padding: 0.25rem 0.75rem;
+
+        .blog-details-header {
+          .created-user {
+            font-size: 0.8rem;
+          }
+
+          .created-at {
+            font-size: 0.8rem;
+          }
+        }
+
+        .blog-title {
+          font-size: 1.25rem;
+          letter-spacing: 0.1rem;
+        }
+
+        .blog-subtitle {
+          margin: 0.375rem 1rem;
+        }
+
+        .blog-description {
+          font-size: 85%;
+          line-height: 1rem;
+          max-height: 6rem;
+        }
+      }
+    }
+  }
+}

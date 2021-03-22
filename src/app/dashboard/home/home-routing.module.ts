@@ -28,6 +28,11 @@ const routes: Routes = [
       },
 
       {
+        path: 'blog',
+        loadChildren: () => import('./blog/blog.module').then((m) => m.BlogModule),
+      },
+
+      {
         path: 'search',
         loadChildren: () =>
           import('./search-user/search-user.module').then((m) => m.SearchUserModule),
