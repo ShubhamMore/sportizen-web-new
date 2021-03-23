@@ -181,7 +181,11 @@
 
       <div class="col-md-7">
         <div class="my-posts">
-          <app-dashboard-feed [isUserFeed]="true" [userId]="userProfileId"></app-dashboard-feed>
+          <app-dashboard-feed
+            [isMyFeed]="false"
+            [isUserFeed]="true"
+            [userId]="userProfileId"
+          ></app-dashboard-feed>
         </div>
       </div>
     </div>

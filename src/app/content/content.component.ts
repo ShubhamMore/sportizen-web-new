@@ -1,12 +1,12 @@
 import { ActivatedRoute, Params } from '@angular/router';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, OnDestroy } from '@angular/core';
 import * as $ from 'jquery';
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
   styleUrls: ['./common-content.scss', './content.component.scss'],
 })
-export class ContentComponent implements OnInit, AfterViewInit {
+export class ContentComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(private route: ActivatedRoute) {}
 
   scroll = (event: any): void => {
@@ -36,13 +36,11 @@ export class ContentComponent implements OnInit, AfterViewInit {
   };
 
   ngOnInit(): void {
-    window.addEventListener('scroll', this.scroll, true);
-
     $(window).on('load', function () {
       $('.js--nav-link').on('click', function () {
         if ($(window).width() < 768) {
-          var nav = $('.js--main-nav');
-          var icon = $('.js--nav-icon i');
+          const nav = $('.js--main-nav');
+          const icon = $('.js--nav-icon i');
           nav.slideToggle(200);
           if (icon.hasClass('fa-list')) {
             icon.addClass('fa-close');
@@ -56,8 +54,8 @@ export class ContentComponent implements OnInit, AfterViewInit {
 
       $('.js--home').on('click', function () {
         if ($(window).width() < 768) {
-          var icon = $('.js--nav-icon i');
-          var nav = $('.js--main-nav');
+          const icon = $('.js--nav-icon i');
+          const nav = $('.js--main-nav');
           nav.slideUp(200);
           icon.addClass('fa-list');
           icon.removeClass('fa-close');
@@ -65,7 +63,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
       });
 
       $(window).on('resize', function () {
-        var nav = $('.js--main-nav');
+        const nav = $('.js--main-nav');
         if ($(window).width() > 767) {
           nav.slideDown(200);
         } else {
@@ -76,6 +74,8 @@ export class ContentComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    window.addEventListener('scroll', this.scroll, true);
+
     this.route.fragment.subscribe((fragment: string) => {
       if (fragment) {
         const element = document.getElementById(fragment);
@@ -97,5 +97,9 @@ export class ContentComponent implements OnInit, AfterViewInit {
       icon.addClass('fa-list');
       icon.removeClass('fa-close');
     }
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('scroll', this.scroll, true);
   }
 }

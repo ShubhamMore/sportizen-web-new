@@ -7,27 +7,14 @@ import { PostModel } from '../models/post.model';
 @Injectable({ providedIn: 'root' })
 export class PostService {
   private _onScreenPostId: string;
-  private _postList: PostModel[];
-
-  constructor(private httpService: HttpService) {}
+  private _postList: PostModel[] = [];
+  private _userProfileId: string;
 
   get onScreenPostId(): string {
     return this._onScreenPostId;
   }
-  set onScreenPostId(onScreenPostId: string) {
-    this._onScreenPostId = onScreenPostId;
-  }
-
-  getPosts() {
-    const data = { api: 'getPosts', data: {} };
-    return this.httpService.httpPost(data).pipe(
-      map((posts: PostModel[]) => {
-        return posts;
-      }),
-      catchError((err: any) => {
-        return throwError(err);
-      })
-    );
+  set onScreenPostId(userProfileId: string) {
+    this._userProfileId = userProfileId;
   }
 
   get postList() {
@@ -35,11 +22,25 @@ export class PostService {
   }
 
   set postList(postList: PostModel[]) {
-    this._postList = postList;
+    this._postList.push(...postList);
   }
 
-  getMyPosts() {
-    const data = { api: 'getMyPosts', data: {} };
+  unsetPostList() {
+    this._postList = [];
+  }
+
+  get userProfileId(): string {
+    return this._onScreenPostId;
+  }
+
+  set userProfileId(userProfileId: string) {
+    this._userProfileId = userProfileId;
+  }
+
+  constructor(private httpService: HttpService) {}
+
+  getPosts(limit?: number, skip?: number) {
+    const data = { api: 'getPosts', data: { limit, skip } };
     return this.httpService.httpPost(data).pipe(
       map((posts: PostModel[]) => {
         return posts;
@@ -50,8 +51,20 @@ export class PostService {
     );
   }
 
-  getUserPosts(sportizenUser: string) {
-    const data = { api: 'getUserPosts', data: { sportizenUser } };
+  getMyPosts(limit?: number, skip?: number) {
+    const data = { api: 'getMyPosts', data: { limit, skip } };
+    return this.httpService.httpPost(data).pipe(
+      map((posts: PostModel[]) => {
+        return posts;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      })
+    );
+  }
+
+  getUserPosts(sportizenUser: string, limit?: number, skip?: number) {
+    const data = { api: 'getUserPosts', data: { sportizenUser, limit, skip } };
     return this.httpService.httpPost(data).pipe(
       map((posts: PostModel[]) => {
         return posts;
@@ -75,7 +88,7 @@ export class PostService {
   }
 
   createPost(post: FormData) {
-    let data = { api: 'createPost', data: post };
+    const data = { api: 'createPost', data: post };
     return this.httpService.httpPost(data).pipe(
       map((resPost: PostModel) => {
         return resPost;
@@ -87,7 +100,7 @@ export class PostService {
   }
 
   sharePost(sharedPost: { post: string; description: string; visibility: string }) {
-    let data = { api: 'sharePost', data: sharedPost };
+    const data = { api: 'sharePost', data: sharedPost };
     return this.httpService.httpPost(data).pipe(
       map((resPost: PostModel) => {
         return resPost;
@@ -99,7 +112,7 @@ export class PostService {
   }
 
   updatePost(post: FormData) {
-    let data = { api: 'updatePost', data: post };
+    const data = { api: 'updatePost', data: post };
     return this.httpService.httpPost(data).pipe(
       map((resPost: PostModel) => {
         return resPost;

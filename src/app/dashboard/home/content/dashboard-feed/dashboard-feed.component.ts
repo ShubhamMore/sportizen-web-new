@@ -1,6 +1,7 @@
+import { PostModel } from './../../../../models/post.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from './../../../../authentication/auth/auth-model/user.model';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -24,12 +25,16 @@ import * as $ from 'jquery';
   templateUrl: './dashboard-feed.component.html',
   styleUrls: ['./dashboard-feed.component.scss'],
 })
-export class DashboardFeedComponent implements OnInit {
+export class DashboardFeedComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() isMyFeed: boolean;
   @Input() isUserFeed: boolean;
   @Input() userId: string;
 
+  noMorePosts: boolean;
+
+  loadingFeed: boolean;
   sportizenUser: string;
+  postList: PostModel[];
 
   constructor(
     public postService: PostService,
@@ -46,43 +51,84 @@ export class DashboardFeedComponent implements OnInit {
     public authService: AuthService
   ) {}
 
+  scroll = (event: any): void => {
+    if ($('.loading-feed-container')) {
+      const moreFeed = $('.loading-feed-container').offset().top;
+      const threshold = window.innerHeight + 50;
+
+      if (moreFeed <= threshold) {
+        const skip = this.postService.postList.length;
+        if (!this.loadingFeed && !this.noMorePosts) {
+          this.loadFeed(3, skip);
+        }
+      }
+    }
+  };
+
   ngOnInit(): void {
+    this.loadingFeed = true;
+    this.noMorePosts = false;
+
     // tslint:disable-next-line: deprecation
     this.authService.getUser().subscribe((user: User) => {
       if (user) {
         this.sportizenUser = user.sportizenId;
       }
-      this.loadFeed();
+      this.loadFeed(3, null);
     });
   }
 
-  loadFeed() {
+  ngAfterViewInit() {
+    window.addEventListener('scroll', this.scroll, true);
+  }
+
+  loadFeed(limit: number, skip: number) {
+    this.loadingFeed = true;
+
     if (this.isMyFeed) {
-      this.postService.getMyPosts().subscribe((res: any) => {
-        this.postService.postList = res;
+      this.postService.getMyPosts(limit, skip).subscribe((posts: PostModel[]) => {
+        if (posts.length === 0) {
+          this.noMorePosts = true;
+        } else {
+          this.postService.postList = posts;
+        }
+
+        this.loadingFeed = false;
       });
     } else if (this.isUserFeed) {
-      this.postService.getUserPosts(this.userId).subscribe((res: any) => {
-        this.postService.postList = res;
+      this.postService.getUserPosts(this.userId, limit, skip).subscribe((posts: PostModel[]) => {
+        if (posts.length === 0) {
+          this.noMorePosts = true;
+        } else {
+          this.postService.postList = posts;
+        }
+
+        this.loadingFeed = false;
       });
     } else {
-      this.postService.getPosts().subscribe((res: any) => {
-        this.postService.postList = res;
-        this.navigateToOnScreenPost();
+      this.postService.getPosts(limit, skip).subscribe((posts: PostModel[]) => {
+        if (posts.length === 0) {
+          this.noMorePosts = true;
+        } else {
+          this.postService.postList = posts;
+          // this.navigateToOnScreenPost();
+        }
+
+        this.loadingFeed = false;
       });
     }
   }
 
-  navigateToOnScreenPost() {
-    if (this.postService.onScreenPostId) {
-      setTimeout(() => {
-        document
-          .querySelector('#p' + this.postService.onScreenPostId)
-          .scrollIntoView({ block: 'center', inline: 'nearest' });
-        this.postService.onScreenPostId = null;
-      }, 1);
-    }
-  }
+  // navigateToOnScreenPost() {
+  //   if (this.postService.onScreenPostId) {
+  //     setTimeout(() => {
+  //       document
+  //         .querySelector('#post-' + this.postService.onScreenPostId)
+  //         .scrollIntoView({ block: 'center', inline: 'nearest' });
+  //       this.postService.onScreenPostId = null;
+  //     }, 1);
+  //   }
+  // }
 
   likeUnlikePost(postId: string, alreadyLiked: boolean, postIndex: number): void {
     if (!alreadyLiked) {
@@ -238,4 +284,9 @@ export class DashboardFeedComponent implements OnInit {
   }
 
   scrolledIndexChange(event: any) {}
+
+  ngOnDestroy() {
+    this.postService.unsetPostList();
+    window.removeEventListener('scroll', this.scroll, true);
+  }
 }

@@ -1,6 +1,18 @@
 $dark-grey-color: #555454;
 $light-grey-color: #dad8d8;
 
+// /* Hide scrollbar for Chrome, Safari and Opera */
+// .post-container::-webkit-scrollbar {
+//   display: none;
+// }
+
+// /* Hide scrollbar for IE, Edge and Firefox */
+// .post-container {
+//   -ms-overflow-style: none; /* IE and Edge */
+//   scrollbar-width: none; /* Firefox */
+//   max-height: 10rem;
+// }
+
 ::ng-deep .mat-menu-panel {
   padding: 0 !important;
   min-width: 0rem !important;
@@ -39,11 +51,6 @@ $light-grey-color: #dad8d8;
   }
 }
 
-.scroll-container {
-  padding-right: 1rem;
-  height: 60rem;
-}
-
 hr {
   margin: 0.5rem 0;
 }
@@ -59,6 +66,12 @@ hr {
 
 .display-none {
   display: none;
+}
+
+.loading-feed-container {
+  mat-spinner {
+    margin: 0.5rem auto;
+  }
 }
 
 .post {

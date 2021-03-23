@@ -15,7 +15,11 @@
 
       <div class="row dashboard-feed">
         <div class="col-md-12">
-          <app-dashboard-feed></app-dashboard-feed>
+          <app-dashboard-feed
+            [isMyFeed]="false"
+            [isUserFeed]="false"
+            [userId]="null"
+          ></app-dashboard-feed>
         </div>
       </div>
     </div>

@@ -1,8 +1,3 @@
-<!-- <cdk-virtual-scroll-viewport
-  class="scroll-container"
-  itemSize="50"
-  (scrolledIndexChange)="scrolledIndexChange($event)"
-> -->
 <div
   class="post"
   *ngIf="postService.postList && postService.postList.length > 0; else noPostsUploaded"
@@ -10,7 +5,7 @@
   <mat-card
     class="post-card"
     *ngFor="let post of postService.postList; let i = index"
-    [id]="'p' + i"
+    [id]="'post-' + i"
   >
     <mat-card-content
       class="post-content"
@@ -217,10 +212,13 @@
     </mat-card-content>
   </mat-card>
 </div>
-<!-- </cdk-virtual-scroll-viewport> -->
 
-<ng-template #noPostsUploaded
-  ><div class="no-posts">
+<div class="loading-feed-container">
+  <mat-spinner diameter="25" *ngIf="loadingFeed"></mat-spinner>
+</div>
+
+<ng-template #noPostsUploaded>
+  <div class="no-posts" *ngIf="!loadingFeed">
     <span>No Posts Uploaded</span>
   </div>
 </ng-template>
