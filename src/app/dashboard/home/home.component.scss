@@ -83,6 +83,14 @@ $grey-color: #838383;
   visibility: hidden;
 }
 
+.disable-dashboard-link {
+  display: none;
+}
+
+.enable-dashboard-link {
+  display: inline-block;
+}
+
 .nav-down {
   opacity: 1;
   transition: all 0.125s;

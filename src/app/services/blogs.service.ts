@@ -46,13 +46,13 @@ export class BlogsService {
     {
       _id: '2',
       images: [
-        // {
-        //   _id: '',
-        //   imageName: '',
-        //   secureUrl: 'https://picsum.photos/200/800',
-        //   publicId: '',
-        //   createdAt: '',
-        // },
+        {
+          _id: '',
+          imageName: '',
+          secureUrl: 'https://picsum.photos/200/800',
+          publicId: '',
+          createdAt: '',
+        },
       ],
       createdBy: '',
       modifiedAt: '10/10/20',

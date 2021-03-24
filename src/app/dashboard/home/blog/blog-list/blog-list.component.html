@@ -22,7 +22,7 @@
     </div>
   </div> -->
 
-  <div class="blog" *ngFor="let blog of blogsList; let i = index" (click)="openBlog(blog._id)">
+  <div class="blog" *ngFor="let blog of blogsList; let i = index">
     <div class="blog-image-container" *ngIf="blog.images.length > 0">
       <div class="carousel-background">
         <div id="{{ 'blog-image-' + i }}" class="carousel slide" data-ride="carousel">
@@ -49,7 +49,11 @@
       </div>
     </div>
 
-    <div class="blog-details">
+    <div
+      class="blog-details"
+      [ngClass]="blog.images.length > 0 ? '' : 'no-blog-image'"
+      (click)="openBlog(blog._id)"
+    >
       <div class="blog-details-header">
         <span class="created-user">{{ blog.createdUser }}</span>
 

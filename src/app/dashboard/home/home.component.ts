@@ -53,10 +53,10 @@ export class HomeComponent implements OnInit {
   ngAfterViewInit(): void {
     this.dashboardSideDrawerService.setSideNav(this.drawer);
 
-    var didScroll: any;
-    var lastScrollTop = 0;
-    var delta = 5;
-    var navbarHeight = $('#dashboardLinks').outerHeight();
+    let didScroll: any;
+    let lastScrollTop = 0;
+    const delta = 5;
+    const navbarHeight = $('#dashboardLinks').outerHeight();
 
     $('#dashboardContent').scroll(function (event) {
       didScroll = true;
@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit {
     }, 250);
 
     function hasScrolled() {
-      var st = $('#dashboardContent').scrollTop();
+      const st = $('#dashboardContent').scrollTop();
 
       // Make sure they scroll more than delta
       if (Math.abs(lastScrollTop - st) <= delta) return;
@@ -80,10 +80,16 @@ export class HomeComponent implements OnInit {
       if (st > lastScrollTop && st > navbarHeight) {
         // Scroll Down
         $('#dashboardLinks').removeClass('nav-down').addClass('nav-up');
+        // $('.dashboard-link')
+        //   .removeClass('disable-dashboard-link')
+        //   .addClass('enable-dashboard-link');
       } else {
         // Scroll Up
         // if(st + $('#dashboardLinks').height() < $(document).height()) {
         $('#dashboardLinks').removeClass('nav-up').addClass('nav-down');
+        // $('.dashboard-link')
+        //   .removeClass('enable-dashboard-link')
+        //   .addClass('disable-dashboard-link');
         // }
       }
 
