@@ -26,12 +26,12 @@
 
     <div class="blog-info">
       <div class="profile-image-container">
-        <img class="profile-image" src="https://picsum.photos/200/200" />
+        <img class="profile-image" [src]="blog.createdUserImage" [alt]="blog.createdUser" />
 
-        <div class="created-user">{{ blog.createdUser }}</div>
+        <div class="created-user">{{ blog.createdUser | capitalizeEachWord }}</div>
 
         <div class="created-at">
-          {{ blog.createdAt }}
+          {{ blog.createdAt | amCalendar }}
         </div>
       </div>
     </div>
@@ -42,9 +42,7 @@
 
     <div class="blog-subtitle">{{ blog.subtitle }}</div>
 
-    <div class="blog-description">
-      {{ blog.description }}
-    </div>
+    <div class="blog-description" [innerHtml]="blog.description | safeHtml"></div>
   </div>
 </div>
 

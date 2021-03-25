@@ -22,6 +22,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatStepperModule } from '@angular/material/stepper';
 
 const MaterialComponents = [
   MatButtonModule,
@@ -47,6 +48,7 @@ const MaterialComponents = [
   MatBottomSheetModule,
   MatTooltipModule,
   MatTabsModule,
+  MatStepperModule,
 ];
 
 @NgModule({

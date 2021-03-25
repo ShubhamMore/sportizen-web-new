@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./blog-list.component.scss'],
 })
 export class BlogListComponent implements OnInit {
+  loading: boolean;
   blogsList: BlogModel[];
 
   constructor(
@@ -18,13 +19,24 @@ export class BlogListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
     this.blogsList = [];
-    this.blogsList = this.blogsService.getBlogsList();
-    console.log(this.blogsList);
+
+    this.blogsService.getBlogs().subscribe(
+      (blogs: BlogModel[]) => {
+        this.blogsList = blogs;
+        this.loading = false;
+      },
+      (error: any) => {
+        this.loading = false;
+      }
+    );
+
+    // this.blogsList = this.blogsService.getBlogsList();
   }
 
-  openBlog(id: string) {
-    this.blogsService.setBlogId(id);
-    this.router.navigate(['/dashboard/blog/view', id], { relativeTo: this.route });
+  openBlog(blog: BlogModel) {
+    this.blogsService.setViewBlog(blog);
+    this.router.navigate(['/dashboard/blog/view', blog._id], { relativeTo: this.route });
   }
 }

@@ -2,6 +2,7 @@ export class BlogModel {
   constructor(
     public _id: string,
     public title: string,
+    public sport: string,
     public subtitle: string,
     public description: string,
     public images: BlogImageModel[],

@@ -7,10 +7,12 @@ import { throwError } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class BlogsService {
   private blogId: string;
+  private blog: BlogModel;
 
   private blogsList: BlogModel[] = [
     {
       _id: '1',
+      sport: '',
       images: [
         {
           _id: '',
@@ -45,6 +47,7 @@ export class BlogsService {
     },
     {
       _id: '2',
+      sport: '',
       images: [
         {
           _id: '',
@@ -64,6 +67,7 @@ export class BlogsService {
     },
     {
       _id: '3',
+      sport: '',
       images: [
         {
           _id: '',
@@ -83,6 +87,7 @@ export class BlogsService {
     },
     {
       _id: '4',
+      sport: '',
       images: [
         {
           _id: '',
@@ -102,6 +107,7 @@ export class BlogsService {
     },
     {
       _id: '5',
+      sport: '',
       images: [
         {
           _id: '',
@@ -129,10 +135,16 @@ export class BlogsService {
     return this.blogId;
   }
 
+  getViewBlog() {
+    return this.blog;
+  }
+  setViewBlog(blog: BlogModel) {
+    this.blog = blog;
+  }
+
   getBlogsList() {
     return [...this.blogsList];
   }
-  getBlogDetails() {}
 
   getSelectedBlogDetails() {
     return this.blogsList.find((blog: BlogModel) => blog._id === this.blogId);
@@ -141,9 +153,9 @@ export class BlogsService {
   constructor(private httpService: HttpService) {}
 
   saveBlog(blog: FormData, editingMode: boolean) {
-    let data = { api: 'createBlog', data: blog };
+    let data = { api: 'create-blog', data: blog };
     if (editingMode) {
-      data = { api: 'updateBlog', data: blog };
+      data = { api: 'update-blog', data: blog };
     }
     return this.httpService.httpPost(data).pipe(
       map((resBlog: BlogModel) => {
@@ -155,8 +167,8 @@ export class BlogsService {
     );
   }
 
-  getMyBlogs(limit?: number) {
-    const data = { api: 'get-my-blogs', data: { limit } };
+  getMyBlogs(limit?: number, skip?: number) {
+    const data = { api: 'get-my-blogs', data: { limit, skip } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -167,8 +179,8 @@ export class BlogsService {
     );
   }
 
-  getBlogs(limit?: number) {
-    const data = { api: 'get-blogs', data: { limit } };
+  getBlogs(limit?: number, skip?: number) {
+    const data = { api: 'get-blogs', data: { limit, skip } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -205,7 +217,7 @@ export class BlogsService {
 
   deleteBlogImage(id: string, imageId: string, index: number) {
     const data = {
-      api: 'deleteBlogImage',
+      api: 'delete-blog-image',
       data: { id, imageId, index },
     };
     return this.httpService.httpPost(data).pipe(

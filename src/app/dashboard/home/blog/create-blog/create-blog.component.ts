@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { BlogsService } from './../../../../services/blogs.service';
 import { BlogModel } from './../../../../models/blog.model';
 import { SportService } from './../../../../services/sport.service';
@@ -20,7 +21,8 @@ export class CreateBlogComponent implements OnInit {
 
   sports: SportModel[];
 
-  form: FormGroup;
+  detailsForm: FormGroup;
+  blogForm: FormGroup;
 
   blog: BlogModel;
 
@@ -28,7 +30,11 @@ export class CreateBlogComponent implements OnInit {
 
   public classicEditor: any;
 
-  constructor(private sportsService: SportService, private blogService: BlogsService) {}
+  constructor(
+    private sportsService: SportService,
+    private blogService: BlogsService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
@@ -38,15 +44,13 @@ export class CreateBlogComponent implements OnInit {
 
     this.sports = this.sportsService.getSports();
 
-    this.loading = false;
-    this.form = new FormGroup({
+    const blogId = this.blogService.getBlogId();
+
+    this.detailsForm = new FormGroup({
       title: new FormControl(null, {
         validators: [Validators.required],
       }),
       subtitle: new FormControl(null, {
-        validators: [Validators.required],
-      }),
-      description: new FormControl(null, {
         validators: [Validators.required],
       }),
       sport: new FormControl('', {
@@ -54,43 +58,98 @@ export class CreateBlogComponent implements OnInit {
       }),
     });
 
+    this.blogForm = new FormGroup({
+      description: new FormControl(null, {
+        validators: [Validators.required],
+      }),
+    });
+
     this.blogImageFiles = [];
     this.blogImagePreview = [];
 
-    this.loading = false;
+    if (blogId) {
+      this.blogService.getBlog(blogId).subscribe(
+        (blog: BlogModel) => {
+          this.blog = blog;
+          this.detailsForm.patchValue({
+            title: blog.title,
+            subtitle: blog.subtitle,
+            sport: blog.sport,
+          });
+
+          this.blogForm.patchValue({
+            description: blog.description,
+          });
+
+          this.loading = false;
+        },
+        (error: any) => {
+          this.loading = false;
+        }
+      );
+    } else {
+      this.loading = false;
+    }
   }
 
   saveBlog() {
-    if (this.form.valid) {
+    if (this.detailsForm.invalid) {
+      this.snackBar.open('Form Details are Required', null, {
+        duration: 2000,
+        panelClass: ['error-snackbar'],
+      });
+    } else if (this.blogForm.invalid) {
+      this.snackBar.open('Blog Description is Required', null, {
+        duration: 2000,
+        panelClass: ['error-snackbar'],
+      });
+    } else {
       this.submit = true;
+
       const blog = new FormData();
+
       if (this.blog) {
         blog.append('_id', this.blog._id);
       }
-      blog.append('title', this.form.value.title);
-      blog.append('subtitle', this.form.value.subtitle);
-      blog.append('sport', this.form.value.sport);
+
+      blog.append('title', this.detailsForm.value.title);
+      blog.append('subtitle', this.detailsForm.value.subtitle);
+      blog.append('sport', this.detailsForm.value.sport);
+
       for (const blogImageFile of this.blogImageFiles) {
         blog.append('blogImage', blogImageFile);
       }
-      blog.append('description', this.form.value.description);
 
-      // this.blogService.saveBlog(blog, !!this.blog).subscribe(
-      //   (resBlog: BlogModel) => {
-      //     if (!this.blog) {
-      //       this.form.reset();
-      //     } else {
-      //       this.blog = resBlog;
-      //       this.blog.images = resBlog.images;
-      //     }
-      //     this.submit = false;
-      //     this.blogImageFiles = [];
-      //     this.blogImagePreview = [];
-      //   },
-      //   (error: any) => {
-      //     this.loading = false;
-      //   }
-      // );
+      blog.append('description', this.blogForm.value.description);
+
+      this.blogService.saveBlog(blog, !!this.blog).subscribe(
+        (resBlog: BlogModel) => {
+          this.snackBar.open(`Blog ${this.blog ? 'Updated' : 'Created'} Successfully!`, null, {
+            duration: 2000,
+            panelClass: ['success-snackbar'],
+          });
+
+          if (!this.blog) {
+            this.detailsForm.reset();
+            this.blogForm.reset();
+          } else {
+            this.blog = resBlog;
+            this.blog.images = resBlog.images;
+          }
+
+          this.blogImageFiles = [];
+          this.blogImagePreview = [];
+
+          this.submit = false;
+        },
+        (error: any) => {
+          this.snackBar.open(error, null, {
+            duration: 2000,
+            panelClass: ['error-snackbar'],
+          });
+          this.loading = false;
+        }
+      );
     }
   }
 

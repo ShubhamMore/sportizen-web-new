@@ -4,15 +4,13 @@ import { BlogsService } from 'src/app/services/blogs.service';
 @Component({
   selector: 'app-my-blogs',
   templateUrl: './my-blogs.component.html',
-  styleUrls: ['./my-blogs.component.scss']
+  styleUrls: ['./my-blogs.component.scss'],
 })
 export class MyBlogsComponent implements OnInit {
-
-  blogs:any;
-  constructor(private blogsService:BlogsService) { }
+  blogs: any;
+  constructor(private blogsService: BlogsService) {}
 
   ngOnInit(): void {
     this.blogs = this.blogsService.getBlogsList();
   }
-
 }

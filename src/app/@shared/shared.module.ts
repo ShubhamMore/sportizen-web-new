@@ -1,3 +1,4 @@
+import { SafeHtmlPipe } from './pipe/safe-html.pipe';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -17,7 +18,7 @@ import { CapitalizeEachWordPipe } from './pipe/capitalize-each-word.pipe';
 import { ConfirmComponent } from './confirm/confirm.component';
 
 @NgModule({
-  declarations: [LoadingContentComponent, CapitalizeEachWordPipe, ConfirmComponent],
+  declarations: [LoadingContentComponent, CapitalizeEachWordPipe, SafeHtmlPipe, ConfirmComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -35,6 +36,7 @@ import { ConfirmComponent } from './confirm/confirm.component';
     ConfirmComponent,
 
     CapitalizeEachWordPipe,
+    SafeHtmlPipe,
 
     FormsModule,
     ReactiveFormsModule,

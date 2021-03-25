@@ -19,12 +19,14 @@ export class ViewBlogComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    const blog = this.blogsService.getSelectedBlogDetails();
+    const blog = this.blogsService.getViewBlog();
+
     if (blog) {
       this.blog = blog;
     } else {
       this.router.navigate(['/dashboard/blog'], { relativeTo: this.route });
     }
+
     this.loading = false;
   }
 }

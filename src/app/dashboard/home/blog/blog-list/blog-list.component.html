@@ -22,6 +22,7 @@
     </div>
   </div> -->
 
+  <ng-container *ngIf="blogsList.length > 0; else noBlogs"> </ng-container>
   <div class="blog" *ngFor="let blog of blogsList; let i = index">
     <div class="blog-image-container" *ngIf="blog.images.length > 0">
       <div class="carousel-background">
@@ -52,12 +53,12 @@
     <div
       class="blog-details"
       [ngClass]="blog.images.length > 0 ? '' : 'no-blog-image'"
-      (click)="openBlog(blog._id)"
+      (click)="openBlog(blog)"
     >
       <div class="blog-details-header">
-        <span class="created-user">{{ blog.createdUser }}</span>
+        <span class="created-user">{{ blog.createdUser | capitalizeEachWord }}</span>
 
-        <span class="created-at">{{ blog.createdAt }}</span>
+        <span class="created-at">{{ blog.createdAt | amCalendar }}</span>
       </div>
 
       <div>
@@ -70,9 +71,11 @@
         </div>
       </div>
 
-      <div class="blog-description">
-        {{ blog.description }}
-      </div>
+      <div class="blog-description" [innerHtml]="blog.description | safeHtml"></div>
     </div>
   </div>
 </div>
+
+<ng-template #noBlogs>
+  <p class="mt-2 text-center">No Blogs Available</p>
+</ng-template>
