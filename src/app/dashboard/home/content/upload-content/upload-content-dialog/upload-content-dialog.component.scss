@@ -7,6 +7,10 @@ $grey-color: #838383;
   overflow-x: hidden;
 }
 
+::ng-deep .mat-dialog-content {
+  max-height: max-content;
+}
+
 .upload-container {
   width: 32rem;
   padding: 1rem;
@@ -145,7 +149,7 @@ $grey-color: #838383;
 
       .middle {
         .remove {
-          font-size: 98%;
+          font-size: 97.5%;
 
           .trash {
             font-size: 145%;
@@ -155,11 +159,11 @@ $grey-color: #838383;
     }
 
     .description {
-      font-size: 98%;
+      font-size: 97.5%;
     }
 
     .submit-btn {
-      font-size: 98%;
+      font-size: 97.5%;
       height: 2rem;
       padding: 0 0.75rem;
     }
@@ -254,7 +258,7 @@ $grey-color: #838383;
 
       .middle {
         .remove {
-          font-size: 90%;
+          font-size: 92.5%;
 
           .trash {
             font-size: 130%;
@@ -264,11 +268,11 @@ $grey-color: #838383;
     }
 
     .description {
-      font-size: 90%;
+      font-size: 92.5%;
     }
 
     .submit-btn {
-      font-size: 90%;
+      font-size: 92.5%;
       height: 1.75rem;
       padding: 0 0.75rem;
     }
@@ -310,7 +314,7 @@ $grey-color: #838383;
 
       .middle {
         .remove {
-          font-size: 80%;
+          font-size: 90%;
 
           .trash {
             font-size: 120%;
@@ -320,11 +324,11 @@ $grey-color: #838383;
     }
 
     .description {
-      font-size: 80%;
+      font-size: 90%;
     }
 
     .submit-btn {
-      font-size: 80%;
+      font-size: 90%;
       height: 1.5rem;
       padding: 0 0.5rem;
     }

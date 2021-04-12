@@ -1,3 +1,4 @@
+import { HomeService } from './../../../services/home.service';
 import { SocketioService } from './../../../services/socket.service';
 import { ChatService, ChatMember } from './@services/chat.service';
 import { Component, OnInit } from '@angular/core';
@@ -11,9 +12,15 @@ export class ChatsComponent implements OnInit {
   user: ChatMember;
   socket: any;
 
-  constructor(private chatService: ChatService, private socketioService: SocketioService) {}
+  constructor(
+    private chatService: ChatService,
+    private socketioService: SocketioService,
+    private homeService: HomeService
+  ) {}
 
   ngOnInit(): void {
+    this.homeService.setRoute('Messages');
+
     this.socket = this.socketioService.getSocket();
 
     $(document).ready(() => {

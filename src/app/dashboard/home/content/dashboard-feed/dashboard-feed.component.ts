@@ -213,7 +213,7 @@ export class DashboardFeedComponent implements OnInit, OnDestroy, AfterViewInit 
 
   sharePost(postId: string) {
     const dialogRef = this.dialog.open(FeedShareComponent, {
-      data: { postId },
+      data: { postId, isUserFeed: this.isUserFeed },
       maxHeight: '90vh',
     });
   }

@@ -6,6 +6,7 @@ import { Component, Input, OnInit, Inject } from '@angular/core';
 
 export interface LikeDialogData {
   postId: string;
+  isUserFeed: boolean;
 }
 
 @Component({
@@ -42,7 +43,9 @@ export class FeedShareComponent implements OnInit {
 
       this.postService.sharePost(sharedPost).subscribe((post: PostModel) => {
         this.postUploading = false;
-        this.postService.postList.unshift(post);
+        if (!this.data.isUserFeed) {
+          this.postService.postList.unshift(post);
+        }
         this.dialogRef.close();
       });
     }

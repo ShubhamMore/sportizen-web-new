@@ -11,7 +11,7 @@ export class HttpService {
   constructor(private http: HttpClient) {}
 
   public httpGet(data: any): any {
-    return this.http.get(environment.backend + data.api).pipe(
+    return this.http.get(environment.backend + data.api, data.data).pipe(
       map((response: any) => {
         return response;
       }),

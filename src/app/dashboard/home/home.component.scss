@@ -81,6 +81,7 @@ $grey-color: #838383;
   opacity: 0;
   transition: all 0.125s;
   visibility: hidden;
+  // display: none;
 }
 
 .disable-dashboard-link {
@@ -95,6 +96,7 @@ $grey-color: #838383;
   opacity: 1;
   transition: all 0.125s;
   visibility: visible;
+  // display: block;
 }
 
 @media only screen and (max-width: 900px) {

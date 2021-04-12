@@ -44,7 +44,7 @@ export class JoinEventComponent implements OnInit, OnDestroy {
         (event: EventModel) => {
           this.event = event;
 
-          if (event.registrationType === '0') {
+          if (event.registrationType === 'individual') {
             this.joinEventForm = new FormGroup({
               name: new FormControl(null, {
                 validators: [Validators.required],
@@ -68,7 +68,7 @@ export class JoinEventComponent implements OnInit, OnDestroy {
                 contact: event.registration.contact,
               });
             }
-          } else if (event.registrationType === '1') {
+          } else if (event.registrationType === 'team') {
             this.joinEventForm = new FormGroup({
               teamName: new FormControl(null, {
                 validators: [Validators.required],
@@ -173,7 +173,7 @@ export class JoinEventComponent implements OnInit, OnDestroy {
 
     const joinEventData = { event: this.event._id, ...this.joinEventForm.getRawValue() };
 
-    if (this.event.registrationType === '0') {
+    if (this.event.registrationType === 'individual') {
       if (!this.event.registration) {
         this.eventPlayerRegistrationService.registerPlayer(joinEventData).subscribe(
           (res: any) => {
@@ -189,7 +189,7 @@ export class JoinEventComponent implements OnInit, OnDestroy {
           (error: any) => {}
         );
       }
-    } else if (this.event.registrationType === '1') {
+    } else if (this.event.registrationType === 'team') {
       if (!this.event.registration) {
         this.eventTeamRegistrationService.registerTeam(joinEventData).subscribe(
           (res: any) => {

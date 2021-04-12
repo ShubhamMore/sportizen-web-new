@@ -1,6 +1,6 @@
 <div class="row event-container">
   <div class="col-12">
-    <mat-card class="event-card" *ngIf="!loading">
+    <mat-card class="event-card" *ngIf="!loading; else loadingSpinner">
       <mat-card-header>
         <mat-card-title>
           <i class="fa fa-plus-circle"></i>
@@ -150,8 +150,8 @@
                       name="registrationType"
                       id="registration-type"
                     >
-                      <mat-option value="0">Individual</mat-option>
-                      <mat-option value="1">Team</mat-option>
+                      <mat-option value="individual">Individual</mat-option>
+                      <mat-option value="team">Team</mat-option>
                     </mat-select>
 
                     <mat-error *ngIf="form.get('registrationType').hasError('required')">
@@ -380,3 +380,9 @@
     </mat-card>
   </div>
 </div>
+
+<ng-template #loadingSpinner>
+  <div class="loading-container">
+    <mat-spinner diameter="25"></mat-spinner>
+  </div>
+</ng-template>

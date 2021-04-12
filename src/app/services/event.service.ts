@@ -19,8 +19,8 @@ export class EventService {
 
   constructor(private httpService: HttpService) {}
 
-  getAllEvents(longitude: number, latitude: number) {
-    const data = { api: 'getAllEvents', data: { longitude, latitude } };
+  getAllEvents(limit: number, skip: number, longitude: number, latitude: number) {
+    const data = { api: 'getAllEvents', data: { limit, skip, longitude, latitude } };
     return this.httpService.httpPost(data).pipe(
       map((events: EventModel[]) => {
         return events;

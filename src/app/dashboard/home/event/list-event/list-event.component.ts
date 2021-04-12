@@ -1,21 +1,27 @@
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmComponent } from 'src/app/@shared/confirm/confirm.component';
 import { ConnectionService } from './../../../../services/connection.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EventService } from './../../../../services/event.service';
 import { UserProfileService } from './../../../../services/user-profile.service';
 import { EventModel } from './../../../../models/event.model';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-list-event',
   templateUrl: './list-event.component.html',
   styleUrls: ['./list-event.component.scss'],
 })
-export class ListEventComponent implements OnInit {
+export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
   events: EventModel[];
   userSportizenId: string;
   loading: boolean;
+  loadingEvents: boolean;
+  noMoreEvents: boolean;
+
+  longitude: number;
+  latitude: number;
 
   constructor(
     private eventService: EventService,
@@ -26,8 +32,27 @@ export class ListEventComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
+  scroll = (event: any): void => {
+    if ($('.loading-event-container')) {
+      const moreFeed = $('.loading-event-container').offset().top;
+      const threshold = window.innerHeight + 50;
+
+      if (moreFeed <= threshold) {
+        const skip = this.events.length;
+        if (!this.loadingEvents && !this.noMoreEvents) {
+          this.getEvents(3, skip, this.longitude, this.latitude);
+        }
+      }
+    }
+  };
+
   ngOnInit(): void {
     this.loading = true;
+    this.noMoreEvents = false;
+
+    this.longitude = null;
+    this.latitude = null;
+
     this.userSportizenId = this.userProfileService.getUserSportizenId();
 
     this.events = [];
@@ -35,9 +60,18 @@ export class ListEventComponent implements OnInit {
     this.getLocation();
   }
 
+  ngAfterViewInit() {
+    window.addEventListener('scroll', this.scroll, true);
+  }
+
   joinEvent(id: string) {
     this.eventService.setEventId(id);
     this.router.navigate(['./join'], { relativeTo: this.route });
+  }
+
+  viewEvent(id: string) {
+    this.eventService.setEventId(id);
+    this.router.navigate(['./view'], { relativeTo: this.route });
   }
 
   editEvent(id: string) {
@@ -58,27 +92,39 @@ export class ListEventComponent implements OnInit {
     if (registrations.length > 6) {
       return registrations.slice(0, 6);
     }
+
     return registrations;
   }
 
   getLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        this.getEvents(position.coords.longitude, position.coords.latitude);
+        this.longitude = position.coords.longitude;
+        this.latitude = position.coords.latitude;
+        this.getEvents(3, null, this.longitude, this.latitude);
       });
     } else {
-      this.getEvents(null, null);
+      this.getEvents(3, null, this.longitude, this.latitude);
     }
   }
 
-  getEvents(longitude: number, latitude: number) {
-    this.eventService.getAllEvents(longitude, latitude).subscribe(
+  getEvents(limit: number, skip: number, longitude: number, latitude: number) {
+    this.loadingEvents = true;
+
+    this.eventService.getAllEvents(limit, skip, longitude, latitude).subscribe(
       (events: EventModel[]) => {
-        this.events = events;
+        if (events.length === 0) {
+          this.noMoreEvents = true;
+        } else {
+          this.events.push(...events);
+        }
+
         this.loading = false;
+        this.loadingEvents = false;
       },
       (error: any) => {
         this.loading = false;
+        this.loadingEvents = false;
       }
     );
   }
@@ -121,5 +167,9 @@ export class ListEventComponent implements OnInit {
       date.indexOf('T') + 1,
       date.indexOf('.')
     )}`;
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('scroll', this.scroll, true);
   }
 }

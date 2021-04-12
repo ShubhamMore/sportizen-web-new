@@ -12,7 +12,9 @@
         <mat-card-content>
           <div class="row">
             <div class="col-md-6">
-              <h1 class="heading">{{ event.name | capitalizeEachWord }}</h1>
+              <h1 class="heading" (click)="viewEvent(event._id)">
+                {{ event.name | capitalizeEachWord }}
+              </h1>
             </div>
 
             <div class="col-md-6">
@@ -219,6 +221,10 @@
       </mat-card>
     </div>
   </div>
+</div>
+
+<div class="loading-event-container">
+  <mat-spinner diameter="25" *ngIf="loadingEvents"></mat-spinner>
 </div>
 
 <ng-template #noRegistrations>

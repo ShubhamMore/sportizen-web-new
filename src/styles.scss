@@ -83,7 +83,7 @@ input::-webkit-inner-spin-button {
 }
 
 .input-error {
-  font-size: 75%;
+  font-size: 90%;
   color: #f00;
 }
 
@@ -157,6 +157,14 @@ input::-webkit-inner-spin-button {
     outline: none !important;
   }
 }
+
+// LOADING SPINNER
+.loading-container {
+  mat-spinner {
+    margin: 0.5rem auto;
+  }
+}
+
 // snackbar
 .success-snackbar {
   color: #7ec735;

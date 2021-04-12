@@ -1,3 +1,4 @@
+import { HomeService } from './../../../services/home.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./event.component.scss'],
 })
 export class EventComponent implements OnInit {
-  constructor() {}
+  constructor(private homeService: HomeService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.homeService.setRoute('Events');
+  }
 }

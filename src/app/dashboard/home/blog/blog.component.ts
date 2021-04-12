@@ -1,3 +1,4 @@
+import { HomeService } from './../../../services/home.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./blog.component.scss'],
 })
 export class BlogComponent implements OnInit {
-  constructor() {}
+  constructor(private homeService: HomeService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.homeService.setRoute('Blogs');
+  }
 }
