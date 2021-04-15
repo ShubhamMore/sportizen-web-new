@@ -20,8 +20,8 @@ export class EventPlayerRegistrationService {
     );
   }
 
-  getEventPlayers() {
-    const data = { api: 'getEventPlayers', data: {} };
+  getEventPlayers(event: string) {
+    const data = { api: 'getEventPlayers', data: { event } };
     return this.httpService.httpPost(data).pipe(
       map((eventPlayers: EventPlayerModel[]) => {
         return eventPlayers;

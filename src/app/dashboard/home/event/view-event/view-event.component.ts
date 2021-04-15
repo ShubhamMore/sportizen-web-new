@@ -1,24 +1,44 @@
+import { MatDialog } from '@angular/material/dialog';
+import { ViewRegistrationComponent } from './view-registration/view-registration.component';
 import { ConnectionService } from './../../../../services/connection.service';
 import { EventTeamRegistrationService } from './../../../../services/event-team-registration.service';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { EventModel } from './../../../../models/event.model';
 import { EventService } from './../../../../services/event.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import { UserProfileService } from './../../../../services/user-profile.service';
-import { ObjectId } from 'bson';
 import { EventPlayerRegistrationService } from './../../../../services/event-player-registration.service';
 
+interface TeamMember {
+  _id: string;
+  name: string;
+  email: string;
+  contact: string;
+}
+
+interface Registration {
+  _id: string;
+  name: string;
+  email: string;
+  contact: string;
+  userImageURL: string;
+  teamName?: string;
+  teamMembers?: TeamMember[];
+}
 @Component({
   selector: 'app-view-event',
   templateUrl: './view-event.component.html',
   styleUrls: ['./view-event.component.scss'],
 })
 export class ViewEventComponent implements OnInit, OnDestroy {
-  event: EventModel;
-  userEmail: string;
   loading: boolean;
+  loadingPlayers: boolean;
+
+  userEmail: string;
+
+  event: EventModel;
+  players: Registration[];
 
   constructor(
     private eventService: EventService,
@@ -26,13 +46,16 @@ export class ViewEventComponent implements OnInit, OnDestroy {
     private eventPlayerRegistrationService: EventPlayerRegistrationService,
     private userProfileService: UserProfileService,
     private connectionService: ConnectionService,
+    public dialog: MatDialog,
     private router: Router,
-    private location: Location,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
+    this.loadingPlayers = true;
+
+    this.players = [];
 
     this.userEmail = this.userProfileService.getUserEmail();
 
@@ -43,6 +66,13 @@ export class ViewEventComponent implements OnInit, OnDestroy {
         (event: EventModel) => {
           this.event = event;
 
+          if (event.registrationType === 'individual') {
+            this.getIndividualRegistrations();
+          } else if (event.registrationType === 'team') {
+            this.getTeamRegistrations();
+          } else {
+          }
+
           this.loading = false;
         },
         (error: any) => {
@@ -51,6 +81,33 @@ export class ViewEventComponent implements OnInit, OnDestroy {
       );
     } else {
     }
+  }
+
+  getIndividualRegistrations() {
+    this.eventPlayerRegistrationService.getEventPlayers(this.event._id).subscribe(
+      (players: Registration[]) => {
+        this.players = players;
+        this.loadingPlayers = false;
+      },
+      (error: any) => {}
+    );
+  }
+
+  getTeamRegistrations() {
+    this.eventTeamRegistrationService.getEventTeams(this.event._id).subscribe(
+      (players: Registration[]) => {
+        this.players = players;
+        this.loadingPlayers = false;
+      },
+      (error: any) => {}
+    );
+  }
+
+  viewTeamMembers(teamMembers: TeamMember[]) {
+    const dialogRef = this.dialog.open(ViewRegistrationComponent, {
+      data: { teamMembers },
+      maxHeight: '90vh',
+    });
   }
 
   getRegistrations(registrations: any[]) {

@@ -18,7 +18,7 @@
 
               <div class="joined-users-container">
                 <div class="joined-users-image-container">
-                  <ng-container *ngIf="event.registrations.length > 0; else noRegistrations">
+                  <ng-container *ngIf="event.registrations.length > 0; else noPlayersRegistered">
                     <img
                       class="joined-user"
                       *ngFor="let user of getRegistrations(event.registrations)"
@@ -181,13 +181,77 @@
         </div>
 
         <hr />
+
+        <div class="registrations-container">
+          <div class="row">
+            <div
+              class="col-md-10 col-sm-12 mx-auto table-responsive"
+              *ngIf="!loadingPlayers; else loadingSpinner"
+            >
+              <table
+                class="table table-borderless"
+                *ngIf="players.length > 0; else noPlayersRegistered"
+              >
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Contact</th>
+                    <th *ngIf="event.registrationType === 'team'">Team</th>
+                    <th *ngIf="event.registrationType === 'team'">Team Members</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let player of players; let i = index">
+                    <td>
+                      {{ i + 1 }}
+                    </td>
+                    <td>
+                      <div class="registered-user">
+                        <span class="image-container">
+                          <img
+                            [src]="player.userImageURL"
+                            [alt]="player.name"
+                            class="user-image"
+                            onerror="'./../../../../../assets/images/user.png'"
+                          />
+                        </span>
+
+                        <span> {{ player.name | capitalizeEachWord }}</span>
+                      </div>
+                    </td>
+                    <td>{{ player.email }}</td>
+                    <td>
+                      {{ player.contact }}
+                    </td>
+                    <td *ngIf="event.registrationType === 'team'">
+                      {{ player.teamName }}
+                    </td>
+                    <td *ngIf="event.registrationType === 'team'">
+                      <button
+                        class=""
+                        type="button"
+                        mat-stroked-button
+                        color="primary"
+                        (click)="viewTeamMembers(player.teamMembers)"
+                      >
+                        Team Members
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </mat-card-content>
     </mat-card>
   </div>
 </div>
 
-<ng-template #noRegistrations>
-  <span>You are first to Register on This Event</span>
+<ng-template #noPlayersRegistered>
+  <span>No Registrations Yet</span>
 </ng-template>
 
 <ng-template #loadingSpinner>

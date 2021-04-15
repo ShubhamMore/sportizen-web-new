@@ -1,3 +1,4 @@
+import { UserProfileModel } from './../../../../models/user-profile.model';
 import { ConnectionService } from './../../../../services/connection.service';
 import { EventTeamRegistrationService } from './../../../../services/event-team-registration.service';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
@@ -45,14 +46,16 @@ export class JoinEventComponent implements OnInit, OnDestroy {
           this.event = event;
 
           if (event.registrationType === 'individual') {
+            const userProfile: UserProfileModel = this.userProfileService.getProfile();
+
             this.joinEventForm = new FormGroup({
-              name: new FormControl(null, {
+              name: new FormControl(userProfile.name, {
                 validators: [Validators.required],
               }),
-              email: new FormControl(null, {
+              email: new FormControl(userProfile.email, {
                 validators: [Validators.required, Validators.email],
               }),
-              contact: new FormControl(null, {
+              contact: new FormControl(userProfile.phoneNo, {
                 validators: [
                   Validators.required,
                   Validators.min(1000000000),

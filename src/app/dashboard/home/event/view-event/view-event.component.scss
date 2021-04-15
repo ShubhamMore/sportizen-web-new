@@ -12,6 +12,10 @@ $primary-color: #05bae3;
   }
 }
 
+td {
+  vertical-align: middle;
+}
+
 .events-container {
   padding: 1rem;
 
@@ -203,6 +207,19 @@ $primary-color: #05bae3;
 
     .registrations-container {
       font-size: 100%;
+
+      .registered-user {
+        .image-container {
+          margin-right: 0.3rem;
+
+          .user-image {
+            width: 1.625rem;
+            height: 1.625rem;
+            // border: 1px solid #fff;
+            border-radius: 100%;
+          }
+        }
+      }
     }
   }
 }
@@ -344,6 +361,17 @@ $primary-color: #05bae3;
 
     .registrations-container {
       font-size: 97.5%;
+
+      .registered-user {
+        .image-container {
+          margin-right: 0.5rem;
+
+          .user-image {
+            width: 1.5rem;
+            height: 1.5rem;
+          }
+        }
+      }
     }
   }
 }
@@ -480,6 +508,17 @@ $primary-color: #05bae3;
 
       .registrations-container {
         font-size: 95%;
+
+        .registered-user {
+          .image-container {
+            margin-right: 0.375rem;
+
+            .user-image {
+              width: 1.5rem;
+              height: 1.5rem;
+            }
+          }
+        }
       }
     }
   }
@@ -612,6 +651,17 @@ $primary-color: #05bae3;
 
       .registrations-container {
         font-size: 92.5%;
+
+        .registered-user {
+          .image-container {
+            margin-right: 0.25rem;
+
+            .user-image {
+              width: 1.25rem;
+              height: 1.25rem;
+            }
+          }
+        }
       }
     }
   }
@@ -745,6 +795,17 @@ $primary-color: #05bae3;
 
       .registrations-container {
         font-size: 90%;
+
+        .registered-user {
+          .image-container {
+            margin-right: 0.1rem;
+
+            .user-image {
+              width: 1rem;
+              height: 1rem;
+            }
+          }
+        }
       }
     }
   }

@@ -3,9 +3,10 @@ import { SharedModule } from './../../../../@shared/shared.module';
 
 import { ViewEventRoutingModule } from './view-event-routing.module';
 import { ViewEventComponent } from './view-event.component';
+import { ViewRegistrationComponent } from './view-registration/view-registration.component';
 
 @NgModule({
-  declarations: [ViewEventComponent],
+  declarations: [ViewEventComponent, ViewRegistrationComponent],
   imports: [SharedModule, ViewEventRoutingModule],
 })
 export class ViewEventModule {}

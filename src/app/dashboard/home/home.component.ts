@@ -62,24 +62,28 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.dashboardSideDrawerService.setSideNav(this.drawer);
 
-    let didScroll: any;
+    // let didScroll: any;
     let lastScrollTop = 0;
     const delta = 5;
-    const navbarHeight = $('#dashboardLinks').outerHeight();
+    const navbarHeight = $('#dashboard-links').outerHeight();
 
-    $('#dashboardContent').scroll(function (event) {
-      didScroll = true;
+    $('#dashboard-content').scroll(function (event) {
+      // didScroll = true;
+
+      hasScrolled();
     });
 
-    setInterval(function () {
-      if (didScroll) {
-        hasScrolled();
-        didScroll = false;
-      }
-    }, 250);
+    // setInterval(function () {
+    //   if (didScroll) {
+    //     hasScrolled();
+    //     didScroll = false;
+    //   }
+    // }, 250);
 
     function hasScrolled() {
-      const st = $('#dashboardContent').scrollTop();
+      const st = $('#dashboard-content').scrollTop();
+
+      // console.log(st, lastScrollTop, lastScrollTop - st, delta);
 
       // Make sure they scroll more than delta
       if (Math.abs(lastScrollTop - st) <= delta) {
@@ -90,10 +94,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
       // This is necessary so you never see what is "behind" the navbar.
       if (st > lastScrollTop && st > navbarHeight) {
         // Scroll Down
-        $('#dashboardLinks').removeClass('nav-down').addClass('nav-up');
+        $('#dashboard-links').removeClass('nav-down').addClass('nav-up');
       } else {
         // Scroll Up
-        $('#dashboardLinks').removeClass('nav-up').addClass('nav-down');
+        $('#dashboard-links').removeClass('nav-up').addClass('nav-down');
       }
 
       lastScrollTop = st;

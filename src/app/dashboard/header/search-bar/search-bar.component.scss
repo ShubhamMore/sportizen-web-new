@@ -9,6 +9,12 @@ $grey-color: #fff;
   text-align: center;
 }
 
+.is-loading {
+  mat-spinner {
+    margin: 0 auto;
+  }
+}
+
 mat-option {
   vertical-align: middle;
   height: 3rem;

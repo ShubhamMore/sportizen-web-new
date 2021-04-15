@@ -12,14 +12,15 @@
       <app-dashboard-side-nav></app-dashboard-side-nav>
     </mat-drawer>
 
-    <mat-drawer-content id="dashboardContent">
-      <nav id="dashboardLinks" class="dashboard-links-container">
+    <mat-drawer-content id="dashboard-content">
+      <nav id="dashboard-links" class="dashboard-links-container">
         <ul class="dashboard-links">
           <li
             *ngFor="let navLink of navLinks"
             class="dashboard-link"
             [routerLink]="navLink.link"
             [matTooltip]="navLink.title"
+            matTooltipPosition="above"
             (click)="changeNavLink(navLink.title)"
             [ngClass]="activeNavLink === navLink.title ? 'active' : 'inactive '"
           >

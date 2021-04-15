@@ -115,14 +115,22 @@
           </div>
 
           <div class="post-image" *ngIf="post.sharedPost.secureUrl">
-            <img [src]="post.sharedPost.secureUrl" loading="lazy" />
+            <img
+              [src]="post.sharedPost.secureUrl"
+              onerror="this.src='../../../../../assets/images/image-loader.png'"
+              loading="lazy"
+            />
           </div>
         </div>
       </ng-container>
 
       <ng-container *ngIf="post.postType !== 'shared'">
         <div class="post-image" *ngIf="post.secureUrl">
-          <img [src]="post.secureUrl" loading="lazy" />
+          <img
+            [src]="post.secureUrl"
+            onerror="this.src='../../../../../assets/images/image-loader.png'"
+            loading="lazy"
+          />
         </div>
       </ng-container>
 
@@ -192,6 +200,7 @@
               post.postType === 'shared' && post.sharedPost ? post.sharedPost._id : post._id
             )
           "
+          *ngIf="(post.postType === 'shared' && post.sharedPost) || post.postType !== 'shared'"
         >
           <i class="fa fa-share icon-green pr-2" aria-hidden="true"></i>
           <span class="">Share</span>
@@ -200,6 +209,7 @@
         <span
           class="float-right pointer save-post"
           (click)="saveUnsavePost(post._id, post.alreadySaved, i)"
+          *ngIf="(post.postType === 'shared' && post.sharedPost) || post.postType !== 'shared'"
         >
           <i
             [ngClass]="[
@@ -218,7 +228,7 @@
 </div>
 
 <ng-template #noPostsUploaded>
-  <div class="no-posts" *ngIf="!loadingFeed">
+  <div class="no-posts text-center" *ngIf="!loadingFeed">
     <span>No Posts Uploaded</span>
   </div>
 </ng-template>
