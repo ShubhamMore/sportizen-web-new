@@ -62,13 +62,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.dashboardSideDrawerService.setSideNav(this.drawer);
 
-    // let didScroll: any;
+    let didScroll: any;
     let lastScrollTop = 0;
     const delta = 5;
     const navbarHeight = $('#dashboard-links').outerHeight();
 
     $('#dashboard-content').scroll(function (event) {
-      // didScroll = true;
+      didScroll = true;
 
       hasScrolled();
     });
@@ -82,9 +82,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     function hasScrolled() {
       const st = $('#dashboard-content').scrollTop();
-
-      // console.log(st, lastScrollTop, lastScrollTop - st, delta);
-
       // Make sure they scroll more than delta
       if (Math.abs(lastScrollTop - st) <= delta) {
         return;

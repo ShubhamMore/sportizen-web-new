@@ -57,7 +57,7 @@ export class DashboardSideNavComponent implements OnInit, OnDestroy {
 
   navigateTo(path: any) {
     this.router.navigate([path], { relativeTo: this.route });
-    this.dashboardSideDrawerService.close();
+    // this.dashboardSideDrawerService.close();
   }
 
   ngOnDestroy() {

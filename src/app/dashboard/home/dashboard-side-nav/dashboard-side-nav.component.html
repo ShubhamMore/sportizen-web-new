@@ -65,6 +65,16 @@
       </mat-expansion-panel-header>
 
       <mat-list>
+        <mat-list-item class="clickable" matRipple (click)="navigateTo('/dashboard/event')">
+          <h3 matLine>
+            <i class="fa fa-link list-icon icon-grey"></i>
+
+            <span class=""> {{ 'msg_event' | translate }}</span>
+          </h3>
+        </mat-list-item>
+
+        <mat-divider></mat-divider>
+
         <mat-list-item class="clickable" matRipple (click)="navigateTo('/dashboard/event/new')">
           <h3 matLine>
             <i class="fa fa-plus-circle list-icon icon-yellow"></i>
@@ -77,7 +87,7 @@
 
         <mat-divider></mat-divider>
 
-        <mat-list-item class="clickable" matRipple (click)="navigateTo('/dashboard/event')">
+        <!-- <mat-list-item class="clickable" matRipple (click)="navigateTo('/dashboard/event')">
           <h3 matLine>
             <i class="fa fa-link list-icon icon-grey"></i>
 
@@ -99,9 +109,9 @@
           </h3>
         </mat-list-item>
 
-        <mat-divider></mat-divider>
+        <mat-divider></mat-divider> -->
 
-        <mat-list-item class="clickable" matRipple (click)="navigateTo('/dashboard/event')">
+        <mat-list-item class="clickable" matRipple (click)="navigateTo('/dashboard/event/manage')">
           <h3 matLine>
             <i class="fa fa-pencil list-icon icon-red"></i>
 

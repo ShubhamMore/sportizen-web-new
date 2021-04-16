@@ -38,7 +38,13 @@ export class JoinEventComponent implements OnInit, OnDestroy {
 
     this.userEmail = this.userProfileService.getUserEmail();
 
-    const id = this.eventService.getEventId();
+    let id = this.eventService.getEventId();
+
+    if (!id) {
+      this.route.queryParams.subscribe((param: Params) => {
+        id = param.id;
+      });
+    }
 
     if (id) {
       this.eventService.getEvent(id).subscribe(

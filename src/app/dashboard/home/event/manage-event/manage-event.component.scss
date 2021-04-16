@@ -12,6 +12,66 @@ $primary-color: #05bae3;
   }
 }
 
+.loading-event-container {
+  mat-spinner {
+    margin: 0.5rem auto;
+  }
+}
+
+.create-event {
+  width: auto;
+  height: 2.5rem;
+
+  .btn-create-event {
+    text-decoration: none;
+    position: fixed;
+    display: inline-flex;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 9999;
+    font-size: 1.25rem;
+    text-align: center;
+    align-items: center;
+    outline: none;
+    background-color: #07bae3;
+    color: #fff;
+    cursor: pointer;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0rem;
+    border-radius: 2.5rem;
+    overflow: hidden;
+    transition: all 0.25s;
+
+    .icon {
+      padding: 0 0.875rem;
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    .text {
+      white-space: nowrap;
+      display: none;
+      font-size: 1rem;
+      padding-right: 0.875rem;
+    }
+  }
+
+  .btn-create-event:hover {
+    width: 9.5rem;
+    transform: scale(1.025);
+
+    .text {
+      display: inline;
+    }
+  }
+}
+
+.event-list {
+  width: 100%;
+}
+
 .events-container {
   padding: 1rem;
 
@@ -27,6 +87,7 @@ $primary-color: #05bae3;
 
     .heading {
       margin-bottom: 1rem;
+      cursor: pointer;
     }
 
     .registered-user-container {
@@ -97,6 +158,22 @@ $primary-color: #05bae3;
       .event-type-box {
         background-color: lighten($color: $primary-color, $amount: 40%);
       }
+
+      .join-event-box {
+        background-color: #32cd32;
+        cursor: pointer;
+        color: white;
+      }
+
+      .edit-chip {
+        cursor: pointer;
+      }
+
+      .delete-chip {
+        background-color: rgb(243, 67, 67);
+        cursor: pointer;
+        color: white;
+      }
     }
 
     .created-user {
@@ -114,7 +191,7 @@ $primary-color: #05bae3;
       }
 
       .created-at {
-        padding-right: 0;
+        padding-right: 0.5rem;
       }
     }
 
@@ -141,7 +218,14 @@ $primary-color: #05bae3;
     .description-container {
       .description {
         margin-top: 0.375rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
         line-height: 1.25rem;
+        max-height: 6.25rem;
+        /* The number of lines to be displayed */
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
         font-size: 95%;
       }
     }
@@ -200,17 +284,6 @@ $primary-color: #05bae3;
       font-size: 2rem;
       line-height: 2.5rem;
     }
-
-    .registration-container {
-      font-size: 100%;
-
-      .register-btn {
-        border-radius: 2rem;
-        line-height: 0;
-        height: 2rem;
-        padding: 0 1rem;
-      }
-    }
   }
 }
 
@@ -220,7 +293,7 @@ $primary-color: #05bae3;
 
     .event-card {
       margin: 0.75rem auto;
-      border-radius: 0.875rem;
+      border-radius: 1.5rem;
 
       .heading {
         margin-bottom: 1.5rem;
@@ -261,7 +334,10 @@ $primary-color: #05bae3;
       }
 
       .event-action {
-        .event-type-box {
+        .join-event-box,
+        .event-type-box,
+        .edit-chip,
+        .delete-chip {
           font-size: 97.5%;
           padding: 0.5rem 0.95rem;
         }
@@ -281,7 +357,7 @@ $primary-color: #05bae3;
         }
 
         .created-at {
-          padding-right: 0;
+          padding-right: 0.25rem;
         }
       }
 
@@ -309,6 +385,7 @@ $primary-color: #05bae3;
         .description {
           margin-top: 0.375rem;
           line-height: 1.25rem;
+          max-height: 6.25rem;
           font-size: 97.5%;
         }
       }
@@ -348,17 +425,6 @@ $primary-color: #05bae3;
         line-height: 1.5rem;
       }
     }
-
-    .registration-container {
-      font-size: 97.5%;
-
-      .register-btn {
-        font-size: 97.5%;
-        line-height: 0;
-        height: 2rem;
-        padding: 0 0.75rem;
-      }
-    }
   }
 }
 
@@ -368,7 +434,7 @@ $primary-color: #05bae3;
 
     .event-card {
       margin: 0.75rem auto;
-      border-radius: 0.75rem;
+      border-radius: 1.5rem;
 
       .heading {
         margin-bottom: 1.5rem;
@@ -409,7 +475,10 @@ $primary-color: #05bae3;
       }
 
       .event-action {
-        .event-type-box {
+        .join-event-box,
+        .event-type-box,
+        .edit-chip,
+        .delete-chip {
           font-size: 95%;
           padding: 0.625rem 1.25rem;
         }
@@ -457,6 +526,7 @@ $primary-color: #05bae3;
         .description {
           margin-top: 0.25rem;
           line-height: 1.25rem;
+          max-height: 6.25rem;
           font-size: 95%;
         }
       }
@@ -491,17 +561,6 @@ $primary-color: #05bae3;
       .no-image-container {
         display: none;
       }
-
-      .registration-container {
-        font-size: 95%;
-
-        .register-btn {
-          font-size: 95%;
-          line-height: 0;
-          height: 1.875rem;
-          padding: 0 0.75rem;
-        }
-      }
     }
   }
 }
@@ -512,7 +571,7 @@ $primary-color: #05bae3;
 
     .event-card {
       margin: 0.625rem auto;
-      border-radius: 0.625rem;
+      border-radius: 1.25rem;
 
       .heading {
         margin-bottom: 1.25rem;
@@ -552,7 +611,10 @@ $primary-color: #05bae3;
       }
 
       .event-action {
-        .event-type-box {
+        .join-event-box,
+        .event-type-box,
+        .edit-chip,
+        .delete-chip {
           font-size: 92.5%;
           padding: 0.4rem 0.75rem;
         }
@@ -600,6 +662,7 @@ $primary-color: #05bae3;
         .description {
           margin-top: 0.15rem;
           line-height: 1rem;
+          max-height: 5rem;
           font-size: 95%;
         }
       }
@@ -628,17 +691,6 @@ $primary-color: #05bae3;
           .image {
             height: 13rem;
           }
-        }
-      }
-
-      .registration-container {
-        font-size: 92.5%;
-
-        .register-btn {
-          font-size: 92.5%;
-          line-height: 0;
-          height: 1.75rem;
-          padding: 0 0.75rem;
         }
       }
     }
@@ -692,7 +744,10 @@ $primary-color: #05bae3;
       }
 
       .event-action {
-        .event-type-box {
+        .join-event-box,
+        .event-type-box,
+        .edit-chip,
+        .delete-chip {
           font-size: 90%;
           padding: 0.25rem 0.625rem;
         }
@@ -740,6 +795,7 @@ $primary-color: #05bae3;
         .description {
           margin-top: 0.1rem;
           line-height: 1rem;
+          max-height: 5rem;
           font-size: 95%;
         }
       }
@@ -768,17 +824,6 @@ $primary-color: #05bae3;
           .image {
             height: 12rem;
           }
-        }
-      }
-
-      .registration-container {
-        font-size: 90%;
-
-        .register-btn {
-          font-size: 90%;
-          line-height: 0;
-          height: 1.5rem;
-          padding: 0 0.5rem;
         }
       }
     }

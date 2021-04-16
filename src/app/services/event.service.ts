@@ -31,8 +31,20 @@ export class EventService {
     );
   }
 
-  getMyEvents() {
-    const data = { api: 'getMyEvents', data: {} };
+  getJoinedEvents(limit: number, skip: number) {
+    const data = { api: 'getJoinedEvents', data: { limit, skip } };
+    return this.httpService.httpPost(data).pipe(
+      map((events: EventModel[]) => {
+        return events;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      })
+    );
+  }
+
+  getMyEvents(limit: number, skip: number) {
+    const data = { api: 'getMyEvents', data: { limit, skip } };
     return this.httpService.httpPost(data).pipe(
       map((events: EventModel[]) => {
         return events;

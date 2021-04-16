@@ -9,19 +9,16 @@ import { EventModel } from './../../../../models/event.model';
 import * as $ from 'jquery';
 
 @Component({
-  selector: 'app-list-event',
-  templateUrl: './list-event.component.html',
-  styleUrls: ['./list-event.component.scss'],
+  selector: 'app-manage-event',
+  templateUrl: './manage-event.component.html',
+  styleUrls: ['./manage-event.component.scss'],
 })
-export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ManageEventComponent implements OnInit, AfterViewInit, OnDestroy {
   events: EventModel[];
   userSportizenId: string;
   loading: boolean;
   loadingEvents: boolean;
   noMoreEvents: boolean;
-
-  longitude: number;
-  latitude: number;
 
   constructor(
     private eventService: EventService,
@@ -35,12 +32,13 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
   scroll = (event: any): void => {
     if ($('.loading-event-container')) {
       const moreFeed = $('.loading-event-container').offset().top;
+
       const threshold = window.innerHeight + 50;
 
       if (moreFeed <= threshold) {
         const skip = this.events.length;
         if (!this.loadingEvents && !this.noMoreEvents) {
-          this.getEvents(3, skip, this.longitude, this.latitude);
+          this.getEvents(3, skip);
         }
       }
     }
@@ -50,33 +48,29 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loading = true;
     this.noMoreEvents = false;
 
-    this.longitude = null;
-    this.latitude = null;
-
     this.userSportizenId = this.userProfileService.getUserSportizenId();
 
     this.events = [];
-
-    this.getLocation();
+    this.getEvents(3, null);
   }
 
   ngAfterViewInit() {
     window.addEventListener('scroll', this.scroll, true);
   }
 
-  joinEvent(id: string) {
-    this.eventService.setEventId(id);
-    this.router.navigate(['./join'], { relativeTo: this.route, queryParams: { id } });
-  }
-
   viewEvent(id: string) {
     this.eventService.setEventId(id);
-    this.router.navigate(['./view'], { relativeTo: this.route, queryParams: { id } });
+    this.router.navigate(['../view'], { relativeTo: this.route, queryParams: { id } });
+  }
+
+  joinEvent(id: string) {
+    this.eventService.setEventId(id);
+    this.router.navigate(['../join'], { relativeTo: this.route, queryParams: { id } });
   }
 
   editEvent(id: string) {
     this.eventService.setEventId(id);
-    this.router.navigate(['./edit'], { relativeTo: this.route });
+    this.router.navigate(['../edit'], { relativeTo: this.route });
   }
 
   viewProfile(id: string) {
@@ -96,22 +90,10 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
     return registrations;
   }
 
-  getLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.longitude = position.coords.longitude;
-        this.latitude = position.coords.latitude;
-        this.getEvents(3, null, this.longitude, this.latitude);
-      });
-    } else {
-      this.getEvents(3, null, this.longitude, this.latitude);
-    }
-  }
-
-  getEvents(limit: number, skip: number, longitude: number, latitude: number) {
+  getEvents(limit: number, skip: number) {
     this.loadingEvents = true;
 
-    this.eventService.getAllEvents(limit, skip, longitude, latitude).subscribe(
+    this.eventService.getMyEvents(limit, skip).subscribe(
       (events: EventModel[]) => {
         if (events.length === 0) {
           this.noMoreEvents = true;
