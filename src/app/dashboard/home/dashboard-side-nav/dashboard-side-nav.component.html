@@ -97,27 +97,27 @@
           </h3>
         </mat-list-item>
 
-        <mat-divider></mat-divider>
-
-        <mat-list-item class="clickable" matRipple (click)="navigateTo('/dashboard/event')">
-          <h3 matLine>
-            <i class="fa fa-eye list-icon icon-green"></i>
-
-            <span class="">{{ 'msg_view' | translate }}</span>
-
-            <span class="">{{ 'msg_event' | translate }}</span>
-          </h3>
-        </mat-list-item>
-
         <mat-divider></mat-divider> -->
 
-        <mat-list-item class="clickable" matRipple (click)="navigateTo('/dashboard/event/manage')">
+        <mat-list-item class="clickable" matRipple (click)="manageEvents()">
           <h3 matLine>
             <i class="fa fa-pencil list-icon icon-red"></i>
 
             <span class=""> {{ 'msg_manage' | translate }}</span>
 
             <span class=""> {{ 'msg_event' | translate }}</span>
+          </h3>
+        </mat-list-item>
+
+        <mat-divider></mat-divider>
+
+        <mat-list-item class="clickable" matRipple (click)="joinedEvents()">
+          <h3 matLine>
+            <i class="fa fa-link list-icon icon-green"></i>
+
+            <span class="">{{ 'msg_join' | translate }}</span>
+
+            <span class="">{{ 'msg_event' | translate }}</span>
           </h3>
         </mat-list-item>
 

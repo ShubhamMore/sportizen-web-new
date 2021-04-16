@@ -27,11 +27,6 @@ const routes: Routes = [
         path: 'view',
         loadChildren: () => import('./view-event/view-event.module').then((m) => m.ViewEventModule),
       },
-      {
-        path: 'manage',
-        loadChildren: () =>
-          import('./manage-event/manage-event.module').then((m) => m.ManageEventModule),
-      },
     ],
   },
 ];

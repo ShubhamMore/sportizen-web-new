@@ -2,7 +2,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmComponent } from 'src/app/@shared/confirm/confirm.component';
 import { ConnectionService } from './../../../../services/connection.service';
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { EventService } from './../../../../services/event.service';
 import { UserProfileService } from './../../../../services/user-profile.service';
 import { EventModel } from './../../../../models/event.model';
@@ -23,6 +23,8 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
   longitude: number;
   latitude: number;
 
+  type: string;
+
   constructor(
     private eventService: EventService,
     private dialog: MatDialog,
@@ -30,7 +32,11 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
     private connectionService: ConnectionService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    this.route.queryParams.subscribe((param: Params) => {
+      this.ngOnInit();
+    });
+  }
 
   scroll = (event: any): void => {
     if ($('.loading-event-container')) {
@@ -53,11 +59,19 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
     this.longitude = null;
     this.latitude = null;
 
+    this.route.queryParams.subscribe((param: Params) => {
+      this.type = param.type;
+    });
+
     this.userSportizenId = this.userProfileService.getUserSportizenId();
 
     this.events = [];
 
-    this.getLocation();
+    if (['joined', 'manage'].includes(this.type)) {
+      this.getEvents(3, null, this.longitude, this.latitude);
+    } else {
+      this.getLocation();
+    }
   }
 
   ngAfterViewInit() {
@@ -111,7 +125,15 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
   getEvents(limit: number, skip: number, longitude: number, latitude: number) {
     this.loadingEvents = true;
 
-    this.eventService.getAllEvents(limit, skip, longitude, latitude).subscribe(
+    let eventDetails = this.eventService.getAllEvents(limit, skip, longitude, latitude);
+
+    if (this.type === 'joined') {
+      eventDetails = this.eventService.getJoinedEvents(limit, skip);
+    } else if (this.type === 'manage') {
+      eventDetails = this.eventService.getMyEvents(limit, skip);
+    }
+
+    eventDetails.subscribe(
       (events: EventModel[]) => {
         if (events.length === 0) {
           this.noMoreEvents = true;

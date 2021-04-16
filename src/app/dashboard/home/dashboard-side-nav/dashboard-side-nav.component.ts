@@ -55,6 +55,20 @@ export class DashboardSideNavComponent implements OnInit, OnDestroy {
     this.authService.logout();
   }
 
+  joinedEvents() {
+    this.router.navigate(['/dashboard/event'], {
+      relativeTo: this.route,
+      queryParams: { type: 'joined' },
+    });
+  }
+
+  manageEvents() {
+    this.router.navigate(['/dashboard/event'], {
+      relativeTo: this.route,
+      queryParams: { type: 'manage' },
+    });
+  }
+
   navigateTo(path: any) {
     this.router.navigate([path], { relativeTo: this.route });
     // this.dashboardSideDrawerService.close();

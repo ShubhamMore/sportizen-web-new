@@ -1,3 +1,4 @@
+import { EventDetailsModule } from './../event-details/event-details.module';
 import { NgModule } from '@angular/core';
 import { SharedModule } from './../../../../@shared/shared.module';
 
@@ -7,6 +8,6 @@ import { ViewRegistrationComponent } from './view-registration/view-registration
 
 @NgModule({
   declarations: [ViewEventComponent, ViewRegistrationComponent],
-  imports: [SharedModule, ViewEventRoutingModule],
+  imports: [SharedModule, ViewEventRoutingModule, EventDetailsModule],
 })
 export class ViewEventModule {}
