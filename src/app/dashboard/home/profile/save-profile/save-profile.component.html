@@ -1,340 +1,365 @@
-<div class="user-profile-container">
-  <mat-card class="user-profile-card">
-    <mat-card-header>
-      <mat-card-title>
-        <span class="header-title">Edit Profile</span>
-      </mat-card-title>
-    </mat-card-header>
+<ng-container *ngIf="!loading; else loadingData">
+  <div class="user-profile-container">
+    <mat-card class="user-profile-card">
+      <mat-card-header>
+        <mat-card-title>
+          <span class="header-title">Edit Profile</span>
+        </mat-card-title>
+      </mat-card-header>
 
-    <mat-card-content>
-      <div class="row">
-        <div class="col-md-4 col-sm-4">
-          <div class="img-container">
-            <input type="file" #filePicker (change)="onImagePicked($event)" />
+      <mat-card-content>
+        <div class="row">
+          <div class="col-md-4 col-sm-4">
+            <div class="img-container">
+              <input type="file" #filePicker (change)="onImagePicked($event)" />
 
-            <img
-              class="profile-image"
-              [src]="profileImagePreview"
-              [alt]="userProfile.name"
-              loading="lazy"
-              onerror="this.src='./../../../../../assets/images/user.png'"
-            />
+              <img
+                class="profile-image"
+                [src]="profileImagePreview"
+                [alt]="userProfile.name"
+                loading="lazy"
+                onerror="this.src='./../../../../../assets/images/user.png'"
+              />
 
-            <div class="edit-image-icon" (click)="filePicker.click()">
-              <i class="fa fa-camera" aria-hidden="true"></i>
+              <div class="edit-image-icon" (click)="filePicker.click()">
+                <i class="fa fa-camera" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-8 col-sm-8">
+            <div class="profile-info-container">
+              <h1>{{ userProfile.name | uppercase }}</h1>
+
+              <mat-chip-list *ngIf="sports.length > 0">
+                <mat-chip
+                  class="btn-sports-interest"
+                  *ngFor="let curSport of sports; let i = index"
+                >
+                  {{ curSport.sport }}
+                  <mat-icon class="icon" (click)="removeInterestedSport(i)"> close </mat-icon>
+                </mat-chip>
+              </mat-chip-list>
+
+              <div class="sports-interest-actions">
+                <button
+                  mat-raised-button
+                  color="primary"
+                  class="btn-add-interest"
+                  (click)="sportsInterest()"
+                >
+                  <mat-icon class="icon"> add </mat-icon>
+                  <span class="">&nbsp;&nbsp; Add Your Interest</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="col-md-8 col-sm-8">
-          <div class="profile-info-container">
-            <h1>{{ userProfile.name | uppercase }}</h1>
+        <mat-divider></mat-divider>
 
-            <mat-chip-list *ngIf="sports.length > 0">
-              <mat-chip class="btn-sports-interest" *ngFor="let curSport of sports; let i = index">
-                {{ curSport.sport }}
-                <mat-icon class="icon" (click)="removeInterestedSport(i)"> close </mat-icon>
-              </mat-chip>
-            </mat-chip-list>
+        <div class="row">
+          <div class="col-12">
+            <div class="user-profile-form-container">
+              <h5>Profile Details</h5>
 
-            <div class="sports-interest-actions">
-              <button
-                mat-raised-button
-                color="primary"
-                class="btn-add-interest"
-                (click)="sportsInterest()"
+              <form (ngSubmit)="saveUserProfile()" [formGroup]="form" class="user-profile-form">
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field class="full-width">
+                      <mat-label for="firstName">First Name</mat-label>
+
+                      <input
+                        matInput
+                        type="text"
+                        name="firstName"
+                        id="firstName"
+                        formControlName="firstName"
+                      />
+
+                      <mat-error *ngIf="form.get('firstName').hasError('required')">
+                        First Name is required*
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-md-6">
+                    <mat-form-field class="full-width">
+                      <mat-label for="lastName">Last Name</mat-label>
+
+                      <input
+                        matInput
+                        type="text"
+                        name="lastName"
+                        id="lastName"
+                        formControlName="lastName"
+                      />
+
+                      <mat-error *ngIf="form.get('lastName').hasError('lastName')">
+                        User Name is required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field class="full-width">
+                      <mat-label for="email">Email Id</mat-label>
+                      <input
+                        matInput
+                        type="email"
+                        name="email"
+                        id="email"
+                        formControlName="emailId"
+                      />
+                      <mat-error
+                        *ngIf="
+                          form.get('emailId').hasError('emailId') && !form.hasError('required')
+                        "
+                      >
+                        Please enter a valid email address
+                      </mat-error>
+                      <mat-error *ngIf="form.get('emailId').hasError('required')">
+                        Email is required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-md-6">
+                    <mat-form-field class="full-width">
+                      <mat-label for="phone">Phone Number</mat-label>
+                      <input
+                        type="number"
+                        matInput
+                        name="phone"
+                        id="phone"
+                        min="1000000000"
+                        max="9999999999"
+                        formControlName="phoneNo"
+                      />
+                      <mat-error *ngIf="form.get('phoneNo').hasError('required')">
+                        Phone Number is required
+                      </mat-error>
+                      <mat-error
+                        *ngIf="
+                          form.get('phoneNo').hasError('min') || form.get('phoneNo').hasError('max')
+                        "
+                      >
+                        Enter Valid Number
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-radio-group
+                      aria-labelledby="gender-label"
+                      name="gender"
+                      id="gender"
+                      formControlName="gender"
+                    >
+                      <mat-radio-button value="male">Male</mat-radio-button>
+                      <mat-radio-button value="female">Female</mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+
+                  <div class="col-md-6">
+                    <mat-form-field class="full-width">
+                      <mat-label for="birth-date">Birth date</mat-label>
+                      <input
+                        matInput
+                        name="birthDate"
+                        id="birth-date"
+                        [matDatepicker]="picker"
+                        formControlName="birthDate"
+                      />
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                      <mat-error *ngIf="form.get('birthDate').hasError('required')">
+                        Birth Date is required*
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-12">
+                    <mat-form-field class="full-width">
+                      <mat-label for="story">Your Sportizen Story</mat-label>
+                      <textarea
+                        matInput
+                        type="text"
+                        name="story"
+                        id="story"
+                        rows="4"
+                        formControlName="story"
+                      ></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-12 text-center">
+                    <button
+                      type="submit"
+                      mat-raised-button
+                      color="primary"
+                      class="save-changes-btn"
+                      [disabled]="loading"
+                    >
+                      Save your changes
+                      <!-- <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner> -->
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="change-password-form-container">
+              <h5>
+                {{ userProfile.userProvider === 'SPORTIZEN' ? 'Change Password' : 'Set Password' }}
+              </h5>
+
+              <form
+                class="change-password-form"
+                (submit)="changePassword()"
+                [formGroup]="changePasswordForm"
+                #changePasswordFormDirective="ngForm"
               >
-                <mat-icon class="icon"> add </mat-icon>
-                <span class="">&nbsp;&nbsp; Add Your Interest</span>
-              </button>
+                <div class="row">
+                  <div class="col-12">
+                    <mat-form-field
+                      class="full-width"
+                      *ngIf="userProfile.userProvider === 'SPORTIZEN'"
+                    >
+                      <mat-label for="oldPassword">Current Password</mat-label>
+
+                      <input
+                        matInput
+                        type="password"
+                        id="oldPassword"
+                        class=""
+                        name="oldPassword"
+                        formControlName="oldPassword"
+                      />
+
+                      <mat-error *ngIf="!changePasswordForm.get('oldPassword').valid"
+                        >*Please enter Your Old Password</mat-error
+                      >
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-12">
+                    <mat-form-field class="full-width">
+                      <mat-label for="password">New Password</mat-label>
+
+                      <input
+                        matInput
+                        type="password"
+                        id="password"
+                        name="password"
+                        formControlName="password"
+                      />
+
+                      <mat-error *ngIf="!changePasswordForm.get('password').valid"
+                        >*Please enter New Password</mat-error
+                      >
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-12">
+                    <mat-form-field class="full-width">
+                      <mat-label for="confirmPassword">Confirm Password</mat-label>
+
+                      <input
+                        matInput
+                        type="password"
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        formControlName="confirmPassword"
+                      />
+
+                      <mat-error *ngIf="!changePasswordForm.get('confirmPassword').valid">
+                        *Please enter Confirm Password
+                      </mat-error>
+
+                      <mat-error
+                        *ngIf="
+                          changePasswordForm.get('confirmPassword').valid &&
+                          changePasswordForm.hasError('invalidPassword')
+                        "
+                      >
+                        *Password & Confirm Password Does Not Match
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-12">
+                    <button
+                      type="submit"
+                      mat-raised-button
+                      color="primary"
+                      class="save-password-btn"
+                    >
+                      {{
+                        userProfile.userProvider === 'SPORTIZEN'
+                          ? 'Change Password'
+                          : 'Set Password'
+                      }}
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
-      </div>
 
-      <mat-divider></mat-divider>
+        <mat-divider></mat-divider>
 
-      <div class="row">
-        <div class="col-12">
-          <div class="user-profile-form-container">
-            <h5>Profile Details</h5>
+        <div class="row">
+          <div class="col-12">
+            <div class="logout-all-container">
+              <h5>Logout From all Devices</h5>
 
-            <form (ngSubmit)="saveUserProfile()" [formGroup]="form" class="user-profile-form">
-              <div class="row">
-                <div class="col-md-6">
-                  <mat-form-field class="full-width">
-                    <mat-label for="firstName">First Name</mat-label>
+              <p class="logout-all-text">
+                If you use Logout from all Devices, it will automatically logout from All the
+                devices you are activated on sportizen, including this Device..
+              </p>
 
-                    <input
-                      matInput
-                      type="text"
-                      name="firstName"
-                      id="firstName"
-                      formControlName="firstName"
-                    />
-
-                    <mat-error *ngIf="form.get('firstName').hasError('required')">
-                      First Name is required*
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-
-                <div class="col-md-6">
-                  <mat-form-field class="full-width">
-                    <mat-label for="lastName">Last Name</mat-label>
-
-                    <input
-                      matInput
-                      type="text"
-                      name="lastName"
-                      id="lastName"
-                      formControlName="lastName"
-                    />
-
-                    <mat-error *ngIf="form.get('lastName').hasError('lastName')">
-                      User Name is required
-                    </mat-error>
-                  </mat-form-field>
-                </div>
+              <div class="logout-all-btn-container">
+                <button
+                  type="button"
+                  mat-raised-button
+                  class="logout-all-btn"
+                  (click)="logoutAll()"
+                >
+                  <i class="fa fa-sign-out"></i>&nbsp;Logout All
+                </button>
               </div>
-
-              <div class="row">
-                <div class="col-md-6">
-                  <mat-form-field class="full-width">
-                    <mat-label for="email">Email Id</mat-label>
-                    <input
-                      matInput
-                      type="email"
-                      name="email"
-                      id="email"
-                      formControlName="emailId"
-                    />
-                    <mat-error
-                      *ngIf="form.get('emailId').hasError('emailId') && !form.hasError('required')"
-                    >
-                      Please enter a valid email address
-                    </mat-error>
-                    <mat-error *ngIf="form.get('emailId').hasError('required')">
-                      Email is required
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-
-                <div class="col-md-6">
-                  <mat-form-field class="full-width">
-                    <mat-label for="phone">Phone Number</mat-label>
-                    <input
-                      type="number"
-                      matInput
-                      name="phone"
-                      id="phone"
-                      min="1000000000"
-                      max="9999999999"
-                      formControlName="phoneNo"
-                    />
-                    <mat-error *ngIf="form.get('phoneNo').hasError('required')">
-                      Phone Number is required
-                    </mat-error>
-                    <mat-error
-                      *ngIf="
-                        form.get('phoneNo').hasError('min') || form.get('phoneNo').hasError('max')
-                      "
-                    >
-                      Enter Valid Number
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-6">
-                  <mat-radio-group
-                    aria-labelledby="gender-label"
-                    name="gender"
-                    id="gender"
-                    formControlName="gender"
-                  >
-                    <mat-radio-button value="male">Male</mat-radio-button>
-                    <mat-radio-button value="female">Female</mat-radio-button>
-                  </mat-radio-group>
-                </div>
-
-                <div class="col-md-6">
-                  <mat-form-field class="full-width">
-                    <mat-label for="birth-date">Birth date</mat-label>
-                    <input
-                      matInput
-                      name="birthDate"
-                      id="birth-date"
-                      [matDatepicker]="picker"
-                      formControlName="birthDate"
-                    />
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                    <mat-error *ngIf="form.get('birthDate').hasError('required')">
-                      Birth Date is required*
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-12">
-                  <mat-form-field class="full-width">
-                    <mat-label for="story">Your Sportizen Story</mat-label>
-                    <textarea
-                      matInput
-                      type="text"
-                      name="story"
-                      id="story"
-                      rows="4"
-                      formControlName="story"
-                    ></textarea>
-                  </mat-form-field>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-12 text-center">
-                  <button
-                    type="submit"
-                    mat-raised-button
-                    color="primary"
-                    class="save-changes-btn"
-                    [disabled]="loading"
-                  >
-                    Save your changes
-                    <!-- <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner> -->
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <mat-divider></mat-divider>
-
-      <div class="row">
-        <div class="col-12">
-          <div class="change-password-form-container">
-            <h5>
-              {{ userProfile.userProvider === 'SPORTIZEN' ? 'Change Password' : 'Set Password' }}
-            </h5>
-
-            <form
-              class="change-password-form"
-              (submit)="changePassword()"
-              [formGroup]="changePasswordForm"
-              #changePasswordFormDirective="ngForm"
-            >
-              <div class="row">
-                <div class="col-12">
-                  <mat-form-field
-                    class="full-width"
-                    *ngIf="userProfile.userProvider === 'SPORTIZEN'"
-                  >
-                    <mat-label for="oldPassword">Current Password</mat-label>
-
-                    <input
-                      matInput
-                      type="password"
-                      id="oldPassword"
-                      class=""
-                      name="oldPassword"
-                      formControlName="oldPassword"
-                    />
-
-                    <mat-error *ngIf="!changePasswordForm.get('oldPassword').valid"
-                      >*Please enter Your Old Password</mat-error
-                    >
-                  </mat-form-field>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-12">
-                  <mat-form-field class="full-width">
-                    <mat-label for="password">New Password</mat-label>
-
-                    <input
-                      matInput
-                      type="password"
-                      id="password"
-                      name="password"
-                      formControlName="password"
-                    />
-
-                    <mat-error *ngIf="!changePasswordForm.get('password').valid"
-                      >*Please enter New Password</mat-error
-                    >
-                  </mat-form-field>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-12">
-                  <mat-form-field class="full-width">
-                    <mat-label for="confirmPassword">Confirm Password</mat-label>
-
-                    <input
-                      matInput
-                      type="password"
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      formControlName="confirmPassword"
-                    />
-
-                    <mat-error *ngIf="!changePasswordForm.get('confirmPassword').valid">
-                      *Please enter Confirm Password
-                    </mat-error>
-
-                    <mat-error
-                      *ngIf="
-                        changePasswordForm.get('confirmPassword').valid &&
-                        changePasswordForm.hasError('invalidPassword')
-                      "
-                    >
-                      *Password & Confirm Password Does Not Match
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-12">
-                  <button type="submit" mat-raised-button color="primary" class="save-password-btn">
-                    {{
-                      userProfile.userProvider === 'SPORTIZEN' ? 'Change Password' : 'Set Password'
-                    }}
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <mat-divider></mat-divider>
-
-      <div class="row">
-        <div class="col-12">
-          <div class="logout-all-container">
-            <h5>Logout From all Devices</h5>
-
-            <p class="logout-all-text">
-              If you use Logout from all Devices, it will automatically logout from All the devices
-              you are activated on sportizen, including this Device..
-            </p>
-
-            <div class="logout-all-btn-container">
-              <button type="button" mat-raised-button class="logout-all-btn" (click)="logoutAll()">
-                <i class="fa fa-sign-out"></i>&nbsp;Logout All
-              </button>
             </div>
           </div>
         </div>
-      </div>
-    </mat-card-content>
-  </mat-card>
-</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</ng-container>
+
+<ng-template #loadingData>
+  <div class="loading-container">
+    <mat-spinner diameter="25"></mat-spinner>
+  </div>
+</ng-template>

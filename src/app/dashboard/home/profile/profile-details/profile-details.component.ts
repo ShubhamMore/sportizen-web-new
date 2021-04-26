@@ -25,6 +25,7 @@ interface Connection {
   styleUrls: ['./profile-details.component.scss'],
 })
 export class ProfileDetailsComponent implements OnInit {
+  loading: boolean;
   userProfile: UserProfileModel;
   invalidImage: boolean;
   imagePreview: string;
@@ -50,21 +51,31 @@ export class ProfileDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
     this.storyEdit = false;
-    this.dashboardSideDrawerService.close();
-    this.userProfile = this.userProfileService.getProfile();
-    if (!this.userProfile.story) {
-      this.storyEdit = true;
-    }
-    this.profileImagePreview = this.userProfile.userImageURL;
-    this.coverImagePreview = this.userProfile.userCoverImageURL;
-    this.gallery = [];
-    this.followers = [];
-    this.followings = [];
+    this.userProfileService.getProfileSubject().subscribe((userProfile: UserProfileModel) => {
+      if (userProfile) {
+        this.userProfile = userProfile;
 
-    this.getGallery();
-    this.getFollowers();
-    this.getFollowings();
+        // this.dashboardSideDrawerService.close();
+
+        if (!this.userProfile.story) {
+          this.storyEdit = true;
+        }
+
+        this.profileImagePreview = this.userProfile.userImageURL;
+        this.coverImagePreview = this.userProfile.userCoverImageURL;
+        this.gallery = [];
+        this.followers = [];
+        this.followings = [];
+
+        this.getGallery();
+        this.getFollowers();
+        this.getFollowings();
+
+        this.loading = false;
+      }
+    });
   }
 
   viewProfile(id: string) {
@@ -245,6 +256,7 @@ export class ProfileDetailsComponent implements OnInit {
     );
 
     const profile = new FormData();
+
     if (this.coverImage) {
       profile.append('_id', this.userProfile._id);
       profile.append('coverImage', this.coverImage);

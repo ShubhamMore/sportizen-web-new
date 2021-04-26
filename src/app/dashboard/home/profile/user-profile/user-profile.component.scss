@@ -7,6 +7,12 @@ $grey-color: #838383;
   margin: 0px;
 }
 
+.loading-container {
+  mat-spinner {
+    margin: 0.5rem auto;
+  }
+}
+
 .profile-details-container {
   position: relative;
 

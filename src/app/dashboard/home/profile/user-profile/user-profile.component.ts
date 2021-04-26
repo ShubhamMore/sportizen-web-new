@@ -51,6 +51,7 @@ export class UserProfileComponent implements OnInit {
     this.loading = true;
 
     this.connectionStatus = '';
+
     this.userProfileService.getProfileSubject().subscribe((userProfile: UserProfileModel) => {
       if (userProfile) {
         this.sportizenId = userProfile.sportizenId;
@@ -59,7 +60,7 @@ export class UserProfileComponent implements OnInit {
     this.gallery = [];
     this.followers = [];
     this.followings = [];
-    // tslint:disable-next-line: deprecation
+
     this.route.params.subscribe((param: Params) => {
       this.userProfileId = param.id;
 
@@ -76,6 +77,8 @@ export class UserProfileComponent implements OnInit {
 
             this.loading = false;
           });
+      } else {
+        this.router.navigate(['../'], { relativeTo: this.route });
       }
     });
   }

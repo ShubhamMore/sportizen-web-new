@@ -11,6 +11,12 @@ $grey-color: #838383;
   background-color: white !important;
 }
 
+.loading-container {
+  mat-spinner {
+    margin: 0.5rem auto;
+  }
+}
+
 .user-profile-container {
   margin: 1rem 5rem;
 

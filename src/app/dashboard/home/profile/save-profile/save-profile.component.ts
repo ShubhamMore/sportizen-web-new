@@ -58,52 +58,61 @@ export class SaveProfileComponent implements OnInit {
 
     this.addSportInterest = false;
 
-    this.userProfile = this.userProfileService.getProfile();
-    this.profileImagePreview = this.userProfile.userImageURL;
-    this.interestedSports = this.userProfile.sportsInterest;
-    this.getInterestSports();
-    this.form = new FormGroup({
-      firstName: new FormControl(this.userProfile.name.split(' ')[0], {
-        validators: [Validators.required],
-      }),
-      lastName: new FormControl(this.userProfile.name.split(' ')[1], {
-        validators: [Validators.required],
-      }),
-      birthDate: new FormControl(new Date(this.userProfile.birthDate), {
-        validators: [Validators.required],
-      }),
-      gender: new FormControl(this.userProfile.gender, { validators: [Validators.required] }),
-      story: new FormControl(this.userProfile.story, {}),
-      emailId: new FormControl(this.userProfile.email, {
-        validators: [Validators.required, Validators.email],
-      }),
-      phoneNo: new FormControl(this.userProfile.phoneNo, {
-        validators: [Validators.required, Validators.min(1000000000), Validators.max(9999999999)],
-      }),
-    });
+    this.userProfileService.getProfileSubject().subscribe((userProfile: UserProfileModel) => {
+      if (userProfile) {
+        this.userProfile = userProfile;
 
-    this.changePasswordForm = new FormGroup(
-      {
-        oldPassword: new FormControl(null, {}),
-        password: new FormControl(null, {
-          validators: [Validators.required, Validators.minLength(6)],
-        }),
-        confirmPassword: new FormControl(null, {
-          validators: [Validators.required, Validators.minLength(6)],
-        }),
-      },
-      {
-        validators: this.validator.passwordValidator.bind(this),
+        this.profileImagePreview = this.userProfile.userImageURL;
+        this.interestedSports = this.userProfile.sportsInterest;
+        this.getInterestSports();
+        this.form = new FormGroup({
+          firstName: new FormControl(this.userProfile.name.split(' ')[0], {
+            validators: [Validators.required],
+          }),
+          lastName: new FormControl(this.userProfile.name.split(' ')[1], {
+            validators: [Validators.required],
+          }),
+          birthDate: new FormControl(new Date(this.userProfile.birthDate), {
+            validators: [Validators.required],
+          }),
+          gender: new FormControl(this.userProfile.gender, { validators: [Validators.required] }),
+          story: new FormControl(this.userProfile.story, {}),
+          emailId: new FormControl(this.userProfile.email, {
+            validators: [Validators.required, Validators.email],
+          }),
+          phoneNo: new FormControl(this.userProfile.phoneNo, {
+            validators: [
+              Validators.required,
+              Validators.min(1000000000),
+              Validators.max(9999999999),
+            ],
+          }),
+        });
+
+        this.changePasswordForm = new FormGroup(
+          {
+            oldPassword: new FormControl(null, {}),
+            password: new FormControl(null, {
+              validators: [Validators.required, Validators.minLength(6)],
+            }),
+            confirmPassword: new FormControl(null, {
+              validators: [Validators.required, Validators.minLength(6)],
+            }),
+          },
+          {
+            validators: this.validator.passwordValidator.bind(this),
+          }
+        );
+
+        if (this.userProfile.userProvider === 'SPORTIZEN') {
+          this.changePasswordForm
+            .get('oldPassword')
+            .setValidators([Validators.required, Validators.minLength(6)]);
+        }
+
+        this.loading = false;
       }
-    );
-
-    if (this.userProfile.userProvider === 'SPORTIZEN') {
-      this.changePasswordForm
-        .get('oldPassword')
-        .setValidators([Validators.required, Validators.minLength(6)]);
-    }
-
-    this.loading = false;
+    });
   }
 
   onImagePicked(event: Event): any {
