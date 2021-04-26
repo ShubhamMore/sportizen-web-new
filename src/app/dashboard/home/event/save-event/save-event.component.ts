@@ -59,8 +59,6 @@ export class SaveEventComponent implements OnInit, OnDestroy {
     this.eventImageFiles = [];
     this.eventImagePreview = [];
 
-    const id = this.eventService.getEventId();
-
     this.states = this.countryService.getStates();
     this.cities = [];
 
@@ -112,49 +110,53 @@ export class SaveEventComponent implements OnInit, OnDestroy {
       }),
     });
 
-    if (id) {
-      this.editingMode = true;
-      this.eventService.getEvent(id).subscribe(
-        (event: EventModel) => {
-          this.event = event;
-          this.form.patchValue({
-            name: event.name,
-            // eventType: event.eventType,
-            sport: event.sport,
-            registrationType: event.registrationType,
-            noOfPlayers: event.noOfPlayers,
-            address: event.address,
-            state: event.state,
-            startDate: this.dateService.convertToDateString(event.startDate),
-            endDate: this.dateService.convertToDateString(event.endDate),
-            registerTill: this.dateService.convertToDateString(event.registerTill),
-            // time: event.time,
-            description: event.description,
-            winningPrice: event.winningPrice,
-            fees: event.fees,
-          });
+    this.route.params.subscribe((param: Params) => {
+      const id = param.id;
 
-          this.changeState(event.state);
+      if (id) {
+        this.editingMode = true;
+        this.eventService.getEventForUser(id).subscribe(
+          (event: EventModel) => {
+            this.event = event;
+            this.form.patchValue({
+              name: event.name,
+              // eventType: event.eventType,
+              sport: event.sport,
+              registrationType: event.registrationType,
+              noOfPlayers: event.noOfPlayers,
+              address: event.address,
+              state: event.state,
+              startDate: this.dateService.convertToDateString(event.startDate),
+              endDate: this.dateService.convertToDateString(event.endDate),
+              registerTill: this.dateService.convertToDateString(event.registerTill),
+              // time: event.time,
+              description: event.description,
+              winningPrice: event.winningPrice,
+              fees: event.fees,
+            });
 
-          this.form.patchValue({
-            city: event.city,
-          });
+            this.changeState(event.state);
 
-          this.changeCity(event.city);
+            this.form.patchValue({
+              city: event.city,
+            });
 
-          this.form.get('sport').disable();
-          this.form.get('registrationType').disable();
-          this.form.get('fees').disable();
+            this.changeCity(event.city);
 
-          this.loading = false;
-        },
-        (error: any) => {
-          this.loading = false;
-        }
-      );
-    } else {
-      this.loading = false;
-    }
+            this.form.get('sport').disable();
+            this.form.get('registrationType').disable();
+            this.form.get('fees').disable();
+
+            this.loading = false;
+          },
+          (error: any) => {
+            this.loading = false;
+          }
+        );
+      } else {
+        this.loading = false;
+      }
+    });
   }
 
   changeState(name: string) {
@@ -273,6 +275,6 @@ export class SaveEventComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.eventService.setEventId(null);
+    // this.eventService.setEventId(null);
   }
 }

@@ -18,7 +18,6 @@ import { EventPlayerRegistrationService } from './../../../../services/event-pla
 })
 export class JoinEventComponent implements OnInit, OnDestroy {
   event: EventModel;
-  userEmail: string;
   loading: boolean;
   joinEventForm: FormGroup;
 
@@ -29,89 +28,92 @@ export class JoinEventComponent implements OnInit, OnDestroy {
     private userProfileService: UserProfileService,
     private connectionService: ConnectionService,
     private router: Router,
-    private location: Location,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
 
-    this.userEmail = this.userProfileService.getUserEmail();
+    this.route.params.subscribe((param: Params) => {
+      const id = param.id;
 
-    let id = this.eventService.getEventId();
+      if (id) {
+        this.eventService.getEventForUser(id).subscribe(
+          (event: EventModel) => {
+            this.event = event;
 
-    if (!id) {
-      this.route.queryParams.subscribe((param: Params) => {
-        id = param.id;
-      });
-    }
-
-    if (id) {
-      this.eventService.getEvent(id).subscribe(
-        (event: EventModel) => {
-          this.event = event;
-
-          if (event.registrationType === 'individual') {
-            const userProfile: UserProfileModel = this.userProfileService.getProfile();
-
-            this.joinEventForm = new FormGroup({
-              name: new FormControl(userProfile.name, {
-                validators: [Validators.required],
-              }),
-              email: new FormControl(userProfile.email, {
-                validators: [Validators.required, Validators.email],
-              }),
-              contact: new FormControl(userProfile.phoneNo, {
-                validators: [
-                  Validators.required,
-                  Validators.min(1000000000),
-                  Validators.max(9999999999),
-                ],
-              }),
-            });
-
-            if (event.registration) {
-              this.joinEventForm.patchValue({
-                name: event.registration.name,
-                email: event.registration.email,
-                contact: event.registration.contact,
-              });
-            }
-          } else if (event.registrationType === 'team') {
-            this.joinEventForm = new FormGroup({
-              teamName: new FormControl(null, {
-                validators: [Validators.required],
-              }),
-              teamMembers: new FormArray([]),
-            });
-
-            if (event.registration) {
-              this.joinEventForm.patchValue({
-                teamName: event.registration.teamName,
+            if (event.registrationType === 'individual') {
+              this.joinEventForm = new FormGroup({
+                name: new FormControl(null, {
+                  validators: [Validators.required],
+                }),
+                email: new FormControl(null, {
+                  validators: [Validators.required, Validators.email],
+                }),
+                contact: new FormControl(null, {
+                  validators: [
+                    Validators.required,
+                    Validators.min(1000000000),
+                    Validators.max(9999999999),
+                  ],
+                }),
               });
 
-              event.registration.teamMembers.forEach((teamMember: any) => {
-                this.addTeamMember(teamMember);
-              });
-            } else {
-              const noOfPlayers = +this.event.noOfPlayers;
+              this.userProfileService
+                .getProfileSubject()
+                .subscribe((userProfile: UserProfileModel) => {
+                  if (userProfile) {
+                    this.joinEventForm.patchValue({
+                      name: userProfile.name,
+                      email: userProfile.email,
+                      contact: userProfile.phoneNo,
+                    });
+                  }
+                });
 
-              for (let i = 0; i < noOfPlayers; i++) {
-                this.generateTeamMember();
+              if (event.registration) {
+                this.joinEventForm.patchValue({
+                  name: event.registration.name,
+                  email: event.registration.email,
+                  contact: event.registration.contact,
+                });
               }
-            }
-          } else {
-            // Invalid Type
-          }
+            } else if (event.registrationType === 'team') {
+              this.joinEventForm = new FormGroup({
+                teamName: new FormControl(null, {
+                  validators: [Validators.required],
+                }),
+                teamMembers: new FormArray([]),
+              });
 
-          this.loading = false;
-        },
-        (error: any) => {
-          this.loading = false;
-        }
-      );
-    } else {
-    }
+              if (event.registration) {
+                this.joinEventForm.patchValue({
+                  teamName: event.registration.teamName,
+                });
+
+                event.registration.teamMembers.forEach((teamMember: any) => {
+                  this.addTeamMember(teamMember);
+                });
+              } else {
+                const noOfPlayers = +this.event.noOfPlayers;
+
+                for (let i = 0; i < noOfPlayers; i++) {
+                  this.generateTeamMember();
+                }
+              }
+            } else {
+              this.router.navigate(['../../'], { relativeTo: this.route, replaceUrl: true });
+            }
+            this.loading = false;
+          },
+          (error: any) => {
+            this.router.navigate(['../../'], { relativeTo: this.route, replaceUrl: true });
+          }
+        );
+      } else {
+        this.router.navigate(['../../'], { relativeTo: this.route, replaceUrl: true });
+      }
+    });
   }
 
   private getTeamMembers() {
@@ -144,10 +146,10 @@ export class JoinEventComponent implements OnInit, OnDestroy {
 
   viewProfile(id: string) {
     if (id === this.userProfileService.getProfile().sportizenId) {
-      this.router.navigate(['../../', 'profile'], { relativeTo: this.route });
+      this.router.navigate(['/dashboard', 'profile'], { relativeTo: this.route });
     } else {
       this.connectionService.searchedSportizenId = id;
-      this.router.navigate(['../../', 'profile', id], { relativeTo: this.route });
+      this.router.navigate(['/dashboard', 'profile', id], { relativeTo: this.route });
     }
   }
 
@@ -220,6 +222,6 @@ export class JoinEventComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.eventService.setEventId(null);
+    // this.eventService.setEventId(null);
   }
 }

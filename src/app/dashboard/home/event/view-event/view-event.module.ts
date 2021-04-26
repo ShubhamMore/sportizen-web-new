@@ -8,6 +8,7 @@ import { ViewRegistrationComponent } from './view-registration/view-registration
 
 @NgModule({
   declarations: [ViewEventComponent, ViewRegistrationComponent],
+  entryComponents: [ViewRegistrationComponent],
   imports: [SharedModule, ViewEventRoutingModule, EventDetailsModule],
 })
 export class ViewEventModule {}

@@ -6,150 +6,6 @@ import { throwError } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class BlogsService {
-  private blogId: string;
-  private blog: BlogModel;
-
-  private blogsList: BlogModel[] = [
-    {
-      _id: '1',
-      sport: '',
-      images: [
-        {
-          _id: '',
-          imageName: '',
-          secureUrl: 'https://picsum.photos/900/600',
-          publicId: '',
-          createdAt: '',
-        },
-        {
-          _id: '',
-          imageName: '',
-          secureUrl: 'https://picsum.photos/600/600',
-          publicId: '',
-          createdAt: '',
-        },
-        {
-          _id: '',
-          imageName: '',
-          secureUrl: 'https://picsum.photos/300/600',
-          publicId: '',
-          createdAt: '',
-        },
-      ],
-      createdBy: '',
-      modifiedAt: '10/10/20',
-      subtitle: 'Football',
-      createdAt: '10/10/20',
-      createdUser: 'Sarvesh',
-      title: 'Sports',
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-    },
-    {
-      _id: '2',
-      sport: '',
-      images: [
-        {
-          _id: '',
-          imageName: '',
-          secureUrl: 'https://picsum.photos/200/800',
-          publicId: '',
-          createdAt: '',
-        },
-      ],
-      createdBy: '',
-      modifiedAt: '10/10/20',
-      subtitle: 'Cricket',
-      createdAt: '10/10/20',
-      createdUser: 'Sarvesh',
-      title: 'Sports',
-      description: 'Hello Sports',
-    },
-    {
-      _id: '3',
-      sport: '',
-      images: [
-        {
-          _id: '',
-          imageName: '',
-          secureUrl: 'https://picsum.photos/200/300',
-          publicId: '',
-          createdAt: '',
-        },
-      ],
-      createdBy: '',
-      modifiedAt: '10/10/20',
-      subtitle: 'Cricket',
-      createdAt: '10/10/20',
-      createdUser: 'Sarvesh',
-      title: 'Sports',
-      description: 'Hello Sports',
-    },
-    {
-      _id: '4',
-      sport: '',
-      images: [
-        {
-          _id: '',
-          imageName: '',
-          secureUrl: 'https://picsum.photos/400/400',
-          publicId: '',
-          createdAt: '',
-        },
-      ],
-      createdBy: '',
-      modifiedAt: '10/10/20',
-      subtitle: 'Cricket',
-      createdAt: '10/10/20',
-      createdUser: 'Sarvesh',
-      title: 'Sports',
-      description: 'Hello Sports',
-    },
-    {
-      _id: '5',
-      sport: '',
-      images: [
-        {
-          _id: '',
-          imageName: '',
-          secureUrl: 'https://picsum.photos/500/600',
-          publicId: '',
-          createdAt: '',
-        },
-      ],
-      createdBy: '',
-      modifiedAt: '10/10/20',
-      subtitle: 'Cricket',
-      createdAt: '10/10/2020',
-      createdUser: 'Sarvesh',
-      title: 'Sports',
-      description: 'Hello Sports',
-    },
-  ];
-
-  setBlogId(blogId: string) {
-    this.blogId = blogId;
-  }
-
-  getBlogId() {
-    return this.blogId;
-  }
-
-  getViewBlog() {
-    return this.blog;
-  }
-  setViewBlog(blog: BlogModel) {
-    this.blog = blog;
-  }
-
-  getBlogsList() {
-    return [...this.blogsList];
-  }
-
-  getSelectedBlogDetails() {
-    return this.blogsList.find((blog: BlogModel) => blog._id === this.blogId);
-  }
-
   constructor(private httpService: HttpService) {}
 
   saveBlog(blog: FormData, editingMode: boolean) {
@@ -191,9 +47,21 @@ export class BlogsService {
     );
   }
 
-  getBlog(id: string) {
+  getBlogForUser(id: string) {
     const data = { api: 'get-blog', data: { id } };
     return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      })
+    );
+  }
+
+  getBlog(id: string) {
+    const data = { api: `get-blog/${id}`, data: { id } };
+    return this.httpService.httpGet(data).pipe(
       map((response: any) => {
         return response;
       }),

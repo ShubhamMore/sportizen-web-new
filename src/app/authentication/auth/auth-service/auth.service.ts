@@ -149,7 +149,7 @@ export class AuthService {
     return this.http.post(environment.backend + 'logout', {}).subscribe(
       (res: any) => {
         this.user.next(null);
-        this.router.navigate(['/dashboard/login']);
+        this.router.navigate(['/login']);
         localStorage.removeItem('userData');
         if (this.tokenExpirationTimer) {
           clearTimeout(this.tokenExpirationTimer);

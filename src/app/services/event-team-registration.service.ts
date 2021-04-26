@@ -33,8 +33,8 @@ export class EventTeamRegistrationService {
   }
 
   getEventTeams(event: string) {
-    const data = { api: 'getEventTeams', data: { event } };
-    return this.httpService.httpPost(data).pipe(
+    const data = { api: `getEventTeams/${event}`, data: { event } };
+    return this.httpService.httpGet(data).pipe(
       map((eventTeams: EventTeamModel[]) => {
         return eventTeams;
       }),

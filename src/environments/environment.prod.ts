@@ -7,4 +7,5 @@ export const environment = {
   title: 'SPORTIZEN',
   SOCKET_ENDPOINT: 'https://api.sportizen.in/sportizen-chat',
   oauthClientID: '106169972032-l24bd52bmddd6ok8oalhvf9ta2tavatm.apps.googleusercontent.com',
+  limit: 5,
 };

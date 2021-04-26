@@ -21,8 +21,8 @@ export class EventPlayerRegistrationService {
   }
 
   getEventPlayers(event: string) {
-    const data = { api: 'getEventPlayers', data: { event } };
-    return this.httpService.httpPost(data).pipe(
+    const data = { api: `getEventPlayers/${event}`, data: { event } };
+    return this.httpService.httpGet(data).pipe(
       map((eventPlayers: EventPlayerModel[]) => {
         return eventPlayers;
       }),

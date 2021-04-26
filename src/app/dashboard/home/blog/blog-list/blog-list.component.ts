@@ -36,7 +36,6 @@ export class BlogListComponent implements OnInit {
   }
 
   openBlog(blog: BlogModel) {
-    this.blogsService.setViewBlog(blog);
     this.router.navigate(['/dashboard/blog/view', blog._id], { relativeTo: this.route });
   }
 }

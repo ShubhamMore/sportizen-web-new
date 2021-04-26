@@ -1,6 +1,6 @@
 import { BlogModel } from './../../../../models/blog.model';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BlogsService } from 'src/app/services/blogs.service';
 
 @Component({
@@ -12,21 +12,39 @@ export class ViewBlogComponent implements OnInit {
   loading: boolean;
   blog: BlogModel;
   constructor(
-    private blogsService: BlogsService,
+    private blogService: BlogsService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
-    const blog = this.blogsService.getViewBlog();
 
-    if (blog) {
-      this.blog = blog;
-    } else {
-      this.router.navigate(['/dashboard/blog'], { relativeTo: this.route });
-    }
+    this.route.params.subscribe((param: Params) => {
+      const id = param.id;
+      let getBlog: any;
+      if (id) {
+        getBlog = this.blogService.getBlogForUser(id);
+      } else {
+        this.route.queryParams.subscribe((param: Params) => {
+          if (param.id) {
+            getBlog = this.blogService.getBlog(param.id);
+          } else {
+            this.router.navigate(['../../'], { relativeTo: this.route, replaceUrl: true });
+          }
+        });
+      }
 
-    this.loading = false;
+      getBlog.subscribe(
+        (blog: BlogModel) => {
+          this.blog = blog;
+          this.loading = false;
+        },
+        (error: any) => {
+          this.loading = false;
+          this.router.navigate(['../../'], { relativeTo: this.route, replaceUrl: true });
+        }
+      );
+    });
   }
 }

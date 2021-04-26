@@ -13,6 +13,7 @@ import { UserProfileService } from 'src/app/services/user-profile.service';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { ConfirmComponent } from 'src/app/@shared/confirm/confirm.component';
 import { MatDialog } from '@angular/material/dialog';
+import { UserProfileModel } from './../../../../models/user-profile.model';
 
 interface DeleteMessageData {
   message: string;
@@ -61,7 +62,11 @@ export class ChatMessagesComponent implements OnInit, AfterViewInit {
     this.isNearBottom = true;
     this.messageLoading = false;
 
-    this.sportizenId = this.userProfileService.getUserSportizenId();
+    this.userProfileService.getProfileSubject().subscribe((userProfile: UserProfileModel) => {
+      if (userProfile) {
+        this.sportizenId = userProfile.sportizenId;
+      }
+    });
 
     this.socket = this.socketioService.getSocket();
 

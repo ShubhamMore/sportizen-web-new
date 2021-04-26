@@ -6,16 +6,16 @@ import { EventModel } from '../models/event.model';
 
 @Injectable({ providedIn: 'root' })
 export class EventService {
-  private events: EventModel[] = [];
-  private eventId: string = null;
+  // private events: EventModel[] = [];
+  // private eventId: string = null;
 
-  setEventId(eventId: string) {
-    this.eventId = eventId;
-  }
+  // setEventId(eventId: string) {
+  //   this.eventId = eventId;
+  // }
 
-  getEventId() {
-    return this.eventId;
-  }
+  // getEventId() {
+  //   return this.eventId;
+  // }
 
   constructor(private httpService: HttpService) {}
 
@@ -56,6 +56,18 @@ export class EventService {
   }
 
   getEvent(id: string) {
+    const data = { api: `getEvent/${id}`, data: { id } };
+    return this.httpService.httpGet(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      })
+    );
+  }
+
+  getEventForUser(id: string) {
     const data = { api: 'getEvent', data: { id } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
@@ -86,8 +98,8 @@ export class EventService {
     const data = { api: `deleteEvent`, data: { id } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
-        const i = this.events.findIndex((event) => event._id === id);
-        this.events.splice(i, 1);
+        // const i = this.events.findIndex((event) => event._id === id);
+        // this.events.splice(i, 1);
         return response;
       }),
       catchError((err: any) => {

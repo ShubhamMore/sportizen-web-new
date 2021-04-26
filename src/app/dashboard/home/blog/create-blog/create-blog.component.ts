@@ -6,6 +6,7 @@ import { SportModel } from './../../../../models/sport.model';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-blog',
@@ -33,6 +34,8 @@ export class CreateBlogComponent implements OnInit {
   constructor(
     private sportsService: SportService,
     private blogService: BlogsService,
+    private router: Router,
+    private route: ActivatedRoute,
     private snackBar: MatSnackBar
   ) {}
 
@@ -43,8 +46,6 @@ export class CreateBlogComponent implements OnInit {
     this.classicEditor = ClassicEditor;
 
     this.sports = this.sportsService.getSports();
-
-    const blogId = this.blogService.getBlogId();
 
     this.detailsForm = new FormGroup({
       title: new FormControl(null, {
@@ -67,29 +68,33 @@ export class CreateBlogComponent implements OnInit {
     this.blogImageFiles = [];
     this.blogImagePreview = [];
 
-    if (blogId) {
-      this.blogService.getBlog(blogId).subscribe(
-        (blog: BlogModel) => {
-          this.blog = blog;
-          this.detailsForm.patchValue({
-            title: blog.title,
-            subtitle: blog.subtitle,
-            sport: blog.sport,
-          });
+    this.route.params.subscribe((param: Params) => {
+      const id = param.id;
 
-          this.blogForm.patchValue({
-            description: blog.description,
-          });
+      if (id) {
+        this.blogService.getBlogForUser(id).subscribe(
+          (blog: BlogModel) => {
+            this.blog = blog;
+            this.detailsForm.patchValue({
+              title: blog.title,
+              subtitle: blog.subtitle,
+              sport: blog.sport,
+            });
 
-          this.loading = false;
-        },
-        (error: any) => {
-          this.loading = false;
-        }
-      );
-    } else {
-      this.loading = false;
-    }
+            this.blogForm.patchValue({
+              description: blog.description,
+            });
+
+            this.loading = false;
+          },
+          (error: any) => {
+            this.router.navigate(['../../'], { relativeTo: this.route, replaceUrl: true });
+          }
+        );
+      } else {
+        this.loading = false;
+      }
+    });
   }
 
   saveBlog() {

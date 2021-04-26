@@ -28,13 +28,13 @@ export class UserProfileService {
     return this.userProfileSubject;
   }
 
-  getUserEmail() {
-    return this.userProfile.email;
-  }
+  // getUserEmail() {
+  //   return this.userProfile.email;
+  // }
 
-  getUserSportizenId() {
-    return this.userProfile.sportizenId;
-  }
+  // getUserSportizenId() {
+  //   return this.userProfile.sportizenId;
+  // }
 
   isProfileCompleted(): boolean {
     if (this.userProfile.profileCompleted === '0') {

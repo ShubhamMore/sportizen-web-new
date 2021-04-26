@@ -7,6 +7,8 @@ import { EventService } from './../../../../services/event.service';
 import { UserProfileService } from './../../../../services/user-profile.service';
 import { EventModel } from './../../../../models/event.model';
 import * as $ from 'jquery';
+import { UserProfileModel } from './../../../../models/user-profile.model';
+import { environment } from './../../../../../environments/environment';
 
 @Component({
   selector: 'app-list-event',
@@ -43,12 +45,12 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
   scroll = (event: any): void => {
     if ($('.loading-event-container')) {
       const moreFeed = $('.loading-event-container').offset().top;
-      const threshold = window.innerHeight + 50;
+      const threshold = window.innerHeight + 250;
 
       if (moreFeed <= threshold) {
         const skip = this.events.length;
         if (!this.loadingEvents && !this.noMoreEvents) {
-          this.getEvents(3, skip, this.longitude, this.latitude);
+          this.getEvents(environment.limit, skip, this.longitude, this.latitude);
         }
       }
     }
@@ -60,6 +62,12 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.events = [];
 
+    this.userProfileService.getProfileSubject().subscribe((userProfile: UserProfileModel) => {
+      if (userProfile) {
+        this.userSportizenId = userProfile.sportizenId;
+      }
+    });
+
     this.longitude = null;
     this.latitude = null;
 
@@ -67,13 +75,11 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
       this.type = data.type;
 
       if (['joined', 'manage'].includes(this.type)) {
-        this.getEvents(3, null, this.longitude, this.latitude);
+        this.getEvents(environment.limit, null, this.longitude, this.latitude);
       } else {
         this.getLocation();
       }
     });
-
-    this.userSportizenId = this.userProfileService.getUserSportizenId();
   }
 
   ngAfterViewInit() {
@@ -81,32 +87,32 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   joinEvent(id: string) {
-    this.eventService.setEventId(id);
-    this.router.navigate(['/event/join'], {
+    // this.eventService.setEventId(id);
+    this.router.navigate(['/dashboard/event/join', id], {
       relativeTo: this.route,
-      queryParams: { id },
+      // queryParams: { id },
     });
   }
 
   viewEvent(id: string) {
-    this.eventService.setEventId(id);
-    this.router.navigate(['/event/view'], {
+    //   this.eventService.setEventId(id);
+    this.router.navigate(['/dashboard/event/view', id], {
       relativeTo: this.route,
-      queryParams: { id },
+      // queryParams: { id },
     });
   }
 
   editEvent(id: string) {
-    this.eventService.setEventId(id);
-    this.router.navigate(['/event/edit'], { relativeTo: this.route });
+    // this.eventService.setEventId(id);
+    this.router.navigate(['/dashboard/event/edit', id], { relativeTo: this.route });
   }
 
   viewProfile(id: string) {
     if (id === this.userProfileService.getProfile().sportizenId) {
-      this.router.navigate(['/', 'profile'], { relativeTo: this.route });
+      this.router.navigate(['/dashboard', 'profile'], { relativeTo: this.route });
     } else {
       this.connectionService.searchedSportizenId = id;
-      this.router.navigate(['/', 'profile', id], { relativeTo: this.route });
+      this.router.navigate(['/dashboard', 'profile', id], { relativeTo: this.route });
     }
   }
 
@@ -123,10 +129,10 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
       navigator.geolocation.getCurrentPosition((position) => {
         this.longitude = position.coords.longitude;
         this.latitude = position.coords.latitude;
-        this.getEvents(3, null, this.longitude, this.latitude);
+        this.getEvents(environment.limit, null, this.longitude, this.latitude);
       });
     } else {
-      this.getEvents(3, null, this.longitude, this.latitude);
+      this.getEvents(environment.limit, null, this.longitude, this.latitude);
     }
   }
 

@@ -19,6 +19,7 @@ import { FeedViewComponent } from './feed-view/feed-view.component';
 import { FeedShareComponent } from './feed-share/feed-share.component';
 import { ConfirmComponent } from 'src/app/@shared/confirm/confirm.component';
 import * as $ from 'jquery';
+import { environment } from './../../../../../environments/environment';
 
 @Component({
   selector: 'app-dashboard-feed',
@@ -54,12 +55,12 @@ export class DashboardFeedComponent implements OnInit, OnDestroy, AfterViewInit 
   scroll = (event: any): void => {
     if ($('.loading-feed-container')) {
       const moreFeed = $('.loading-feed-container').offset().top;
-      const threshold = window.innerHeight + 50;
+      const threshold = window.innerHeight + 250;
 
       if (moreFeed <= threshold) {
         const skip = this.postService.postList.length;
         if (!this.loadingFeed && !this.noMorePosts) {
-          this.loadFeed(3, skip);
+          this.loadFeed(environment.limit, skip);
         }
       }
     }
@@ -74,7 +75,7 @@ export class DashboardFeedComponent implements OnInit, OnDestroy, AfterViewInit 
       if (user) {
         this.sportizenUser = user.sportizenId;
       }
-      this.loadFeed(3, null);
+      this.loadFeed(environment.limit, null);
     });
   }
 

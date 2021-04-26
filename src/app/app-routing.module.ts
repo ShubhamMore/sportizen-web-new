@@ -4,10 +4,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { LoginAuthGuard } from './authentication/auth/guards/login.auth.guard';
-import { BlogsComponent } from './blogs/blogs.component';
-import { BlogDetailsComponent } from './blogs/blog-details/blog-details.component';
-import { SaveBlogComponent } from './blogs/save-blog/save-blog.component';
-import { MyBlogsComponent } from './blogs/my-blogs/my-blogs.component';
 
 const appRoutes: Routes = [
   {
@@ -27,22 +23,7 @@ const appRoutes: Routes = [
         loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
         canActivate: [UserAuthGuard],
       },
-      {
-        path: 'blogs',
-        component: BlogsComponent,
-      },
-      {
-        path: 'blogDetails',
-        component: BlogDetailsComponent,
-      },
-      {
-        path: 'saveBlog',
-        component: SaveBlogComponent,
-      },
-      {
-        path: 'myBlogs',
-        component: MyBlogsComponent,
-      },
+
       {
         path: 'page-not-found',
         loadChildren: () =>

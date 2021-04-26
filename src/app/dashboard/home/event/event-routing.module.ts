@@ -28,16 +28,16 @@ const routes: Routes = [
         data: { type: 'new' },
       },
       {
-        path: 'edit',
+        path: 'edit/:id',
         loadChildren: () => import('./save-event/save-event.module').then((m) => m.SaveEventModule),
         data: { type: 'edit' },
       },
       {
-        path: 'join',
+        path: 'join/:id',
         loadChildren: () => import('./join-event/join-event.module').then((m) => m.JoinEventModule),
       },
       {
-        path: 'view',
+        path: 'view/:id',
         loadChildren: () => import('./view-event/view-event.module').then((m) => m.ViewEventModule),
       },
     ],

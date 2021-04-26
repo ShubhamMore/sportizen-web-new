@@ -1,5 +1,5 @@
 import { HomeService } from './../../services/home.service';
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { DashboardSideDrawerService } from './../../services/dashboard-side-drawer.service';
 
@@ -26,7 +26,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   constructor(
     private homeService: HomeService,
-    private dashboardSideDrawerService: DashboardSideDrawerService
+    private dashboardSideDrawerService: DashboardSideDrawerService,
+    private changeDetectorRef: ChangeDetectorRef
   ) {
     this.screenWidth = window.innerWidth;
     window.onresize = () => {
@@ -36,6 +37,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.activeNavLink = 'Home';
+
     this.navLinks = [
       new NavTabLink('/dashboard', 'Home', 'fa-home'),
       new NavTabLink('/dashboard/event', 'Events', 'fa-trophy'),
@@ -49,6 +52,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // tslint:disable-next-line: deprecation
     this.homeService.getRoute().subscribe((route: string) => {
       this.activeNavLink = route;
+      this.changeDetectorRef.detectChanges();
     });
 
     this.responsiveWidth = 1200;

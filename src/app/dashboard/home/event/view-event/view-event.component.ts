@@ -6,7 +6,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { EventModel } from './../../../../models/event.model';
 import { EventService } from './../../../../services/event.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Location } from '@angular/common';
 import { UserProfileService } from './../../../../services/user-profile.service';
 import { EventPlayerRegistrationService } from './../../../../services/event-player-registration.service';
 
@@ -55,16 +54,23 @@ export class ViewEventComponent implements OnInit, OnDestroy {
 
     this.players = [];
 
-    let id = this.eventService.getEventId();
+    this.route.params.subscribe((param: Params) => {
+      const id = param.id;
 
-    if (!id) {
-      this.route.queryParams.subscribe((param: Params) => {
-        id = param.id;
-      });
-    }
+      let getEvent: any;
+      if (id) {
+        getEvent = this.eventService.getEventForUser(id);
+      } else {
+        this.route.queryParams.subscribe((param: Params) => {
+          if (param.id) {
+            getEvent = this.eventService.getEvent(param.id);
+          } else {
+            this.router.navigate(['../../'], { relativeTo: this.route, replaceUrl: true });
+          }
+        });
+      }
 
-    if (id) {
-      this.eventService.getEvent(id).subscribe(
+      getEvent.subscribe(
         (event: EventModel) => {
           this.event = event;
 
@@ -79,10 +85,10 @@ export class ViewEventComponent implements OnInit, OnDestroy {
         },
         (error: any) => {
           this.loading = false;
+          this.router.navigate(['../../'], { relativeTo: this.route, replaceUrl: true });
         }
       );
-    } else {
-    }
+    });
   }
 
   getIndividualRegistrations() {
@@ -121,14 +127,14 @@ export class ViewEventComponent implements OnInit, OnDestroy {
 
   viewProfile(id: string) {
     if (id === this.userProfileService.getProfile().sportizenId) {
-      this.router.navigate(['../../', 'profile'], { relativeTo: this.route });
+      this.router.navigate(['/dashboard', 'profile'], { relativeTo: this.route });
     } else {
       this.connectionService.searchedSportizenId = id;
-      this.router.navigate(['../../', 'profile', id], { relativeTo: this.route });
+      this.router.navigate(['/dashboard', 'profile', id], { relativeTo: this.route });
     }
   }
 
   ngOnDestroy() {
-    this.eventService.setEventId(null);
+    // this.eventService.setEventId(null);
   }
 }

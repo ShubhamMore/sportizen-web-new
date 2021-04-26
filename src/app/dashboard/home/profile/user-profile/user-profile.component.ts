@@ -51,7 +51,11 @@ export class UserProfileComponent implements OnInit {
     this.loading = true;
 
     this.connectionStatus = '';
-    this.sportizenId = this.userProfileService.getProfile().sportizenId;
+    this.userProfileService.getProfileSubject().subscribe((userProfile: UserProfileModel) => {
+      if (userProfile) {
+        this.sportizenId = userProfile.sportizenId;
+      }
+    });
     this.gallery = [];
     this.followers = [];
     this.followings = [];

@@ -17,26 +17,16 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { Validator } from './@shared/validators';
 
 import { LoginAuthGuard } from './authentication/auth/guards/login.auth.guard';
-import { BlogsComponent } from './blogs/blogs.component';
-import { BlogDetailsComponent } from './blogs/blog-details/blog-details.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { SaveBlogComponent } from './blogs/save-blog/save-blog.component';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { MyBlogsComponent } from './blogs/my-blogs/my-blogs.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, '../../assets/i18n/locale_', '.json');
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    BlogsComponent,
-    BlogDetailsComponent,
-    SaveBlogComponent,
-    MyBlogsComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
