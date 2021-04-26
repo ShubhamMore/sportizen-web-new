@@ -6,6 +6,7 @@ import {
   Router,
   CanActivateChild,
   UrlTree,
+  ActivatedRoute,
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
@@ -13,7 +14,11 @@ import { map, take, tap } from 'rxjs/operators';
 import { AuthService } from '../auth-service/auth.service';
 @Injectable({ providedIn: 'root' })
 export class LoginAuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   // tslint:disable-next-line: max-line-length
   canActivate(
@@ -30,7 +35,7 @@ export class LoginAuthGuard implements CanActivate {
         if (!isAuth) {
           return true;
         } else if (user.userType === 'user') {
-          return this.router.createUrlTree(['/dashboard']);
+          return this.router.createUrlTree(['/dashboard'], { relativeTo: this.route });
         } else {
           return this.router.createUrlTree(['/login']);
         }

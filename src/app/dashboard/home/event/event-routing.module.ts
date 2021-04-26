@@ -10,14 +10,27 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: () => import('./list-event/list-event.module').then((m) => m.ListEventModule),
+        data: { type: 'list' },
+      },
+      {
+        path: 'manage',
+        loadChildren: () => import('./list-event/list-event.module').then((m) => m.ListEventModule),
+        data: { type: 'manage' },
+      },
+      {
+        path: 'joined',
+        loadChildren: () => import('./list-event/list-event.module').then((m) => m.ListEventModule),
+        data: { type: 'joined' },
       },
       {
         path: 'new',
         loadChildren: () => import('./save-event/save-event.module').then((m) => m.SaveEventModule),
+        data: { type: 'new' },
       },
       {
         path: 'edit',
         loadChildren: () => import('./save-event/save-event.module').then((m) => m.SaveEventModule),
+        data: { type: 'edit' },
       },
       {
         path: 'join',

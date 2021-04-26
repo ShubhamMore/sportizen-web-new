@@ -124,7 +124,7 @@ export class AuthService {
       this.autoLogout(expirationDuration);
 
       if (loadedUser.userType === 'user') {
-        this.router.navigate(['/dashboard'], { relativeTo: this.route });
+        // this.router.navigate(['/dashboard'], { relativeTo: this.route });
       } else {
         this.router.navigate(['/'], { relativeTo: this.route });
       }
@@ -139,7 +139,7 @@ export class AuthService {
       (response: any) => {},
       (err: any) => {
         this.removeUser();
-        this.router.navigate(['/login'], { relativeTo: this.route });
+        this.router.navigate(['/dashboard/login'], { relativeTo: this.route });
       }
     );
   }
@@ -149,7 +149,7 @@ export class AuthService {
     return this.http.post(environment.backend + 'logout', {}).subscribe(
       (res: any) => {
         this.user.next(null);
-        this.router.navigate(['/login']);
+        this.router.navigate(['/dashboard/login']);
         localStorage.removeItem('userData');
         if (this.tokenExpirationTimer) {
           clearTimeout(this.tokenExpirationTimer);
@@ -172,7 +172,7 @@ export class AuthService {
     return this.http.post(environment.backend + 'logoutAll', {}).subscribe(
       (res: any) => {
         this.user.next(null);
-        this.router.navigate(['/login']);
+        this.router.navigate(['/dashboard/login']);
         localStorage.removeItem('userData');
         if (this.tokenExpirationTimer) {
           clearTimeout(this.tokenExpirationTimer);

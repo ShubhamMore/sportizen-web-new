@@ -33,9 +33,11 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute
   ) {
-    this.route.queryParams.subscribe((param: Params) => {
-      this.ngOnInit();
-    });
+    // this.route.queryParams.subscribe((param: Params) => {
+    //   if (this.type !== param.type || (param.type && !['joined', 'manage'].includes(param.type))) {
+    //     this.ngOnInit();
+    //   }
+    // });
   }
 
   scroll = (event: any): void => {
@@ -56,22 +58,22 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loading = true;
     this.noMoreEvents = false;
 
+    this.events = [];
+
     this.longitude = null;
     this.latitude = null;
 
-    this.route.queryParams.subscribe((param: Params) => {
-      this.type = param.type;
+    this.route.data.subscribe((data: any) => {
+      this.type = data.type;
+
+      if (['joined', 'manage'].includes(this.type)) {
+        this.getEvents(3, null, this.longitude, this.latitude);
+      } else {
+        this.getLocation();
+      }
     });
 
     this.userSportizenId = this.userProfileService.getUserSportizenId();
-
-    this.events = [];
-
-    if (['joined', 'manage'].includes(this.type)) {
-      this.getEvents(3, null, this.longitude, this.latitude);
-    } else {
-      this.getLocation();
-    }
   }
 
   ngAfterViewInit() {
@@ -80,25 +82,31 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
 
   joinEvent(id: string) {
     this.eventService.setEventId(id);
-    this.router.navigate(['./join'], { relativeTo: this.route, queryParams: { id } });
+    this.router.navigate(['/event/join'], {
+      relativeTo: this.route,
+      queryParams: { id },
+    });
   }
 
   viewEvent(id: string) {
     this.eventService.setEventId(id);
-    this.router.navigate(['./view'], { relativeTo: this.route, queryParams: { id } });
+    this.router.navigate(['/event/view'], {
+      relativeTo: this.route,
+      queryParams: { id },
+    });
   }
 
   editEvent(id: string) {
     this.eventService.setEventId(id);
-    this.router.navigate(['./edit'], { relativeTo: this.route });
+    this.router.navigate(['/event/edit'], { relativeTo: this.route });
   }
 
   viewProfile(id: string) {
     if (id === this.userProfileService.getProfile().sportizenId) {
-      this.router.navigate(['../../', 'profile'], { relativeTo: this.route });
+      this.router.navigate(['/', 'profile'], { relativeTo: this.route });
     } else {
       this.connectionService.searchedSportizenId = id;
-      this.router.navigate(['../../', 'profile', id], { relativeTo: this.route });
+      this.router.navigate(['/', 'profile', id], { relativeTo: this.route });
     }
   }
 

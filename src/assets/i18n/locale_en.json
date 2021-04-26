@@ -1,7 +1,7 @@
 {
   "msg_event": "Event",
   "msg_create": "Create",
-  "msg_join": "Join",
+  "msg_join": "Joined",
   "msg_view": "View",
   "msg_manage": "Manage",
   "msg_privacy_policy": "Privacy Policy",

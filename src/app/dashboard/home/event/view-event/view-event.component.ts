@@ -35,8 +35,6 @@ export class ViewEventComponent implements OnInit, OnDestroy {
   loading: boolean;
   loadingPlayers: boolean;
 
-  userEmail: string;
-
   event: EventModel;
   players: Registration[];
 
@@ -56,8 +54,6 @@ export class ViewEventComponent implements OnInit, OnDestroy {
     this.loadingPlayers = true;
 
     this.players = [];
-
-    this.userEmail = this.userProfileService.getUserEmail();
 
     let id = this.eventService.getEventId();
 
