@@ -9,6 +9,7 @@ import { EventModel } from './../../../../models/event.model';
 import * as $ from 'jquery';
 import { UserProfileModel } from './../../../../models/user-profile.model';
 import { environment } from './../../../../../environments/environment';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-list-event',
@@ -33,7 +34,9 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
     private userProfileService: UserProfileService,
     private connectionService: ConnectionService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private titleService: Title,
+    private metaService: Meta
   ) {
     // this.route.queryParams.subscribe((param: Params) => {
     //   if (this.type !== param.type || (param.type && !['joined', 'manage'].includes(param.type))) {
@@ -61,6 +64,8 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
     this.noMoreEvents = false;
 
     this.events = [];
+
+    this.titleService.setTitle('SPORTIZEN | Events');
 
     this.userProfileService.getProfileSubject().subscribe((userProfile: UserProfileModel) => {
       if (userProfile) {
@@ -142,8 +147,10 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
     let eventDetails = this.eventService.getAllEvents(limit, skip, longitude, latitude);
 
     if (this.type === 'joined') {
+      this.titleService.setTitle('SPORTIZEN | Joined Events');
       eventDetails = this.eventService.getJoinedEvents(limit, skip);
     } else if (this.type === 'manage') {
+      this.titleService.setTitle('SPORTIZEN | Manage Events');
       eventDetails = this.eventService.getMyEvents(limit, skip);
     }
 

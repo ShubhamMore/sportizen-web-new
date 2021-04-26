@@ -8,6 +8,7 @@ import { EventService } from './../../../../services/event.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UserProfileService } from './../../../../services/user-profile.service';
 import { EventPlayerRegistrationService } from './../../../../services/event-player-registration.service';
+import { Title } from '@angular/platform-browser';
 
 interface TeamMember {
   _id: string;
@@ -45,12 +46,14 @@ export class ViewEventComponent implements OnInit, OnDestroy {
     private connectionService: ConnectionService,
     public dialog: MatDialog,
     private router: Router,
+    private titleService: Title,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
     this.loadingPlayers = true;
+    this.titleService.setTitle(`SPORTIZEN | Event`);
 
     this.players = [];
 
@@ -73,6 +76,7 @@ export class ViewEventComponent implements OnInit, OnDestroy {
       getEvent.subscribe(
         (event: EventModel) => {
           this.event = event;
+          this.titleService.setTitle(`SPORTIZEN | Event | ${event.name}`);
 
           if (event.registrationType === 'individual') {
             this.getIndividualRegistrations();

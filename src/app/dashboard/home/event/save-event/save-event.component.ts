@@ -12,6 +12,7 @@ import { EventModel, EventImageModel } from './../../../../models/event.model';
 import { SportModel } from './../../../../models/sport.model';
 import { SportService } from './../../../../services/sport.service';
 import { CountryService } from './../../../../services/shared-services/country.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-save-event',
@@ -45,11 +46,15 @@ export class SaveEventComponent implements OnInit, OnDestroy {
     private dateService: DateService,
     private router: Router,
     private location: Location,
+    private titleService: Title,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
+
+    this.titleService.setTitle(`SPORTIZEN | Event`);
+
     this.savingRecord = false;
     this.invalidImage = false;
     this.editingMode = false;
@@ -114,9 +119,11 @@ export class SaveEventComponent implements OnInit, OnDestroy {
       const id = param.id;
 
       if (id) {
+        this.titleService.setTitle(`SPORTIZEN | Edit Event`);
         this.editingMode = true;
         this.eventService.getEventForUser(id).subscribe(
           (event: EventModel) => {
+            this.titleService.setTitle(`SPORTIZEN | Edit Event | ${event.name}`);
             this.event = event;
             this.form.patchValue({
               name: event.name,
@@ -154,6 +161,7 @@ export class SaveEventComponent implements OnInit, OnDestroy {
           }
         );
       } else {
+        this.titleService.setTitle(`SPORTIZEN | New Event`);
         this.loading = false;
       }
     });

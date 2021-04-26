@@ -10,6 +10,7 @@ import { Location } from '@angular/common';
 import { UserProfileService } from './../../../../services/user-profile.service';
 import { ObjectId } from 'bson';
 import { EventPlayerRegistrationService } from './../../../../services/event-player-registration.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-join-event',
@@ -28,11 +29,13 @@ export class JoinEventComponent implements OnInit, OnDestroy {
     private userProfileService: UserProfileService,
     private connectionService: ConnectionService,
     private router: Router,
+    private titleService: Title,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
+    this.titleService.setTitle(`SPORTIZEN | Join Event`);
 
     this.route.params.subscribe((param: Params) => {
       const id = param.id;
@@ -41,6 +44,8 @@ export class JoinEventComponent implements OnInit, OnDestroy {
         this.eventService.getEventForUser(id).subscribe(
           (event: EventModel) => {
             this.event = event;
+
+            this.titleService.setTitle(`SPORTIZEN | Join Event | ${event.name}`);
 
             if (event.registrationType === 'individual') {
               this.joinEventForm = new FormGroup({
