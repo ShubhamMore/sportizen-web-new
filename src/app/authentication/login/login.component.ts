@@ -3,15 +3,15 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { environment } from './../../../environments/environment';
 
-import { AuthService, AuthResponseData } from '../auth/auth-service/auth.service';
-import { EncryptService } from '../../services/shared-services/encrypt.service';
+import { AuthService, AuthResponseData } from './../auth/auth-service/auth.service';
+import { EncryptService } from './../../services/shared-services/encrypt.service';
 
 import { SocialAuthService as GoogleAuthService } from 'angularx-social-login';
 import { SocialUser } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
-import { UserService } from '../../services/user.service';
+import { UserService } from './../../services/user.service';
 
 @Component({
   selector: 'app-login',

@@ -1,13 +1,13 @@
 import { MatDialog } from '@angular/material/dialog';
 import { ViewRegistrationComponent } from './view-registration/view-registration.component';
-import { ConnectionService } from './../../../../services/connection.service';
-import { EventTeamRegistrationService } from './../../../../services/event-team-registration.service';
+import { ConnectionService } from './../../services/connection.service';
+import { EventTeamRegistrationService } from './../../services/event-team-registration.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { EventModel } from './../../../../models/event.model';
-import { EventService } from './../../../../services/event.service';
+import { EventModel } from './../../models/event.model';
+import { EventService } from './../../services/event.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { UserProfileService } from './../../../../services/user-profile.service';
-import { EventPlayerRegistrationService } from './../../../../services/event-player-registration.service';
+import { UserProfileService } from './../../services/user-profile.service';
+import { EventPlayerRegistrationService } from './../../services/event-player-registration.service';
 import { Title } from '@angular/platform-browser';
 
 interface TeamMember {
@@ -34,7 +34,7 @@ interface Registration {
 export class ViewEventComponent implements OnInit, OnDestroy {
   loading: boolean;
   loadingPlayers: boolean;
-
+  sportizenId: string;
   event: EventModel;
   players: Registration[];
 
@@ -55,6 +55,10 @@ export class ViewEventComponent implements OnInit, OnDestroy {
     this.loadingPlayers = true;
     this.titleService.setTitle(`SPORTIZEN | Event`);
 
+    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
+      this.sportizenId = sportizenId;
+    });
+
     this.players = [];
 
     this.route.params.subscribe((param: Params) => {
@@ -62,15 +66,9 @@ export class ViewEventComponent implements OnInit, OnDestroy {
 
       let getEvent: any;
       if (id) {
-        getEvent = this.eventService.getEventForUser(id);
+        getEvent = this.eventService.getEvent(param.id);
       } else {
-        this.route.queryParams.subscribe((param: Params) => {
-          if (param.id) {
-            getEvent = this.eventService.getEvent(param.id);
-          } else {
-            this.router.navigate(['../../'], { relativeTo: this.route, replaceUrl: true });
-          }
-        });
+        this.router.navigate(['./../../'], { relativeTo: this.route, replaceUrl: true });
       }
 
       getEvent.subscribe(
@@ -89,7 +87,7 @@ export class ViewEventComponent implements OnInit, OnDestroy {
         },
         (error: any) => {
           this.loading = false;
-          this.router.navigate(['../../'], { relativeTo: this.route, replaceUrl: true });
+          this.router.navigate(['./../../'], { relativeTo: this.route, replaceUrl: true });
         }
       );
     });
@@ -130,10 +128,12 @@ export class ViewEventComponent implements OnInit, OnDestroy {
   }
 
   viewProfile(id: string) {
-    if (id === this.userProfileService.getProfile().sportizenId) {
+    if (this.sportizenId && id === this.sportizenId) {
       this.router.navigate(['/dashboard', 'profile'], { relativeTo: this.route });
     } else {
-      this.connectionService.searchedSportizenId = id;
+      if (this.sportizenId) {
+        this.connectionService.searchedSportizenId = id;
+      }
       this.router.navigate(['/dashboard', 'profile', id], { relativeTo: this.route });
     }
   }

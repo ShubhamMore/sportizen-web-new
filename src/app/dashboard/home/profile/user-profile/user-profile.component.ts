@@ -1,4 +1,4 @@
-import { ImageModelComponent } from '../image-model/image-model.component';
+import { ImageModelComponent } from './../image-model/image-model.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PostGalleryService } from './../../../../services/post-gallery.service';
 import { Component, OnInit } from '@angular/core';
@@ -51,43 +51,41 @@ export class UserProfileComponent implements OnInit {
     this.loading = true;
 
     this.connectionStatus = '';
-
-    this.userProfileService.getProfileSubject().subscribe((userProfile: UserProfileModel) => {
-      if (userProfile) {
-        this.sportizenId = userProfile.sportizenId;
-      }
-    });
     this.gallery = [];
     this.followers = [];
     this.followings = [];
 
-    this.route.params.subscribe((param: Params) => {
-      this.userProfileId = param.id;
+    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
+      this.sportizenId = sportizenId;
 
-      if (this.userProfileId) {
-        this.userProfileService
-          .getUserProfile(this.userProfileId)
-          .subscribe((userProfile: UserProfileModel) => {
-            this.userProfile = userProfile;
+      this.route.params.subscribe((param: Params) => {
+        this.userProfileId = param.id;
 
-            this.setConnectionStatus(userProfile.connection);
-            this.getGallery();
-            this.getFollowers();
-            this.getFollowings();
+        if (this.userProfileId) {
+          this.userProfileService
+            .getUserProfile(this.userProfileId)
+            .subscribe((userProfile: UserProfileModel) => {
+              this.userProfile = userProfile;
 
-            this.loading = false;
-          });
-      } else {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      }
+              this.setConnectionStatus(userProfile.connection);
+              this.getGallery();
+              this.getFollowers();
+              this.getFollowings();
+
+              this.loading = false;
+            });
+        } else {
+          this.router.navigate(['./../'], { relativeTo: this.route });
+        }
+      });
     });
   }
 
   viewProfile(id: string) {
-    if (id === this.userProfileService.getProfile().sportizenId) {
-      this.router.navigate(['../'], { relativeTo: this.route });
+    if (id === this.sportizenId) {
+      this.router.navigate(['./../'], { relativeTo: this.route });
     } else {
-      this.router.navigate(['../../', 'profile', id], { relativeTo: this.route });
+      this.router.navigate(['./../../', 'profile', id], { relativeTo: this.route });
     }
   }
 

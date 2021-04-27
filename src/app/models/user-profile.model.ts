@@ -1,4 +1,4 @@
-import { ConnectionStatus } from '../enums/connectionStatus';
+import { ConnectionStatus } from './../enums/connectionStatus';
 
 export class UserProfileModel {
   constructor(

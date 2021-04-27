@@ -1,10 +1,10 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { LikeType } from 'src/app/enums/likeType';
-import { LikeModel } from 'src/app/models/like.model';
-import { PostCommentLikeService } from 'src/app/services/post-comment-like.service';
-import { PostCommentReplyLikeService } from 'src/app/services/post-comment-reply-like.service';
-import { PostLikeService } from 'src/app/services/post-like.service';
+import { LikeType } from './../../../../../enums/likeType';
+import { LikeModel } from './../../../../../models/like.model';
+import { PostCommentLikeService } from './../../../../../services/post-comment-like.service';
+import { PostCommentReplyLikeService } from './../../../../../services/post-comment-reply-like.service';
+import { PostLikeService } from './../../../../../services/post-like.service';
 
 export interface LikeDialogData {
   likeType: LikeType;

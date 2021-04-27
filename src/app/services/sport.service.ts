@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SportModel } from '../models/sport.model';
+import { SportModel } from './../models/sport.model';
 
 @Injectable({ providedIn: 'root' })
 export class SportService {

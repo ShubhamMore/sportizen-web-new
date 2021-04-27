@@ -2,7 +2,7 @@
   <div class="col-12">
     <mat-card class="event-card" *ngIf="!loading; else loadingSpinner">
       <mat-card-content>
-        <app-event-details [eventDetails]="event"></app-event-details>
+        <app-event-details [eventDetails]="event" [isList]="false"></app-event-details>
 
         <hr />
 

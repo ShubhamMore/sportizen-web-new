@@ -7,7 +7,7 @@ import { UserProfileModel } from './../../models/user-profile.model';
 import { DashboardSideDrawerService } from './../../services/dashboard-side-drawer.service';
 import { SideDrawerService } from './../../services/side-drawer.service';
 import { UserProfileService } from './../../services/user-profile.service';
-import { User } from '../../authentication/auth/auth-model/user.model';
+import { User } from './../../authentication/auth/auth-model/user.model';
 
 @Component({
   selector: 'app-header',
@@ -76,7 +76,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.userProfileService.getProfileSubject().subscribe((profile: UserProfileModel) => {
+    this.userProfileService.getProfile().subscribe((profile: UserProfileModel) => {
       this.userProfile = profile;
     });
   }

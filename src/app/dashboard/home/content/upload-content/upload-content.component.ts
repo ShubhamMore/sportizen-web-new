@@ -23,7 +23,7 @@ export class UploadContentComponent implements OnInit {
     this.postImageFiles = [];
     this.postImagePreview = [];
     // tslint:disable-next-line: deprecation
-    this.userProfileService.getProfileSubject().subscribe((userProfile: UserProfileModel) => {
+    this.userProfileService.getProfile().subscribe((userProfile: UserProfileModel) => {
       if (userProfile) {
         this.profileName = userProfile.name;
       }

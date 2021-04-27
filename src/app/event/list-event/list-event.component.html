@@ -1,5 +1,5 @@
-<span class="create-event">
-  <a class="btn-create-event shadow-sm" routerLink="/dashboard/event/new">
+<span class="create-event" *ngIf="sportizenId">
+  <a class="btn-create-event shadow-sm" (click)="newEvent()">
     <span class="icon">+</span>
     <span class="text">Create Event</span>
   </a>
@@ -113,23 +113,25 @@
                     {{ event.eventType | capitalizeEachWord }}</mat-chip
                   >
 
-                  <mat-chip
-                    class="join-event-box"
-                    *ngIf="event.createdBy != userSportizenId"
-                    (click)="joinEvent(event._id)"
-                  >
-                    {{ event.isRegistered ? 'Registered' : 'Join Event' }}
-                  </mat-chip>
-
-                  <ng-container *ngIf="event.createdBy === userSportizenId">
-                    <mat-chip class="edit-chip" (click)="editEvent(event._id)">Edit</mat-chip>
-
+                  <ng-container *ngIf="sportizenId">
                     <mat-chip
-                      class="delete-chip"
-                      (click)="deleteEvent(event._id, event.createdBy, i)"
+                      class="join-event-box"
+                      *ngIf="event.createdBy != sportizenId"
+                      (click)="joinEvent(event._id)"
                     >
-                      Delete
+                      {{ event.isRegistered ? 'Registered' : 'Join Event' }}
                     </mat-chip>
+
+                    <ng-container *ngIf="event.createdBy === sportizenId">
+                      <mat-chip class="edit-chip" (click)="editEvent(event._id)">Edit</mat-chip>
+
+                      <mat-chip
+                        class="delete-chip"
+                        (click)="deleteEvent(event._id, event.createdBy, i)"
+                      >
+                        Delete
+                      </mat-chip>
+                    </ng-container>
                   </ng-container>
                 </mat-chip-list>
               </div>
@@ -206,7 +208,7 @@
                 <div class="winning-prize-box">
                   <span class="bold-text">Winning Prize : </span>
 
-                  <span class="">{{ event.winningPrice }} /-</span>
+                  <span class="">{{ event.winningPrice }}/-</span>
                 </div>
 
                 <div class="border-box entry-fees-box">

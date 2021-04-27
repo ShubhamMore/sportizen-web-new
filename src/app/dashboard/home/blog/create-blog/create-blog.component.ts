@@ -88,7 +88,7 @@ export class CreateBlogComponent implements OnInit {
             this.loading = false;
           },
           (error: any) => {
-            this.router.navigate(['../../'], { relativeTo: this.route, replaceUrl: true });
+            this.router.navigate(['./../../'], { relativeTo: this.route, replaceUrl: true });
           }
         );
       } else {

@@ -11,14 +11,10 @@ import {
 import { Observable } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 
-import { AuthService } from '../auth-service/auth.service';
+import { AuthService } from './../auth-service/auth.service';
 @Injectable({ providedIn: 'root' })
-export class LoginAuthGuard implements CanActivate {
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
+export class LoginAuthActivateGuard implements CanActivate {
+  constructor(private authService: AuthService, private router: Router) {}
 
   // tslint:disable-next-line: max-line-length
   canActivate(
@@ -35,7 +31,7 @@ export class LoginAuthGuard implements CanActivate {
         if (!isAuth) {
           return true;
         } else if (user.userType === 'user') {
-          return this.router.createUrlTree(['/dashboard'], { relativeTo: this.route });
+          return this.router.createUrlTree(['/dashboard']);
         } else {
           return this.router.createUrlTree(['/login']);
         }

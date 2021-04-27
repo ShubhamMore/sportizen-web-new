@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { EventModel } from '../models/event.model';
+import { EventModel } from './../models/event.model';
 
 @Injectable({ providedIn: 'root' })
 export class EventService {
@@ -20,8 +20,11 @@ export class EventService {
   constructor(private httpService: HttpService) {}
 
   getAllEvents(limit: number, skip: number, longitude: number, latitude: number) {
-    const data = { api: 'getAllEvents', data: { limit, skip, longitude, latitude } };
-    return this.httpService.httpPost(data).pipe(
+    const data = {
+      api: `getAllEvents/${limit}/${skip}/${longitude}/${latitude}`,
+      data: { limit, skip, longitude, latitude },
+    };
+    return this.httpService.httpGet(data).pipe(
       map((events: EventModel[]) => {
         return events;
       }),
@@ -58,18 +61,6 @@ export class EventService {
   getEvent(id: string) {
     const data = { api: `getEvent/${id}`, data: { id } };
     return this.httpService.httpGet(data).pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError((err: any) => {
-        return throwError(err);
-      })
-    );
-  }
-
-  getEventForUser(id: string) {
-    const data = { api: 'getEvent', data: { id } };
-    return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
       }),

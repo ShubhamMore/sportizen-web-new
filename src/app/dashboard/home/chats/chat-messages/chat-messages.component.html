@@ -10,7 +10,7 @@
           aria-hidden
           [src]="user.userImageURL"
           [alt]="user.name"
-          onerror="this.src='../../../../../assets/images/user.png'"
+          onerror="this.src='./../../../../../assets/images/user.png'"
         />
         <span class="online" *ngIf="user.isOnline"></span>
       </span>

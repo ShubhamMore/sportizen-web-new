@@ -4,8 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError, BehaviorSubject } from 'rxjs';
 
-import { User } from '../auth-model/user.model';
-import { environment } from '../../../../environments/environment';
+import { User } from './../auth-model/user.model';
+import { environment } from './../../../../environments/environment';
 
 export interface AuthResponseData {
   _id: string;
@@ -172,7 +172,7 @@ export class AuthService {
     return this.http.post(environment.backend + 'logoutAll', {}).subscribe(
       (res: any) => {
         this.user.next(null);
-        this.router.navigate(['/dashboard/login']);
+        this.router.navigate(['/login']);
         localStorage.removeItem('userData');
         if (this.tokenExpirationTimer) {
           clearTimeout(this.tokenExpirationTimer);

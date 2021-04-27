@@ -1,19 +1,19 @@
 import { SportsInterestComponent } from './../sports-interest/sports-interest.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageCroperComponent } from './../image-croper/image-croper.component';
-import { Validator } from '../../../../@shared/validators';
+import { Validator } from './../../../../@shared/validators';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { SportService } from '../../../../services/sport.service';
-import { SportModel } from '../../../../models/sport.model';
-import { environment } from '../../../../../environments/environment';
+import { SportService } from './../../../../services/sport.service';
+import { SportModel } from './../../../../models/sport.model';
+import { environment } from './../../../../../environments/environment';
 import { FormGroup, FormControl, Validators, FormBuilder, NgForm } from '@angular/forms';
-import { UserProfileModel } from '../../../../models/user-profile.model';
-import { UserProfileService } from '../../../../services/user-profile.service';
-import { EncryptService } from '../../../../services/shared-services/encrypt.service';
-import { HttpService } from '../../../../services/shared-services/http.service';
-import { UserService } from '../../../../services/user.service';
+import { UserProfileModel } from './../../../../models/user-profile.model';
+import { UserProfileService } from './../../../../services/user-profile.service';
+import { EncryptService } from './../../../../services/shared-services/encrypt.service';
+import { HttpService } from './../../../../services/shared-services/http.service';
+import { UserService } from './../../../../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DashboardSideDrawerService } from '../../../../services/dashboard-side-drawer.service';
+import { DashboardSideDrawerService } from './../../../../services/dashboard-side-drawer.service';
 
 @Component({
   selector: 'app-save-profile',
@@ -58,7 +58,7 @@ export class SaveProfileComponent implements OnInit {
 
     this.addSportInterest = false;
 
-    this.userProfileService.getProfileSubject().subscribe((userProfile: UserProfileModel) => {
+    this.userProfileService.getProfile().subscribe((userProfile: UserProfileModel) => {
       if (userProfile) {
         this.userProfile = userProfile;
 

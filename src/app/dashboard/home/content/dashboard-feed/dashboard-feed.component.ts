@@ -11,13 +11,12 @@ import { PostLikeService } from './../../../../services/post-like.service';
 import { PostSaveService } from './../../../../services/post-save.service';
 import { PostViewService } from './../../../../services/post-view.service';
 import { PostService } from './../../../../services/post.service';
-import { AuthService } from './../../../../authentication/auth/auth-service/auth.service';
 import { UserProfileService } from './../../../../services/user-profile.service';
 import { FeedCommentComponent } from './feed-comment/feed-comment.component';
 import { FeedLikesComponent } from './feed-likes/feed-likes.component';
 import { FeedViewComponent } from './feed-view/feed-view.component';
 import { FeedShareComponent } from './feed-share/feed-share.component';
-import { ConfirmComponent } from 'src/app/@shared/confirm/confirm.component';
+import { ConfirmComponent } from './../../../../@shared/confirm/confirm.component';
 import * as $ from 'jquery';
 import { environment } from './../../../../../environments/environment';
 
@@ -34,7 +33,7 @@ export class DashboardFeedComponent implements OnInit, OnDestroy, AfterViewInit 
   noMorePosts: boolean;
 
   loadingFeed: boolean;
-  sportizenUser: string;
+  sportizenId: string;
   postList: PostModel[];
 
   constructor(
@@ -48,8 +47,7 @@ export class DashboardFeedComponent implements OnInit, OnDestroy, AfterViewInit 
     private router: Router,
     private route: ActivatedRoute,
     private userProfileService: UserProfileService,
-    private connectionService: ConnectionService,
-    public authService: AuthService
+    private connectionService: ConnectionService
   ) {}
 
   scroll = (event: any): void => {
@@ -71,10 +69,8 @@ export class DashboardFeedComponent implements OnInit, OnDestroy, AfterViewInit 
     this.noMorePosts = false;
 
     // tslint:disable-next-line: deprecation
-    this.authService.getUser().subscribe((user: User) => {
-      if (user) {
-        this.sportizenUser = user.sportizenId;
-      }
+    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
+      this.sportizenId = sportizenId;
       this.loadFeed(environment.limit, null);
     });
   }
@@ -244,7 +240,7 @@ export class DashboardFeedComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   viewProfile(id: string, postId: any) {
-    if (id === this.userProfileService.getProfile().sportizenId) {
+    if (id === this.sportizenId) {
       this.router.navigate(['/dashboard', 'profile'], { relativeTo: this.route });
     } else {
       this.connectionService.searchedSportizenId = id;
@@ -254,7 +250,7 @@ export class DashboardFeedComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   deletePost(post: string, createdBy: string, i: number) {
-    if (createdBy === this.sportizenUser) {
+    if (createdBy === this.sportizenId) {
       const dialogRef = this.dialog.open(ConfirmComponent, {
         data: { message: 'Do yoy really want to delete this Post?' },
         maxHeight: '90vh',

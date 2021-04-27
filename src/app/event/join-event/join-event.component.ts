@@ -1,15 +1,15 @@
-import { UserProfileModel } from './../../../../models/user-profile.model';
-import { ConnectionService } from './../../../../services/connection.service';
-import { EventTeamRegistrationService } from './../../../../services/event-team-registration.service';
+import { UserProfileModel } from './../../models/user-profile.model';
+import { ConnectionService } from './../../services/connection.service';
+import { EventTeamRegistrationService } from './../../services/event-team-registration.service';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { EventModel } from './../../../../models/event.model';
-import { EventService } from './../../../../services/event.service';
+import { EventModel } from './../../models/event.model';
+import { EventService } from './../../services/event.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
-import { UserProfileService } from './../../../../services/user-profile.service';
+import { UserProfileService } from './../../services/user-profile.service';
 import { ObjectId } from 'bson';
-import { EventPlayerRegistrationService } from './../../../../services/event-player-registration.service';
+import { EventPlayerRegistrationService } from './../../services/event-player-registration.service';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -21,6 +21,7 @@ export class JoinEventComponent implements OnInit, OnDestroy {
   event: EventModel;
   loading: boolean;
   joinEventForm: FormGroup;
+  sportizenId: string;
 
   constructor(
     private eventService: EventService,
@@ -41,7 +42,7 @@ export class JoinEventComponent implements OnInit, OnDestroy {
       const id = param.id;
 
       if (id) {
-        this.eventService.getEventForUser(id).subscribe(
+        this.eventService.getEvent(id).subscribe(
           (event: EventModel) => {
             this.event = event;
 
@@ -64,17 +65,17 @@ export class JoinEventComponent implements OnInit, OnDestroy {
                 }),
               });
 
-              this.userProfileService
-                .getProfileSubject()
-                .subscribe((userProfile: UserProfileModel) => {
-                  if (userProfile) {
-                    this.joinEventForm.patchValue({
-                      name: userProfile.name,
-                      email: userProfile.email,
-                      contact: userProfile.phoneNo,
-                    });
-                  }
-                });
+              this.userProfileService.getProfile().subscribe((userProfile: UserProfileModel) => {
+                if (userProfile) {
+                  this.sportizenId = userProfile.sportizenId;
+
+                  this.joinEventForm.patchValue({
+                    name: userProfile.name,
+                    email: userProfile.email,
+                    contact: userProfile.phoneNo,
+                  });
+                }
+              });
 
               if (event.registration) {
                 this.joinEventForm.patchValue({
@@ -107,16 +108,16 @@ export class JoinEventComponent implements OnInit, OnDestroy {
                 }
               }
             } else {
-              this.router.navigate(['../../'], { relativeTo: this.route, replaceUrl: true });
+              this.router.navigate(['./../../'], { relativeTo: this.route, replaceUrl: true });
             }
             this.loading = false;
           },
           (error: any) => {
-            this.router.navigate(['../../'], { relativeTo: this.route, replaceUrl: true });
+            this.router.navigate(['./../../'], { relativeTo: this.route, replaceUrl: true });
           }
         );
       } else {
-        this.router.navigate(['../../'], { relativeTo: this.route, replaceUrl: true });
+        this.router.navigate(['./../../'], { relativeTo: this.route, replaceUrl: true });
       }
     });
   }
@@ -150,7 +151,7 @@ export class JoinEventComponent implements OnInit, OnDestroy {
   }
 
   viewProfile(id: string) {
-    if (id === this.userProfileService.getProfile().sportizenId) {
+    if (id === this.sportizenId) {
       this.router.navigate(['/dashboard', 'profile'], { relativeTo: this.route });
     } else {
       this.connectionService.searchedSportizenId = id;
@@ -194,7 +195,7 @@ export class JoinEventComponent implements OnInit, OnDestroy {
         this.eventPlayerRegistrationService.registerPlayer(joinEventData).subscribe(
           (res: any) => {
             this.event.registration = res;
-            this.router.navigate(['../'], { relativeTo: this.route });
+            this.router.navigate(['./../'], { relativeTo: this.route });
           },
           (error: any) => {}
         );
@@ -210,7 +211,7 @@ export class JoinEventComponent implements OnInit, OnDestroy {
         this.eventTeamRegistrationService.registerTeam(joinEventData).subscribe(
           (res: any) => {
             this.event.registration = res;
-            this.router.navigate(['../'], { relativeTo: this.route });
+            this.router.navigate(['./../'], { relativeTo: this.route });
           },
           (error: any) => {}
         );
@@ -218,7 +219,7 @@ export class JoinEventComponent implements OnInit, OnDestroy {
         joinEventData._id = this.event.registration._id;
         this.eventTeamRegistrationService.updateTeamRegistration(joinEventData).subscribe(
           (res: any) => {
-            this.router.navigate(['../'], { relativeTo: this.route });
+            this.router.navigate(['./../'], { relativeTo: this.route });
           },
           (error: any) => {}
         );

@@ -1,4 +1,4 @@
-import { ImageModelComponent } from '../image-model/image-model.component';
+import { ImageModelComponent } from './../image-model/image-model.component';
 import { PostGalleryService } from './../../../../services/post-gallery.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageCroperComponent } from './../image-croper/image-croper.component';
@@ -53,7 +53,7 @@ export class ProfileDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
     this.storyEdit = false;
-    this.userProfileService.getProfileSubject().subscribe((userProfile: UserProfileModel) => {
+    this.userProfileService.getProfile().subscribe((userProfile: UserProfileModel) => {
       if (userProfile) {
         this.userProfile = userProfile;
 
@@ -79,11 +79,11 @@ export class ProfileDetailsComponent implements OnInit {
   }
 
   viewProfile(id: string) {
-    if (id === this.userProfileService.getProfile().sportizenId) {
-      this.router.navigate(['../../', 'profile'], {});
+    if (id === this.userProfile.sportizenId) {
+      this.router.navigate(['./../../', 'profile'], { relativeTo: this.route });
     } else {
       this.connectionService.searchedSportizenId = id;
-      this.router.navigate(['../../', 'profile', id], {});
+      this.router.navigate(['./../../', 'profile', id], { relativeTo: this.route });
     }
   }
 
@@ -288,7 +288,7 @@ export class ProfileDetailsComponent implements OnInit {
       const profile: any = { _id: this.userProfile._id, story: this.story };
       this.userProfileService.saveUserStory(profile).subscribe(
         (updatedUserProfile: UserProfileModel) => {
-          this.userProfileService.setStory(this.story);
+          this.userProfileService.setProfile(updatedUserProfile);
           this.snackBar.open('Story Updated Successfully', null, {
             duration: 2000,
             panelClass: ['success-snackbar'],

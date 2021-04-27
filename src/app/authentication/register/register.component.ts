@@ -1,13 +1,13 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthResponseData, AuthService } from '../auth/auth-service/auth.service';
+import { AuthResponseData, AuthService } from './../auth/auth-service/auth.service';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { EncryptService } from '../../services/shared-services/encrypt.service';
-import { environment } from '../../../environments/environment';
-import { Validator } from '../../@shared/validators';
-import { UserService } from '../../services/user.service';
+import { EncryptService } from './../../services/shared-services/encrypt.service';
+import { environment } from './../../../environments/environment';
+import { Validator } from './../../@shared/validators';
+import { UserService } from './../../services/user.service';
 
 @Component({
   selector: 'app-register',

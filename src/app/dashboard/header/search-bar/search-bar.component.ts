@@ -82,6 +82,7 @@ export class SearchBarComponent implements OnInit {
   isLoading: boolean;
   searchKeyWord: string;
   isSearchBarOpen: boolean;
+  sportizenId: string;
 
   constructor(
     private router: Router,
@@ -95,6 +96,11 @@ export class SearchBarComponent implements OnInit {
     this.isSearchBarOpen = false;
     this.searchKeyWord = '';
     this.options = [];
+
+    this.userProfileService.getUserSportizenId().subscribe((sortizenId: string) => {
+      this.sportizenId = this.sportizenId;
+    });
+
     this.myControl.valueChanges
       .pipe(
         debounceTime(300),
@@ -118,7 +124,7 @@ export class SearchBarComponent implements OnInit {
   }
 
   viewProfile(id: string) {
-    if (id === this.userProfileService.getProfile().sportizenId) {
+    if (id === this.sportizenId) {
       this.router.navigate(['/dashboard', 'profile'], {});
     } else {
       this.connectionService.searchedSportizenId = id;

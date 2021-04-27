@@ -1,15 +1,14 @@
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmComponent } from 'src/app/@shared/confirm/confirm.component';
-import { ConnectionService } from './../../../../services/connection.service';
+import { ConfirmComponent } from './../../@shared/confirm/confirm.component';
+import { ConnectionService } from './../../services/connection.service';
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { EventService } from './../../../../services/event.service';
-import { UserProfileService } from './../../../../services/user-profile.service';
-import { EventModel } from './../../../../models/event.model';
-import * as $ from 'jquery';
-import { UserProfileModel } from './../../../../models/user-profile.model';
-import { environment } from './../../../../../environments/environment';
+import { EventService } from './../../services/event.service';
+import { UserProfileService } from './../../services/user-profile.service';
+import { EventModel } from './../../models/event.model';
+import { environment } from './../../../environments/environment';
 import { Title, Meta } from '@angular/platform-browser';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-list-event',
@@ -18,7 +17,7 @@ import { Title, Meta } from '@angular/platform-browser';
 })
 export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
   events: EventModel[];
-  userSportizenId: string;
+  sportizenId: string;
   loading: boolean;
   loadingEvents: boolean;
   noMoreEvents: boolean;
@@ -27,6 +26,7 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
   latitude: number;
 
   type: string;
+  backPosition: string;
 
   constructor(
     private eventService: EventService,
@@ -35,15 +35,8 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
     private connectionService: ConnectionService,
     private router: Router,
     private route: ActivatedRoute,
-    private titleService: Title,
-    private metaService: Meta
-  ) {
-    // this.route.queryParams.subscribe((param: Params) => {
-    //   if (this.type !== param.type || (param.type && !['joined', 'manage'].includes(param.type))) {
-    //     this.ngOnInit();
-    //   }
-    // });
-  }
+    private titleService: Title
+  ) {}
 
   scroll = (event: any): void => {
     if ($('.loading-event-container')) {
@@ -65,25 +58,25 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.events = [];
 
-    this.titleService.setTitle('SPORTIZEN | Events');
-
-    this.userProfileService.getProfileSubject().subscribe((userProfile: UserProfileModel) => {
-      if (userProfile) {
-        this.userSportizenId = userProfile.sportizenId;
-      }
-    });
-
     this.longitude = null;
     this.latitude = null;
 
-    this.route.data.subscribe((data: any) => {
-      this.type = data.type;
+    this.titleService.setTitle('SPORTIZEN | Events');
 
-      if (['joined', 'manage'].includes(this.type)) {
-        this.getEvents(environment.limit, null, this.longitude, this.latitude);
-      } else {
-        this.getLocation();
-      }
+    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
+      this.sportizenId = sportizenId;
+
+      this.route.data.subscribe((data: any) => {
+        this.type = data.type;
+
+        if (this.sportizenId && ['joined', 'manage'].includes(this.type)) {
+          this.getEvents(environment.limit, null, this.longitude, this.latitude);
+          this.backPosition = './../';
+        } else {
+          this.getLocation();
+          this.backPosition = './';
+        }
+      });
     });
   }
 
@@ -92,32 +85,39 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   joinEvent(id: string) {
-    // this.eventService.setEventId(id);
-    this.router.navigate(['/dashboard/event/join', id], {
-      relativeTo: this.route,
-      // queryParams: { id },
-    });
+    if (this.sportizenId) {
+      this.router.navigate([this.backPosition, 'join', id], {
+        relativeTo: this.route,
+      });
+    }
   }
 
   viewEvent(id: string) {
-    //   this.eventService.setEventId(id);
-    this.router.navigate(['/dashboard/event/view', id], {
+    this.router.navigate([this.backPosition, 'view', id], {
       relativeTo: this.route,
-      // queryParams: { id },
     });
   }
 
+  newEvent() {
+    if (this.sportizenId) {
+      this.router.navigate([this.backPosition, 'new'], { relativeTo: this.route });
+    }
+  }
+
   editEvent(id: string) {
-    // this.eventService.setEventId(id);
-    this.router.navigate(['/dashboard/event/edit', id], { relativeTo: this.route });
+    if (this.sportizenId) {
+      this.router.navigate([this.backPosition, 'edit', id], { relativeTo: this.route });
+    }
   }
 
   viewProfile(id: string) {
-    if (id === this.userProfileService.getProfile().sportizenId) {
-      this.router.navigate(['/dashboard', 'profile'], { relativeTo: this.route });
+    if (id === this.sportizenId) {
+      this.router.navigate([this.backPosition, '../', 'profile'], { relativeTo: this.route });
     } else {
-      this.connectionService.searchedSportizenId = id;
-      this.router.navigate(['/dashboard', 'profile', id], { relativeTo: this.route });
+      if (this.sportizenId) {
+        this.connectionService.searchedSportizenId = id;
+      }
+      this.router.navigate([this.backPosition, '../', 'profile', id], { relativeTo: this.route });
     }
   }
 
@@ -146,12 +146,14 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
 
     let eventDetails = this.eventService.getAllEvents(limit, skip, longitude, latitude);
 
-    if (this.type === 'joined') {
-      this.titleService.setTitle('SPORTIZEN | Joined Events');
-      eventDetails = this.eventService.getJoinedEvents(limit, skip);
-    } else if (this.type === 'manage') {
-      this.titleService.setTitle('SPORTIZEN | Manage Events');
-      eventDetails = this.eventService.getMyEvents(limit, skip);
+    if (this.sportizenId) {
+      if (this.type === 'joined') {
+        this.titleService.setTitle('SPORTIZEN | Joined Events');
+        eventDetails = this.eventService.getJoinedEvents(limit, skip);
+      } else if (this.type === 'manage') {
+        this.titleService.setTitle('SPORTIZEN | Manage Events');
+        eventDetails = this.eventService.getMyEvents(limit, skip);
+      }
     }
 
     eventDetails.subscribe(
@@ -173,7 +175,7 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   deleteEvent(id: string, createdUser: string, i: number) {
-    if (this.userSportizenId === createdUser) {
+    if (this.sportizenId === createdUser) {
       const dialogRef = this.dialog.open(ConfirmComponent, {
         data: { message: 'Do you really want to delete This Event?' },
         maxHeight: '90vh',

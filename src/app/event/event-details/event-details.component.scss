@@ -135,6 +135,16 @@ $primary-color: #05bae3;
     line-height: 1.25rem;
     font-size: 95%;
   }
+
+  .description-less {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    max-height: 6.25rem;
+    /* The number of lines to be displayed */
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+  }
 }
 
 .entry-winning-container {
@@ -293,6 +303,10 @@ $primary-color: #05bae3;
       line-height: 1.25rem;
       font-size: 97.5%;
     }
+
+    .description-less {
+      max-height: 6.25rem;
+    }
   }
 
   .entry-winning-container {
@@ -432,6 +446,10 @@ $primary-color: #05bae3;
       line-height: 1.25rem;
       font-size: 95%;
     }
+
+    .description-less {
+      max-height: 6.25rem;
+    }
   }
 
   .entry-winning-container {
@@ -566,6 +584,10 @@ $primary-color: #05bae3;
       line-height: 1rem;
       font-size: 95%;
     }
+
+    .description-less {
+      max-height: 5rem;
+    }
   }
 
   .entry-winning-container {
@@ -696,6 +718,10 @@ $primary-color: #05bae3;
       margin-top: 0.1rem;
       line-height: 1rem;
       font-size: 95%;
+    }
+
+    .description-less {
+      max-height: 5rem;
     }
   }
 

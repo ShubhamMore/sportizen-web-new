@@ -24,7 +24,7 @@
         <img
           class="profile-image"
           [src]="post.userImageURL"
-          onerror="this.src='../../../assets/images/user.png'"
+          onerror="this.src='./../../../assets/images/user.png'"
         />
       </div>
 
@@ -71,7 +71,7 @@
             <img
               class="profile-image"
               [src]="post.sharedPost.userImageURL"
-              onerror="this.src='../../../assets/images/user.png'"
+              onerror="this.src='./../../../assets/images/user.png'"
             />
           </div>
 
@@ -117,7 +117,7 @@
           <div class="post-image" *ngIf="post.sharedPost.secureUrl">
             <img
               [src]="post.sharedPost.secureUrl"
-              onerror="this.src='../../../../../assets/images/image-loader.png'"
+              onerror="this.src='./../../../../../assets/images/image-loader.png'"
               loading="lazy"
             />
           </div>
@@ -128,7 +128,7 @@
         <div class="post-image" *ngIf="post.secureUrl">
           <img
             [src]="post.secureUrl"
-            onerror="this.src='../../../../../assets/images/image-loader.png'"
+            onerror="this.src='./../../../../../assets/images/image-loader.png'"
             loading="lazy"
           />
         </div>
@@ -244,7 +244,7 @@
     <button
       mat-menu-item
       (click)="deletePost(postId, createdBy, index)"
-      *ngIf="createdBy === sportizenUser"
+      *ngIf="createdBy === sportizenId"
     >
       <i class="fa fa-trash"> </i>
       <span>&nbsp;Delete</span>

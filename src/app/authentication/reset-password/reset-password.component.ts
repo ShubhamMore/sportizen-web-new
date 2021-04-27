@@ -2,10 +2,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormGroupDirective } from '@angular/forms';
 import { Params, ActivatedRoute, Router } from '@angular/router';
-import { HttpService } from '../../services/shared-services/http.service';
-import { EncryptService } from '../../services/shared-services/encrypt.service';
-import { environment } from '../../../environments/environment';
-import { Validator } from '../../@shared/validators';
+import { HttpService } from './../../services/shared-services/http.service';
+import { EncryptService } from './../../services/shared-services/encrypt.service';
+import { environment } from './../../../environments/environment';
+import { Validator } from './../../@shared/validators';
 
 @Component({
   selector: 'app-reset-password',

@@ -2,45 +2,26 @@ import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
 import { BehaviorSubject, throwError } from 'rxjs';
-import { UserProfileModel } from '../models/user-profile.model';
+import { UserProfileModel } from './../models/user-profile.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserProfileService {
-  private userProfile: UserProfileModel;
-  private userProfileSubject = new BehaviorSubject<UserProfileModel>(null);
+  private sportizenId = new BehaviorSubject<string>(null);
+  private userProfile = new BehaviorSubject<UserProfileModel>(null);
 
   setProfile(userProfile: any) {
-    this.userProfile = userProfile;
-    this.userProfileSubject.next(userProfile);
-  }
-
-  setStory(story: string) {
-    this.userProfile.story = story;
+    this.sportizenId.next(userProfile.sportizenId);
+    this.userProfile.next(userProfile);
   }
 
   getProfile() {
     return this.userProfile;
   }
 
-  getProfileSubject() {
-    return this.userProfileSubject;
-  }
-
-  // getUserEmail() {
-  //   return this.userProfile.email;
-  // }
-
-  // getUserSportizenId() {
-  //   return this.userProfile.sportizenId;
-  // }
-
-  isProfileCompleted(): boolean {
-    if (this.userProfile.profileCompleted === '0') {
-      return false;
-    }
-    return true;
+  getUserSportizenId() {
+    return this.sportizenId;
   }
 
   constructor(private httpService: HttpService) {}

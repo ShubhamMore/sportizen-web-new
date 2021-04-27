@@ -24,7 +24,7 @@
           aria-hidden
           [src]="option.userImageURL"
           [alt]="option.name"
-          onerror="this.src='../../assets/images/user.png'"
+          onerror="this.src='./../../assets/images/user.png'"
         />
         <span class="profile-name">{{ option.name | capitalizeEachWord }}</span>
         <span class="profile-name" *ngIf="option.connectionStatus">|</span>

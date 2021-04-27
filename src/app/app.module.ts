@@ -16,13 +16,13 @@ import { AuthenticationModule } from './authentication/authentication.module';
 
 import { Validator } from './@shared/validators';
 
-import { LoginAuthGuard } from './authentication/auth/guards/login.auth.guard';
+import { LoginAuthActivateGuard } from './authentication/auth/guards/login.activate.guard';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, '../../assets/i18n/locale_', '.json');
+  return new TranslateHttpLoader(http, './../../assets/i18n/locale_', '.json');
 }
 
 @NgModule({
@@ -47,7 +47,7 @@ export function createTranslateLoader(http: HttpClient) {
     }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
-  providers: [LoginAuthGuard, Validator],
+  providers: [LoginAuthActivateGuard, Validator],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

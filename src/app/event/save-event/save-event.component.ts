@@ -1,17 +1,15 @@
-import { map } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
-import { DateService } from './../../../../services/shared-services/date.service';
+import { DateService } from './../../services/shared-services/date.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { EventService } from '../../../../services/event.service';
+import { ActivatedRoute, Params } from '@angular/router';
+import { EventService } from './../../services/event.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
-import { UserProfileModel } from './../../../../models/user-profile.model';
-import { UserProfileService } from './../../../../services/user-profile.service';
-import { EventModel, EventImageModel } from './../../../../models/event.model';
-import { SportModel } from './../../../../models/sport.model';
-import { SportService } from './../../../../services/sport.service';
-import { CountryService } from './../../../../services/shared-services/country.service';
+import { UserProfileModel } from './../../models/user-profile.model';
+import { UserProfileService } from './../../services/user-profile.service';
+import { EventModel, EventImageModel } from './/../../models/event.model';
+import { SportModel } from './../../models/sport.model';
+import { SportService } from './../../services/sport.service';
+import { CountryService } from './../../services/shared-services/country.service';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -44,7 +42,6 @@ export class SaveEventComponent implements OnInit, OnDestroy {
     private sportsService: SportService,
     private countryService: CountryService,
     private dateService: DateService,
-    private router: Router,
     private location: Location,
     private titleService: Title,
     private route: ActivatedRoute
@@ -59,110 +56,116 @@ export class SaveEventComponent implements OnInit, OnDestroy {
     this.invalidImage = false;
     this.editingMode = false;
     this.sports = this.sportsService.getSports();
-    this.userProfile = this.userProfileService.getProfile();
+    this.userProfileService.getProfile().subscribe((userProfile: UserProfileModel) => {
+      if (userProfile) {
+        this.userProfile = userProfile;
 
-    this.eventImageFiles = [];
-    this.eventImagePreview = [];
+        this.eventImageFiles = [];
+        this.eventImagePreview = [];
 
-    this.states = this.countryService.getStates();
-    this.cities = [];
+        this.states = this.countryService.getStates();
+        this.cities = [];
 
-    this.form = new FormGroup({
-      name: new FormControl(null, {
-        validators: [Validators.required],
-      }),
-      // eventType: new FormControl( '', {
-      //   validators: [Validators.required],
-      // }),
-      sport: new FormControl('', {
-        validators: [Validators.required],
-      }),
-      registrationType: new FormControl('', {
-        validators: [Validators.required],
-      }),
-      noOfPlayers: new FormControl(null, {
-        validators: [Validators.required],
-      }),
-      startDate: new FormControl(null, {
-        validators: [Validators.required],
-      }),
-      endDate: new FormControl(null, {
-        validators: [Validators.required],
-      }),
-      registerTill: new FormControl(null, {
-        validators: [Validators.required],
-      }),
-      // time: new FormControl( null, {
-      //   validators: [Validators.required],
-      // }),
-      description: new FormControl(null, {
-        validators: [Validators.required],
-      }),
-      winningPrice: new FormControl(null, {
-        validators: [Validators.required],
-      }),
-      fees: new FormControl(null, {
-        validators: [Validators.required, Validators.min(0)],
-      }),
-      address: new FormControl(null, {
-        validators: [Validators.required],
-      }),
-      state: new FormControl('', {
-        validators: [Validators.required],
-      }),
-      city: new FormControl('', {
-        validators: [Validators.required],
-      }),
-    });
+        this.form = new FormGroup({
+          name: new FormControl(null, {
+            validators: [Validators.required],
+          }),
+          // eventType: new FormControl( '', {
+          //   validators: [Validators.required],
+          // }),
+          sport: new FormControl('', {
+            validators: [Validators.required],
+          }),
+          registrationType: new FormControl('', {
+            validators: [Validators.required],
+          }),
+          noOfPlayers: new FormControl(null, {
+            validators: [Validators.required],
+          }),
+          startDate: new FormControl(null, {
+            validators: [Validators.required],
+          }),
+          endDate: new FormControl(null, {
+            validators: [Validators.required],
+          }),
+          registerTill: new FormControl(null, {
+            validators: [Validators.required],
+          }),
+          // time: new FormControl( null, {
+          //   validators: [Validators.required],
+          // }),
+          description: new FormControl(null, {
+            validators: [Validators.required],
+          }),
+          winningPrice: new FormControl(null, {
+            validators: [Validators.required],
+          }),
+          fees: new FormControl(null, {
+            validators: [Validators.required, Validators.min(0)],
+          }),
+          address: new FormControl(null, {
+            validators: [Validators.required],
+          }),
+          state: new FormControl('', {
+            validators: [Validators.required],
+          }),
+          city: new FormControl('', {
+            validators: [Validators.required],
+          }),
+        });
 
-    this.route.params.subscribe((param: Params) => {
-      const id = param.id;
+        this.route.params.subscribe((param: Params) => {
+          const id = param.id;
 
-      if (id) {
-        this.titleService.setTitle(`SPORTIZEN | Edit Event`);
-        this.editingMode = true;
-        this.eventService.getEventForUser(id).subscribe(
-          (event: EventModel) => {
-            this.titleService.setTitle(`SPORTIZEN | Edit Event | ${event.name}`);
-            this.event = event;
-            this.form.patchValue({
-              name: event.name,
-              // eventType: event.eventType,
-              sport: event.sport,
-              registrationType: event.registrationType,
-              noOfPlayers: event.noOfPlayers,
-              address: event.address,
-              state: event.state,
-              startDate: this.dateService.convertToDateString(event.startDate),
-              endDate: this.dateService.convertToDateString(event.endDate),
-              registerTill: this.dateService.convertToDateString(event.registerTill),
-              // time: event.time,
-              description: event.description,
-              winningPrice: event.winningPrice,
-              fees: event.fees,
-            });
+          if (id) {
+            this.titleService.setTitle(`SPORTIZEN | Edit Event`);
+            this.editingMode = true;
+            this.eventService.getEvent(id).subscribe(
+              (event: EventModel) => {
+                this.titleService.setTitle(`SPORTIZEN | Edit Event | ${event.name}`);
+                this.event = event;
+                this.form.patchValue({
+                  name: event.name,
+                  // eventType: event.eventType,
+                  sport: event.sport,
+                  registrationType: event.registrationType,
+                  noOfPlayers: event.noOfPlayers,
+                  address: event.address,
+                  state: event.state,
+                  startDate: this.dateService.convertToDateString(event.startDate),
+                  endDate: this.dateService.convertToDateString(event.endDate),
+                  registerTill: this.dateService.convertToDateString(event.registerTill),
+                  // time: event.time,
+                  description: event.description,
+                  winningPrice: event.winningPrice,
+                  fees: event.fees,
+                });
 
-            this.changeState(event.state);
+                this.changeState(event.state);
 
-            this.form.patchValue({
-              city: event.city,
-            });
+                this.form.patchValue({
+                  city: event.city,
+                });
 
-            this.changeCity(event.city);
+                this.changeCity(event.city);
 
-            this.form.get('sport').disable();
-            this.form.get('registrationType').disable();
-            this.form.get('fees').disable();
+                this.form.get('sport').disable();
+                this.form.get('registrationType').disable();
+                this.form.get('fees').disable();
 
-            this.loading = false;
-          },
-          (error: any) => {
+                this.loading = false;
+              },
+              (error: any) => {
+                this.loading = false;
+              }
+            );
+          } else {
+            this.titleService.setTitle(`SPORTIZEN | New Event`);
             this.loading = false;
           }
-        );
+        });
       } else {
-        this.titleService.setTitle(`SPORTIZEN | New Event`);
-        this.loading = false;
+        this.location.back();
       }
     });
   }

@@ -142,7 +142,7 @@
 
     <div class="description-container">
       <div class="bold-text">Description :</div>
-      <p class="description">
+      <p class="description" [ngClass]="isList ? 'description-less' : ''">
         {{ event.description }}
         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
         been the industry's standard dummy text ever since the 1500s, when an unknown printer took a

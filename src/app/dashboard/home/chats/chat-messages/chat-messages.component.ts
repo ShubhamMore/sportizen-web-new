@@ -9,9 +9,9 @@ import {
   ViewChildren,
   AfterViewInit,
 } from '@angular/core';
-import { UserProfileService } from 'src/app/services/user-profile.service';
+import { UserProfileService } from './../../../../services/user-profile.service';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { ConfirmComponent } from 'src/app/@shared/confirm/confirm.component';
+import { ConfirmComponent } from './../../../../@shared/confirm/confirm.component';
 import { MatDialog } from '@angular/material/dialog';
 import { UserProfileModel } from './../../../../models/user-profile.model';
 
@@ -62,7 +62,7 @@ export class ChatMessagesComponent implements OnInit, AfterViewInit {
     this.isNearBottom = true;
     this.messageLoading = false;
 
-    this.userProfileService.getProfileSubject().subscribe((userProfile: UserProfileModel) => {
+    this.userProfileService.getProfile().subscribe((userProfile: UserProfileModel) => {
       if (userProfile) {
         this.sportizenId = userProfile.sportizenId;
       }

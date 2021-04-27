@@ -1,4 +1,4 @@
-import { ConfirmComponent } from 'src/app/@shared/confirm/confirm.component';
+import { ConfirmComponent } from './../../../../../@shared/confirm/confirm.component';
 import { ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,7 +10,7 @@ import { PostCommentReplyLikeService } from './../../../../../services/post-comm
 import { PostCommentReplyService } from './../../../../../services/post-comment-reply.service';
 import { PostCommentService } from './../../../../../services/post-comment.service';
 import { UserProfileService } from './../../../../../services/user-profile.service';
-import { FeedLikesComponent } from '../feed-likes/feed-likes.component';
+import { FeedLikesComponent } from './../feed-likes/feed-likes.component';
 
 @Component({
   selector: 'app-feed-comment',
@@ -40,10 +40,13 @@ export class FeedCommentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.mySportizenId = this.userProfileService.getProfile().sportizenId;
     this.commentsLoading = true;
     this.comments = [];
-    this.getComments();
+
+    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
+      this.mySportizenId = sportizenId;
+      this.getComments();
+    });
   }
 
   private getComments() {

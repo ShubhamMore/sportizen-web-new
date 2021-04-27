@@ -8,12 +8,12 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, take, tap } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
-import { AuthService } from '../auth-service/auth.service';
+import { AuthService } from './../auth-service/auth.service';
 
 @Injectable({ providedIn: 'root' })
-export class UserAuthGuard implements CanActivate {
+export class UserAuthActivateGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   // tslint:disable-next-line: max-line-length

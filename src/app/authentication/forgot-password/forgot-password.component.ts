@@ -1,6 +1,6 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpService } from '../../services/shared-services/http.service';
+import { HttpService } from './../../services/shared-services/http.service';
 import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
 
 @Component({

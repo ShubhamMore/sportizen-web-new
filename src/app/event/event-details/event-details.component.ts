@@ -1,7 +1,7 @@
-import { ConnectionService } from './../../../../services/connection.service';
+import { ConnectionService } from './../../services/connection.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserProfileService } from './../../../../services/user-profile.service';
-import { EventModel } from './../../../../models/event.model';
+import { UserProfileService } from './../../services/user-profile.service';
+import { EventModel } from './../../models/event.model';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
@@ -11,6 +11,9 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class EventDetailsComponent implements OnInit {
   @Input('eventDetails') event: EventModel;
+  @Input('isList') isList: boolean;
+
+  sportizenId: string;
 
   constructor(
     private userProfileService: UserProfileService,
@@ -19,7 +22,11 @@ export class EventDetailsComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
+      this.sportizenId = sportizenId;
+    });
+  }
 
   getRegistrations(registrations: any[]) {
     if (registrations.length > 6) {
@@ -29,11 +36,13 @@ export class EventDetailsComponent implements OnInit {
   }
 
   viewProfile(id: string) {
-    if (id === this.userProfileService.getProfile().sportizenId) {
-      this.router.navigate(['../../', 'profile'], { relativeTo: this.route });
+    if (this.sportizenId && id === this.sportizenId) {
+      this.router.navigate(['./../../', 'profile'], { relativeTo: this.route });
     } else {
-      this.connectionService.searchedSportizenId = id;
-      this.router.navigate(['../../', 'profile', id], { relativeTo: this.route });
+      if (this.sportizenId) {
+        this.connectionService.searchedSportizenId = id;
+      }
+      this.router.navigate(['./../../', 'profile', id], { relativeTo: this.route });
     }
   }
 }

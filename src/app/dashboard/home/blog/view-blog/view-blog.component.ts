@@ -1,7 +1,7 @@
 import { BlogModel } from './../../../../models/blog.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { BlogsService } from 'src/app/services/blogs.service';
+import { BlogsService } from './../../../../services/blogs.service';
 
 @Component({
   selector: 'app-view-blog',
@@ -30,7 +30,7 @@ export class ViewBlogComponent implements OnInit {
           if (param.id) {
             getBlog = this.blogService.getBlog(param.id);
           } else {
-            this.router.navigate(['../../'], { relativeTo: this.route, replaceUrl: true });
+            this.router.navigate(['./../../'], { relativeTo: this.route, replaceUrl: true });
           }
         });
       }
@@ -42,7 +42,7 @@ export class ViewBlogComponent implements OnInit {
         },
         (error: any) => {
           this.loading = false;
-          this.router.navigate(['../../'], { relativeTo: this.route, replaceUrl: true });
+          this.router.navigate(['./../../'], { relativeTo: this.route, replaceUrl: true });
         }
       );
     });

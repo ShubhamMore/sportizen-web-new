@@ -44,11 +44,9 @@ export class DashboardSideNavComponent implements OnInit, OnDestroy {
       (error: any) => {}
     );
 
-    this.userProfileSubscription = this.userProfileService
-      .getProfileSubject()
-      .subscribe((profile) => {
-        this.userProfile = profile;
-      });
+    this.userProfileSubscription = this.userProfileService.getProfile().subscribe((profile) => {
+      this.userProfile = profile;
+    });
   }
 
   onLogout() {
