@@ -1,6 +1,6 @@
-import { PostModel } from './../../../../../models/post.model';
+import { PostModel } from '../../../models/post.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PostService } from './../../../../../services/post.service';
+import { PostService } from '../../../services/post.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Component, Input, OnInit, Inject } from '@angular/core';
 
@@ -10,18 +10,18 @@ export interface LikeDialogData {
 }
 
 @Component({
-  selector: 'app-feed-share',
-  templateUrl: './feed-share.component.html',
-  styleUrls: ['./feed-share.component.scss'],
+  selector: 'app-post-share',
+  templateUrl: './post-share.component.html',
+  styleUrls: ['./post-share.component.scss'],
 })
-export class FeedShareComponent implements OnInit {
+export class PostShareComponent implements OnInit {
   form: FormGroup;
 
   postUploading = false;
 
   constructor(
     public postService: PostService,
-    public dialogRef: MatDialogRef<FeedShareComponent>,
+    public dialogRef: MatDialogRef<PostShareComponent>,
     @Inject(MAT_DIALOG_DATA) public data: LikeDialogData
   ) {}
 

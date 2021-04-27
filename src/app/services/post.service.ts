@@ -76,8 +76,8 @@ export class PostService {
   }
 
   getPost(id: string) {
-    const data = { api: 'getPost', data: { id } };
-    return this.httpService.httpPost(data).pipe(
+    const data = { api: `getPost/${id}`, data: { id } };
+    return this.httpService.httpGet(data).pipe(
       map((response: any) => {
         return response;
       }),

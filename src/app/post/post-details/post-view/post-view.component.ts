@@ -1,25 +1,25 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PostViewModel } from './../../../../../models/post-view.model';
-import { PostViewService } from './../../../../../services/post-view.service';
+import { PostViewModel } from '../../../models/post-view.model';
+import { PostViewService } from '../../../services/post-view.service';
 
 export interface ViewDialogData {
   postId: string;
 }
 
 @Component({
-  selector: 'app-feed-view',
-  templateUrl: './feed-view.component.html',
-  styleUrls: ['./feed-view.component.scss'],
+  selector: 'app-post-view',
+  templateUrl: './post-view.component.html',
+  styleUrls: ['./post-view.component.scss'],
 })
-export class FeedViewComponent implements OnInit {
+export class PostViewComponent implements OnInit {
   loading: boolean;
   views: PostViewModel[];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: ViewDialogData,
     private postViewService: PostViewService,
-    public dialogRef: MatDialogRef<FeedViewComponent>
+    public dialogRef: MatDialogRef<PostViewComponent>
   ) {}
 
   ngOnInit(): void {

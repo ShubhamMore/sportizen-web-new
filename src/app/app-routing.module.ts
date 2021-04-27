@@ -2,7 +2,6 @@ import { UserAuthGuard } from './authentication/auth/guards/user.auth.guard';
 import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import { LoginAuthGuard } from './authentication/auth/guards/login.auth.guard';
 
 const appRoutes: Routes = [
@@ -27,6 +26,12 @@ const appRoutes: Routes = [
       {
         path: 'events',
         loadChildren: () => import('./event/event.module').then((m) => m.EventModule),
+        canActivate: [LoginAuthGuard],
+      },
+
+      {
+        path: 'post/:id',
+        loadChildren: () => import('./post/post.module').then((m) => m.PostModule),
         canActivate: [LoginAuthGuard],
       },
 

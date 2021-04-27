@@ -1,32 +1,31 @@
-<div class="like-container">
-  <div mat-dialog-content class="">
+<div class="view-container">
+  <div mat-dialog-content>
     <span class="float-right pointer close" mat-dialog-close>
       <mat-icon>close</mat-icon>
     </span>
-
-    <h2 mat-dialog-title *ngIf="likes && likes.length > 0">Likes</h2>
+    <h2 mat-dialog-title>Views</h2>
 
     <hr />
 
-    <div *ngIf="!loading; else loadingLikes">
-      <ng-container *ngIf="likes && likes.length > 0; else noLikes">
-        <div *ngFor="let like of likes" class="user-container">
+    <div *ngIf="!loading; else loadingViews">
+      <ng-container *ngIf="views && views.length > 0; else noViews">
+        <div *ngFor="let view of views" class="user-container">
           <div class="profile-icon">
             <img
               class="profile-image"
-              [src]="like.userImageURL"
+              [src]="view.userImageURL"
               onerror="this.src='./../../../assets/images/user.png'"
             />
           </div>
 
           <div class="user-details">
             <div class="user-name">
-              <span class="">{{ like.name | capitalizeEachWord }}</span>
+              <span class="">{{ view.name | capitalizeEachWord }}</span>
             </div>
 
-            <div class="liked-at">
+            <div class="viewed-at">
               <i class="fa fa-clock-o icon-blue mr-2"></i>
-              <span class="">{{ like.createdAt | amTimeAgo }}</span>
+              <span class="">{{ view.createdAt | amTimeAgo }}</span>
             </div>
           </div>
 
@@ -35,8 +34,11 @@
       </ng-container>
     </div>
 
-    <ng-template #loadingLikes>
-      <div class="user-container">
+    <ng-template #loadingViews>
+      <div class="loading-container">
+        <mat-spinner diameter="25"></mat-spinner>
+      </div>
+      <!-- <div class="user-container">
         <div class="profile-icon">
           <img
             class="profile-image"
@@ -50,17 +52,15 @@
             <span class="no-user-name"> </span>
           </div>
 
-          <div class="liked-at">
-            <span class="no-like-at"> </span>
+          <div class="viewed-at">
+            <span class="no-viewed-at"> </span>
           </div>
         </div>
 
         <br />
-      </div>
+      </div> -->
     </ng-template>
 
-    <ng-template #noLikes>
-      <p class="text-center">No Likes Yet</p>
-    </ng-template>
+    <ng-template #noViews>No Views Yet</ng-template>
   </div>
 </div>

@@ -3,27 +3,11 @@ import { NgModule } from '@angular/core';
 
 import { DashboardFeedRoutingModule } from './dashboard-feed-routing.module';
 import { DashboardFeedComponent } from './dashboard-feed.component';
-import { FeedShareComponent } from './feed-share/feed-share.component';
-import { FeedLikesComponent } from './feed-likes/feed-likes.component';
-import { FeedViewComponent } from './feed-view/feed-view.component';
-import { FeedCommentComponent } from './feed-comment/feed-comment.component';
-import { ScrollingModule } from '@angular/cdk/scrolling';
+import { PostDetailsModule } from '../../../../post/post-details/post-details.module';
 
 @NgModule({
-  declarations: [
-    DashboardFeedComponent,
-    FeedShareComponent,
-    FeedLikesComponent,
-    FeedViewComponent,
-    FeedCommentComponent,
-  ],
-  imports: [SharedModule, DashboardFeedRoutingModule, ScrollingModule],
-  entryComponents: [
-    FeedShareComponent,
-    FeedLikesComponent,
-    FeedViewComponent,
-    FeedCommentComponent,
-  ],
+  declarations: [DashboardFeedComponent],
+  imports: [SharedModule, DashboardFeedRoutingModule, PostDetailsModule],
   exports: [DashboardFeedComponent],
 })
 export class DashboardFeedModule {}

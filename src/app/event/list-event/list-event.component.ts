@@ -152,7 +152,6 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   deleteEvent(id: string) {
-    console.log(id);
     const i = this.events.findIndex((event: EventModel) => event._id === id);
 
     if (i !== -1) {

@@ -1,0 +1,9 @@
+<div class="post" *ngIf="!loading; else loadingData">
+  <app-post-details [post]="post" [index]="0"></app-post-details>
+</div>
+
+<ng-template #loadingData>
+  <div class="loading-container">
+    <mat-spinner diameter="25"></mat-spinner>
+  </div>
+</ng-template>

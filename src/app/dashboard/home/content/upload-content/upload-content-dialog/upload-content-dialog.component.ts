@@ -34,7 +34,6 @@ export class UploadContentDialogComponent implements OnInit {
 
   submitPost(): void {
     if (this.form.valid) {
-      console.log('valid');
       this.postUploading = true;
 
       if (this.form.value.description == null && this.data.postType === PostType.Text) {

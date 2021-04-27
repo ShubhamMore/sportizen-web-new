@@ -4,7 +4,7 @@
 
 <div class="comment-container" *ngIf="!commentsLoading">
   <!-- <img class="comment-image" [src]="data.imageUrl"  loading="lazy" /> -->
-  <div class="comments-list-container">
+  <div class="comments-list-container" [ngClass]="!sportizenId ? 'full-comment-list' : ''">
     <div *ngIf="comments && comments.length > 0; else noComments">
       <div
         class="singe-comment-container"
@@ -33,7 +33,7 @@
             {{ singleComment.comment }}
           </div>
 
-          <div class="action-links">
+          <div class="action-links" *ngIf="sportizenId">
             <span class="pr-2" (click)="replyComment(singleComment._id, singleComment.name)">
               <i class="fa fa-reply icon-yellow" aria-hidden="true"></i>
               <span class="">&nbsp;Reply</span>
@@ -54,7 +54,7 @@
             </span>
 
             <span
-              *ngIf="mySportizenId == singleComment.sportizenId"
+              *ngIf="sportizenId === singleComment.sportizenId"
               class="pr-2"
               (click)="deleteComment(singleComment._id, commentIndex)"
             >
@@ -122,7 +122,7 @@
                   <span class=""> {{ singleReplyComment.replyComment }}</span>
                 </div>
 
-                <div class="action-links">
+                <div class="action-links" *ngIf="sportizenId">
                   <span
                     class="pr-2"
                     (click)="replyComment(singleComment._id, singleReplyComment.name)"
@@ -155,7 +155,7 @@
                   </span>
 
                   <span
-                    *ngIf="mySportizenId == singleReplyComment.sportizenId"
+                    *ngIf="sportizenId === singleReplyComment.sportizenId"
                     class="pr-2"
                     (click)="
                       deleteReplyComment(singleReplyComment._id, commentIndex, replyCommentIndex)
@@ -195,7 +195,7 @@
     </ng-template>
   </div>
 
-  <div class="post-comment-input">
+  <div class="post-comment-input" *ngIf="sportizenId">
     <mat-form-field class="full-width">
       <mat-label>Comment</mat-label>
       <textarea

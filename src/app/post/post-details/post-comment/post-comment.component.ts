@@ -1,34 +1,35 @@
-import { ConfirmComponent } from './../../../../../@shared/confirm/confirm.component';
+import { ConfirmComponent } from '../../../@shared/confirm/confirm.component';
 import { ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { LikeType } from './../../../../../enums/likeType';
-import { CommentModel } from './../../../../../models/comment.model';
-import { PostCommentLikeService } from './../../../../../services/post-comment-like.service';
-import { PostCommentReplyLikeService } from './../../../../../services/post-comment-reply-like.service';
-import { PostCommentReplyService } from './../../../../../services/post-comment-reply.service';
-import { PostCommentService } from './../../../../../services/post-comment.service';
-import { UserProfileService } from './../../../../../services/user-profile.service';
-import { FeedLikesComponent } from './../feed-likes/feed-likes.component';
+import { LikeType } from '../../../enums/likeType';
+import { CommentModel } from '../../../models/comment.model';
+import { PostCommentLikeService } from '../../../services/post-comment-like.service';
+import { PostCommentReplyLikeService } from '../../../services/post-comment-reply-like.service';
+import { PostCommentReplyService } from '../../../services/post-comment-reply.service';
+import { PostCommentService } from '../../../services/post-comment.service';
+import { UserProfileService } from '../../../services/user-profile.service';
+import { PostLikesComponent } from '../post-likes/post-likes.component';
 
 @Component({
-  selector: 'app-feed-comment',
-  templateUrl: './feed-comment.component.html',
-  styleUrls: ['./feed-comment.component.scss'],
+  selector: 'app-post-comment',
+  templateUrl: './post-comment.component.html',
+  styleUrls: ['./post-comment.component.scss'],
 })
-export class FeedCommentComponent implements OnInit {
+export class PostCommentComponent implements OnInit {
   @ViewChild('commentInput') commentInput: ElementRef;
 
   postComment: string;
   comments: CommentModel[];
   commentsLoading: boolean;
-  mySportizenId: string;
+  sportizenId: string;
   replyCommentFlag: boolean;
   replyCommentId: string;
 
   constructor(
-    @Inject(MAT_BOTTOM_SHEET_DATA) public data: { postId: string; imageUrl: string },
+    @Inject(MAT_BOTTOM_SHEET_DATA)
+    public data: { postId: string; imageUrl: string; sportizenId: string },
     public postCommentService: PostCommentService,
     private postCommentLikeService: PostCommentLikeService,
     private postCommentReplyService: PostCommentReplyService,
@@ -44,7 +45,7 @@ export class FeedCommentComponent implements OnInit {
     this.comments = [];
 
     this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
-      this.mySportizenId = sportizenId;
+      this.sportizenId = sportizenId;
       this.getComments();
     });
   }
@@ -60,11 +61,21 @@ export class FeedCommentComponent implements OnInit {
   }
 
   submitComment() {
-    if (this.postComment) {
-      if (this.replyCommentFlag) {
-        this.postCommentReplyService
-          .addPostCommentReply(this.data.postId, this.replyCommentId, this.postComment)
-          .subscribe(
+    if (this.sportizenId) {
+      if (this.postComment) {
+        if (this.replyCommentFlag) {
+          this.postCommentReplyService
+            .addPostCommentReply(this.data.postId, this.replyCommentId, this.postComment)
+            .subscribe(
+              (res: any) => {
+                this.commentPostedSuccessfully();
+              },
+              (error: any) => {
+                this.commentPostedError(error);
+              }
+            );
+        } else {
+          this.postCommentService.addPostComment(this.data.postId, this.postComment).subscribe(
             (res: any) => {
               this.commentPostedSuccessfully();
             },
@@ -72,15 +83,7 @@ export class FeedCommentComponent implements OnInit {
               this.commentPostedError(error);
             }
           );
-      } else {
-        this.postCommentService.addPostComment(this.data.postId, this.postComment).subscribe(
-          (res: any) => {
-            this.commentPostedSuccessfully();
-          },
-          (error: any) => {
-            this.commentPostedError(error);
-          }
-        );
+        }
       }
     }
   }
@@ -104,75 +107,83 @@ export class FeedCommentComponent implements OnInit {
   }
 
   deleteComment(id: string, index: number) {
-    const dialogRef = this.dialog.open(ConfirmComponent, {
-      data: { message: 'Do you really want to delete this Comment?' },
-      maxHeight: '90vh',
-      disableClose: true,
-    });
+    if (this.sportizenId) {
+      const dialogRef = this.dialog.open(ConfirmComponent, {
+        data: { message: 'Do you really want to delete this Comment?' },
+        maxHeight: '90vh',
+        disableClose: true,
+      });
 
-    // tslint:disable-next-line: deprecation
-    dialogRef.afterClosed().subscribe((confirm: boolean) => {
-      if (confirm) {
-        this.postCommentService.deletePostComment(id).subscribe(
-          (res: any) => {
-            this.comments.splice(index, 1);
-            this.changeDetectorRef.markForCheck();
-            this.snackBar.open('Comment Deleted Successfully', null, {
-              duration: 2000,
-              panelClass: ['success-snackbar'],
-            });
-          },
-          (error: any) => {
-            this.snackBar.open(error, null, {
-              duration: 2000,
-              panelClass: ['error-snackbar'],
-            });
-          }
-        );
-      }
-    });
+      // tslint:disable-next-line: deprecation
+      dialogRef.afterClosed().subscribe((confirm: boolean) => {
+        if (confirm) {
+          this.postCommentService.deletePostComment(id).subscribe(
+            (res: any) => {
+              this.comments.splice(index, 1);
+              this.changeDetectorRef.markForCheck();
+              this.snackBar.open('Comment Deleted Successfully', null, {
+                duration: 2000,
+                panelClass: ['success-snackbar'],
+              });
+            },
+            (error: any) => {
+              this.snackBar.open(error, null, {
+                duration: 2000,
+                panelClass: ['error-snackbar'],
+              });
+            }
+          );
+        }
+      });
+    }
   }
 
   deleteReplyComment(id: string, commentIndex: number, replyCommentIndex: number) {
-    const dialogRef = this.dialog.open(ConfirmComponent, {
-      data: { message: 'Do you really want to delete this Comment?' },
-      maxHeight: '90vh',
-      disableClose: true,
-    });
+    if (this.sportizenId) {
+      const dialogRef = this.dialog.open(ConfirmComponent, {
+        data: { message: 'Do you really want to delete this Comment?' },
+        maxHeight: '90vh',
+        disableClose: true,
+      });
 
-    // tslint:disable-next-line: deprecation
-    dialogRef.afterClosed().subscribe((confirm: boolean) => {
-      if (confirm) {
-        this.postCommentReplyService.deletePostCommentReply(id).subscribe(
-          (res: any) => {
-            this.comments[commentIndex].replyComments.splice(replyCommentIndex, 1);
-            this.changeDetectorRef.markForCheck();
-            this.snackBar.open('Reply Comment Deleted Successfully', null, {
-              duration: 2000,
-            });
-          },
-          (error: any) => {
-            this.snackBar.open(error, null, {
-              duration: 2000,
-              panelClass: ['error-snackbar'],
-            });
-          }
-        );
-      }
-    });
+      // tslint:disable-next-line: deprecation
+      dialogRef.afterClosed().subscribe((confirm: boolean) => {
+        if (confirm) {
+          this.postCommentReplyService.deletePostCommentReply(id).subscribe(
+            (res: any) => {
+              this.comments[commentIndex].replyComments.splice(replyCommentIndex, 1);
+              this.changeDetectorRef.markForCheck();
+              this.snackBar.open('Reply Comment Deleted Successfully', null, {
+                duration: 2000,
+              });
+            },
+            (error: any) => {
+              this.snackBar.open(error, null, {
+                duration: 2000,
+                panelClass: ['error-snackbar'],
+              });
+            }
+          );
+        }
+      });
+    }
   }
 
   likeUnlikeComment(commentId: string, alreadyLiked: boolean, index: number): void {
-    if (!alreadyLiked) {
-      this.postCommentLikeService.likeComment(this.data.postId, commentId).subscribe((res: any) => {
-        this.updateCommentLikesCount(commentId, alreadyLiked, index);
-      });
-    } else {
-      this.postCommentLikeService
-        .unlikeComment(this.data.postId, commentId)
-        .subscribe((res: any) => {
-          this.updateCommentLikesCount(commentId, alreadyLiked, index);
-        });
+    if (this.sportizenId) {
+      if (!alreadyLiked) {
+        this.postCommentLikeService
+          .likeComment(this.data.postId, commentId)
+          .subscribe((res: any) => {
+            this.updateCommentLikesCount(commentId, alreadyLiked, index);
+          });
+      } else {
+        this.postCommentLikeService
+          .unlikeComment(this.data.postId, commentId)
+          .subscribe((res: any) => {
+            this.updateCommentLikesCount(commentId, alreadyLiked, index);
+          });
+      }
     }
   }
 
@@ -201,28 +212,30 @@ export class FeedCommentComponent implements OnInit {
     commentIndex: number,
     replyCommentIndex: number
   ) {
-    if (!alreadyLiked) {
-      this.postCommentReplyLikeService
-        .likeReplyComment(this.data.postId, commentId, replyCommentId)
-        .subscribe((res: any) => {
-          this.updateReplyCommentLikesCount(
-            commentId,
-            alreadyLiked,
-            commentIndex,
-            replyCommentIndex
-          );
-        });
-    } else {
-      this.postCommentReplyLikeService
-        .unlikeReplyComment(this.data.postId, commentId, replyCommentId)
-        .subscribe((res: any) => {
-          this.updateReplyCommentLikesCount(
-            commentId,
-            alreadyLiked,
-            commentIndex,
-            replyCommentIndex
-          );
-        });
+    if (this.sportizenId) {
+      if (!alreadyLiked) {
+        this.postCommentReplyLikeService
+          .likeReplyComment(this.data.postId, commentId, replyCommentId)
+          .subscribe((res: any) => {
+            this.updateReplyCommentLikesCount(
+              commentId,
+              alreadyLiked,
+              commentIndex,
+              replyCommentIndex
+            );
+          });
+      } else {
+        this.postCommentReplyLikeService
+          .unlikeReplyComment(this.data.postId, commentId, replyCommentId)
+          .subscribe((res: any) => {
+            this.updateReplyCommentLikesCount(
+              commentId,
+              alreadyLiked,
+              commentIndex,
+              replyCommentIndex
+            );
+          });
+      }
     }
   }
 
@@ -257,10 +270,12 @@ export class FeedCommentComponent implements OnInit {
   }
 
   replyComment(commentId: string, userName: string) {
-    this.postComment = '@' + userName + ' ';
-    this.commentInput.nativeElement.focus();
-    this.replyCommentFlag = true;
-    this.replyCommentId = commentId;
+    if (this.sportizenId) {
+      this.postComment = '@' + userName + ' ';
+      this.commentInput.nativeElement.focus();
+      this.replyCommentFlag = true;
+      this.replyCommentId = commentId;
+    }
   }
 
   viewCommentDetails(commentId: string, index: number) {
@@ -273,7 +288,7 @@ export class FeedCommentComponent implements OnInit {
   }
 
   viewCommentLikeDetails(commentId: string) {
-    const dialogRef = this.dialog.open(FeedLikesComponent, {
+    const dialogRef = this.dialog.open(PostLikesComponent, {
       data: { likeType: LikeType.PostComment, postId: this.data.postId, commentId },
       maxHeight: '90vh',
     });
@@ -282,7 +297,7 @@ export class FeedCommentComponent implements OnInit {
   }
 
   viewReplyCommentLikeDetails(commentId: string, replyCommentId: string) {
-    const dialogRef = this.dialog.open(FeedLikesComponent, {
+    const dialogRef = this.dialog.open(PostLikesComponent, {
       data: {
         likeType: LikeType.PostReplyComment,
         postId: this.data.postId,

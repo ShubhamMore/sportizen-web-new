@@ -1,10 +1,10 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { LikeType } from './../../../../../enums/likeType';
-import { LikeModel } from './../../../../../models/like.model';
-import { PostCommentLikeService } from './../../../../../services/post-comment-like.service';
-import { PostCommentReplyLikeService } from './../../../../../services/post-comment-reply-like.service';
-import { PostLikeService } from './../../../../../services/post-like.service';
+import { LikeType } from '../../../enums/likeType';
+import { LikeModel } from '../../../models/like.model';
+import { PostCommentLikeService } from '../../../services/post-comment-like.service';
+import { PostCommentReplyLikeService } from '../../../services/post-comment-reply-like.service';
+import { PostLikeService } from '../../../services/post-like.service';
 
 export interface LikeDialogData {
   likeType: LikeType;
@@ -14,11 +14,11 @@ export interface LikeDialogData {
 }
 
 @Component({
-  selector: 'app-feed-likes',
-  templateUrl: './feed-likes.component.html',
-  styleUrls: ['./feed-likes.component.scss'],
+  selector: 'app-post-likes',
+  templateUrl: './post-likes.component.html',
+  styleUrls: ['./post-likes.component.scss'],
 })
-export class FeedLikesComponent implements OnInit {
+export class PostLikesComponent implements OnInit {
   loading: boolean;
   likes: LikeModel[];
 
@@ -26,7 +26,7 @@ export class FeedLikesComponent implements OnInit {
     private postLikeService: PostLikeService,
     private postCommentLikeService: PostCommentLikeService,
     private postCommentReplyLikeService: PostCommentReplyLikeService,
-    public dialogRef: MatDialogRef<FeedLikesComponent>,
+    public dialogRef: MatDialogRef<PostLikesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: LikeDialogData
   ) {}
 
