@@ -1,9 +1,9 @@
-import { UserAuthActivateGuard } from './authentication/auth/guards/user.activate.guard';
+import { UserAuthGuard } from './authentication/auth/guards/user.auth.guard';
 import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { LoginAuthActivateGuard } from './authentication/auth/guards/login.activate.guard';
+import { LoginAuthGuard } from './authentication/auth/guards/login.auth.guard';
 
 const appRoutes: Routes = [
   {
@@ -15,19 +15,19 @@ const appRoutes: Routes = [
       {
         path: 'home',
         loadChildren: () => import('./content/content.module').then((m) => m.ContentModule),
-        canActivate: [LoginAuthActivateGuard],
+        canActivate: [LoginAuthGuard],
       },
 
       {
         path: 'dashboard',
         loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
-        canActivate: [UserAuthActivateGuard],
+        canActivate: [UserAuthGuard],
       },
 
       {
         path: 'events',
         loadChildren: () => import('./event/event.module').then((m) => m.EventModule),
-        canActivate: [LoginAuthActivateGuard],
+        canActivate: [LoginAuthGuard],
       },
 
       {

@@ -12,7 +12,11 @@ export class UserProfileService {
   private userProfile = new BehaviorSubject<UserProfileModel>(null);
 
   setProfile(userProfile: any) {
-    this.sportizenId.next(userProfile.sportizenId);
+    if (userProfile) {
+      this.sportizenId.next(userProfile.sportizenId);
+    } else {
+      this.sportizenId.next(null);
+    }
     this.userProfile.next(userProfile);
   }
 

@@ -213,6 +213,8 @@ export class DashboardFeedComponent implements OnInit, OnDestroy, AfterViewInit 
       data: { postId, isUserFeed: this.isUserFeed },
       maxHeight: '90vh',
     });
+
+    dialogRef.afterClosed().subscribe((result: any) => {});
   }
 
   showLikeDetails(postId: string) {
@@ -220,6 +222,8 @@ export class DashboardFeedComponent implements OnInit, OnDestroy, AfterViewInit 
       data: { likeType: LikeType.Post, postId },
       maxHeight: '90vh',
     });
+
+    dialogRef.afterClosed().subscribe((result: any) => {});
   }
 
   showViewDetails(postId: string) {
@@ -227,6 +231,8 @@ export class DashboardFeedComponent implements OnInit, OnDestroy, AfterViewInit 
       data: { likeType: LikeType.Post, postId },
       maxHeight: '90vh',
     });
+
+    dialogRef.afterClosed().subscribe((result: any) => {});
   }
 
   callViewPost(postId: string, alreadyViewed: boolean, postIndex: number, event: any) {

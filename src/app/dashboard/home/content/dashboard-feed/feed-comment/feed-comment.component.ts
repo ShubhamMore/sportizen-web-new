@@ -277,6 +277,8 @@ export class FeedCommentComponent implements OnInit {
       data: { likeType: LikeType.PostComment, postId: this.data.postId, commentId },
       maxHeight: '90vh',
     });
+
+    dialogRef.afterClosed().subscribe((result: any) => {});
   }
 
   viewReplyCommentLikeDetails(commentId: string, replyCommentId: string) {
@@ -289,5 +291,7 @@ export class FeedCommentComponent implements OnInit {
       },
       maxHeight: '90vh',
     });
+
+    dialogRef.afterClosed().subscribe((result: any) => {});
   }
 }

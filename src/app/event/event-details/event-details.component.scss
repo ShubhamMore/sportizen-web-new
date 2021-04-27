@@ -88,6 +88,22 @@ $primary-color: #05bae3;
   .event-type-box {
     background-color: lighten($color: $primary-color, $amount: 40%);
   }
+
+  .join-event-box {
+    background-color: #32cd32;
+    cursor: pointer;
+    color: white;
+  }
+
+  .edit-chip {
+    cursor: pointer;
+  }
+
+  .delete-chip {
+    background-color: rgb(243, 67, 67);
+    cursor: pointer;
+    color: white;
+  }
 }
 
 .created-user {
@@ -253,7 +269,10 @@ $primary-color: #05bae3;
   }
 
   .event-action {
-    .event-type-box {
+    .join-event-box,
+    .event-type-box,
+    .edit-chip,
+    .delete-chip {
       font-size: 97.5%;
       padding: 0.5rem 0.95rem;
     }
@@ -396,7 +415,10 @@ $primary-color: #05bae3;
   }
 
   .event-action {
-    .event-type-box {
+    .join-event-box,
+    .event-type-box,
+    .edit-chip,
+    .delete-chip {
       font-size: 95%;
       padding: 0.625rem 1.25rem;
     }
@@ -534,7 +556,10 @@ $primary-color: #05bae3;
   }
 
   .event-action {
-    .event-type-box {
+    .join-event-box,
+    .event-type-box,
+    .edit-chip,
+    .delete-chip {
       font-size: 92.5%;
       padding: 0.4rem 0.75rem;
     }
@@ -669,7 +694,10 @@ $primary-color: #05bae3;
   }
 
   .event-action {
-    .event-type-box {
+    .join-event-box,
+    .event-type-box,
+    .edit-chip,
+    .delete-chip {
       font-size: 90%;
       padding: 0.25rem 0.625rem;
     }

@@ -9,14 +9,16 @@ import { UserProfileModel } from './../models/user-profile.model';
   styleUrls: ['./event.component.scss'],
 })
 export class EventComponent implements OnInit {
-  userProfile: UserProfileModel;
+  isSportizenId: boolean;
 
   constructor(private homeService: HomeService, private userProfileService: UserProfileService) {}
 
   ngOnInit(): void {
-    this.userProfileService.getProfile().subscribe((userProfile: UserProfileModel) => {
-      if (userProfile) {
-        this.userProfile = userProfile;
+    this.isSportizenId = true;
+
+    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
+      this.isSportizenId = !!sportizenId;
+      if (sportizenId) {
         this.homeService.setRoute('Events');
       }
     });

@@ -1,13 +1,11 @@
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmComponent } from './../../@shared/confirm/confirm.component';
 import { ConnectionService } from './../../services/connection.service';
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { EventService } from './../../services/event.service';
 import { UserProfileService } from './../../services/user-profile.service';
 import { EventModel } from './../../models/event.model';
 import { environment } from './../../../environments/environment';
-import { Title, Meta } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import * as $ from 'jquery';
 
 @Component({
@@ -30,7 +28,6 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private eventService: EventService,
-    private dialog: MatDialog,
     private userProfileService: UserProfileService,
     private connectionService: ConnectionService,
     private router: Router,
@@ -61,6 +58,8 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
     this.longitude = null;
     this.latitude = null;
 
+    this.backPosition = './';
+
     this.titleService.setTitle('SPORTIZEN | Events');
 
     this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
@@ -74,7 +73,6 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
           this.backPosition = './../';
         } else {
           this.getLocation();
-          this.backPosition = './';
         }
       });
     });
@@ -83,30 +81,9 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     window.addEventListener('scroll', this.scroll, true);
   }
-
-  joinEvent(id: string) {
-    if (this.sportizenId) {
-      this.router.navigate([this.backPosition, 'join', id], {
-        relativeTo: this.route,
-      });
-    }
-  }
-
-  viewEvent(id: string) {
-    this.router.navigate([this.backPosition, 'view', id], {
-      relativeTo: this.route,
-    });
-  }
-
   newEvent() {
-    if (this.sportizenId) {
+    if (this.sportizenId && this.type === 'list') {
       this.router.navigate([this.backPosition, 'new'], { relativeTo: this.route });
-    }
-  }
-
-  editEvent(id: string) {
-    if (this.sportizenId) {
-      this.router.navigate([this.backPosition, 'edit', id], { relativeTo: this.route });
     }
   }
 
@@ -174,28 +151,12 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  deleteEvent(id: string, createdUser: string, i: number) {
-    if (this.sportizenId === createdUser) {
-      const dialogRef = this.dialog.open(ConfirmComponent, {
-        data: { message: 'Do you really want to delete This Event?' },
-        maxHeight: '90vh',
-        disableClose: true,
-      });
+  deleteEvent(id: string) {
+    console.log(id);
+    const i = this.events.findIndex((event: EventModel) => event._id === id);
 
-      // tslint:disable-next-line: deprecation
-      dialogRef.afterClosed().subscribe((confirm: boolean) => {
-        if (confirm) {
-          this.loading = true;
-          this.eventService.deleteEvent(id).subscribe(
-            (res: any) => {
-              this.events.splice(i, 1);
-            },
-            (error: any) => {
-              this.loading = false;
-            }
-          );
-        }
-      });
+    if (i !== -1) {
+      this.events.splice(i, 1);
     }
   }
 

@@ -4,6 +4,9 @@ import { MatDrawer } from '@angular/material/sidenav';
 import { DashboardSideDrawerService } from './../../services/dashboard-side-drawer.service';
 
 import * as $ from 'jquery';
+import { UserProfileService } from 'src/app/services/user-profile.service';
+import { UserProfileModel } from 'src/app/models/user-profile.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 class NavTabLink {
   constructor(public link: string, public title: string, public icon: string) {}
@@ -27,6 +30,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   constructor(
     private homeService: HomeService,
     private dashboardSideDrawerService: DashboardSideDrawerService,
+    private userProfileService: UserProfileService,
+    private router: Router,
+    private route: ActivatedRoute,
     private changeDetectorRef: ChangeDetectorRef
   ) {
     this.screenWidth = window.innerWidth;
@@ -37,7 +43,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.activeNavLink = 'Home';
+    this.loading = true;
+
+    this.responsiveWidth = 1200;
 
     this.navLinks = [
       new NavTabLink('/dashboard', 'Home', 'fa-home'),
@@ -47,6 +55,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       new NavTabLink('/dashboard', 'Notifications', 'fa-bell'),
       new NavTabLink('/dashboard', 'My Network', 'fa-users'),
     ];
+
     this.homeService.setRoute(this.navLinks[0].title);
 
     // tslint:disable-next-line: deprecation
@@ -55,8 +64,22 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.changeDetectorRef.detectChanges();
     });
 
-    this.responsiveWidth = 1200;
-    this.loading = true;
+    this.userProfileService.getMyProfile().subscribe(
+      (userProfile: UserProfileModel) => {
+        if (userProfile) {
+          this.userProfileService.setProfile(userProfile);
+
+          // if (!userProfile.profileCompleted) {
+          //   this.router.navigate(['/dashboard/profile/edit'], { relativeTo: this.route });
+          // }
+
+          this.loading = false;
+        }
+      },
+      (error: any) => {
+        // this.router.navigate(['../'], { relativeTo: this.route });
+      }
+    );
   }
 
   changeNavLink(link: string) {

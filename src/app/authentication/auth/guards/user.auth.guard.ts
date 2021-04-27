@@ -6,14 +6,16 @@ import {
   Router,
   CanActivateChild,
   UrlTree,
+  Route,
+  CanLoad,
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
-import { AuthService } from './../auth-service/auth.service';
+import { AuthService } from '../auth-service/auth.service';
 
 @Injectable({ providedIn: 'root' })
-export class UserAuthActivateGuard implements CanActivate {
+export class UserAuthGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(private authService: AuthService, private router: Router) {}
 
   // tslint:disable-next-line: max-line-length
@@ -44,5 +46,18 @@ export class UserAuthActivateGuard implements CanActivate {
     state: RouterStateSnapshot
   ): boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
     return this.canActivate(route, state);
+  }
+
+  canLoad(route: Route) {
+    return this.authService.getUser().pipe(
+      take(1),
+      map((user) => {
+        const isAuth = !!user;
+        if (isAuth && user.userType === 'user') {
+          return true;
+        }
+        return false;
+      })
+    );
   }
 }

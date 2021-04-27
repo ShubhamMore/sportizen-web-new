@@ -1,7 +1,7 @@
 import { AuthenticationComponent } from './authentication.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginAuthActivateGuard } from './auth/guards/login.activate.guard';
+import { LoginAuthGuard } from './auth/guards/login.auth.guard';
 
 const routes: Routes = [
   {
@@ -13,24 +13,24 @@ const routes: Routes = [
       {
         path: 'login',
         loadChildren: () => import('./login/login.module').then((m) => m.LoginModule),
-        canActivate: [LoginAuthActivateGuard],
+        canActivate: [LoginAuthGuard],
       },
       {
         path: 'register',
         loadChildren: () => import('./register/register.module').then((m) => m.RegisterModule),
-        canActivate: [LoginAuthActivateGuard],
+        canActivate: [LoginAuthGuard],
       },
       {
         path: 'forgot-password',
         loadChildren: () =>
           import('./forgot-password/forgot-password.module').then((m) => m.ForgotPasswordModule),
-        canActivate: [LoginAuthActivateGuard],
+        canActivate: [LoginAuthGuard],
       },
       {
         path: 'reset-password',
         loadChildren: () =>
           import('./reset-password/reset-password.module').then((m) => m.ResetPasswordModule),
-        canActivate: [LoginAuthActivateGuard],
+        canActivate: [LoginAuthGuard],
       },
     ],
   },

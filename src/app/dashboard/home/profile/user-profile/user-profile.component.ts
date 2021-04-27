@@ -103,6 +103,8 @@ export class UserProfileComponent implements OnInit {
       data: { image },
       maxHeight: '90vh',
     });
+
+    dialogRef.afterClosed().subscribe((result: any) => {});
   }
 
   getFollowers() {

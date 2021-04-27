@@ -29,6 +29,7 @@ export class JoinEventComponent implements OnInit, OnDestroy {
     private eventPlayerRegistrationService: EventPlayerRegistrationService,
     private userProfileService: UserProfileService,
     private connectionService: ConnectionService,
+    private location: Location,
     private router: Router,
     private titleService: Title,
     private route: ActivatedRoute
@@ -108,16 +109,16 @@ export class JoinEventComponent implements OnInit, OnDestroy {
                 }
               }
             } else {
-              this.router.navigate(['./../../'], { relativeTo: this.route, replaceUrl: true });
+              this.back();
             }
             this.loading = false;
           },
           (error: any) => {
-            this.router.navigate(['./../../'], { relativeTo: this.route, replaceUrl: true });
+            this.back();
           }
         );
       } else {
-        this.router.navigate(['./../../'], { relativeTo: this.route, replaceUrl: true });
+        this.back();
       }
     });
   }
@@ -195,14 +196,16 @@ export class JoinEventComponent implements OnInit, OnDestroy {
         this.eventPlayerRegistrationService.registerPlayer(joinEventData).subscribe(
           (res: any) => {
             this.event.registration = res;
-            this.router.navigate(['./../'], { relativeTo: this.route });
+            this.back();
           },
           (error: any) => {}
         );
       } else {
         joinEventData._id = this.event.registration._id;
         this.eventPlayerRegistrationService.updatePlayerRegistration(joinEventData).subscribe(
-          (res: any) => {},
+          (res: any) => {
+            this.back();
+          },
           (error: any) => {}
         );
       }
@@ -211,7 +214,7 @@ export class JoinEventComponent implements OnInit, OnDestroy {
         this.eventTeamRegistrationService.registerTeam(joinEventData).subscribe(
           (res: any) => {
             this.event.registration = res;
-            this.router.navigate(['./../'], { relativeTo: this.route });
+            this.back();
           },
           (error: any) => {}
         );
@@ -219,12 +222,16 @@ export class JoinEventComponent implements OnInit, OnDestroy {
         joinEventData._id = this.event.registration._id;
         this.eventTeamRegistrationService.updateTeamRegistration(joinEventData).subscribe(
           (res: any) => {
-            this.router.navigate(['./../'], { relativeTo: this.route });
+            this.back();
           },
           (error: any) => {}
         );
       }
     }
+  }
+
+  back() {
+    this.location.back();
   }
 
   ngOnDestroy() {

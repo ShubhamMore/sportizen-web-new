@@ -118,6 +118,8 @@ export class ViewEventComponent implements OnInit, OnDestroy {
       data: { teamMembers },
       maxHeight: '90vh',
     });
+
+    dialogRef.afterClosed().subscribe((result: any) => {});
   }
 
   getRegistrations(registrations: any[]) {

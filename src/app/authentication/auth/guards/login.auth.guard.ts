@@ -6,14 +6,13 @@ import {
   Router,
   CanActivateChild,
   UrlTree,
-  ActivatedRoute,
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 
-import { AuthService } from './../auth-service/auth.service';
+import { AuthService } from '../auth-service/auth.service';
 @Injectable({ providedIn: 'root' })
-export class LoginAuthActivateGuard implements CanActivate {
+export class LoginAuthGuard implements CanActivate, CanActivateChild {
   constructor(private authService: AuthService, private router: Router) {}
 
   // tslint:disable-next-line: max-line-length
@@ -42,5 +41,12 @@ export class LoginAuthActivateGuard implements CanActivate {
       //   }
       // })
     );
+  }
+
+  canActivateChild(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
+    return this.canActivate(route, state);
   }
 }

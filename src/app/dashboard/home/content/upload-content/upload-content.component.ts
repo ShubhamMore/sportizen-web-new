@@ -49,7 +49,7 @@ export class UploadContentComponent implements OnInit {
     });
 
     // tslint:disable-next-line: deprecation
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result: any) => {});
   }
 
   onImagePicked(event: Event): any {

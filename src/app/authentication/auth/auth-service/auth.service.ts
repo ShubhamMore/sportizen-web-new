@@ -139,7 +139,7 @@ export class AuthService {
       (response: any) => {},
       (err: any) => {
         this.removeUser();
-        this.router.navigate(['/dashboard/login'], { relativeTo: this.route });
+        this.router.navigate(['/login'], { relativeTo: this.route });
       }
     );
   }

@@ -16,7 +16,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
 
 import { Validator } from './@shared/validators';
 
-import { LoginAuthActivateGuard } from './authentication/auth/guards/login.activate.guard';
+import { LoginAuthGuard } from './authentication/auth/guards/login.auth.guard';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -47,7 +47,7 @@ export function createTranslateLoader(http: HttpClient) {
     }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
-  providers: [LoginAuthActivateGuard, Validator],
+  providers: [LoginAuthGuard, Validator],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
