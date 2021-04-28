@@ -2,6 +2,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpService } from './../../services/shared-services/http.service';
 import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-forgot-password',
@@ -14,10 +15,15 @@ export class ForgotPasswordComponent implements OnInit {
   loading: boolean;
   form: FormGroup;
 
-  constructor(private httpService: HttpService, private snackBar: MatSnackBar) {}
+  constructor(
+    private httpService: HttpService,
+    private snackBar: MatSnackBar,
+    private titleService: Title
+  ) {}
 
   ngOnInit() {
     this.loading = true;
+    this.titleService.setTitle('SPORTIZEN | Forgot Password');
 
     this.form = new FormGroup({
       email: new FormControl(null, {

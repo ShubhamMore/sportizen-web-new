@@ -6,6 +6,7 @@ import { HttpService } from './../../services/shared-services/http.service';
 import { EncryptService } from './../../services/shared-services/encrypt.service';
 import { environment } from './../../../environments/environment';
 import { Validator } from './../../@shared/validators';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-reset-password',
@@ -26,11 +27,13 @@ export class ResetPasswordComponent implements OnInit {
     private encryptService: EncryptService,
     private router: Router,
     private snackBar: MatSnackBar,
+    private titleService: Title,
     private validator: Validator
   ) {}
 
   ngOnInit() {
     this.loading = true;
+    this.titleService.setTitle('SPORTIZEN | Reset Password');
     this.form = new FormGroup(
       {
         password: new FormControl(null, {

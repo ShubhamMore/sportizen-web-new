@@ -12,6 +12,7 @@ import { SocialAuthService as GoogleAuthService } from 'angularx-social-login';
 import { SocialUser } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
 import { UserService } from './../../services/user.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -35,12 +36,14 @@ export class LoginComponent implements OnInit {
     private googleAuthService: GoogleAuthService,
     private router: Router,
     private snackBar: MatSnackBar,
+    private titleService: Title,
     private encryptService: EncryptService,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.loading = true;
+    this.titleService.setTitle('SPORTIZEN | Login');
     // tslint:disable-next-line: deprecation
     this.googleAuthService.authState.subscribe((user: any) => {
       this.user = user;

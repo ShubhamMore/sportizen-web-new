@@ -8,6 +8,7 @@ import { EncryptService } from './../../services/shared-services/encrypt.service
 import { environment } from './../../../environments/environment';
 import { Validator } from './../../@shared/validators';
 import { UserService } from './../../services/user.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-register',
@@ -28,12 +29,14 @@ export class RegisterComponent implements OnInit {
     private encryptService: EncryptService,
     private userService: UserService,
     private snackBar: MatSnackBar,
+    private titleService: Title,
     private validator: Validator
   ) {}
 
   ngOnInit() {
     this.loading = true;
 
+    this.titleService.setTitle('SPORTIZEN | Register');
     this.userExist = false;
     this.form = new FormGroup(
       {

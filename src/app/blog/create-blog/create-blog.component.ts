@@ -9,6 +9,7 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { UserProfileService } from '../../services/user-profile.service';
 import { Location } from '@angular/common';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-create-blog',
@@ -42,6 +43,7 @@ export class CreateBlogComponent implements OnInit {
     private userProfileService: UserProfileService,
     private router: Router,
     private route: ActivatedRoute,
+    private titleService: Title,
     private snackBar: MatSnackBar
   ) {}
 
@@ -84,6 +86,7 @@ export class CreateBlogComponent implements OnInit {
           if (id) {
             this.blogService.getBlogForUser(id).subscribe(
               (blog: BlogModel) => {
+                this.titleService.setTitle('SPORTIZEN | Edit Blog | ' + blog.title);
                 this.blog = blog;
                 this.detailsForm.patchValue({
                   title: blog.title,
@@ -102,6 +105,8 @@ export class CreateBlogComponent implements OnInit {
               }
             );
           } else {
+            this.titleService.setTitle('SPORTIZEN | New Blog');
+
             this.loading = false;
           }
         });

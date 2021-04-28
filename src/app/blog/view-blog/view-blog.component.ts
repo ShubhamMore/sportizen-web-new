@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BlogsService } from '../../services/blogs.service';
 import { UserProfileService } from '../../services/user-profile.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-view-blog',
@@ -17,6 +18,7 @@ export class ViewBlogComponent implements OnInit {
   constructor(
     private blogService: BlogsService,
     private userProfileService: UserProfileService,
+    private titleService: Title,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -46,6 +48,7 @@ export class ViewBlogComponent implements OnInit {
       getBlog.subscribe(
         (blog: BlogModel) => {
           this.blog = blog;
+          this.titleService.setTitle('SPORTIZEN | Blog | ' + blog.title);
           this.loading = false;
         },
         (error: any) => {

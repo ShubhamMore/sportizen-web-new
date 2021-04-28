@@ -3,6 +3,7 @@ import { BlogsService } from '../../services/blogs.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserProfileService } from '../../services/user-profile.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-blog-list',
@@ -18,11 +19,13 @@ export class BlogListComponent implements OnInit {
     private blogsService: BlogsService,
     private router: Router,
     private userProfileService: UserProfileService,
+    private titleService: Title,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
+    this.titleService.setTitle('SPORTIZEN | Blogs');
     this.blogsList = [];
 
     this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
