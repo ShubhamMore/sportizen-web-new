@@ -31,6 +31,12 @@ const appRoutes: Routes = [
       },
 
       {
+        path: 'blogs',
+        loadChildren: () => import('./blog/blog.module').then((m) => m.BlogModule),
+        canActivate: [LoginAuthGuard],
+      },
+
+      {
         path: 'post/:id',
         loadChildren: () => import('./post/post.module').then((m) => m.PostModule),
         canActivate: [LoginAuthGuard],

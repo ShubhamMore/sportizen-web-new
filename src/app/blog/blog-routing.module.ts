@@ -1,6 +1,7 @@
 import { BlogComponent } from './blog.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { UserAuthGuard } from '../authentication/auth/guards/user.auth.guard';
 
 const routes: Routes = [
   {
@@ -15,11 +16,15 @@ const routes: Routes = [
         path: 'new',
         loadChildren: () =>
           import('./create-blog/create-blog.module').then((m) => m.CreateBlogModule),
+        canActivate: [UserAuthGuard],
+        canLoad: [UserAuthGuard],
       },
       {
         path: 'edit/:id',
         loadChildren: () =>
           import('./create-blog/create-blog.module').then((m) => m.CreateBlogModule),
+        canActivate: [UserAuthGuard],
+        canLoad: [UserAuthGuard],
       },
       {
         path: 'view/:id',

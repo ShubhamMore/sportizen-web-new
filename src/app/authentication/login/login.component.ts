@@ -1,7 +1,7 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from './../../../environments/environment';
 
@@ -26,6 +26,8 @@ export class LoginComponent implements OnInit {
 
   user: SocialUser;
   authObs: Observable<AuthResponseData>;
+
+  redirectRoute: string[];
 
   constructor(
     private authService: AuthService,
@@ -52,7 +54,15 @@ export class LoginComponent implements OnInit {
       }),
     });
 
-    this.loading = false;
+    this.redirectRoute = [];
+
+    this.route.queryParams.subscribe((param: Params) => {
+      if (param.redirectTo) {
+        this.redirectRoute = param.redirectTo.toString().split('/');
+      }
+
+      this.loading = false;
+    });
   }
 
   login() {
@@ -86,7 +96,11 @@ export class LoginComponent implements OnInit {
             panelClass: ['success-snackbar'],
           });
 
-          this.router.navigate(['/dashboard'], { relativeTo: this.route });
+          if (this.redirectRoute.length > 0) {
+            this.router.navigate(['/dashboard', ...this.redirectRoute], { relativeTo: this.route });
+          } else {
+            this.router.navigate(['/dashboard'], { relativeTo: this.route });
+          }
         } else {
           this.snackBar.open('Invalid User', null, {
             duration: 2000,

@@ -1,7 +1,8 @@
-import { BlogModel } from './../../../../models/blog.model';
-import { BlogsService } from './../../../../services/blogs.service';
+import { BlogModel } from '../../models/blog.model';
+import { BlogsService } from '../../services/blogs.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserProfileService } from '../../services/user-profile.service';
 
 @Component({
   selector: 'app-blog-list',
@@ -11,16 +12,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class BlogListComponent implements OnInit {
   loading: boolean;
   blogsList: BlogModel[];
+  sportizenId: string;
 
   constructor(
     private blogsService: BlogsService,
     private router: Router,
+    private userProfileService: UserProfileService,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
     this.blogsList = [];
+
+    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
+      this.sportizenId = sportizenId;
+    });
 
     this.blogsService.getBlogs().subscribe(
       (blogs: BlogModel[]) => {

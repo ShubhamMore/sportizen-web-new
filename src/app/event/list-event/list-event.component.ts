@@ -64,17 +64,17 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
       this.sportizenId = sportizenId;
+    });
 
-      this.route.data.subscribe((data: any) => {
-        this.type = data.type;
+    this.route.data.subscribe((data: any) => {
+      this.type = data.type;
 
-        if (this.sportizenId && ['joined', 'manage'].includes(this.type)) {
-          this.backPosition = './../';
-          this.getEvents(environment.limit, null, this.longitude, this.latitude);
-        } else {
-          this.getLocation();
-        }
-      });
+      if (this.sportizenId && ['joined', 'manage'].includes(this.type)) {
+        this.backPosition = './../';
+        this.getEvents(environment.limit, null, this.longitude, this.latitude);
+      } else {
+        this.getLocation();
+      }
     });
   }
 

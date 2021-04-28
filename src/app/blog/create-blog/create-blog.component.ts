@@ -1,12 +1,14 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { BlogsService } from './../../../../services/blogs.service';
-import { BlogModel } from './../../../../models/blog.model';
-import { SportService } from './../../../../services/sport.service';
-import { SportModel } from './../../../../models/sport.model';
+import { BlogsService } from '../../services/blogs.service';
+import { BlogModel } from '../../models/blog.model';
+import { SportService } from '../../services/sport.service';
+import { SportModel } from '../../models/sport.model';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { UserProfileService } from '../../services/user-profile.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-blog',
@@ -29,11 +31,15 @@ export class CreateBlogComponent implements OnInit {
 
   submit: boolean;
 
+  sportizenId: string;
+
   public classicEditor: any;
 
   constructor(
     private sportsService: SportService,
     private blogService: BlogsService,
+    private location: Location,
+    private userProfileService: UserProfileService,
     private router: Router,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar
@@ -43,56 +49,64 @@ export class CreateBlogComponent implements OnInit {
     this.loading = true;
     this.submit = false;
 
-    this.classicEditor = ClassicEditor;
+    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
+      if (sportizenId) {
+        this.sportizenId = sportizenId;
 
-    this.sports = this.sportsService.getSports();
+        this.classicEditor = ClassicEditor;
 
-    this.detailsForm = new FormGroup({
-      title: new FormControl(null, {
-        validators: [Validators.required],
-      }),
-      subtitle: new FormControl(null, {
-        validators: [Validators.required],
-      }),
-      sport: new FormControl('', {
-        validators: [Validators.required],
-      }),
-    });
+        this.sports = this.sportsService.getSports();
 
-    this.blogForm = new FormGroup({
-      description: new FormControl(null, {
-        validators: [Validators.required],
-      }),
-    });
+        this.detailsForm = new FormGroup({
+          title: new FormControl(null, {
+            validators: [Validators.required],
+          }),
+          subtitle: new FormControl(null, {
+            validators: [Validators.required],
+          }),
+          sport: new FormControl('', {
+            validators: [Validators.required],
+          }),
+        });
 
-    this.blogImageFiles = [];
-    this.blogImagePreview = [];
+        this.blogForm = new FormGroup({
+          description: new FormControl(null, {
+            validators: [Validators.required],
+          }),
+        });
 
-    this.route.params.subscribe((param: Params) => {
-      const id = param.id;
+        this.blogImageFiles = [];
+        this.blogImagePreview = [];
 
-      if (id) {
-        this.blogService.getBlogForUser(id).subscribe(
-          (blog: BlogModel) => {
-            this.blog = blog;
-            this.detailsForm.patchValue({
-              title: blog.title,
-              subtitle: blog.subtitle,
-              sport: blog.sport,
-            });
+        this.route.params.subscribe((param: Params) => {
+          const id = param.id;
 
-            this.blogForm.patchValue({
-              description: blog.description,
-            });
+          if (id) {
+            this.blogService.getBlogForUser(id).subscribe(
+              (blog: BlogModel) => {
+                this.blog = blog;
+                this.detailsForm.patchValue({
+                  title: blog.title,
+                  subtitle: blog.subtitle,
+                  sport: blog.sport,
+                });
 
+                this.blogForm.patchValue({
+                  description: blog.description,
+                });
+
+                this.loading = false;
+              },
+              (error: any) => {
+                this.router.navigate(['./../../'], { relativeTo: this.route, replaceUrl: true });
+              }
+            );
+          } else {
             this.loading = false;
-          },
-          (error: any) => {
-            this.router.navigate(['./../../'], { relativeTo: this.route, replaceUrl: true });
           }
-        );
+        });
       } else {
-        this.loading = false;
+        this.location.back();
       }
     });
   }

@@ -1,5 +1,5 @@
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { SharedModule } from './../../../../@shared/shared.module';
+import { SharedModule } from '../../@shared/shared.module';
 import { NgModule } from '@angular/core';
 
 import { CreateBlogRoutingModule } from './create-blog-routing.module';
