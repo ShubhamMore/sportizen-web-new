@@ -23,6 +23,16 @@ const appRoutes: Routes = [
         canActivate: [UserAuthGuard],
         canLoad: [UserAuthGuard],
       },
+
+      {
+        path: 'page-not-found',
+        loadChildren: () =>
+          import('./@shared/page-not-found/page-not-found.module').then(
+            (m) => m.PageNotFoundModule
+          ),
+      },
+
+      { path: '**', redirectTo: '/page-not-found', pathMatch: 'full' },
     ],
   },
 ];

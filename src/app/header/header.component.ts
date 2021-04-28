@@ -54,7 +54,7 @@ export class HeaderComponent implements OnInit {
 
       $(window).resize(function () {
         var nav = $('.js--main-nav');
-        if ($(window).width() > 767) {
+        if ($(window).width() > 1080) {
           nav.slideDown(200);
         } else {
           nav.slideUp(200);
