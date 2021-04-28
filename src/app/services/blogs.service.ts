@@ -36,8 +36,8 @@ export class BlogsService {
   }
 
   getBlogs(limit?: number, skip?: number) {
-    const data = { api: 'get-blogs', data: { limit, skip } };
-    return this.httpService.httpPost(data).pipe(
+    const data = { api: `get-blogs/${limit}/${skip}`, data: { limit, skip } };
+    return this.httpService.httpGet(data).pipe(
       map((response: any) => {
         return response;
       }),
@@ -47,17 +47,17 @@ export class BlogsService {
     );
   }
 
-  getBlogForUser(id: string) {
-    const data = { api: 'get-blog', data: { id } };
-    return this.httpService.httpPost(data).pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError((err: any) => {
-        return throwError(err);
-      })
-    );
-  }
+  // getBlogForUser(id: string) {
+  //   const data = { api: 'get-blog', data: { id } };
+  //   return this.httpService.httpPost(data).pipe(
+  //     map((response: any) => {
+  //       return response;
+  //     }),
+  //     catchError((err: any) => {
+  //       return throwError(err);
+  //     })
+  //   );
+  // }
 
   getBlog(id: string) {
     const data = { api: `get-blog/${id}`, data: { id } };

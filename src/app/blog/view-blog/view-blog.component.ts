@@ -32,30 +32,21 @@ export class ViewBlogComponent implements OnInit {
 
     this.route.params.subscribe((param: Params) => {
       const id = param.id;
-      let getBlog: any;
-      if (id) {
-        getBlog = this.blogService.getBlogForUser(id);
-      } else {
-        this.route.queryParams.subscribe((param: Params) => {
-          if (param.id) {
-            getBlog = this.blogService.getBlog(param.id);
-          } else {
-            this.router.navigate(['./../../'], { relativeTo: this.route, replaceUrl: true });
-          }
-        });
-      }
 
-      getBlog.subscribe(
-        (blog: BlogModel) => {
-          this.blog = blog;
-          this.titleService.setTitle('SPORTIZEN | Blog | ' + blog.title);
-          this.loading = false;
-        },
-        (error: any) => {
-          this.loading = false;
-          this.router.navigate(['./../../'], { relativeTo: this.route, replaceUrl: true });
-        }
-      );
+      if (id) {
+        this.blogService.getBlog(id).subscribe(
+          (blog: BlogModel) => {
+            this.blog = blog;
+            this.titleService.setTitle('SPORTIZEN | Blog | ' + blog.title);
+            this.loading = false;
+          },
+          (error: any) => {
+            this.router.navigate(['./../'], { relativeTo: this.route, replaceUrl: true });
+          }
+        );
+      } else {
+        this.router.navigate(['./../'], { relativeTo: this.route, replaceUrl: true });
+      }
     });
   }
 }

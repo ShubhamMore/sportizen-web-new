@@ -84,7 +84,7 @@ export class CreateBlogComponent implements OnInit {
           const id = param.id;
 
           if (id) {
-            this.blogService.getBlogForUser(id).subscribe(
+            this.blogService.getBlog(id).subscribe(
               (blog: BlogModel) => {
                 this.titleService.setTitle('SPORTIZEN | Edit Blog | ' + blog.title);
                 this.blog = blog;

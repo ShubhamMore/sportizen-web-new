@@ -13,7 +13,7 @@ const appRoutes: Routes = [
 
       {
         path: 'home',
-        loadChildren: () => import('./content/content.module').then((m) => m.ContentModule),
+        loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
         canActivate: [LoginAuthGuard],
       },
 
@@ -22,24 +22,6 @@ const appRoutes: Routes = [
         loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
         canActivate: [UserAuthGuard],
         canLoad: [UserAuthGuard],
-      },
-
-      {
-        path: 'events',
-        loadChildren: () => import('./event/event.module').then((m) => m.EventModule),
-        canActivate: [LoginAuthGuard],
-      },
-
-      {
-        path: 'blogs',
-        loadChildren: () => import('./blog/blog.module').then((m) => m.BlogModule),
-        canActivate: [LoginAuthGuard],
-      },
-
-      {
-        path: 'post/:id',
-        loadChildren: () => import('./post/post.module').then((m) => m.PostModule),
-        canActivate: [LoginAuthGuard],
       },
     ],
   },

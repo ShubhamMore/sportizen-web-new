@@ -12,7 +12,6 @@ import { DashboardModule } from './dashboard/dashboard.module';
 
 import { SharedModule } from './@shared/shared.module';
 import { CoreModule } from './@core/core.module';
-import { AuthenticationModule } from './authentication/authentication.module';
 
 import { Validator } from './@shared/validators';
 
@@ -20,6 +19,7 @@ import { LoginAuthGuard } from './authentication/auth/guards/login.auth.guard';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { ContentModule } from './content/content.module';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './../../assets/i18n/locale_', '.json');
@@ -33,7 +33,7 @@ export function createTranslateLoader(http: HttpClient) {
     HttpClientModule,
     SharedModule,
     CoreModule,
-    AuthenticationModule,
+    ContentModule,
     DashboardModule,
     AppRoutingModule,
     CKEditorModule,

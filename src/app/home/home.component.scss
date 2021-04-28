@@ -1,0 +1,370 @@
+.arrow-up {
+  border: solid;
+  border-width: 0 0.25rem 0.25rem 0;
+  display: inline-block;
+  padding: 0.25rem;
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+
+.btn-top {
+  width: 3rem;
+  height: 3rem;
+}
+
+.btn-top-link {
+  display: none;
+  text-decoration: none;
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.75rem;
+  z-index: 99;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  text-align: center;
+  outline: none;
+  background-color: #07bae3;
+  color: #fff;
+  cursor: pointer;
+  width: 3rem;
+  height: 3rem;
+  padding: 0.75rem;
+  border-radius: 50%;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.btn-top-link:hover {
+  background-color: #075492;
+  color: #fff;
+}
+
+.show-top-btn {
+  display: block;
+}
+
+.sportizen-text-box {
+  position: absolute;
+  text-align: center;
+  width: 72rem;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.heading-primary {
+  backface-visibility: hidden;
+  margin-bottom: 3rem;
+}
+
+.heading-primary-main {
+  letter-spacing: 0.25rem;
+  animation: moveInLeft 1s ease-out;
+}
+
+.heading-primary-logo {
+  -webkit-filter: drop-shadow(0.5rem 0.5rem 0.5rem #000);
+  filter: drop-shadow(0.5rem 0.5rem 0.5rem #000);
+}
+
+.heading-primary-sub {
+  margin: 0 auto;
+  width: 75%;
+  background-color: #075492;
+  color: #fff;
+  letter-spacing: 0.1875rem;
+  animation: moveInRight 1s ease-out;
+  padding: 0.25rem 0.625rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+}
+
+.heading-contact-btn-animated {
+  animation: moveInBottom 1s ease-out 0.75s;
+  animation-fill-mode: backwards;
+}
+
+.heading-contact-btn:link,
+.heading-contact-btn:visited {
+  background-color: transparent;
+  text-transform: uppercase;
+  border: 1px solid #fff;
+  font-weight: 300;
+  border-radius: 6.25rem;
+  color: #fff;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.heading-contact-btn:hover {
+  /* transform: scale(1.1); */
+  transform: translateY(-0.1875rem);
+  background-color: #05bae3e6;
+  box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.2);
+}
+
+.heading-contact-btn:active {
+  transform: translateY(-0.0625rem);
+  box-shadow: 0 0.25rem 0.5rem rgba(255, 255, 255, 0.2);
+}
+
+/* LOGO */
+
+.logo {
+  margin-top: 1.25rem;
+  height: 3rem;
+  width: auto;
+  float: left;
+  cursor: pointer;
+  animation: fadeIn 1s ease-out;
+}
+
+.hide-logo {
+  display: none;
+}
+
+/* MAIN NAV BAR */
+
+.main-nav {
+  margin-top: 3.5rem;
+  float: right;
+  list-style: none;
+  animation: moveInTop 1s ease-out;
+}
+
+.main-nav li {
+  display: inline-block;
+  margin-left: 2.5rem;
+}
+
+.main-nav li a:link,
+.main-nav li a:visited {
+  padding: 0.5rem 0;
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-bottom: 0.125rem solid transparent;
+  font-size: 92.5%;
+  -webkit-transition: border-bottom 0.2s;
+  transition: border-bottom 0.2s;
+}
+
+.main-nav li a:hover,
+.main-nav li a:active {
+  border-bottom: 0.125rem solid #075492;
+}
+
+/* MOBILE NAV */
+.mobile-nan-icon {
+  float: right;
+  margin-top: 2rem;
+  cursor: pointer;
+  display: none;
+  animation: moveInTop 1s ease-out;
+}
+
+.mobile-nan-icon i {
+  font-size: 180%;
+  font-weight: 100;
+  color: #fff;
+}
+
+.mobile-nan-icon .fa-close {
+  color: #075492;
+}
+
+/* STICKY NAV BAR */
+.sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* background-color: rgba(255, 255, 255, 0.98); */
+  background-color: rgba(5, 186, 227, 0.98);
+  box-shadow: 0 0.125rem 0.125rem #07b3da;
+  z-index: 9999;
+}
+
+.sticky .main-nav {
+  margin-top: 1.25rem;
+}
+
+.sticky .main-nav li a:link,
+.sticky .main-nav li a:visited {
+  padding: 1rem 0;
+  color: #fff;
+}
+
+.sticky .main-nav li a:hover,
+.sticky .main-nav li a:active {
+  border-bottom: 0.125rem solid #075492;
+}
+
+.sticky .logo {
+  height: 3rem;
+  margin: 0.25rem 0;
+  width: auto;
+}
+
+@keyframes moveInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-6.25rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ANIMATIONS */
+@keyframes moveInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(6.25rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes moveInTop {
+  0% {
+    opacity: 0;
+    transform: translateY(-1.25rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes moveInBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Big tablets to 1200px (Width smaller that the 1140px row) */
+@media only screen and (max-width: 1023px) {
+  .row {
+    padding: 0 2%;
+  }
+
+  .sportizen-text-box {
+    width: 100%;
+    padding: 0 2%;
+  }
+}
+
+/* Small tablets to big tablets 768px - 1023px */
+@media only screen and (max-width: 1023px) {
+}
+
+/* Small Phones to small tablets 481px - 767px */
+@media only screen and (max-width: 767px) {
+  .arrow-up {
+    border-width: 0 0.25rem 0.25rem 0;
+    padding: 0.25rem;
+  }
+
+  .btn-top,
+  .btn-top-link {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .btn-top-link {
+    bottom: 1rem;
+    right: 1.25rem;
+    font-size: 1.25rem;
+    line-height: 1.25rem;
+    padding: 0.5rem 0 0 0;
+  }
+
+  .sportizen-text-box,
+  .row {
+    padding: 0 4%;
+  }
+
+  .mobile-nan-icon {
+    display: inline-block;
+  }
+
+  .main-nav {
+    float: left;
+    margin-top: 2.25rem;
+    margin-left: 1.5rem;
+    display: none;
+  }
+
+  .main-nav li {
+    display: block;
+    width: 100%;
+    margin: 0rem;
+  }
+
+  .main-nav li a:link,
+  .main-nav li a:visited {
+    display: block;
+    border: 0;
+    padding: 0.625rem 0;
+    font-size: 100%;
+  }
+
+  .sticky .main-nav {
+    margin: 0rem;
+    float: left;
+    display: none;
+    width: 100%;
+  }
+
+  .sticky .main-nav li {
+    display: block;
+    width: 100%;
+    margin: 0rem;
+  }
+
+  .sticky .main-nav li a:link,
+  .sticky .main-nav li a:visited {
+    display: block;
+    padding: 0.625rem 0;
+    color: #fff;
+  }
+
+  .sticky .main-nav li a:hover,
+  .sticky .main-nav li a:active {
+    border: 0;
+  }
+
+  .sticky .mobile-nan-icon {
+    margin-top: 1rem;
+  }
+  .sticky .mobile-nan-icon i {
+    color: #fff;
+  }
+
+  .sticky .mobile-nan-icon .fa-close {
+    color: #075492;
+  }
+}
+
+/* Small Phones 0px - 480px */
+@media only screen and (max-width: 480px) {
+  .main-nav {
+    margin-left: 0rem;
+  }
+}

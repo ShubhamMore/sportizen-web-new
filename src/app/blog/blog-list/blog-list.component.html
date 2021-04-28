@@ -1,5 +1,5 @@
-<span class="create-blog">
-  <a class="btn-create-blog shadow-sm" routerLink="new">
+<span class="create-blog" *ngIf="sportizenId">
+  <a class="btn-create-blog shadow-sm" (click)="newBlog()">
     <span class="icon">+</span>
 
     <span class="text">Write Blog</span>
@@ -53,7 +53,7 @@
     <div
       class="blog-details"
       [ngClass]="blog.images.length > 0 ? '' : 'no-blog-image'"
-      (click)="openBlog(blog)"
+      (click)="openBlog(blog._id)"
     >
       <div class="blog-details-header">
         <span class="created-user">{{ blog.createdUser | capitalizeEachWord }}</span>

@@ -30,9 +30,15 @@ export class BlogListComponent implements OnInit {
 
     this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
       this.sportizenId = sportizenId;
+
+      this.getBlogs(null, null);
     });
 
-    this.blogsService.getBlogs().subscribe(
+    // this.blogsList = this.blogsService.getBlogsList();
+  }
+
+  getBlogs(limit: number, skip: number) {
+    this.blogsService.getBlogs(limit, skip).subscribe(
       (blogs: BlogModel[]) => {
         this.blogsList = blogs;
         this.loading = false;
@@ -41,11 +47,21 @@ export class BlogListComponent implements OnInit {
         this.loading = false;
       }
     );
-
-    // this.blogsList = this.blogsService.getBlogsList();
   }
 
-  openBlog(blog: BlogModel) {
-    this.router.navigate(['/dashboard/blog/view', blog._id], { relativeTo: this.route });
+  newBlog() {
+    if (this.sportizenId) {
+      this.router.navigate(['./new'], { relativeTo: this.route });
+    }
+  }
+
+  editBlog(id: string) {
+    if (this.sportizenId && id) {
+      this.router.navigate(['./edit', id], { relativeTo: this.route });
+    }
+  }
+
+  openBlog(id: string) {
+    this.router.navigate(['./view', id], { relativeTo: this.route });
   }
 }
