@@ -53,9 +53,14 @@ export class EventDetailsComponent implements OnInit {
     return registrations;
   }
 
+  private getBackRoute() {
+    const backRoute = this.backPosition; //  + (this.isList ? '' : '../')
+    return backRoute;
+  }
+
   joinEvent(id: string) {
     if (this.sportizenId) {
-      this.router.navigate([this.backPosition, 'join', id], {
+      this.router.navigate([this.getBackRoute(), 'join', id], {
         relativeTo: this.route,
       });
     }
@@ -71,7 +76,16 @@ export class EventDetailsComponent implements OnInit {
 
   editEvent(id: string) {
     if (this.sportizenId) {
-      this.router.navigate([this.backPosition, 'edit', id], { relativeTo: this.route });
+      this.router.navigate([this.getBackRoute(), 'edit', id], { relativeTo: this.route });
+    }
+  }
+
+  loginForJoinEvent(id: string) {
+    if (!this.sportizenId) {
+      this.router.navigate(['/login'], {
+        relativeTo: this.route,
+        queryParams: { redirectTo: `event/join/${id}` },
+      });
     }
   }
 

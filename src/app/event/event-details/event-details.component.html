@@ -91,10 +91,10 @@
           >Event Type: {{ event.eventType | capitalizeEachWord }}</mat-chip
         >
 
-        <ng-container *ngIf="sportizenId && isList">
+        <ng-container *ngIf="sportizenId && isList; else loginForEventRegistration">
           <mat-chip
             class="join-event-box"
-            *ngIf="event.createdBy != sportizenId"
+            *ngIf="event.createdBy !== sportizenId"
             (click)="joinEvent(event._id)"
           >
             {{ event.isRegistered ? 'Registered' : 'Join Event' }}
@@ -108,6 +108,16 @@
             </mat-chip>
           </ng-container>
         </ng-container>
+
+        <ng-template #loginForEventRegistration>
+          <mat-chip
+            class="join-event-box"
+            *ngIf="!sportizenId"
+            (click)="loginForJoinEvent(event._id)"
+          >
+            Join Event
+          </mat-chip>
+        </ng-template>
       </mat-chip-list>
     </div>
 
