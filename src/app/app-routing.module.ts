@@ -21,6 +21,7 @@ const appRoutes: Routes = [
         path: 'dashboard',
         loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
         canActivate: [UserAuthGuard],
+        canLoad: [UserAuthGuard],
       },
 
       {
@@ -34,16 +35,6 @@ const appRoutes: Routes = [
         loadChildren: () => import('./post/post.module').then((m) => m.PostModule),
         canActivate: [LoginAuthGuard],
       },
-
-      {
-        path: 'page-not-found',
-        loadChildren: () =>
-          import('./@shared/page-not-found/page-not-found.module').then(
-            (m) => m.PageNotFoundModule
-          ),
-      },
-
-      { path: '**', redirectTo: 'page-not-found' },
     ],
   },
 ];

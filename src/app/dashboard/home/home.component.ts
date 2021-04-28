@@ -3,10 +3,10 @@ import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '
 import { MatDrawer } from '@angular/material/sidenav';
 import { DashboardSideDrawerService } from './../../services/dashboard-side-drawer.service';
 
-import * as $ from 'jquery';
 import { UserProfileService } from 'src/app/services/user-profile.service';
-import { UserProfileModel } from 'src/app/models/user-profile.model';
 import { ActivatedRoute, Router } from '@angular/router';
+
+import * as $ from 'jquery';
 
 class NavTabLink {
   constructor(public link: string, public title: string, public icon: string) {}
@@ -64,22 +64,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.changeDetectorRef.detectChanges();
     });
 
-    this.userProfileService.getMyProfile().subscribe(
-      (userProfile: UserProfileModel) => {
-        if (userProfile) {
-          this.userProfileService.setProfile(userProfile);
-
-          // if (!userProfile.profileCompleted) {
-          //   this.router.navigate(['/dashboard/profile/edit'], { relativeTo: this.route });
-          // }
-
-          this.loading = false;
-        }
-      },
-      (error: any) => {
-        // this.router.navigate(['../'], { relativeTo: this.route });
-      }
-    );
+    this.loading = false;
   }
 
   changeNavLink(link: string) {

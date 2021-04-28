@@ -69,8 +69,8 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
         this.type = data.type;
 
         if (this.sportizenId && ['joined', 'manage'].includes(this.type)) {
-          this.getEvents(environment.limit, null, this.longitude, this.latitude);
           this.backPosition = './../';
+          this.getEvents(environment.limit, null, this.longitude, this.latitude);
         } else {
           this.getLocation();
         }
@@ -81,29 +81,11 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     window.addEventListener('scroll', this.scroll, true);
   }
+
   newEvent() {
     if (this.sportizenId && this.type === 'list') {
       this.router.navigate([this.backPosition, 'new'], { relativeTo: this.route });
     }
-  }
-
-  viewProfile(id: string) {
-    if (id === this.sportizenId) {
-      this.router.navigate([this.backPosition, '../', 'profile'], { relativeTo: this.route });
-    } else {
-      if (this.sportizenId) {
-        this.connectionService.searchedSportizenId = id;
-      }
-      this.router.navigate([this.backPosition, '../', 'profile', id], { relativeTo: this.route });
-    }
-  }
-
-  getRegistrations(registrations: any[]) {
-    if (registrations.length > 6) {
-      return registrations.slice(0, 6);
-    }
-
-    return registrations;
   }
 
   getLocation() {
@@ -157,14 +139,6 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
     if (i !== -1) {
       this.events.splice(i, 1);
     }
-  }
-
-  limitDescription(desc: string) {
-    const limit = 25;
-    if (desc.length < limit) {
-      return desc;
-    }
-    return desc.substring(0, limit) + '...';
   }
 
   formatDate(date: string) {

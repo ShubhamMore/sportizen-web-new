@@ -101,13 +101,14 @@ export class EventDetailsComponent implements OnInit {
   }
 
   viewProfile(id: string) {
-    if (this.sportizenId && id === this.sportizenId) {
-      this.router.navigate(['./../../', 'profile'], { relativeTo: this.route });
-    } else {
-      if (this.sportizenId) {
+    if (this.sportizenId) {
+      const backPath = this.backPosition + (this.isList ? '' : '../') + '../';
+      if (id === this.sportizenId) {
+        this.router.navigate([backPath, 'profile'], { relativeTo: this.route });
+      } else {
         this.connectionService.searchedSportizenId = id;
+        this.router.navigate([backPath, 'profile', id], { relativeTo: this.route });
       }
-      this.router.navigate(['./../../', 'profile', id], { relativeTo: this.route });
     }
   }
 }
