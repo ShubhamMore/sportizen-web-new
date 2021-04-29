@@ -11,6 +11,8 @@ import { UserProfileService } from './../../services/user-profile.service';
 import { ObjectId } from 'bson';
 import { EventPlayerRegistrationService } from './../../services/event-player-registration.service';
 import { Title } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
+import { PaymentComponent } from './../../payment/payment.component';
 
 @Component({
   selector: 'app-join-event',
@@ -29,6 +31,7 @@ export class JoinEventComponent implements OnInit, OnDestroy {
     private eventPlayerRegistrationService: EventPlayerRegistrationService,
     private userProfileService: UserProfileService,
     private connectionService: ConnectionService,
+    public dialog: MatDialog,
     private location: Location,
     private router: Router,
     private titleService: Title,
@@ -180,6 +183,17 @@ export class JoinEventComponent implements OnInit, OnDestroy {
       const teamMembers = this.getTeamMembers();
       teamMembers.removeAt(i);
     }
+  }
+
+  payNow() {
+    const dialogRef = this.dialog.open(PaymentComponent, {
+      data: { amount: this.event.fees },
+      maxHeight: '90vh',
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      console.log(result);
+    });
   }
 
   registerNow() {

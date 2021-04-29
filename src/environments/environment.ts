@@ -10,6 +10,7 @@ export const environment = {
   title: 'SPORTIZEN',
   SOCKET_ENDPOINT: 'http://127.0.0.1:3000/sportizen-chat',
   oauthClientID: '106169972032-l24bd52bmddd6ok8oalhvf9ta2tavatm.apps.googleusercontent.com',
+  razorpayKey: 'rzp_test_sd927qB1Q0xG2n',
   limit: 5,
 };
 

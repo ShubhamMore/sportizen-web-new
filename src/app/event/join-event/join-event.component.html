@@ -12,7 +12,7 @@
               <h3>Registration for {{ event.name | capitalizeEachWord }}</h3>
 
               <form
-                (ngSubmit)="registerNow()"
+                (ngSubmit)="payNow()"
                 [formGroup]="joinEventForm"
                 *ngIf="event.registrationType === 'individual'"
               >

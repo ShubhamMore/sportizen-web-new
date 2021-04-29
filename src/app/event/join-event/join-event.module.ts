@@ -4,9 +4,10 @@ import { NgModule } from '@angular/core';
 import { JoinEventRoutingModule } from './join-event-routing.module';
 import { JoinEventComponent } from './join-event.component';
 import { EventDetailsModule } from './../event-details/event-details.module';
+import { PaymentModule } from 'src/app/payment/payment.module';
 
 @NgModule({
   declarations: [JoinEventComponent],
-  imports: [SharedModule, JoinEventRoutingModule, EventDetailsModule],
+  imports: [SharedModule, JoinEventRoutingModule, PaymentModule, EventDetailsModule],
 })
 export class JoinEventModule {}
