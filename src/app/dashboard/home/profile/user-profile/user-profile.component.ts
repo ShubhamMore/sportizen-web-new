@@ -8,6 +8,7 @@ import { ConnectionStatus } from './../../../../enums/connectionStatus';
 import { UserProfileModel } from './../../../../models/user-profile.model';
 import { ConnectionService } from './../../../../services/connection.service';
 import { UserProfileService } from './../../../../services/user-profile.service';
+import { Title } from '@angular/platform-browser';
 interface Connection {
   name: string;
   email: string;
@@ -39,6 +40,7 @@ export class UserProfileComponent implements OnInit {
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
     private router: Router,
+    private titleService: Title,
     private route: ActivatedRoute
   ) {
     // tslint:disable-next-line: deprecation
@@ -49,6 +51,8 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
+
+    this.titleService.setTitle('SPORTIZEN | Profile');
 
     this.connectionStatus = '';
     this.gallery = [];
@@ -65,6 +69,7 @@ export class UserProfileComponent implements OnInit {
           this.userProfileService
             .getUserProfile(this.userProfileId)
             .subscribe((userProfile: UserProfileModel) => {
+              this.titleService.setTitle('SPORTIZEN | Profile | ' + userProfile.name);
               this.userProfile = userProfile;
 
               this.setConnectionStatus(userProfile.connection);

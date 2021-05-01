@@ -14,6 +14,7 @@ import { HttpService } from './../../../../services/shared-services/http.service
 import { UserService } from './../../../../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DashboardSideDrawerService } from './../../../../services/dashboard-side-drawer.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-save-profile',
@@ -48,12 +49,16 @@ export class SaveProfileComponent implements OnInit {
     private validator: Validator,
     private userService: UserService,
     private snackBar: MatSnackBar,
+    private titleService: Title,
     public dialog: MatDialog,
     private dashboardSideDrawerService: DashboardSideDrawerService
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
+
+    this.titleService.setTitle('SPORTIZEN | Edit Profile');
+
     navigator.geolocation.getCurrentPosition((location) => {});
 
     this.addSportInterest = false;

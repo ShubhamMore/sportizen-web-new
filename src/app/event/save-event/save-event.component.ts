@@ -73,10 +73,10 @@ export class SaveEventComponent implements OnInit, OnDestroy {
           name: new FormControl(null, {
             validators: [Validators.required],
           }),
-          // eventType: new FormControl( '', {
-          //   validators: [Validators.required],
-          // }),
           sport: new FormControl('', {
+            validators: [Validators.required],
+          }),
+          eventType: new FormControl('', {
             validators: [Validators.required],
           }),
           registrationType: new FormControl('', {
@@ -102,6 +102,9 @@ export class SaveEventComponent implements OnInit, OnDestroy {
           }),
           endDate: new FormControl(null, {
             validators: [Validators.required],
+          }),
+          time: new FormControl(null, {
+            validators: [],
           }),
           registerTill: new FormControl(null, {
             validators: [Validators.required],
@@ -131,10 +134,21 @@ export class SaveEventComponent implements OnInit, OnDestroy {
                 this.titleService.setTitle(`SPORTIZEN | Edit Event | ${event.name}`);
                 this.event = event;
 
+                console.log({
+                  name: event.name,
+                  sport: event.sport,
+                  eventType: event.eventType,
+                  registrationType: event.registrationType,
+                  noOfPlayers: event.noOfPlayers,
+                  description: event.description,
+                  winningPrice: event.winningPrice,
+                  fees: event.fees,
+                });
+
                 this.eventDetailsForm.patchValue({
                   name: event.name,
-                  // eventType: event.eventType,
                   sport: event.sport,
+                  eventType: event.eventType,
                   registrationType: event.registrationType,
                   noOfPlayers: event.noOfPlayers,
                   description: event.description,
@@ -143,10 +157,10 @@ export class SaveEventComponent implements OnInit, OnDestroy {
                 });
 
                 this.eventScheduleForm.patchValue({
-                  startDate: this.dateService.convertToDateString(event.startDate),
-                  endDate: this.dateService.convertToDateString(event.endDate),
-                  registerTill: this.dateService.convertToDateString(event.registerTill),
-                  // time: event.time,
+                  startDate: event.startDate,
+                  endDate: event.endDate,
+                  time: event.time,
+                  registerTill: event.registerTill,
                 });
 
                 this.eventLocationForm.patchValue({
@@ -162,9 +176,10 @@ export class SaveEventComponent implements OnInit, OnDestroy {
 
                 this.changeCity(event.city);
 
-                this.eventDetailsForm.get('sport').disable();
-                this.eventDetailsForm.get('registrationType').disable();
-                this.eventDetailsForm.get('fees').disable();
+                // this.eventDetailsForm.get('sport').disable();
+                // this.eventDetailsForm.get('eventType').disable();
+                // this.eventDetailsForm.get('registrationType').disable();
+                // this.eventDetailsForm.get('fees').disable();
 
                 this.loading = false;
               },
@@ -255,27 +270,32 @@ export class SaveEventComponent implements OnInit, OnDestroy {
       this.submit = true;
 
       const event = new FormData();
+      // Event ID
       if (this.event) {
         event.append('_id', this.event._id);
       }
-      event.append('name', this.eventDetailsForm.value.name);
-      event.append('description', this.eventDetailsForm.value.description);
-      event.append('sport', this.eventDetailsForm.value.sport);
-      event.append('registrationType', this.eventDetailsForm.value.registrationType);
-      event.append('noOfPlayers', this.eventDetailsForm.value.noOfPlayers);
-      event.append('winningPrice', this.eventDetailsForm.value.winningPrice);
-      event.append('fees', this.eventDetailsForm.value.fees);
-      event.append('startDate', this.eventScheduleForm.value.startDate);
-      event.append('endDate', this.eventScheduleForm.value.endDate);
-      event.append('registerTill', this.eventScheduleForm.value.registerTill);
-      // event.append('time', this.eventScheduleForm.value.time);
-      event.append('address', this.eventLocationForm.value.address);
-      event.append('state', this.eventLocationForm.value.state);
-      event.append('city', this.eventLocationForm.value.city);
+      // Event Details
+      event.append('name', this.eventDetailsForm.getRawValue().name);
+      event.append('description', this.eventDetailsForm.getRawValue().description);
+      event.append('sport', this.eventDetailsForm.getRawValue().sport);
+      event.append('eventType', this.eventDetailsForm.getRawValue().eventType);
+      event.append('registrationType', this.eventDetailsForm.getRawValue().registrationType);
+      event.append('noOfPlayers', this.eventDetailsForm.getRawValue().noOfPlayers);
+      event.append('winningPrice', this.eventDetailsForm.getRawValue().winningPrice);
+      event.append('fees', this.eventDetailsForm.getRawValue().fees);
+      // Event Schedule
+      event.append('startDate', this.eventScheduleForm.getRawValue().startDate);
+      event.append('endDate', this.eventScheduleForm.getRawValue().endDate);
+      event.append('registerTill', this.eventScheduleForm.getRawValue().registerTill);
+      event.append('time', this.eventScheduleForm.getRawValue().time);
+      // Event Location
+      event.append('address', this.eventLocationForm.getRawValue().address);
+      event.append('state', this.eventLocationForm.getRawValue().state);
+      event.append('city', this.eventLocationForm.getRawValue().city);
       event.append('latitude', this.city.latitude);
       event.append('longitude', this.city.longitude);
       event.append('createdBy', this.userProfile.email);
-      // tslint:disable-next-line: prefer-for-of
+      // Event Images
       for (let i = 0; i < this.eventImageFiles.length; i++) {
         event.append('eventImage', this.eventImageFiles[i]);
       }
@@ -318,7 +338,5 @@ export class SaveEventComponent implements OnInit, OnDestroy {
     this.location.back();
   }
 
-  ngOnDestroy() {
-    // this.eventService.setEventId(null);
-  }
+  ngOnDestroy() {}
 }

@@ -1,6 +1,6 @@
 import { HomeService } from './../../../services/home.service';
 import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { Title } from '@angular/platform-browser';
 import { DashboardSideDrawerService } from './../../../services/dashboard-side-drawer.service';
 
 @Component({
@@ -13,15 +13,17 @@ export class ContentComponent implements OnInit {
 
   constructor(
     private dashboardSideDrawerService: DashboardSideDrawerService,
-    private homeService: HomeService
+    private homeService: HomeService,
+    private titleService: Title
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
     this.homeService.setRoute('Home');
-    setTimeout(() => {
-      this.loading = false;
-    }, 5000);
-
+    // setTimeout(() => {
+    //   this.loading = false;
+    // }, 5000);
+    this.titleService.setTitle('SPORTIZEN | Feed');
     // this.dashboardSideDrawerService.openDrawer();
   }
 }

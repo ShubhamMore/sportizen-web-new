@@ -72,6 +72,23 @@
 
                     <div class="col-md-6">
                       <mat-form-field class="full-width">
+                        <mat-label for="event-type"> Event Type </mat-label>
+
+                        <mat-select formControlName="eventType" name="eventType" id="event-type">
+                          <mat-option value="tournament">Tournament</mat-option>
+                          <mat-option value="podcast">Podcast</mat-option>
+                          <mat-option value="quiz">Quiz</mat-option>
+                          <mat-option value="auction">Auction</mat-option>
+                        </mat-select>
+
+                        <mat-error *ngIf="eventDetailsForm.get('eventType').hasError('required')">
+                          Event Type is required*
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <div class="col-md-6">
+                      <mat-form-field class="full-width">
                         <mat-label for="registration-type"> Registration Type </mat-label>
 
                         <mat-select
@@ -198,6 +215,7 @@
                         <input
                           matInput
                           [matDatepicker]="endDatePicker"
+                          [min]="eventScheduleForm.value.startDate"
                           name="endDate"
                           id="end-date"
                           formControlName="endDate"
@@ -216,7 +234,7 @@
                       </mat-form-field>
                     </div>
 
-                    <!-- <div class="col-md-6">
+                    <div class="col-md-6">
                       <mat-form-field class="full-width">
                         <mat-label for="time">Time </mat-label>
 
@@ -226,7 +244,7 @@
                           Time is required*
                         </mat-error>
                       </mat-form-field>
-                    </div> -->
+                    </div>
 
                     <div class="col-md-6">
                       <mat-form-field class="full-width">
@@ -235,6 +253,8 @@
                         <input
                           matInput
                           [matDatepicker]="registeredTill"
+                          [min]="eventScheduleForm.value.startDate"
+                          [max]="eventScheduleForm.value.endDate"
                           name="registerTill"
                           id="register-till"
                           formControlName="registerTill"

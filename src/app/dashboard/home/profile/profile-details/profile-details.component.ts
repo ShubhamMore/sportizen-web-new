@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserProfileModel } from './../../../../models/user-profile.model';
 import { DashboardSideDrawerService } from './../../../../services/dashboard-side-drawer.service';
 import { UserProfileService } from './../../../../services/user-profile.service';
+import { Title } from '@angular/platform-browser';
 
 interface Connection {
   name: string;
@@ -44,6 +45,7 @@ export class ProfileDetailsComponent implements OnInit {
     private dashboardSideDrawerService: DashboardSideDrawerService,
     private postGalleryService: PostGalleryService,
     private snackBar: MatSnackBar,
+    private titleService: Title,
     public dialog: MatDialog,
     private connectionService: ConnectionService,
     private router: Router,
@@ -53,6 +55,9 @@ export class ProfileDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
     this.storyEdit = false;
+
+    this.titleService.setTitle('SPORTIZEN | Profile');
+
     this.userProfileService.getProfile().subscribe((userProfile: UserProfileModel) => {
       if (userProfile) {
         this.userProfile = userProfile;
