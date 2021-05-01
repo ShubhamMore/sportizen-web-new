@@ -17,6 +17,7 @@
           <mat-horizontal-stepper [linear]="true" #stepper>
             <mat-step [stepControl]="detailsForm">
               <form [formGroup]="detailsForm">
+                <ng-template matStepLabel>Blog Details</ng-template>
                 <div class="row">
                   <div class="col-md-6">
                     <mat-form-field class="full-width">
@@ -78,18 +79,17 @@
 
             <mat-step [stepControl]="blogForm">
               <form [formGroup]="blogForm">
+                <ng-template matStepLabel>Wrire a Blog</ng-template>
                 <div class="row">
                   <div class="col-12">
-                    <mat-label style="display: block; text-align: left" for="description"
-                      >Description</mat-label
-                    >
-
+                    <br />
                     <ckeditor
                       matInput
                       name="description"
                       id="description"
                       formControlName="description"
                       [editor]="classicEditor"
+                      (ready)="onReady($event)"
                     ></ckeditor>
 
                     <mat-error
@@ -116,6 +116,7 @@
             </mat-step>
 
             <mat-step>
+              <ng-template matStepLabel>Header Images</ng-template>
               <div class="row">
                 <div class="col-12 text-left">
                   <input
@@ -128,65 +129,61 @@
                     (change)="onImagePicked($event)"
                   />
 
-                  <button
-                    type="button"
-                    mat-raised-button
-                    class="control-btn"
-                    color="primary"
-                    (click)="blogImages.click()"
-                  >
-                    <i class="fa fa-plus-circle"></i>
-                    <span>&nbsp;Add Images</span>
-                  </button>
-
-                  <ng-template #noImagePicked>
-                    <p class="d-inline-block ml-2">No Images Picked Yet</p>
-                  </ng-template>
-
                   <span class="input-error" *ngIf="invalidImage">
                     *Please Select a Valid Image File
                   </span>
 
-                  <div
-                    class="row"
-                    *ngIf="
-                      blogImagePreview.length > 0 || (blog && blog.images.length > 0);
-                      else noImagePicked
-                    "
-                  >
+                  <div class="row">
                     <div class="col-12">
-                      <span
-                        class="image-container"
-                        *ngFor="let image of blogImagePreview; let i = index"
+                      <ng-container
+                        *ngIf="blogImagePreview.length > 0 || (blog && blog.images.length > 0)"
                       >
-                        <img [src]="image" class="image" [alt]="" loading="lazy" />
-
-                        <div class="middle">
-                          <a class="remove" (click)="removeImage(i)"
-                            ><i class="fa fa-trash-o trash"></i
-                          ></a>
-                        </div>
-                      </span>
-
-                      <ng-container *ngIf="blog">
-                        <div
+                        <span
                           class="image-container"
-                          *ngFor="let image of blog.images; let i = index"
+                          *ngFor="let image of blogImagePreview; let i = index"
                         >
-                          <img
-                            [src]="image.secureUrl"
-                            class="image"
-                            [alt]="image.imageName"
-                            loading="lazy"
-                          />
+                          <img [src]="image" class="image" [alt]="" loading="lazy" />
 
                           <div class="middle">
-                            <a class="remove" (click)="deleteImage(blog._id, image._id, i)">
-                              <i class="fa fa-trash-o trash"></i>
-                            </a>
+                            <a class="remove" (click)="removeImage(i)"
+                              ><i class="fa fa-trash-o trash"></i
+                            ></a>
                           </div>
-                        </div>
+                        </span>
+
+                        <ng-container *ngIf="blog">
+                          <div
+                            class="image-container"
+                            *ngFor="let image of blog.images; let i = index"
+                          >
+                            <img
+                              [src]="image.secureUrl"
+                              class="image"
+                              [alt]="image.imageName"
+                              loading="lazy"
+                            />
+
+                            <div class="middle">
+                              <a class="remove" (click)="deleteImage(blog._id, image._id, i)">
+                                <i class="fa fa-trash-o trash"></i>
+                              </a>
+                            </div>
+                          </div>
+                        </ng-container>
                       </ng-container>
+
+                      <span
+                        class="image-container"
+                        matTooltip="Upload Image"
+                        (click)="blogImages.click()"
+                      >
+                        <img
+                          src="./../../../assets/images/upload-image.png"
+                          class="image-upload"
+                          alt="Upload Image"
+                          loading="lazy"
+                        />
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -204,6 +201,7 @@
             </mat-step>
 
             <mat-step>
+              <ng-template matStepLabel>Submit</ng-template>
               <div class="row">
                 <div class="col-12">
                   <h4 class="text-center">You are now done.</h4>
@@ -216,7 +214,7 @@
                     [disabled]="submit"
                   >
                     <span class=""> {{ blog ? 'Save' : 'Create' }}</span>
-                    <!-- <mat-spinner [diameter]="20" *ngIf="savingRecord"></mat-spinner> -->
+                    <!-- <mat-spinner [diameter]="20" *ngIf="submit"></mat-spinner> -->
                   </button>
 
                   <button mat-button matStepperPrevious class="control-btn float-left">

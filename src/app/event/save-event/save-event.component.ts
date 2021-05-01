@@ -11,6 +11,7 @@ import { SportModel } from './../../models/sport.model';
 import { SportService } from './../../services/sport.service';
 import { CountryService } from './../../services/shared-services/country.service';
 import { Title } from '@angular/platform-browser';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-save-event',
@@ -19,14 +20,15 @@ import { Title } from '@angular/platform-browser';
 })
 export class SaveEventComponent implements OnInit, OnDestroy {
   event: EventModel;
-  editingMode: boolean;
-  savingRecord: boolean;
+  submit: boolean;
 
   loading: boolean;
 
   userProfile: UserProfileModel;
 
-  form: FormGroup;
+  eventDetailsForm: FormGroup;
+  eventScheduleForm: FormGroup;
+  eventLocationForm: FormGroup;
   sports: SportModel[];
   invalidImage: boolean;
   eventImageFiles: File[];
@@ -43,6 +45,7 @@ export class SaveEventComponent implements OnInit, OnDestroy {
     private countryService: CountryService,
     private dateService: DateService,
     private location: Location,
+    private snackBar: MatSnackBar,
     private titleService: Title,
     private route: ActivatedRoute
   ) {}
@@ -52,9 +55,9 @@ export class SaveEventComponent implements OnInit, OnDestroy {
 
     this.titleService.setTitle(`SPORTIZEN | Event`);
 
-    this.savingRecord = false;
+    this.submit = false;
     this.invalidImage = false;
-    this.editingMode = false;
+
     this.sports = this.sportsService.getSports();
     this.userProfileService.getProfile().subscribe((userProfile: UserProfileModel) => {
       if (userProfile) {
@@ -66,7 +69,7 @@ export class SaveEventComponent implements OnInit, OnDestroy {
         this.states = this.countryService.getStates();
         this.cities = [];
 
-        this.form = new FormGroup({
+        this.eventDetailsForm = new FormGroup({
           name: new FormControl(null, {
             validators: [Validators.required],
           }),
@@ -82,18 +85,6 @@ export class SaveEventComponent implements OnInit, OnDestroy {
           noOfPlayers: new FormControl(null, {
             validators: [Validators.required],
           }),
-          startDate: new FormControl(null, {
-            validators: [Validators.required],
-          }),
-          endDate: new FormControl(null, {
-            validators: [Validators.required],
-          }),
-          registerTill: new FormControl(null, {
-            validators: [Validators.required],
-          }),
-          // time: new FormControl( null, {
-          //   validators: [Validators.required],
-          // }),
           description: new FormControl(null, {
             validators: [Validators.required],
           }),
@@ -103,6 +94,21 @@ export class SaveEventComponent implements OnInit, OnDestroy {
           fees: new FormControl(null, {
             validators: [Validators.required, Validators.min(0)],
           }),
+        });
+
+        this.eventScheduleForm = new FormGroup({
+          startDate: new FormControl(null, {
+            validators: [Validators.required],
+          }),
+          endDate: new FormControl(null, {
+            validators: [Validators.required],
+          }),
+          registerTill: new FormControl(null, {
+            validators: [Validators.required],
+          }),
+        });
+
+        this.eventLocationForm = new FormGroup({
           address: new FormControl(null, {
             validators: [Validators.required],
           }),
@@ -119,39 +125,46 @@ export class SaveEventComponent implements OnInit, OnDestroy {
 
           if (id) {
             this.titleService.setTitle(`SPORTIZEN | Edit Event`);
-            this.editingMode = true;
+
             this.eventService.getEvent(id).subscribe(
               (event: EventModel) => {
                 this.titleService.setTitle(`SPORTIZEN | Edit Event | ${event.name}`);
                 this.event = event;
-                this.form.patchValue({
+
+                this.eventDetailsForm.patchValue({
                   name: event.name,
                   // eventType: event.eventType,
                   sport: event.sport,
                   registrationType: event.registrationType,
                   noOfPlayers: event.noOfPlayers,
-                  address: event.address,
-                  state: event.state,
-                  startDate: this.dateService.convertToDateString(event.startDate),
-                  endDate: this.dateService.convertToDateString(event.endDate),
-                  registerTill: this.dateService.convertToDateString(event.registerTill),
-                  // time: event.time,
                   description: event.description,
                   winningPrice: event.winningPrice,
                   fees: event.fees,
                 });
 
+                this.eventScheduleForm.patchValue({
+                  startDate: this.dateService.convertToDateString(event.startDate),
+                  endDate: this.dateService.convertToDateString(event.endDate),
+                  registerTill: this.dateService.convertToDateString(event.registerTill),
+                  // time: event.time,
+                });
+
+                this.eventLocationForm.patchValue({
+                  address: event.address,
+                  state: event.state,
+                });
+
                 this.changeState(event.state);
 
-                this.form.patchValue({
+                this.eventLocationForm.patchValue({
                   city: event.city,
                 });
 
                 this.changeCity(event.city);
 
-                this.form.get('sport').disable();
-                this.form.get('registrationType').disable();
-                this.form.get('fees').disable();
+                this.eventDetailsForm.get('sport').disable();
+                this.eventDetailsForm.get('registrationType').disable();
+                this.eventDetailsForm.get('fees').disable();
 
                 this.loading = false;
               },
@@ -223,61 +236,81 @@ export class SaveEventComponent implements OnInit, OnDestroy {
   }
 
   saveEvent() {
-    // if (this.editingMode) {
-    //   if (this.eventImageFiles.length === 0 && this.eventImage.length === 0) {
-    //     return;
-    //   }
-    // } else {
-    //   if (this.eventImageFiles.length === 0) {
-    //     return;
-    //   }
-    // }
+    if (this.eventDetailsForm.invalid) {
+      this.snackBar.open('Form Details are Required', null, {
+        duration: 2000,
+        panelClass: ['error-snackbar'],
+      });
+    } else if (this.eventScheduleForm.invalid) {
+      this.snackBar.open('Event Schedule is Required', null, {
+        duration: 2000,
+        panelClass: ['error-snackbar'],
+      });
+    } else if (this.eventLocationForm.invalid) {
+      this.snackBar.open('Event Location is Required', null, {
+        duration: 2000,
+        panelClass: ['error-snackbar'],
+      });
+    } else {
+      this.submit = true;
 
-    if (this.form.valid) {
-      this.savingRecord = true;
       const event = new FormData();
-      if (this.event && this.editingMode) {
+      if (this.event) {
         event.append('_id', this.event._id);
       }
-      event.append('name', this.form.value.name);
-      event.append('sport', this.form.value.sport);
-      event.append('registrationType', this.form.value.registrationType);
-      event.append('startDate', this.form.value.startDate);
-      event.append('endDate', this.form.value.endDate);
-      event.append('registerTill', this.form.value.registerTill);
-      // event.append('time', this.form.value.time);
-      event.append('noOfPlayers', this.form.value.noOfPlayers);
-      event.append('address', this.form.value.address);
-      event.append('state', this.form.value.state);
-      event.append('city', this.form.value.city);
+      event.append('name', this.eventDetailsForm.value.name);
+      event.append('description', this.eventDetailsForm.value.description);
+      event.append('sport', this.eventDetailsForm.value.sport);
+      event.append('registrationType', this.eventDetailsForm.value.registrationType);
+      event.append('noOfPlayers', this.eventDetailsForm.value.noOfPlayers);
+      event.append('winningPrice', this.eventDetailsForm.value.winningPrice);
+      event.append('fees', this.eventDetailsForm.value.fees);
+      event.append('startDate', this.eventScheduleForm.value.startDate);
+      event.append('endDate', this.eventScheduleForm.value.endDate);
+      event.append('registerTill', this.eventScheduleForm.value.registerTill);
+      // event.append('time', this.eventScheduleForm.value.time);
+      event.append('address', this.eventLocationForm.value.address);
+      event.append('state', this.eventLocationForm.value.state);
+      event.append('city', this.eventLocationForm.value.city);
       event.append('latitude', this.city.latitude);
       event.append('longitude', this.city.longitude);
-      event.append('description', this.form.value.description);
-      event.append('winningPrice', this.form.value.winningPrice);
-      event.append('fees', this.form.value.fees);
       event.append('createdBy', this.userProfile.email);
       // tslint:disable-next-line: prefer-for-of
       for (let i = 0; i < this.eventImageFiles.length; i++) {
         event.append('eventImage', this.eventImageFiles[i]);
       }
 
-      this.eventService.saveEvent(event, this.editingMode).subscribe(
-        (resEvent: EventModel) => {
-          if (!this.editingMode) {
-            this.form.reset();
-          } else {
+      if (!this.event) {
+        this.eventService.saveEvent(event).subscribe(
+          (resEvent: EventModel) => {
+            this.eventDetailsForm.reset();
+            this.eventScheduleForm.reset();
+            this.eventLocationForm.reset();
+
+            this.submit = false;
+            this.eventImageFiles = [];
+            this.eventImagePreview = [];
+            this.close();
+          },
+          (error: any) => {
+            this.loading = false;
+          }
+        );
+      } else {
+        this.eventService.editEvent(event).subscribe(
+          (resEvent: EventModel) => {
             this.event = resEvent;
             this.event.images = resEvent.images;
+            this.submit = false;
+            this.eventImageFiles = [];
+            this.eventImagePreview = [];
+            this.close();
+          },
+          (error: any) => {
+            this.loading = false;
           }
-          this.savingRecord = false;
-          this.eventImageFiles = [];
-          this.eventImagePreview = [];
-          this.close();
-        },
-        (error: any) => {
-          this.loading = false;
-        }
-      );
+        );
+      }
     }
   }
 

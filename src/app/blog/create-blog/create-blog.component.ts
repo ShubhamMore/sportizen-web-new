@@ -10,6 +10,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { UserProfileService } from '../../services/user-profile.service';
 import { Location } from '@angular/common';
 import { Title } from '@angular/platform-browser';
+import { UploadAdapter } from './upload-adapter';
 
 @Component({
   selector: 'app-create-blog',
@@ -114,6 +115,12 @@ export class CreateBlogComponent implements OnInit {
         this.location.back();
       }
     });
+  }
+
+  onReady(eventData: any) {
+    eventData.plugins.get('FileRepository').createUploadAdapter = function (loader: any) {
+      return new UploadAdapter(loader);
+    };
   }
 
   saveBlog() {

@@ -60,6 +60,18 @@
   width: auto;
   height: 10rem;
 
+  .image-upload {
+    border-radius: 0.325rem;
+    border: 1px solid #075492;
+    border-style: dashed;
+    display: block;
+    padding: 1.5rem;
+    cursor: pointer;
+    width: auto;
+    height: 100%;
+    backface-visibility: hidden;
+  }
+
   .image {
     border-radius: 0.325rem;
     opacity: 1;
@@ -160,6 +172,7 @@
     margin: 0.4325rem;
     height: 9.375rem;
 
+    .image-upload,
     .image {
       border-radius: 0.2875rem;
     }
@@ -213,6 +226,7 @@
     margin: 0.375rem;
     height: 8.75rem;
 
+    .image-upload,
     .image {
       border-radius: 0.2875rem;
     }
@@ -266,6 +280,7 @@
     margin: 0.3125rem;
     height: 8.125rem;
 
+    .image-upload,
     .image {
       border-radius: 0.2875rem;
     }
@@ -319,6 +334,7 @@
     margin: 0.25rem;
     height: 7.5rem;
 
+    .image-upload,
     .image {
       border-radius: 0.25rem;
     }

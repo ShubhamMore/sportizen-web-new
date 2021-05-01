@@ -70,11 +70,22 @@ export class EventService {
     );
   }
 
-  saveEvent(event: FormData, editingMode: boolean) {
-    let data = { api: 'newEvent', data: event };
-    if (editingMode) {
-      data = { api: 'editEvent', data: event };
-    }
+  saveEvent(event: FormData) {
+    const data = { api: 'newEvent', data: event };
+
+    return this.httpService.httpPost(data).pipe(
+      map((resEvent: EventModel) => {
+        return resEvent;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      })
+    );
+  }
+
+  editEvent(event: FormData) {
+    const data = { api: 'editEvent', data: event };
+
     return this.httpService.httpPost(data).pipe(
       map((resEvent: EventModel) => {
         return resEvent;
