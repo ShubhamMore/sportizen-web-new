@@ -186,17 +186,23 @@ export class JoinEventComponent implements OnInit, OnDestroy {
   }
 
   payNow() {
-    const dialogRef = this.dialog.open(PaymentComponent, {
-      data: { amount: this.event.fees },
-      maxHeight: '90vh',
-    });
+    if (!this.event.registration) {
+      const dialogRef = this.dialog.open(PaymentComponent, {
+        data: { amount: this.event.fees },
+        maxHeight: '90vh',
+      });
 
-    dialogRef.afterClosed().subscribe((result: any) => {
-      console.log(result);
-    });
+      dialogRef.afterClosed().subscribe((result: any) => {
+        if (result.status) {
+          this.registerNow();
+        }
+      });
+    } else {
+      this.registerNow();
+    }
   }
 
-  registerNow() {
+  private registerNow() {
     this.joinEventForm.markAllAsTouched();
     if (this.joinEventForm.invalid) {
       // Show Error
