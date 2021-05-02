@@ -21,6 +21,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { ContentModule } from './content/content.module';
 
+import { NgxImageCompressService } from 'ngx-image-compress';
+
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './../../assets/i18n/locale_', '.json');
 }
@@ -47,7 +49,7 @@ export function createTranslateLoader(http: HttpClient) {
     }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
-  providers: [LoginAuthGuard, Validator],
+  providers: [LoginAuthGuard, NgxImageCompressService, Validator],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

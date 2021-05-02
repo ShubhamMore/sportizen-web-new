@@ -15,7 +15,9 @@
         <div>
           <strong>Registered Users: </strong>
         </div>
-        <div class="number-of-members">{{ event.registrations.length }} Members</div>
+        <div class="number-of-members">
+          {{ event.registrations.length }}/{{ event.noOfRegistrations }} Registrations
+        </div>
       </div>
 
       <div class="joined-users-container">
@@ -156,12 +158,12 @@
 
       <div class="border-box border-box-date">
         <div class="bold-text">
-          <span class=""> Last Date :</span>
+          <span class=""> End Date :</span>
         </div>
 
         <div>
           <i class="fa fa-calendar icon-green"></i>
-          <time> {{ event.endDate | amCalendar: 'DD/MM/YYYY' }}</time>
+          <time> {{ event.registerTill | amCalendar: 'DD/MM/YYYY' }}</time>
         </div>
       </div>
 
@@ -169,9 +171,14 @@
         <div class="bold-text">Time :</div>
         <div>
           <i class="fa fa-clock-o icon-blue"></i>
-          <time> {{ event.time }}</time>
+          <time> {{ event.time | clock12hr }}</time>
         </div>
       </div>
+    </div>
+
+    <div class="registration-close">
+      <strong>Registration Closed on : </strong>
+      {{ event.registerTill | amCalendar: 'DD/MM/YYYY' }}
     </div>
 
     <div class="description-container">

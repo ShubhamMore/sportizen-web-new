@@ -12,6 +12,7 @@ import { SportService } from './../../services/sport.service';
 import { CountryService } from './../../services/shared-services/country.service';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 @Component({
   selector: 'app-save-event',
@@ -41,9 +42,10 @@ export class SaveEventComponent implements OnInit, OnDestroy {
   constructor(
     private eventService: EventService,
     private userProfileService: UserProfileService,
+    private imageCompress: NgxImageCompressService,
     private sportsService: SportService,
     private countryService: CountryService,
-    private dateService: DateService,
+    public dateService: DateService,
     private location: Location,
     private snackBar: MatSnackBar,
     private titleService: Title,
@@ -82,8 +84,11 @@ export class SaveEventComponent implements OnInit, OnDestroy {
           registrationType: new FormControl('', {
             validators: [Validators.required],
           }),
+          noOfRegistrations: new FormControl(null, {
+            validators: [Validators.required, Validators.min(1)],
+          }),
           noOfPlayers: new FormControl(null, {
-            validators: [Validators.required],
+            validators: [],
           }),
           description: new FormControl(null, {
             validators: [Validators.required],
@@ -97,11 +102,14 @@ export class SaveEventComponent implements OnInit, OnDestroy {
         });
 
         this.eventScheduleForm = new FormGroup({
-          startDate: new FormControl(null, {
+          durationType: new FormControl('', {
+            validators: [Validators.required],
+          }),
+          startDate: new FormControl(this.dateService.getDate(), {
             validators: [Validators.required],
           }),
           endDate: new FormControl(null, {
-            validators: [Validators.required],
+            validators: [],
           }),
           time: new FormControl(null, {
             validators: [],
@@ -134,22 +142,12 @@ export class SaveEventComponent implements OnInit, OnDestroy {
                 this.titleService.setTitle(`SPORTIZEN | Edit Event | ${event.name}`);
                 this.event = event;
 
-                console.log({
-                  name: event.name,
-                  sport: event.sport,
-                  eventType: event.eventType,
-                  registrationType: event.registrationType,
-                  noOfPlayers: event.noOfPlayers,
-                  description: event.description,
-                  winningPrice: event.winningPrice,
-                  fees: event.fees,
-                });
-
                 this.eventDetailsForm.patchValue({
                   name: event.name,
                   sport: event.sport,
                   eventType: event.eventType,
                   registrationType: event.registrationType,
+                  noOfRegistrations: event.noOfRegistrations,
                   noOfPlayers: event.noOfPlayers,
                   description: event.description,
                   winningPrice: event.winningPrice,
@@ -157,10 +155,11 @@ export class SaveEventComponent implements OnInit, OnDestroy {
                 });
 
                 this.eventScheduleForm.patchValue({
-                  startDate: event.startDate,
-                  endDate: event.endDate,
+                  durationType: event.durationType,
+                  startDate: this.dateService.convertToDateString(event.startDate),
+                  endDate: this.dateService.convertToDateString(event.endDate),
                   time: event.time,
-                  registerTill: event.registerTill,
+                  registerTill: this.dateService.convertToDateString(event.registerTill),
                 });
 
                 this.eventLocationForm.patchValue({
@@ -198,6 +197,38 @@ export class SaveEventComponent implements OnInit, OnDestroy {
     });
   }
 
+  onSelectDurationType() {
+    const durationType = this.eventScheduleForm.getRawValue().durationType;
+    if (durationType === 'multiple-day') {
+      this.eventScheduleForm.controls['endDate'].setValidators([Validators.required]);
+      this.eventScheduleForm.controls['endDate'].updateValueAndValidity();
+    } else {
+      this.eventScheduleForm.patchValue({
+        endDate: null,
+      });
+      this.eventScheduleForm.controls['endDate'].clearValidators();
+      this.eventScheduleForm.controls['endDate'].updateValueAndValidity();
+    }
+  }
+
+  changeRegistrationType() {
+    const registrationType = this.eventDetailsForm.getRawValue().registrationType;
+    console.log(registrationType, registrationType === 'team');
+    if (registrationType === 'team') {
+      this.eventDetailsForm.controls['noOfPlayers'].setValidators([
+        Validators.required,
+        Validators.min(1),
+      ]);
+      this.eventDetailsForm.controls['noOfPlayers'].updateValueAndValidity();
+    } else {
+      this.eventDetailsForm.patchValue({
+        noOfPlayers: null,
+      });
+      this.eventDetailsForm.controls['noOfPlayers'].clearValidators();
+      this.eventDetailsForm.controls['noOfPlayers'].updateValueAndValidity();
+    }
+  }
+
   changeState(name: string) {
     this.cities = this.countryService.getCities(name);
   }
@@ -231,6 +262,24 @@ export class SaveEventComponent implements OnInit, OnDestroy {
       reader.readAsDataURL(files[i]);
     }
   }
+
+  // compressFile(image, fileName) {
+  //   var orientation = -1;
+  //   const sizeOfOriginalImage = this.imageCompress.byteCount(image) / (1024 * 1024);
+  //   console.warn('Size in bytes is now:', sizeOfOriginalImage);
+  //   this.imageCompress.compressFile(image, orientation, 50, 50).then((result) => {
+  //     this.imgResultAfterCompress = result;
+  //     // this.localCompressedURl = result;
+  //     const sizeOFCompressedImage = this.imageCompress.byteCount(result) / (1024 * 1024);
+  //     console.warn('Size in bytes after compression:', sizeOFCompressedImage);
+  //     // create file from byte
+  //     const imageName = fileName;
+  //     // call method that creates a blob from dataUri
+  //     // const imageBlob = this.dataURItoBlob(this.imgResultAfterCompress.split(',')[1]);
+  //     // //imageFile created below is the new compressed file which can be send to API in form data
+  //     // const imageFile = new File([result], imageName, { type: 'image/jpeg' });
+  //   });
+  // }
 
   removeImage(i: number) {
     this.eventImageFiles.splice(i, 1);
@@ -280,10 +329,12 @@ export class SaveEventComponent implements OnInit, OnDestroy {
       event.append('sport', this.eventDetailsForm.getRawValue().sport);
       event.append('eventType', this.eventDetailsForm.getRawValue().eventType);
       event.append('registrationType', this.eventDetailsForm.getRawValue().registrationType);
+      event.append('noOfRegistrations', this.eventDetailsForm.getRawValue().noOfRegistrations);
       event.append('noOfPlayers', this.eventDetailsForm.getRawValue().noOfPlayers);
       event.append('winningPrice', this.eventDetailsForm.getRawValue().winningPrice);
       event.append('fees', this.eventDetailsForm.getRawValue().fees);
       // Event Schedule
+      event.append('durationType', this.eventScheduleForm.getRawValue().durationType);
       event.append('startDate', this.eventScheduleForm.getRawValue().startDate);
       event.append('endDate', this.eventScheduleForm.getRawValue().endDate);
       event.append('registerTill', this.eventScheduleForm.getRawValue().registerTill);

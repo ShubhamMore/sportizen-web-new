@@ -89,12 +89,34 @@
 
                     <div class="col-md-6">
                       <mat-form-field class="full-width">
+                        <mat-label for="no-of-registrations">No of Registrations</mat-label>
+
+                        <input
+                          matInput
+                          type="number"
+                          name="noOfRegistrations"
+                          id="no-of-registrations"
+                          min="1"
+                          formControlName="noOfRegistrations"
+                        />
+
+                        <mat-error
+                          *ngIf="eventDetailsForm.get('noOfRegistrations').hasError('required')"
+                        >
+                          No of Registrations is required*
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <div class="col-md-6">
+                      <mat-form-field class="full-width">
                         <mat-label for="registration-type"> Registration Type </mat-label>
 
                         <mat-select
                           formControlName="registrationType"
                           name="registrationType"
                           id="registration-type"
+                          (selectionChange)="changeRegistrationType()"
                         >
                           <mat-option value="individual">Individual</mat-option>
                           <mat-option value="team">Team</mat-option>
@@ -108,7 +130,10 @@
                       </mat-form-field>
                     </div>
 
-                    <div class="col-md-6">
+                    <div
+                      class="col-md-6"
+                      *ngIf="this.eventDetailsForm.getRawValue().registrationType === 'team'"
+                    >
                       <mat-form-field class="full-width">
                         <mat-label for="no-of-players">No of Players</mat-label>
 
@@ -117,6 +142,7 @@
                           type="number"
                           name="noOfPlayers"
                           id="no-of-players"
+                          min="1"
                           formControlName="noOfPlayers"
                         />
 
@@ -185,6 +211,28 @@
                   <div class="row">
                     <div class="col-md-6">
                       <mat-form-field class="full-width">
+                        <mat-label for="duration-type"> Duration Type </mat-label>
+
+                        <mat-select
+                          formControlName="durationType"
+                          name="durationType"
+                          id="duration-type"
+                          (selectionChange)="onSelectDurationType()"
+                        >
+                          <mat-option value="one-day">One Day Event</mat-option>
+                          <mat-option value="multiple-day">Multiple Day Event</mat-option>
+                        </mat-select>
+
+                        <mat-error
+                          *ngIf="eventScheduleForm.get('durationType').hasError('required')"
+                        >
+                          Duration Type is required*
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <div class="col-md-6">
+                      <mat-form-field class="full-width">
                         <mat-label for="start-date">Start Date</mat-label>
 
                         <input
@@ -192,6 +240,7 @@
                           [matDatepicker]="startDatePicker"
                           name="startDate"
                           id="start-date"
+                          [min]="dateService.getDate()"
                           formControlName="startDate"
                         />
 
@@ -208,7 +257,10 @@
                       </mat-form-field>
                     </div>
 
-                    <div class="col-md-6">
+                    <div
+                      class="col-md-6"
+                      *ngIf="this.eventScheduleForm.getRawValue().durationType === 'multiple-day'"
+                    >
                       <mat-form-field class="full-width">
                         <mat-label for="end-date">End Date</mat-label>
 
@@ -253,8 +305,8 @@
                         <input
                           matInput
                           [matDatepicker]="registeredTill"
-                          [min]="eventScheduleForm.value.startDate"
-                          [max]="eventScheduleForm.value.endDate"
+                          [min]="dateService.getDate()"
+                          [max]="eventScheduleForm.value.startDate"
                           name="registerTill"
                           id="register-till"
                           formControlName="registerTill"
@@ -380,6 +432,7 @@
                     <input
                       class="event-images-file-picker form-control"
                       type="file"
+                      accept=".jpg,.png,.jpeg"
                       name="eventImages"
                       id="eventImages"
                       multiple

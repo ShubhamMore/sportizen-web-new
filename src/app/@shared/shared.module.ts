@@ -15,10 +15,17 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LoadingContentComponent } from './loading-content/loading-content.component';
 
 import { CapitalizeEachWordPipe } from './pipe/capitalize-each-word.pipe';
+import { TimePipe } from './pipe/time.pipe';
 import { ConfirmComponent } from './confirm/confirm.component';
 
 @NgModule({
-  declarations: [LoadingContentComponent, CapitalizeEachWordPipe, SafeHtmlPipe, ConfirmComponent],
+  declarations: [
+    LoadingContentComponent,
+    CapitalizeEachWordPipe,
+    TimePipe,
+    SafeHtmlPipe,
+    ConfirmComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -37,6 +44,7 @@ import { ConfirmComponent } from './confirm/confirm.component';
 
     CapitalizeEachWordPipe,
     SafeHtmlPipe,
+    TimePipe,
 
     FormsModule,
     ReactiveFormsModule,
