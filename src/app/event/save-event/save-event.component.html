@@ -427,88 +427,94 @@
               <mat-step>
                 <ng-template matStepLabel>Event Images</ng-template>
 
-                <div class="row">
-                  <div class="col-12 text-left">
-                    <input
-                      class="event-images-file-picker form-control"
-                      type="file"
-                      accept=".jpg,.png,.jpeg"
-                      name="eventImages"
-                      id="eventImages"
-                      multiple
-                      #eventImages
-                      (change)="onImagePicked($event)"
-                    />
+                <ng-container *ngIf="!loadingImages; else loadingSpinner">
+                  <div class="row">
+                    <div class="col-12 text-left">
+                      <input
+                        class="event-images-file-picker form-control"
+                        type="file"
+                        accept=".jpg,.png,.jpeg"
+                        name="eventImages"
+                        id="eventImages"
+                        multiple
+                        #eventImages
+                        (change)="onImagePicked($event)"
+                      />
 
-                    <span class="input-error" *ngIf="invalidImage">
-                      *Please Select a Valid Image File
-                    </span>
+                      <span class="input-error" *ngIf="invalidImage">
+                        *Please Select a Valid Image File
+                      </span>
 
-                    <div class="row">
-                      <div class="col-12">
-                        <ng-container
-                          *ngIf="eventImagePreview.length > 0 || (event && event.images.length > 0)"
-                        >
-                          <span
-                            class="image-container"
-                            *ngFor="let image of eventImagePreview; let i = index"
+                      <div class="row">
+                        <div class="col-12">
+                          <ng-container
+                            *ngIf="
+                              eventImagePreview.length > 0 || (event && event.images.length > 0)
+                            "
                           >
-                            <img [src]="image" class="image" [alt]="" loading="lazy" />
-
-                            <div class="middle">
-                              <a class="remove" (click)="removeImage(i)"
-                                ><i class="fa fa-trash-o trash"></i
-                              ></a>
-                            </div>
-                          </span>
-
-                          <ng-container *ngIf="event">
-                            <div
+                            <span
                               class="image-container"
-                              *ngFor="let image of event.images; let i = index"
+                              *ngFor="let image of eventImagePreview; let i = index"
                             >
-                              <img
-                                [src]="image.secureUrl"
-                                class="image"
-                                [alt]="image.imageName"
-                                loading="lazy"
-                              />
+                              <img [src]="image" class="image" [alt]="" loading="lazy" />
 
                               <div class="middle">
-                                <a class="remove" (click)="deleteImage(event._id, image._id, i)">
-                                  <i class="fa fa-trash-o trash"></i>
-                                </a>
+                                <a class="remove" (click)="removeImage(i)"
+                                  ><i class="fa fa-trash-o trash"></i
+                                ></a>
                               </div>
-                            </div>
-                          </ng-container>
-                        </ng-container>
+                            </span>
 
-                        <span
-                          class="image-container"
-                          matTooltip="Upload Image"
-                          (click)="eventImages.click()"
-                        >
-                          <img
-                            src="./../../../assets/images/upload-image.png"
-                            class="image-upload"
-                            alt="Upload Image"
-                            loading="lazy"
-                          />
-                        </span>
+                            <ng-container *ngIf="event">
+                              <div
+                                class="image-container"
+                                *ngFor="let image of event.images; let i = index"
+                              >
+                                <img
+                                  [src]="image.secureUrl"
+                                  class="image"
+                                  [alt]="image.imageName"
+                                  loading="lazy"
+                                />
+
+                                <div class="middle">
+                                  <a class="remove" (click)="deleteImage(event._id, image._id, i)">
+                                    <i class="fa fa-trash-o trash"></i>
+                                  </a>
+                                </div>
+                              </div>
+                            </ng-container>
+                          </ng-container>
+
+                          <span
+                            class="image-container"
+                            matTooltip="Upload Image"
+                            (click)="eventImages.click()"
+                          >
+                            <img
+                              src="./../../../assets/images/upload-image.png"
+                              class="image-upload"
+                              alt="Upload Image"
+                              loading="lazy"
+                            />
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <div class="row">
-                  <div class="col-12">
-                    <button mat-button matStepperNext class="control-btn float-right">Next</button>
+                  <div class="row">
+                    <div class="col-12">
+                      <button mat-button matStepperNext class="control-btn float-right">
+                        Next
+                      </button>
 
-                    <button mat-button matStepperPrevious class="control-btn float-left">
-                      Previous
-                    </button>
+                      <button mat-button matStepperPrevious class="control-btn float-left">
+                        Previous
+                      </button>
+                    </div>
                   </div>
-                </div>
+                </ng-container>
               </mat-step>
 
               <mat-step>
