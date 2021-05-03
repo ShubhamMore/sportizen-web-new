@@ -18,6 +18,7 @@ $primary-color: #05bae3;
 
 .heading {
   margin-bottom: 1rem;
+  font-weight: bold;
 }
 
 .registered-user-container {
@@ -87,6 +88,7 @@ $primary-color: #05bae3;
 .event-action {
   .event-type-box {
     background-color: lighten($color: $primary-color, $amount: 40%);
+    color: #075492;
   }
 
   .join-event-box {
@@ -164,24 +166,27 @@ $primary-color: #05bae3;
   }
 }
 
-.entry-winning-container {
-  margin-top: 1.5rem;
+.entry-container {
+  width: 100%;
+  display: block;
+
+  .entry-box {
+    margin: 1rem 0 0 0.25rem;
+    width: auto;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+  }
+}
+
+.winning-container {
+  margin: 1rem 0 0 0.25rem;
   width: 100%;
   display: block;
 
   .winning-prize-box {
-    display: inline-block;
-    width: 11.5rem;
-    margin-right: 0.5rem;
     background-color: lighten($color: $primary-color, $amount: 40%);
     padding: 0.2rem 1rem;
-    text-align: center;
-    white-space: nowrap;
-  }
-
-  .entry-fees-box {
-    width: auto;
-    display: inline-block;
     text-align: center;
     white-space: nowrap;
   }
@@ -330,18 +335,20 @@ $primary-color: #05bae3;
     }
   }
 
-  .entry-winning-container {
-    margin-top: 1.5rem;
+  .entry-container {
+    font-size: 97.5%;
+
+    .entry-box {
+      margin: 0.875rem 0 0 0.25rem;
+    }
+  }
+
+  .winning-container {
+    margin: 0.875rem 0 0 0.25rem;
     font-size: 97.5%;
 
     .winning-prize-box {
-      width: 10.5rem;
       padding: 0.1rem 0.5rem;
-      margin-right: 0.5rem;
-    }
-
-    .entry-fees-box {
-      width: 10rem;
     }
   }
 
@@ -477,18 +484,20 @@ $primary-color: #05bae3;
     }
   }
 
-  .entry-winning-container {
-    margin-top: 1.25rem;
+  .entry-container {
+    font-size: 95%;
+
+    .entry-box {
+      margin: 0.75rem 0 0 0.25rem;
+    }
+  }
+
+  .winning-container {
+    margin: 0.75rem 0 0 0.25rem;
     font-size: 95%;
 
     .winning-prize-box {
-      width: 12rem;
       padding: 0.1rem 0.75rem;
-      margin-right: 0.5rem;
-    }
-
-    .entry-fees-box {
-      width: 15rem;
     }
   }
 
@@ -619,18 +628,20 @@ $primary-color: #05bae3;
     }
   }
 
-  .entry-winning-container {
-    margin-top: 1rem;
+  .entry-container {
+    font-size: 92.5%;
+
+    .entry-box {
+      margin: 0.625rem 0 0 0.125rem;
+    }
+  }
+
+  .winning-container {
+    margin: 0.625rem 0 0 0.125rem;
     font-size: 92.5%;
 
     .winning-prize-box {
-      width: 10rem;
       padding: 0.075rem 0.5rem;
-      margin-right: 0.4rem;
-    }
-
-    .entry-fees-box {
-      width: 11rem;
     }
   }
 
@@ -758,18 +769,20 @@ $primary-color: #05bae3;
     }
   }
 
-  .entry-winning-container {
-    margin-top: 1rem;
+  .entry-container {
+    font-size: 90%;
+
+    .entry-box {
+      margin: 0.5rem 0 0 0.125rem;
+    }
+  }
+
+  .winning-container {
+    margin: 0.5rem 0 0 0.125rem;
     font-size: 90%;
 
     .winning-prize-box {
-      width: max-content;
       padding: 0.05rem 0.3rem;
-      margin-right: 0.25rem;
-    }
-
-    .entry-fees-box {
-      width: max-content;
     }
   }
 

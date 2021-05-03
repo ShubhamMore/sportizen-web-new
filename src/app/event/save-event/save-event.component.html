@@ -427,7 +427,7 @@
               <mat-step>
                 <ng-template matStepLabel>Event Images</ng-template>
 
-                <ng-container *ngIf="!loadingImages; else loadingSpinner">
+                <ng-container>
                   <div class="row">
                     <div class="col-12 text-left">
                       <input
@@ -505,7 +505,12 @@
 
                   <div class="row">
                     <div class="col-12">
-                      <button mat-button matStepperNext class="control-btn float-right">
+                      <button
+                        mat-button
+                        matStepperNext
+                        class="control-btn float-right"
+                        (click)="compressImages()"
+                      >
                         Next
                       </button>
 
@@ -519,9 +524,10 @@
 
               <mat-step>
                 <ng-template matStepLabel>Submit</ng-template>
-                <div class="row">
+                <div class="row" *ngIf="!compressingImages; else compressingImagesData">
                   <div class="col-12">
                     <h4 class="text-center">You are now done.</h4>
+
                     <button
                       mat-raised-button
                       color="primary"
@@ -556,5 +562,14 @@
 <ng-template #loadingSpinner>
   <div class="loading-container">
     <mat-spinner diameter="25"></mat-spinner>
+  </div>
+</ng-template>
+
+<ng-template #compressingImagesData>
+  <div class="loading-container">
+    <mat-spinner diameter="25"></mat-spinner>
+    <div class="text-center">
+      <p>Preparing for Upload</p>
+    </div>
   </div>
 </ng-template>

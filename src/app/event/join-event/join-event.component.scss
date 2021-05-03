@@ -28,8 +28,17 @@ $primary-color: #05bae3;
     .registration-container {
       font-size: 100%;
 
+      .registration-heading {
+        font-weight: bold;
+        font-size: 1.5rem;
+
+        .registration {
+          padding-bottom: 0.125rem;
+          border-bottom: 0.25rem solid #05bae3;
+        }
+      }
+
       .register-btn {
-        float: right;
         border-radius: 2rem;
         line-height: 0;
         height: 2rem;

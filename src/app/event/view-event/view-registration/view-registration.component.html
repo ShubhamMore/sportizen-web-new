@@ -9,36 +9,26 @@
     <hr />
 
     <div>
-      <div class="row">
-        <div class="col-md-10 col-sm-12 mx-auto table-responsive">
-          <table class="table table-borderless">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>User</th>
-                <th>Email</th>
-                <th>Contact</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let teamMember of data.teamMembers; let i = index">
-                <td>
-                  {{ i + 1 }}
-                </td>
-                <td>
-                  <span> {{ teamMember.name | capitalizeEachWord }}</span>
-                </td>
-                <td>{{ teamMember.email }}</td>
-                <td>
-                  {{ teamMember.contact }}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <mat-list role="team-members">
+        <mat-list-item
+          *ngFor="let teamMember of data.teamMembers; let i = index"
+          role="team-member"
+        >
+          <div class="team-member-card">
+            <div class="team-member-name">
+              {{ teamMember.name | capitalizeEachWord }}
+            </div>
 
-        <br />
-      </div>
+            <div class="team-member-email">
+              <em>{{ teamMember.email }}</em>
+            </div>
+
+            <div class="team-member-contact">
+              {{ teamMember.contact }}
+            </div>
+          </div>
+        </mat-list-item>
+      </mat-list>
     </div>
   </div>
 </div>

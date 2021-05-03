@@ -195,17 +195,27 @@
       </p>
     </div>
 
-    <div class="entry-winning-container">
-      <div class="winning-prize-box">
-        <span class="bold-text">Winning Prize : </span>
+    <div class="entry-container">
+      <div class="border-box entry-box">
+        <span class="bold-text">Entry Type : </span>
 
-        <span class="">{{ event.winningPrice }} /-</span>
+        <span class="">{{ event.registrationType | capitalizeEachWord }} Entry</span>
       </div>
 
-      <div class="border-box entry-fees-box">
+      <div class="border-box entry-box">
         <span class="bold-text">Entry Fees : </span>
 
-        <span class="">{{ event.fees ? event.fees + '/-' : 'free' }}</span>
+        <span class="">{{ event.fees ? (event.fees | amount) : 'free' }}</span>
+      </div>
+    </div>
+
+    <div class="winning-container">
+      <div class="winning-prize-box">
+        <i class="fa fa-trophy icon-yellow" aria-hidden="true"></i>
+        &nbsp;
+        <span class="bold-text">Winning Prize : </span>
+
+        <span class="">{{ event.winningPrice | amount }}</span>
       </div>
     </div>
   </div>

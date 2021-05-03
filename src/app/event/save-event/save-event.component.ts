@@ -15,6 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgxImageCompressService } from 'ngx-image-compress';
 import { CompressImageService } from 'src/app/services/shared-services/compress-image.service';
 import { take } from 'rxjs/operators';
+import { fromEventPattern } from 'rxjs';
 
 @Component({
   selector: 'app-save-event',
@@ -26,7 +27,7 @@ export class SaveEventComponent implements OnInit, OnDestroy {
   submit: boolean;
 
   loading: boolean;
-  loadingImages: boolean;
+  compressingImages: boolean;
 
   userProfile: UserProfileModel;
 
@@ -36,6 +37,7 @@ export class SaveEventComponent implements OnInit, OnDestroy {
   sports: SportModel[];
   invalidImage: boolean;
   eventImageFiles: File[];
+  compressedImageFiles: File[];
   eventImagePreview: string[];
 
   states: any[];
@@ -51,14 +53,14 @@ export class SaveEventComponent implements OnInit, OnDestroy {
     public dateService: DateService,
     private location: Location,
     private snackBar: MatSnackBar,
-    private compressImage: CompressImageService,
+    private compressImageService: CompressImageService,
     private titleService: Title,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
-    this.loadingImages = false;
+    this.compressingImages = false;
 
     this.titleService.setTitle(`SPORTIZEN | Event`);
 
@@ -71,6 +73,7 @@ export class SaveEventComponent implements OnInit, OnDestroy {
         this.userProfile = userProfile;
 
         this.eventImageFiles = [];
+        this.compressedImageFiles = [];
         this.eventImagePreview = [];
 
         this.states = this.countryService.getStates();
@@ -244,14 +247,12 @@ export class SaveEventComponent implements OnInit, OnDestroy {
   }
 
   onImagePicked(event: Event): any {
-    this.invalidImage = false;
     const files = (event.target as HTMLInputElement).files;
     const imgExt: string[] = ['jpg', 'jpeg', 'png'];
 
     const n: number = files.length;
 
     for (let i = 0; i < n; i++) {
-      this.loadingImages = true;
       const fileName = files[i].name;
       const ext = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
 
@@ -260,70 +261,48 @@ export class SaveEventComponent implements OnInit, OnDestroy {
         continue;
       }
 
-      console.log(`Image size before compressed: ${files[i].size} bytes.`);
+      this.eventImageFiles.push(files[i]);
 
-      this.compressImage
-        .compress(files[i])
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        const preview = reader.result as string;
+        this.eventImagePreview.push(preview);
+      };
+
+      reader.readAsDataURL(files[i]);
+    }
+  }
+
+  compressImages() {
+    this.compressingImages = true;
+    const n = this.eventImageFiles.length;
+
+    console.log(n);
+
+    if (n === 0) {
+      this.compressingImages = false;
+      return;
+    }
+
+    this.compressedImageFiles = [];
+
+    for (let i = 0; i < n; i++) {
+      console.log(i);
+      this.compressImageService
+        .compress(this.eventImageFiles[i])
         .pipe(take(1))
         .subscribe((compressedImage) => {
-          console.log(`Image size after compressed: ${compressedImage.size} bytes.`);
+          console.log(i, `Image size after compressed: ${compressedImage.size} bytes.`);
           // now you can do upload the compressed image
-          this.eventImageFiles.push(compressedImage);
 
-          const reader = new FileReader();
-
-          reader.onload = () => {
-            const file = reader.result as string;
-            this.eventImagePreview.push(file);
-            this.loadingImages = false;
-          };
-
-          reader.readAsDataURL(compressedImage);
+          this.compressedImageFiles.push(compressedImage);
+          if (i === n - 1) {
+            this.compressingImages = false;
+            console.log(this.compressedImageFiles.length);
+          }
         });
-
-      // this.eventImageFiles.push(files[i]);
-
-      // const reader = new FileReader();
-
-      // reader.onload = () => {
-      //   const file = reader.result as string;
-      //   this.compressFile(file, fileName);
-      // };
-
-      // reader.readAsDataURL(files[i]);
     }
-  }
-
-  compressFile(image: string, fileName: string) {
-    var orientation = -1;
-    const sizeOfOriginalImage = this.imageCompress.byteCount(image) / (1024 * 1024);
-    console.log('Size in bytes is now:', sizeOfOriginalImage);
-    this.imageCompress.compressFile(image, orientation, 50, 50).then((result) => {
-      const compressedImage = result;
-      this.eventImagePreview.push(compressedImage);
-      const sizeOFCompressedImage = this.imageCompress.byteCount(result) / (1024 * 1024);
-      console.log('Size in bytes after compression:', sizeOFCompressedImage);
-      // create file from byte
-      // call method that creates a blob from dataUri
-      const imageFile = this.dataURLtoFile(compressedImage, fileName);
-      this.eventImageFiles.push(imageFile);
-      this.loadingImages = false;
-      //imageFile created below is the new compressed file which can be send to API in form data
-    });
-  }
-
-  private dataURLtoFile(dataURL: string, filename: string) {
-    const arr = dataURL.split(',');
-    const mime = arr[0].match(/:(.*?);/)[1];
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-
-    return new File([u8arr], filename, { type: mime });
   }
 
   removeImage(i: number) {
@@ -392,8 +371,9 @@ export class SaveEventComponent implements OnInit, OnDestroy {
       event.append('longitude', this.city.longitude);
       event.append('createdBy', this.userProfile.email);
       // Event Images
-      for (let i = 0; i < this.eventImageFiles.length; i++) {
-        event.append('eventImage', this.eventImageFiles[i]);
+      const n = this.compressedImageFiles.length;
+      for (let i = 0; i < n; i++) {
+        event.append('eventImage', this.compressedImageFiles[i]);
       }
 
       if (!this.event) {

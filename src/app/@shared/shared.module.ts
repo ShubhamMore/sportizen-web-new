@@ -17,12 +17,14 @@ import { LoadingContentComponent } from './loading-content/loading-content.compo
 import { CapitalizeEachWordPipe } from './pipe/capitalize-each-word.pipe';
 import { TimePipe } from './pipe/time.pipe';
 import { ConfirmComponent } from './confirm/confirm.component';
+import { AmountPipe } from './pipe/amount.pipe';
 
 @NgModule({
   declarations: [
     LoadingContentComponent,
     CapitalizeEachWordPipe,
     TimePipe,
+    AmountPipe,
     SafeHtmlPipe,
     ConfirmComponent,
   ],
@@ -45,6 +47,7 @@ import { ConfirmComponent } from './confirm/confirm.component';
     CapitalizeEachWordPipe,
     SafeHtmlPipe,
     TimePipe,
+    AmountPipe,
 
     FormsModule,
     ReactiveFormsModule,

@@ -1,0 +1,58 @@
+.team-member-card {
+  display: block;
+  font-size: 100%;
+
+  .team-member-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .team-member-email {
+  }
+
+  .team-member-contact {
+  }
+}
+
+@media only screen and(max-width:900px) {
+  .team-member-card {
+    font-size: 97.5%;
+
+    .team-member-name {
+      font-size: 1.125rem;
+    }
+  }
+}
+
+@media only screen and(max-width:767px) {
+  .team-member-card {
+    font-size: 95%;
+
+    .team-member-name {
+      font-size: 1.05rem;
+    }
+  }
+}
+
+@media only screen and(max-width:600px) {
+  .team-member-card {
+    font-size: 92.5%;
+
+    .team-member-name {
+      font-size: 0.975rem;
+    }
+  }
+}
+
+@media only screen and(max-width:400px) {
+  .team-member-card {
+    font-size: 90%;
+
+    .team-member-name {
+      font-size: 0.9rem;
+    }
+  }
+}
