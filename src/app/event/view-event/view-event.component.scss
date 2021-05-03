@@ -1,17 +1,5 @@
 $primary-color: #05bae3;
 
-.row {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-
-  .col-md-6,
-  .col-12 {
-    margin: 0;
-    padding: 0;
-  }
-}
-
 td {
   vertical-align: middle;
 }
@@ -38,9 +26,9 @@ td {
       }
 
       .registered-user-card {
-        display: inline-block;
-        width: max-content;
-        margin: 1rem;
+        display: block;
+        width: 100%;
+        // margin: 1rem;
 
         .user-image {
           display: inline-block;
@@ -90,7 +78,7 @@ td {
         }
 
         .registered-user-card {
-          margin: 0.875rem;
+          // margin: 0.875rem;
 
           .user-image {
             width: 3.875rem;
@@ -126,7 +114,7 @@ td {
         }
 
         .registered-user-card {
-          margin: 0.75rem;
+          // margin: 0.75rem;
 
           .user-image {
             width: 3.75rem;
@@ -162,7 +150,7 @@ td {
         }
 
         .registered-user-card {
-          margin: 0.625rem;
+          // margin: 0.625rem;
 
           .user-image {
             width: 3.625rem;
@@ -198,7 +186,7 @@ td {
         }
 
         .registered-user-card {
-          margin: 0.5rem;
+          // margin: 0.5rem;
 
           .user-image {
             width: 3.5rem;

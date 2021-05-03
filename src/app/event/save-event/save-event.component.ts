@@ -212,7 +212,7 @@ export class SaveEventComponent implements OnInit, OnDestroy {
       this.eventScheduleForm.controls['endDate'].updateValueAndValidity();
     } else {
       this.eventScheduleForm.patchValue({
-        endDate: null,
+        endDate: '',
       });
       this.eventScheduleForm.controls['endDate'].clearValidators();
       this.eventScheduleForm.controls['endDate'].updateValueAndValidity();
@@ -230,7 +230,7 @@ export class SaveEventComponent implements OnInit, OnDestroy {
       this.eventDetailsForm.controls['noOfPlayers'].updateValueAndValidity();
     } else {
       this.eventDetailsForm.patchValue({
-        noOfPlayers: null,
+        noOfPlayers: '',
       });
       this.eventDetailsForm.controls['noOfPlayers'].clearValidators();
       this.eventDetailsForm.controls['noOfPlayers'].updateValueAndValidity();
@@ -288,14 +288,10 @@ export class SaveEventComponent implements OnInit, OnDestroy {
     this.compressedImageFiles = [];
 
     for (let i = 0; i < n; i++) {
-      console.log(i);
       this.compressImageService
         .compress(this.eventImageFiles[i])
         .pipe(take(1))
         .subscribe((compressedImage) => {
-          console.log(i, `Image size after compressed: ${compressedImage.size} bytes.`);
-          // now you can do upload the compressed image
-
           this.compressedImageFiles.push(compressedImage);
           if (i === n - 1) {
             this.compressingImages = false;
@@ -347,6 +343,7 @@ export class SaveEventComponent implements OnInit, OnDestroy {
       if (this.event) {
         event.append('_id', this.event._id);
       }
+
       // Event Details
       event.append('name', this.eventDetailsForm.getRawValue().name);
       event.append('description', this.eventDetailsForm.getRawValue().description);

@@ -1,34 +1,43 @@
-<div class="like-container">
+<div class="team-container">
   <div mat-dialog-content class="">
     <span class="float-right pointer close" mat-dialog-close>
       <mat-icon>close</mat-icon>
     </span>
 
-    <h2 mat-dialog-title>Team Players</h2>
+    <h2 mat-dialog-title>Team Members</h2>
 
     <hr />
 
-    <div>
-      <mat-list role="team-members">
-        <mat-list-item
-          *ngFor="let teamMember of data.teamMembers; let i = index"
-          role="team-member"
-        >
-          <div class="team-member-card">
-            <div class="team-member-name">
-              {{ teamMember.name | capitalizeEachWord }}
-            </div>
+    <div class="team-member-container">
+      <div class="team-member-card" *ngFor="let teamMember of data.teamMembers; let i = index">
+        <div class="team-member-user">
+          {{ getUserLetter(teamMember.name) }}
+        </div>
 
-            <div class="team-member-email">
-              <em>{{ teamMember.email }}</em>
-            </div>
-
-            <div class="team-member-contact">
-              {{ teamMember.contact }}
-            </div>
+        <div class="team-member-details">
+          <div class="team-member-name">
+            {{ teamMember.name | capitalizeEachWord }}
           </div>
-        </mat-list-item>
-      </mat-list>
+
+          <div class="team-member-email">
+            <em>{{ teamMember.email }}</em>
+          </div>
+
+          <div class="team-member-contact">
+            {{ teamMember.contact }}
+          </div>
+        </div>
+      </div>
     </div>
+
+    <ng-template #loadingteams>
+      <div class="loading-container">
+        <mat-spinner diameter="25"></mat-spinner>
+      </div>
+    </ng-template>
+
+    <ng-template #noTeamMembers>
+      <p class="text-center">No Team Members Yet</p>
+    </ng-template>
   </div>
 </div>

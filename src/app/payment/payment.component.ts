@@ -32,7 +32,9 @@ export class PaymentComponent implements OnInit, OnDestroy {
     private userProfileService: UserProfileService,
     private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<PaymentComponent> // private router: Router, // private route: ActivatedRoute,
-  ) {}
+  ) {
+    dialogRef.disableClose = true;
+  }
 
   ngOnInit() {
     this.userProfileService.getProfile().subscribe((userProfile: UserProfileModel) => {

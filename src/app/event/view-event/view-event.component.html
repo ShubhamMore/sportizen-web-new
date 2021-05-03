@@ -1,5 +1,5 @@
-<div class="row events-container">
-  <div class="col-12">
+<div class="events-container">
+  <div class="">
     <mat-card class="event-card" *ngIf="!loading; else loadingSpinner">
       <mat-card-content>
         <app-event-details [eventDetails]="event" [isList]="false"></app-event-details>
@@ -13,42 +13,48 @@
                 <span class="registered-members">Registered Members</span>
               </div>
 
-              <div class="registered-user-card" *ngFor="let player of players; let i = index">
-                <mat-card>
-                  <mat-card-content>
-                    <img
-                      class="user-image"
-                      [src]="player.userImageURL"
-                      loading="lazy"
-                      onerror="this.src='./../../../assets/images/user.png'"
-                    />
+              <br />
 
-                    <div class="user-details">
-                      <div class="user-name">
-                        {{ player.name | capitalizeEachWord }}
-                      </div>
+              <div class="row">
+                <div class="col-md-6 col-sm-12" *ngFor="let player of players; let i = index">
+                  <div class="registered-user-card">
+                    <mat-card>
+                      <mat-card-content>
+                        <img
+                          class="user-image"
+                          [src]="player.userImageURL"
+                          loading="lazy"
+                          onerror="this.src='./../../../assets/images/user.png'"
+                        />
 
-                      <div class="user-email">
-                        <em>{{ player.email }}</em>
-                      </div>
+                        <div class="user-details">
+                          <div class="user-name">
+                            {{ player.name | capitalizeEachWord }}
+                          </div>
 
-                      <div class="user-contact">
-                        {{ player.contact }}
-                      </div>
-                    </div>
+                          <div class="user-email">
+                            <em>{{ player.email }}</em>
+                          </div>
 
-                    <div class="text-right" *ngIf="event.registrationType === 'team'">
-                      <button
-                        type="button"
-                        mat-button
-                        color="primary"
-                        (click)="viewTeamMembers(player.teamMembers)"
-                      >
-                        Team Members
-                      </button>
-                    </div>
-                  </mat-card-content>
-                </mat-card>
+                          <div class="user-contact">
+                            {{ player.contact }}
+                          </div>
+                        </div>
+
+                        <div class="text-right" *ngIf="event.registrationType === 'team'">
+                          <button
+                            type="button"
+                            mat-button
+                            color="primary"
+                            (click)="viewTeamMembers(player.teamMembers)"
+                          >
+                            Team Members
+                          </button>
+                        </div>
+                      </mat-card-content>
+                    </mat-card>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

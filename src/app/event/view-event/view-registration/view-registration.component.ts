@@ -24,4 +24,11 @@ export class ViewRegistrationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
+
+  getUserLetter(userName: string) {
+    if (!userName) {
+      return 'S';
+    }
+    return userName.charAt(0).toUpperCase();
+  }
 }
