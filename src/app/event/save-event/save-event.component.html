@@ -16,7 +16,7 @@
         <div class="row text-center">
           <div class="col-12">
             <mat-horizontal-stepper [linear]="true" #stepper>
-              <mat-step [stepControl]="eventDetailsForm">
+              <mat-step [stepControl]="eventDetailsForm" [editable]="!compressingImages">
                 <ng-template matStepLabel>Details</ng-template>
                 <form [formGroup]="eventDetailsForm">
                   <div class="row">
@@ -205,7 +205,7 @@
                 </form>
               </mat-step>
 
-              <mat-step [stepControl]="eventScheduleForm">
+              <mat-step [stepControl]="eventScheduleForm" [editable]="!compressingImages">
                 <ng-template matStepLabel>Schedule</ng-template>
                 <form [formGroup]="eventScheduleForm">
                   <div class="row">
@@ -342,7 +342,7 @@
                 </form>
               </mat-step>
 
-              <mat-step [stepControl]="eventLocationForm">
+              <mat-step [stepControl]="eventLocationForm" [editable]="!compressingImages">
                 <ng-template matStepLabel>Location</ng-template>
 
                 <form [formGroup]="eventLocationForm">
@@ -424,10 +424,10 @@
                 </form>
               </mat-step>
 
-              <mat-step>
+              <mat-step [editable]="!compressingImages">
                 <ng-template matStepLabel>Event Images</ng-template>
 
-                <ng-container>
+                <ng-container *ngIf="!compressingImages; else compressingImagesData">
                   <div class="row">
                     <div class="col-12 text-left">
                       <input
@@ -505,12 +505,7 @@
 
                   <div class="row">
                     <div class="col-12">
-                      <button
-                        mat-button
-                        matStepperNext
-                        class="control-btn float-right"
-                        (click)="compressImages()"
-                      >
+                      <button mat-button matStepperNext class="control-btn float-right">
                         Next
                       </button>
 
@@ -522,7 +517,7 @@
                 </ng-container>
               </mat-step>
 
-              <mat-step>
+              <mat-step [editable]="!compressingImages">
                 <ng-template matStepLabel>Submit</ng-template>
                 <div class="row" *ngIf="!compressingImages; else compressingImagesData">
                   <div class="col-12">
@@ -569,7 +564,7 @@
   <div class="loading-container">
     <mat-spinner diameter="25"></mat-spinner>
     <div class="text-center">
-      <p>Preparing for Upload</p>
+      <p>Processing Images..</p>
     </div>
   </div>
 </ng-template>

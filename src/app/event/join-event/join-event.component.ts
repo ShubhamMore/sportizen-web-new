@@ -193,7 +193,6 @@ export class JoinEventComponent implements OnInit, OnDestroy {
       });
 
       dialogRef.afterClosed().subscribe((result: any) => {
-        console.log(result);
         if (result.status) {
           this.registerNow();
         }

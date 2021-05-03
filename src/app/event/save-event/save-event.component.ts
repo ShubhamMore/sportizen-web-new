@@ -12,7 +12,6 @@ import { SportService } from './../../services/sport.service';
 import { CountryService } from './../../services/shared-services/country.service';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NgxImageCompressService } from 'ngx-image-compress';
 import { CompressImageService } from 'src/app/services/shared-services/compress-image.service';
 import { take } from 'rxjs/operators';
 import { fromEventPattern } from 'rxjs';
@@ -34,10 +33,10 @@ export class SaveEventComponent implements OnInit, OnDestroy {
   eventDetailsForm: FormGroup;
   eventScheduleForm: FormGroup;
   eventLocationForm: FormGroup;
+
   sports: SportModel[];
   invalidImage: boolean;
   eventImageFiles: File[];
-  compressedImageFiles: File[];
   eventImagePreview: string[];
 
   states: any[];
@@ -47,7 +46,6 @@ export class SaveEventComponent implements OnInit, OnDestroy {
   constructor(
     private eventService: EventService,
     private userProfileService: UserProfileService,
-    private imageCompress: NgxImageCompressService,
     private sportsService: SportService,
     private countryService: CountryService,
     public dateService: DateService,
@@ -73,7 +71,6 @@ export class SaveEventComponent implements OnInit, OnDestroy {
         this.userProfile = userProfile;
 
         this.eventImageFiles = [];
-        this.compressedImageFiles = [];
         this.eventImagePreview = [];
 
         this.states = this.countryService.getStates();
@@ -212,7 +209,7 @@ export class SaveEventComponent implements OnInit, OnDestroy {
       this.eventScheduleForm.controls['endDate'].updateValueAndValidity();
     } else {
       this.eventScheduleForm.patchValue({
-        endDate: '',
+        endDate: null,
       });
       this.eventScheduleForm.controls['endDate'].clearValidators();
       this.eventScheduleForm.controls['endDate'].updateValueAndValidity();
@@ -221,7 +218,6 @@ export class SaveEventComponent implements OnInit, OnDestroy {
 
   changeRegistrationType() {
     const registrationType = this.eventDetailsForm.getRawValue().registrationType;
-    console.log(registrationType, registrationType === 'team');
     if (registrationType === 'team') {
       this.eventDetailsForm.controls['noOfPlayers'].setValidators([
         Validators.required,
@@ -230,7 +226,7 @@ export class SaveEventComponent implements OnInit, OnDestroy {
       this.eventDetailsForm.controls['noOfPlayers'].updateValueAndValidity();
     } else {
       this.eventDetailsForm.patchValue({
-        noOfPlayers: '',
+        noOfPlayers: null,
       });
       this.eventDetailsForm.controls['noOfPlayers'].clearValidators();
       this.eventDetailsForm.controls['noOfPlayers'].updateValueAndValidity();
@@ -252,6 +248,8 @@ export class SaveEventComponent implements OnInit, OnDestroy {
 
     const n: number = files.length;
 
+    const eventImageFiles: File[] = [];
+
     for (let i = 0; i < n; i++) {
       const fileName = files[i].name;
       const ext = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
@@ -261,42 +259,42 @@ export class SaveEventComponent implements OnInit, OnDestroy {
         continue;
       }
 
-      this.eventImageFiles.push(files[i]);
-
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        const preview = reader.result as string;
-        this.eventImagePreview.push(preview);
-      };
-
-      reader.readAsDataURL(files[i]);
+      eventImageFiles.push(files[i]);
     }
+
+    this.compressImages(eventImageFiles);
   }
 
-  compressImages() {
+  compressImages(imageFiles: File[]) {
     this.compressingImages = true;
-    const n = this.eventImageFiles.length;
+    this.eventImageFiles = [];
 
-    console.log(n);
+    const n = imageFiles.length;
 
     if (n === 0) {
       this.compressingImages = false;
       return;
     }
 
-    this.compressedImageFiles = [];
-
     for (let i = 0; i < n; i++) {
       this.compressImageService
-        .compress(this.eventImageFiles[i])
+        .compress(imageFiles[i])
         .pipe(take(1))
         .subscribe((compressedImage) => {
-          this.compressedImageFiles.push(compressedImage);
-          if (i === n - 1) {
-            this.compressingImages = false;
-            console.log(this.compressedImageFiles.length);
-          }
+          this.eventImageFiles.push(compressedImage);
+
+          const reader = new FileReader();
+
+          reader.onload = () => {
+            const preview = reader.result as string;
+            this.eventImagePreview.push(preview);
+
+            if (i === n - 1) {
+              this.compressingImages = false;
+            }
+          };
+
+          reader.readAsDataURL(compressedImage);
         });
     }
   }
@@ -320,21 +318,26 @@ export class SaveEventComponent implements OnInit, OnDestroy {
   }
 
   saveEvent() {
-    if (this.eventDetailsForm.invalid) {
+    if (this.compressingImages) {
+      return;
+    } else if (this.eventDetailsForm.invalid) {
       this.snackBar.open('Form Details are Required', null, {
         duration: 2000,
         panelClass: ['error-snackbar'],
       });
+      return;
     } else if (this.eventScheduleForm.invalid) {
       this.snackBar.open('Event Schedule is Required', null, {
         duration: 2000,
         panelClass: ['error-snackbar'],
       });
+      return;
     } else if (this.eventLocationForm.invalid) {
       this.snackBar.open('Event Location is Required', null, {
         duration: 2000,
         panelClass: ['error-snackbar'],
       });
+      return;
     } else {
       this.submit = true;
 
@@ -368,9 +371,9 @@ export class SaveEventComponent implements OnInit, OnDestroy {
       event.append('longitude', this.city.longitude);
       event.append('createdBy', this.userProfile.email);
       // Event Images
-      const n = this.compressedImageFiles.length;
+      const n = this.eventImageFiles.length;
       for (let i = 0; i < n; i++) {
-        event.append('eventImage', this.compressedImageFiles[i]);
+        event.append('eventImage', this.eventImageFiles[i]);
       }
 
       if (!this.event) {
@@ -386,6 +389,10 @@ export class SaveEventComponent implements OnInit, OnDestroy {
             this.close();
           },
           (error: any) => {
+            this.snackBar.open(error, null, {
+              duration: 2000,
+              panelClass: ['error-snackbar'],
+            });
             this.loading = false;
           }
         );
@@ -400,6 +407,10 @@ export class SaveEventComponent implements OnInit, OnDestroy {
             this.close();
           },
           (error: any) => {
+            this.snackBar.open(error, null, {
+              duration: 2000,
+              panelClass: ['error-snackbar'],
+            });
             this.loading = false;
           }
         );
