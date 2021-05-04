@@ -9,7 +9,7 @@ export class UploadAdapter {
       (file: any) =>
         new Promise((resolve, reject) => {
           const myReader = new FileReader();
-           myReader.onloadend = (e: any) => {
+          myReader.onloadend = (e: any) => {
             resolve({ default: myReader.result });
           };
 
