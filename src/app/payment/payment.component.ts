@@ -11,6 +11,7 @@ declare const Razorpay: any;
 
 export interface PaymentDetails {
   amount: number;
+  eventId: string;
 }
 
 @Component({
@@ -81,6 +82,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
           sportizenId: this.userProfile.sportizenId,
           description: 'Event Registration',
           amount: this.data.amount,
+          event: this.data.eventId,
         };
 
         this.generateOrder();

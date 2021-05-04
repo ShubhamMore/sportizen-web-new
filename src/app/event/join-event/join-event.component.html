@@ -45,6 +45,9 @@
                         <mat-error *ngIf="joinEventForm.get('email').hasError('required')">
                           Email is required*
                         </mat-error>
+                        <mat-error *ngIf="joinEventForm.get('email').hasError('email')">
+                          enter Valid Email
+                        </mat-error>
                       </mat-form-field>
                     </div>
 
@@ -54,7 +57,7 @@
 
                         <input
                           matInput
-                          type="text"
+                          type="number"
                           name="contact"
                           id="contact"
                           formControlName="contact"
@@ -62,6 +65,14 @@
 
                         <mat-error *ngIf="joinEventForm.get('contact').hasError('required')">
                           Contact is required*
+                        </mat-error>
+                        <mat-error
+                          *ngIf="
+                            joinEventForm.get('contact').hasError('min') ||
+                            joinEventForm.get('contact').hasError('max')
+                          "
+                        >
+                          Enter Valid Contact
                         </mat-error>
                       </mat-form-field>
                     </div>
@@ -135,6 +146,9 @@
                           <mat-error *ngIf="teamMember.get('email').hasError('required')">
                             Email is required*
                           </mat-error>
+                          <mat-error *ngIf="teamMember.get('email').hasError('email')">
+                            Enter valid Email
+                          </mat-error>
                         </mat-form-field>
                       </div>
 
@@ -144,7 +158,7 @@
 
                           <input
                             matInput
-                            type="text"
+                            type="number"
                             name="contact-{{ i }}"
                             id="contact-{{ i }}"
                             formControlName="contact"
@@ -153,6 +167,14 @@
                           <mat-error *ngIf="teamMember.get('contact').hasError('required')">
                             Contact is required*
                           </mat-error>
+                          <mat-error
+                            *ngIf="
+                              teamMember.get('contact').hasError('min') ||
+                              teamMember.get('contact').hasError('max')
+                            "
+                          >
+                            Enter Valid Contact
+                          </mat-error>
                         </mat-form-field>
                       </div>
                     </div>
@@ -160,7 +182,12 @@
                 </ng-container>
 
                 <div>
-                  <mat-checkbox color="primary" class="example-margin">
+                  <mat-checkbox
+                    color="primary"
+                    class="example-margin"
+                    [checked]="acceptTCStatus"
+                    (change)="acceptTermsConditions($event.checked)"
+                  >
                     Tick the checkbox to agree the Event's T&C policy
                   </mat-checkbox>
                 </div>
@@ -168,7 +195,13 @@
                 <br />
 
                 <div class="text-center">
-                  <button mat-raised-button color="primary" type="submit" class="register-btn">
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    type="submit"
+                    class="register-btn"
+                    [disabled]="joinEventForm.invalid || !this.acceptTCStatus || submit"
+                  >
                     {{ event.registration ? 'Update' : 'Register Now' }}
                   </button>
                 </div>

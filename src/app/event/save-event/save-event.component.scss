@@ -10,6 +10,14 @@
   }
 }
 
+.hide-on-mobile {
+  display: inline-block;
+
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
+}
+
 ::ng-deep .mat-card-header-text {
   width: 100%;
   margin: 0px;

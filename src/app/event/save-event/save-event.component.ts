@@ -6,7 +6,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { UserProfileModel } from './../../models/user-profile.model';
 import { UserProfileService } from './../../services/user-profile.service';
-import { EventModel, EventImageModel } from './/../../models/event.model';
+import { EventModel } from './/../../models/event.model';
 import { SportModel } from './../../models/sport.model';
 import { SportService } from './../../services/sport.service';
 import { CountryService } from './../../services/shared-services/country.service';
@@ -14,7 +14,6 @@ import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CompressImageService } from 'src/app/services/shared-services/compress-image.service';
 import { take } from 'rxjs/operators';
-import { fromEventPattern } from 'rxjs';
 
 @Component({
   selector: 'app-save-event',
@@ -77,7 +76,7 @@ export class SaveEventComponent implements OnInit, OnDestroy {
         this.cities = [];
 
         this.eventDetailsForm = new FormGroup({
-          name: new FormControl(null, {
+          name: new FormControl('', {
             validators: [Validators.required],
           }),
           sport: new FormControl('', {
@@ -89,19 +88,19 @@ export class SaveEventComponent implements OnInit, OnDestroy {
           registrationType: new FormControl('', {
             validators: [Validators.required],
           }),
-          noOfRegistrations: new FormControl(null, {
+          noOfRegistrations: new FormControl('', {
             validators: [Validators.required, Validators.min(1)],
           }),
-          noOfPlayers: new FormControl(null, {
+          noOfPlayers: new FormControl('', {
             validators: [],
           }),
-          description: new FormControl(null, {
+          description: new FormControl('', {
             validators: [Validators.required],
           }),
-          winningPrice: new FormControl(null, {
+          winningPrice: new FormControl('', {
             validators: [Validators.required],
           }),
-          fees: new FormControl(null, {
+          fees: new FormControl('', {
             validators: [Validators.required, Validators.min(0)],
           }),
         });
@@ -113,19 +112,19 @@ export class SaveEventComponent implements OnInit, OnDestroy {
           startDate: new FormControl(this.dateService.getDate(), {
             validators: [Validators.required],
           }),
-          endDate: new FormControl(null, {
+          endDate: new FormControl('', {
             validators: [],
           }),
-          time: new FormControl(null, {
+          time: new FormControl('', {
             validators: [],
           }),
-          registerTill: new FormControl(null, {
+          registerTill: new FormControl('', {
             validators: [Validators.required],
           }),
         });
 
         this.eventLocationForm = new FormGroup({
-          address: new FormControl(null, {
+          address: new FormControl('', {
             validators: [Validators.required],
           }),
           state: new FormControl('', {
@@ -162,7 +161,7 @@ export class SaveEventComponent implements OnInit, OnDestroy {
                 this.eventScheduleForm.patchValue({
                   durationType: event.durationType,
                   startDate: this.dateService.convertToDateString(event.startDate),
-                  endDate: this.dateService.convertToDateString(event.endDate),
+                  endDate: event.endDate ? this.dateService.convertToDateString(event.endDate) : '',
                   time: event.time,
                   registerTill: this.dateService.convertToDateString(event.registerTill),
                 });
@@ -209,7 +208,7 @@ export class SaveEventComponent implements OnInit, OnDestroy {
       this.eventScheduleForm.controls['endDate'].updateValueAndValidity();
     } else {
       this.eventScheduleForm.patchValue({
-        endDate: null,
+        endDate: '',
       });
       this.eventScheduleForm.controls['endDate'].clearValidators();
       this.eventScheduleForm.controls['endDate'].updateValueAndValidity();
@@ -226,7 +225,7 @@ export class SaveEventComponent implements OnInit, OnDestroy {
       this.eventDetailsForm.controls['noOfPlayers'].updateValueAndValidity();
     } else {
       this.eventDetailsForm.patchValue({
-        noOfPlayers: null,
+        noOfPlayers: '',
       });
       this.eventDetailsForm.controls['noOfPlayers'].clearValidators();
       this.eventDetailsForm.controls['noOfPlayers'].updateValueAndValidity();
@@ -321,19 +320,19 @@ export class SaveEventComponent implements OnInit, OnDestroy {
     if (this.compressingImages) {
       return;
     } else if (this.eventDetailsForm.invalid) {
-      this.snackBar.open('Form Details are Required', null, {
+      this.snackBar.open('Form Details are Required', '', {
         duration: 2000,
         panelClass: ['error-snackbar'],
       });
       return;
     } else if (this.eventScheduleForm.invalid) {
-      this.snackBar.open('Event Schedule is Required', null, {
+      this.snackBar.open('Event Schedule is Required', '', {
         duration: 2000,
         panelClass: ['error-snackbar'],
       });
       return;
     } else if (this.eventLocationForm.invalid) {
-      this.snackBar.open('Event Location is Required', null, {
+      this.snackBar.open('Event Location is Required', '', {
         duration: 2000,
         panelClass: ['error-snackbar'],
       });
@@ -389,10 +388,11 @@ export class SaveEventComponent implements OnInit, OnDestroy {
             this.close();
           },
           (error: any) => {
-            this.snackBar.open(error, null, {
+            this.snackBar.open(error, '', {
               duration: 2000,
               panelClass: ['error-snackbar'],
             });
+            this.submit = false;
             this.loading = false;
           }
         );
@@ -407,10 +407,11 @@ export class SaveEventComponent implements OnInit, OnDestroy {
             this.close();
           },
           (error: any) => {
-            this.snackBar.open(error, null, {
+            this.snackBar.open(error, '', {
               duration: 2000,
               panelClass: ['error-snackbar'],
             });
+            this.submit = false;
             this.loading = false;
           }
         );
