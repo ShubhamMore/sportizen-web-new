@@ -141,13 +141,6 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  formatDate(date: string) {
-    return `${date.split('T')[0].split('-').reverse().join('-')} ${date.substring(
-      date.indexOf('T') + 1,
-      date.indexOf('.')
-    )}`;
-  }
-
   ngOnDestroy() {
     window.removeEventListener('scroll', this.scroll, true);
   }

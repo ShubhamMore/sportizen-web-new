@@ -53,14 +53,32 @@ export class EventDetailsComponent implements OnInit {
     return registrations;
   }
 
-  private getBackRoute() {
-    const backRoute = this.backPosition; //  + (this.isList ? '' : '../')
-    return backRoute;
+  joinEvent(id: string, isRegistered: boolean) {
+    if (this.event.createdBy === this.sportizenId) {
+      return;
+    } else if (isRegistered) {
+      this.joinEventRoute(id);
+      return;
+    } else if (this.isRegistrationFull()) {
+      return;
+    } else {
+      this.joinEventRoute(id);
+    }
   }
 
-  joinEvent(id: string) {
+  isRegistrationFull(): boolean {
+    const noOfRegistrations = this.event.registrations.length;
+
+    if (this.event.noOfRegistrations === noOfRegistrations) {
+      return true;
+    }
+
+    return false;
+  }
+
+  private joinEventRoute(id: string) {
     if (this.sportizenId) {
-      this.router.navigate([this.getBackRoute(), 'join', id], {
+      this.router.navigate([this.backPosition, 'join', id], {
         relativeTo: this.route,
       });
     }
@@ -76,11 +94,15 @@ export class EventDetailsComponent implements OnInit {
 
   editEvent(id: string) {
     if (this.sportizenId) {
-      this.router.navigate([this.getBackRoute(), 'edit', id], { relativeTo: this.route });
+      this.router.navigate([this.backPosition, 'edit', id], { relativeTo: this.route });
     }
   }
 
   loginForJoinEvent(id: string) {
+    if (this.isRegistrationFull()) {
+      return;
+    }
+
     if (!this.sportizenId) {
       this.router.navigate(['/login'], {
         relativeTo: this.route,

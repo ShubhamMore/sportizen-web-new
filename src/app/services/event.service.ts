@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 import { EventModel } from './../models/event.model';
 
 @Injectable({ providedIn: 'root' })
 export class EventService {
-  // private events: EventModel[] = [];
-  // private eventId: string = null;
+  // private event = new BehaviorSubject<EventModel>(null);
 
-  // setEventId(eventId: string) {
-  //   this.eventId = eventId;
+  // setLocalEvent(event: EventModel) {
+  //   this.event.next(event);
   // }
 
-  // getEventId() {
-  //   return this.eventId;
+  // getLocalEvent() {
+  //   return this.event;
   // }
 
   constructor(private httpService: HttpService) {}

@@ -7,6 +7,7 @@ import { EventComponent } from './event.component';
 
 @NgModule({
   declarations: [EventComponent],
+
   imports: [SharedModule, HeaderModule, EventRoutingModule],
 })
 export class EventModule {}

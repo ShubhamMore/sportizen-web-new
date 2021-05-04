@@ -63,6 +63,18 @@ export class JoinEventComponent implements OnInit, OnDestroy {
             this.titleService.setTitle(`SPORTIZEN | Join Event | ${event.name}`);
 
             this.userProfileService.getProfile().subscribe((userProfile: UserProfileModel) => {
+              if (event.createdBy === userProfile.sportizenId) {
+                this.location.back();
+                return;
+              }
+
+              const noOfRegisteredMembers = event.registrations.length;
+
+              if (!event.registration && event.noOfRegistrations === noOfRegisteredMembers) {
+                this.location.back();
+                return;
+              }
+
               this.sportizenId = userProfile.sportizenId;
 
               if (event.registrationType === 'individual') {

@@ -97,9 +97,15 @@
           <mat-chip
             class="join-event-box"
             *ngIf="event.createdBy !== sportizenId"
-            (click)="joinEvent(event._id)"
+            (click)="joinEvent(event._id, event.isRegistered)"
           >
-            {{ event.isRegistered ? 'Registered' : 'Join Event' }}
+            {{
+              event.isRegistered
+                ? 'Registered'
+                : isRegistrationFull()
+                ? 'Registration Full'
+                : 'Join Event'
+            }}
           </mat-chip>
 
           <ng-container *ngIf="event.createdBy === sportizenId">
@@ -117,7 +123,7 @@
             *ngIf="!sportizenId"
             (click)="loginForJoinEvent(event._id)"
           >
-            Join Event
+            {{ isRegistrationFull() ? 'Registration Full' : 'Join Event' }}
           </mat-chip>
         </ng-template>
       </mat-chip-list>

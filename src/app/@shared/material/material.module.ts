@@ -12,7 +12,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-
+import { MatTimepickerModule } from 'mat-timepicker';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
@@ -39,6 +39,7 @@ const MaterialComponents = [
   MatRadioModule,
   MatNativeDateModule,
   MatDatepickerModule,
+  // MatTimepickerModule,
   MatProgressSpinnerModule,
   MatSelectModule,
   MatMenuModule,

@@ -179,10 +179,10 @@ export class SaveEventComponent implements OnInit, OnDestroy {
 
                 this.changeCity(event.city);
 
-                // this.eventDetailsForm.get('sport').disable();
-                // this.eventDetailsForm.get('eventType').disable();
-                // this.eventDetailsForm.get('registrationType').disable();
-                // this.eventDetailsForm.get('fees').disable();
+                this.eventDetailsForm.get('eventType').disable();
+                this.eventDetailsForm.get('registrationType').disable();
+                this.eventDetailsForm.get('noOfPlayers').disable();
+                this.eventDetailsForm.get('fees').disable();
 
                 this.loading = false;
               },
