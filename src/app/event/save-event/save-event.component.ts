@@ -12,8 +12,11 @@ import { SportService } from './../../services/sport.service';
 import { CountryService } from './../../services/shared-services/country.service';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CompressImageService } from 'src/app/services/shared-services/compress-image.service';
+import { CompressImageService } from '../../services/shared-services/compress-image.service';
 import { take } from 'rxjs/operators';
+import { ImageModelComponent } from '../../image/image-model/image-model.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmComponent } from '../../@shared/confirm/confirm.component';
 
 @Component({
   selector: 'app-save-event',
@@ -25,6 +28,7 @@ export class SaveEventComponent implements OnInit, OnDestroy {
   submit: boolean;
 
   loading: boolean;
+  deleting: boolean;
   compressingImages: boolean;
 
   userProfile: UserProfileModel;
@@ -51,12 +55,14 @@ export class SaveEventComponent implements OnInit, OnDestroy {
     private location: Location,
     private snackBar: MatSnackBar,
     private compressImageService: CompressImageService,
+    private dialog: MatDialog,
     private titleService: Title,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
+    this.deleting = false;
     this.compressingImages = false;
 
     this.titleService.setTitle(`SPORTIZEN | Event`);
@@ -304,16 +310,36 @@ export class SaveEventComponent implements OnInit, OnDestroy {
   }
 
   deleteImage(id: string, imageId: string, i: number) {
-    this.loading = true;
-    this.eventService.deleteEventImage(id, imageId, i).subscribe(
-      (res: any) => {
-        this.event.images.splice(i, 1);
-        this.loading = false;
-      },
-      (error: any) => {
-        this.loading = false;
+    const dialogRef = this.dialog.open(ConfirmComponent, {
+      data: { message: 'Do you want to delete This Image?' },
+      maxHeight: '90vh',
+      disableClose: true,
+    });
+
+    // tslint:disable-next-line: deprecation
+    dialogRef.afterClosed().subscribe((confirm: boolean) => {
+      if (confirm) {
+        this.deleting = true;
+        this.eventService.deleteEventImage(id, imageId, i).subscribe(
+          (res: any) => {
+            this.event.images.splice(i, 1);
+            this.deleting = false;
+          },
+          (error: any) => {
+            this.deleting = false;
+          }
+        );
       }
-    );
+    });
+  }
+
+  openImageModel(image: any) {
+    const dialogRef = this.dialog.open(ImageModelComponent, {
+      data: { image },
+      maxHeight: '90vh',
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {});
   }
 
   saveEvent() {

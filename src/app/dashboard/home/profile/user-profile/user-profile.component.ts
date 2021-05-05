@@ -1,4 +1,4 @@
-import { ImageModelComponent } from './../image-model/image-model.component';
+import { ImageModelComponent } from '../../../../image/image-model/image-model.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PostGalleryService } from './../../../../services/post-gallery.service';
 import { Component, OnInit } from '@angular/core';

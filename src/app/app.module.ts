@@ -16,7 +16,6 @@ import { CoreModule } from './@core/core.module';
 import { Validator } from './@shared/validators';
 
 import { LoginAuthGuard } from './authentication/auth/guards/login.auth.guard';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { ContentModule } from './content/content.module';
@@ -36,7 +35,7 @@ export function createTranslateLoader(http: HttpClient) {
     ContentModule,
     DashboardModule,
     AppRoutingModule,
-    CKEditorModule,
+
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {

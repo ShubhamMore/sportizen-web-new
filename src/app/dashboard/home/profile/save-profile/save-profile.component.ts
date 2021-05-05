@@ -1,6 +1,6 @@
 import { SportsInterestComponent } from './../sports-interest/sports-interest.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ImageCroperComponent } from './../image-croper/image-croper.component';
+import { ImageCroperComponent } from '../../../../image/image-croper/image-croper.component';
 import { Validator } from './../../../../@shared/validators';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SportService } from './../../../../services/sport.service';

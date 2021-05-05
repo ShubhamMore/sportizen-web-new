@@ -1,7 +1,7 @@
-import { ImageModelComponent } from './../image-model/image-model.component';
+import { ImageModelComponent } from '../../../../image/image-model/image-model.component';
 import { PostGalleryService } from './../../../../services/post-gallery.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ImageCroperComponent } from './../image-croper/image-croper.component';
+import { ImageCroperComponent } from '../../../../image/image-croper/image-croper.component';
 import { ConnectionService } from './../../../../services/connection.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';

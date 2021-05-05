@@ -14,6 +14,8 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { LoadingContentComponent } from './loading-content/loading-content.component';
 
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
 import { CapitalizeEachWordPipe } from './pipe/capitalize-each-word.pipe';
 import { TimePipe } from './pipe/time.pipe';
 import { ConfirmComponent } from './confirm/confirm.component';
@@ -34,6 +36,8 @@ import { AmountPipe } from './pipe/amount.pipe';
     ReactiveFormsModule,
     MaterialModule,
 
+    CKEditorModule,
+
     MomentModule,
     InfiniteScrollModule,
     SharedRoutingModule,
@@ -53,6 +57,9 @@ import { AmountPipe } from './pipe/amount.pipe';
     ReactiveFormsModule,
     MaterialModule,
     TranslateModule,
+
+    CKEditorModule,
+
     MomentModule,
     InfiniteScrollModule,
     SharedRoutingModule,

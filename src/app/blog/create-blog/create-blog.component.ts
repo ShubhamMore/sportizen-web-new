@@ -11,6 +11,11 @@ import { UserProfileService } from '../../services/user-profile.service';
 import { Location } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 import { UploadAdapter } from './upload-adapter';
+import { take } from 'rxjs/operators';
+import { CompressImageService } from '../../services/shared-services/compress-image.service';
+import { ImageModelComponent } from '../../image/image-model/image-model.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmComponent } from '../../@shared/confirm/confirm.component';
 
 @Component({
   selector: 'app-create-blog',
@@ -19,6 +24,8 @@ import { UploadAdapter } from './upload-adapter';
 })
 export class CreateBlogComponent implements OnInit {
   loading: boolean;
+  deleting: boolean;
+  compressingImages: boolean;
 
   blogImageFiles: File[];
   blogImagePreview: string[];
@@ -35,6 +42,8 @@ export class CreateBlogComponent implements OnInit {
 
   sportizenId: string;
 
+  ckeditorConfig: any;
+
   public classicEditor: any;
 
   constructor(
@@ -45,12 +54,91 @@ export class CreateBlogComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private titleService: Title,
+    private compressImageService: CompressImageService,
+    private dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
     this.loading = true;
+    this.deleting = false;
+    this.compressingImages = false;
+
     this.submit = false;
+
+    this.ckeditorConfig = {
+      toolbar: [
+        'heading',
+        // 'fontFamily',
+        // 'fontSize',
+        '|',
+        'bold',
+        'italic',
+        // 'underline',
+        // 'fontColor',
+        // 'fontBackgroundColor',
+        // 'highlight',
+        'link',
+        '|',
+        // 'CKFinder',
+        'imageUpload',
+        // 'mediaEmbed',
+        '|',
+        'blockQuote',
+        // 'alignment',
+        'bulletedList',
+        'numberedList',
+        '|',
+        'indent',
+        'outdent',
+        '|',
+        'undo',
+        'redo',
+        // '|',
+        // 'insertTable',
+        // 'specialCharacters',
+      ],
+      language: 'id',
+      image: {
+        toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side'],
+        styles: ['full', 'side'],
+      },
+      // image: {
+      //   // Configure the available styles.
+      //   styles: ['alignLeft', 'alignCenter', 'alignRight'],
+
+      //   // Configure the available image resize options.
+      //   resizeOptions: [
+      //     {
+      //       name: 'resizeImage:original',
+      //       label: 'Original',
+      //       value: null,
+      //     },
+      //     {
+      //       name: 'resizeImage:50',
+      //       label: '50%',
+      //       value: '50',
+      //     },
+      //     {
+      //       name: 'resizeImage:75',
+      //       label: '75%',
+      //       value: '75',
+      //     },
+      //   ],
+
+      //   // You need to configure the image toolbar, too, so it shows the new style
+      //   // buttons as well as the resize buttons.
+      //   toolbar: [
+      //     'imageStyle:alignLeft',
+      //     'imageStyle:alignCenter',
+      //     'imageStyle:alignRight',
+      //     '|',
+      //     'resizeImage',
+      //     '|',
+      //     'imageTextAlternative',
+      //   ],
+      // },
+    };
 
     this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
       if (sportizenId) {
@@ -178,34 +266,66 @@ export class CreateBlogComponent implements OnInit {
             duration: 2000,
             panelClass: ['error-snackbar'],
           });
+          this.submit = false;
           this.loading = false;
         }
       );
     }
   }
-
   onImagePicked(event: Event): any {
-    this.invalidImage = false;
     const files = (event.target as HTMLInputElement).files;
-    const imgExt: string[] = ['jpg', 'png'];
-    let ext: string;
+    const imgExt: string[] = ['jpg', 'jpeg', 'png'];
+
     const n: number = files.length;
+
+    const eventImageFiles: File[] = [];
+
     for (let i = 0; i < n; i++) {
-      ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1).toLowerCase();
+      const fileName = files[i].name;
+      const ext = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
+
       if (!(imgExt.indexOf(ext) !== -1)) {
-        return (this.invalidImage = true);
+        this.invalidImage = true;
+        continue;
       }
+
+      eventImageFiles.push(files[i]);
     }
 
-    this.invalidImage = false;
+    this.compressImages(eventImageFiles);
+  }
+
+  compressImages(imageFiles: File[]) {
+    this.compressingImages = true;
+    this.blogImageFiles = [];
+
+    const n = imageFiles.length;
+
+    if (n === 0) {
+      this.compressingImages = false;
+      return;
+    }
 
     for (let i = 0; i < n; i++) {
-      this.blogImageFiles.push(files[i]);
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.blogImagePreview.push(reader.result as string);
-      };
-      reader.readAsDataURL(files[i]);
+      this.compressImageService
+        .compress(imageFiles[i])
+        .pipe(take(1))
+        .subscribe((compressedImage) => {
+          this.blogImageFiles.push(compressedImage);
+
+          const reader = new FileReader();
+
+          reader.onload = () => {
+            const preview = reader.result as string;
+            this.blogImagePreview.push(preview);
+
+            if (i === n - 1) {
+              this.compressingImages = false;
+            }
+          };
+
+          reader.readAsDataURL(compressedImage);
+        });
     }
   }
 
@@ -215,15 +335,35 @@ export class CreateBlogComponent implements OnInit {
   }
 
   deleteImage(id: string, imageId: string, i: number) {
-    this.loading = true;
-    this.blogService.deleteBlogImage(id, imageId, i).subscribe(
-      (res: any) => {
-        this.blog.images.splice(i, 1);
-        this.loading = false;
-      },
-      (error: any) => {
-        this.loading = false;
+    const dialogRef = this.dialog.open(ConfirmComponent, {
+      data: { message: 'Do you want to delete This Image?' },
+      maxHeight: '90vh',
+      disableClose: true,
+    });
+
+    // tslint:disable-next-line: deprecation
+    dialogRef.afterClosed().subscribe((confirm: boolean) => {
+      if (confirm) {
+        this.deleting = true;
+        this.blogService.deleteBlogImage(id, imageId, i).subscribe(
+          (res: any) => {
+            this.blog.images.splice(i, 1);
+            this.deleting = false;
+          },
+          (error: any) => {
+            this.deleting = false;
+          }
+        );
       }
-    );
+    });
+  }
+
+  openImageModel(image: any) {
+    const dialogRef = this.dialog.open(ImageModelComponent, {
+      data: { image },
+      maxHeight: '90vh',
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {});
   }
 }
