@@ -5,6 +5,10 @@
   </a>
 </span>
 
+<div class="event-image-container shadow-sm">
+  <div class="cover-text">{{ type | capitalizeEachWord }} Event</div>
+</div>
+
 <div class="event-list" *ngIf="loading || events.length > 0; else noEvents">
   <div class="row events-container">
     <div class="col-12">

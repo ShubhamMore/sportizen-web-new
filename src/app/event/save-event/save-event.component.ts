@@ -408,9 +408,9 @@ export class SaveEventComponent implements OnInit, OnDestroy {
             this.eventScheduleForm.reset();
             this.eventLocationForm.reset();
 
-            this.submit = false;
             this.eventImageFiles = [];
             this.eventImagePreview = [];
+            this.submit = false;
             this.close();
           },
           (error: any) => {
@@ -419,7 +419,6 @@ export class SaveEventComponent implements OnInit, OnDestroy {
               panelClass: ['error-snackbar'],
             });
             this.submit = false;
-            this.loading = false;
           }
         );
       } else {
@@ -427,9 +426,9 @@ export class SaveEventComponent implements OnInit, OnDestroy {
           (resEvent: EventModel) => {
             this.event = resEvent;
             this.event.images = resEvent.images;
-            this.submit = false;
             this.eventImageFiles = [];
             this.eventImagePreview = [];
+            this.submit = false;
             this.close();
           },
           (error: any) => {
@@ -438,7 +437,6 @@ export class SaveEventComponent implements OnInit, OnDestroy {
               panelClass: ['error-snackbar'],
             });
             this.submit = false;
-            this.loading = false;
           }
         );
       }

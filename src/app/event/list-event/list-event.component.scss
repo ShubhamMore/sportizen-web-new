@@ -68,6 +68,27 @@ $primary-color: #05bae3;
   }
 }
 
+.event-image-container {
+  position: relative;
+  height: 15rem;
+  width: 100%;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.5)),
+    url('./../../../assets/images/cover-image.jpg');
+  background-size: cover;
+  object-fit: cover;
+  background-position: center;
+  // background-attachment: fixed;
+
+  .cover-text {
+    position: absolute;
+    font-size: 3rem;
+    font-weight: bold;
+    color: #fff;
+    bottom: 3rem;
+    left: 4rem;
+  }
+}
+
 .event-list {
   width: 100%;
 }
@@ -84,6 +105,16 @@ $primary-color: #05bae3;
 }
 
 @media only screen and(max-width:900px) {
+  .event-image-container {
+    height: 13.75rem;
+
+    .cover-text {
+      font-size: 2.75rem;
+      bottom: 2.75rem;
+      left: 3.5rem;
+    }
+  }
+
   .events-container {
     padding: 0.75rem;
 
@@ -95,6 +126,16 @@ $primary-color: #05bae3;
 }
 
 @media only screen and(max-width:767px) {
+  .event-image-container {
+    height: 12.5rem;
+
+    .cover-text {
+      font-size: 2.5rem;
+      bottom: 2.5rem;
+      left: 3rem;
+    }
+  }
+
   .events-container {
     padding: 0.75rem;
 
@@ -106,6 +147,16 @@ $primary-color: #05bae3;
 }
 
 @media only screen and(max-width:600px) {
+  .event-image-container {
+    height: 11.25rem;
+
+    .cover-text {
+      font-size: 2.25rem;
+      bottom: 2.25rem;
+      left: 2.5rem;
+    }
+  }
+
   .events-container {
     padding: 0.625rem;
 
@@ -117,6 +168,16 @@ $primary-color: #05bae3;
 }
 
 @media only screen and(max-width:400px) {
+  .event-image-container {
+    height: 10rem;
+
+    .cover-text {
+      font-size: 2rem;
+      bottom: 2rem;
+      left: 2rem;
+    }
+  }
+
   .events-container {
     padding: 0.5rem;
 
