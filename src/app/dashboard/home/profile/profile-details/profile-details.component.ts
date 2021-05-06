@@ -3,13 +3,16 @@ import { PostGalleryService } from './../../../../services/post-gallery.service'
 import { MatDialog } from '@angular/material/dialog';
 import { ImageCroperComponent } from '../../../../image/image-croper/image-croper.component';
 import { ConnectionService } from './../../../../services/connection.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserProfileModel } from './../../../../models/user-profile.model';
 import { DashboardSideDrawerService } from './../../../../services/dashboard-side-drawer.service';
 import { UserProfileService } from './../../../../services/user-profile.service';
 import { Title } from '@angular/platform-browser';
+import { take } from 'rxjs/operators';
+import { CompressImageService } from './../../../../services/shared-services/compress-image.service';
+import { ConnectionStatus } from 'src/app/enums/connectionStatus';
 
 interface Connection {
   name: string;
@@ -27,23 +30,30 @@ interface Connection {
 })
 export class ProfileDetailsComponent implements OnInit {
   loading: boolean;
+
+  userProfileId: string;
   userProfile: UserProfileModel;
-  invalidImage: boolean;
-  imagePreview: string;
+
+  connectionStatus: string;
+
   profileImagePreview: string;
   coverImagePreview: string;
-  profileImage: File;
-  coverImage: File;
+  invalidImage: boolean;
+
   storyEdit: boolean;
   story: string;
+
   followers: Connection[];
   followings: Connection[];
   gallery: any[];
+
+  sportizenId: string;
 
   constructor(
     private userProfileService: UserProfileService,
     private dashboardSideDrawerService: DashboardSideDrawerService,
     private postGalleryService: PostGalleryService,
+    private compressImageService: CompressImageService,
     private snackBar: MatSnackBar,
     private titleService: Title,
     public dialog: MatDialog,
@@ -56,36 +66,55 @@ export class ProfileDetailsComponent implements OnInit {
     this.loading = true;
     this.storyEdit = false;
 
+    this.gallery = [];
+    this.followers = [];
+    this.followings = [];
+
     this.titleService.setTitle('SPORTIZEN | Profile');
 
-    this.userProfileService.getProfile().subscribe((userProfile: UserProfileModel) => {
-      if (userProfile) {
-        this.userProfile = userProfile;
+    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
+      this.sportizenId = sportizenId;
 
-        // this.dashboardSideDrawerService.close();
+      this.route.params.subscribe((param: Params) => {
+        const userProfileId = param.id;
 
-        if (!this.userProfile.story) {
-          this.storyEdit = true;
+        let userProfileSubscription: any;
+        if (userProfileId) {
+          this.userProfileId = userProfileId;
+          userProfileSubscription = this.userProfileService.getUserProfile(userProfileId);
+        } else {
+          userProfileSubscription = this.userProfileService.getProfile();
         }
 
-        this.profileImagePreview = this.userProfile.userImageURL;
-        this.coverImagePreview = this.userProfile.userCoverImageURL;
-        this.gallery = [];
-        this.followers = [];
-        this.followings = [];
+        userProfileSubscription.subscribe((userProfile: UserProfileModel) => {
+          if (userProfile) {
+            this.userProfile = userProfile;
 
-        this.getGallery();
-        this.getFollowers();
-        this.getFollowings();
+            // this.dashboardSideDrawerService.close();
 
-        this.loading = false;
-      }
+            if (!userProfileId && !this.userProfile.story) {
+              this.storyEdit = true;
+            }
+
+            this.profileImagePreview = this.userProfile.userImageURL;
+            this.coverImagePreview = this.userProfile.userCoverImageURL;
+
+            this.getGallery(userProfileId);
+            this.getFollowers(userProfileId);
+            this.getFollowings(userProfileId);
+
+            this.loading = false;
+          } else {
+            this.router.navigate(['./../'], { relativeTo: this.route });
+          }
+        });
+      });
     });
   }
 
   viewProfile(id: string) {
     if (id === this.userProfile.sportizenId) {
-      this.router.navigate(['./../../', 'profile'], { relativeTo: this.route });
+      this.router.navigate(['./../', 'profile'], { relativeTo: this.route });
     } else {
       this.connectionService.searchedSportizenId = id;
       this.router.navigate(['./../../', 'profile', id], { relativeTo: this.route });
@@ -101,8 +130,16 @@ export class ProfileDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: any) => {});
   }
 
-  getGallery() {
-    this.postGalleryService.getMyPostGallery(6).subscribe(
+  getGallery(userProfileId: string) {
+    let postGallerySubscription: any;
+
+    if (userProfileId) {
+      postGallerySubscription = this.postGalleryService.getUserPostGallery(userProfileId, 6);
+    } else {
+      postGallerySubscription = this.postGalleryService.getMyPostGallery(6);
+    }
+
+    postGallerySubscription.subscribe(
       (gallery: any[]) => {
         this.gallery = gallery;
       },
@@ -110,8 +147,16 @@ export class ProfileDetailsComponent implements OnInit {
     );
   }
 
-  getFollowers() {
-    this.userProfileService.getMyFollowers().subscribe(
+  getFollowers(userProfileId: string) {
+    let followerSubscription: any;
+
+    if (userProfileId) {
+      followerSubscription = this.userProfileService.getUserFollowers(userProfileId);
+    } else {
+      followerSubscription = this.userProfileService.getMyFollowers();
+    }
+
+    followerSubscription.subscribe(
       (followers: Connection[]) => {
         this.followers = followers;
       },
@@ -119,13 +164,31 @@ export class ProfileDetailsComponent implements OnInit {
     );
   }
 
-  getFollowings() {
-    this.userProfileService.getMyFollowings().subscribe(
+  getFollowings(userProfileId: string) {
+    let followingSubscription: any;
+
+    if (userProfileId) {
+      followingSubscription = this.userProfileService.getUserFollowings(userProfileId);
+    } else {
+      followingSubscription = this.userProfileService.getMyFollowings();
+    }
+
+    followingSubscription.subscribe(
       (followings: Connection[]) => {
         this.followings = followings;
       },
       (error: any) => {}
     );
+  }
+
+  setConnectionStatus(connectionStatus: any) {
+    if (connectionStatus === ConnectionStatus.following) {
+      this.connectionStatus = ConnectionStatus.following;
+    } else if (connectionStatus === ConnectionStatus.pending) {
+      this.connectionStatus = ConnectionStatus.pending;
+    } else {
+      this.connectionStatus = 'follow';
+    }
   }
 
   unfollow(name: string, sportizenId: string, i: number) {
@@ -164,125 +227,8 @@ export class ProfileDetailsComponent implements OnInit {
     );
   }
 
-  onImagePicked(event: Event, isCoverPic: boolean): any {
-    this.invalidImage = false;
-    const files = (event.target as HTMLInputElement).files;
-    const imgExt: string[] = ['jpg', 'png'];
-    let ext: string;
-    const n: number = files.length;
-    for (let i = 0; i < n; i++) {
-      ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1).toLowerCase();
-      if (!(imgExt.indexOf(ext) !== -1)) {
-        return (this.invalidImage = true);
-      }
-    }
-    this.invalidImage = false;
-    for (let i = 0; i < n; i++) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.imagePreview = reader.result as string;
-        if (!isCoverPic) {
-          const dialogRef = this.dialog.open(ImageCroperComponent, {
-            data: {
-              image: this.imagePreview,
-              customSavedBtnName: 'Save',
-            },
-            maxHeight: '90vh',
-          });
-
-          dialogRef.afterClosed().subscribe((data: any) => {
-            if (data) {
-              this.saveCroppedProfileImage(data);
-            } else {
-              this.imagePreview = null;
-            }
-          });
-        } else {
-          const dialogRef = this.dialog.open(ImageCroperComponent, {
-            data: {
-              image: this.imagePreview,
-              customSavedBtnName: 'Save',
-              customAspectRatio: 3,
-            },
-            maxHeight: '90vh',
-          });
-
-          dialogRef.afterClosed().subscribe((data: any) => {
-            if (data) {
-              this.saveCroppedCoverImage(data);
-            } else {
-              this.imagePreview = null;
-            }
-          });
-        }
-      };
-      reader.readAsDataURL(files[i]);
-    }
-  }
-
   editProfile() {
     this.router.navigate(['./edit'], { relativeTo: this.route });
-  }
-
-  saveCroppedProfileImage(e: any) {
-    this.profileImagePreview = e;
-    this.imagePreview = null;
-    this.profileImage = this.dataURLtoFile(
-      this.profileImagePreview as string,
-      this.userProfile.email.split('@')[0]
-    );
-
-    const profile = new FormData();
-    if (this.profileImage) {
-      profile.append('_id', this.userProfile._id);
-      profile.append('profileImage', this.profileImage);
-      this.userProfileService.saveProfileImage(profile).subscribe(
-        (updatedUserProfile: UserProfileModel) => {
-          this.userProfileService.setProfile(updatedUserProfile);
-          this.snackBar.open('Profile Photo Updated Successfully', null, {
-            duration: 2000,
-            panelClass: ['success-snackbar'],
-          });
-        },
-        (error: any) => {
-          this.snackBar.open(error, null, {
-            duration: 2000,
-            panelClass: ['error-snackbar'],
-          });
-        }
-      );
-    }
-  }
-
-  saveCroppedCoverImage(e: any) {
-    this.coverImagePreview = e;
-    this.imagePreview = null;
-    this.coverImage = this.dataURLtoFile(
-      this.coverImagePreview as string,
-      this.userProfile.email.split('@')[0]
-    );
-
-    const profile = new FormData();
-
-    if (this.coverImage) {
-      profile.append('_id', this.userProfile._id);
-      profile.append('coverImage', this.coverImage);
-      this.userProfileService.saveCoverImage(profile).subscribe(
-        (updatedUserProfile: UserProfileModel) => {
-          this.userProfileService.setProfile(updatedUserProfile);
-          this.snackBar.open('Cover Photo Updated Successfully', null, {
-            duration: 2000,
-            panelClass: ['success-snackbar'],
-          });
-        },
-        (error: any) => {
-          this.snackBar.open(error, null, {
-            duration: 2000,
-            panelClass: ['error-snackbar'],
-          });
-        }
-      );
-    }
   }
 
   editStory() {
@@ -293,9 +239,11 @@ export class ProfileDetailsComponent implements OnInit {
   saveStory() {
     if (this.story) {
       const profile: any = { _id: this.userProfile._id, story: this.story };
+
       this.userProfileService.saveUserStory(profile).subscribe(
         (updatedUserProfile: UserProfileModel) => {
           this.userProfileService.setProfile(updatedUserProfile);
+
           this.snackBar.open('Story Updated Successfully', null, {
             duration: 2000,
             panelClass: ['success-snackbar'],
@@ -317,7 +265,73 @@ export class ProfileDetailsComponent implements OnInit {
     }
   }
 
-  dataURLtoFile(dataURL: string, filename: string) {
+  onImagePicked(event: Event, isCoverPic: boolean): any {
+    this.invalidImage = false;
+
+    const files = (event.target as HTMLInputElement).files;
+
+    const imgExt: string[] = ['jpg', 'jpeg', 'png'];
+
+    let ext: string;
+    const n: number = files.length;
+
+    for (let i = 0; i < n; i++) {
+      ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1).toLowerCase();
+      if (!(imgExt.indexOf(ext) !== -1)) {
+        this.invalidImage = true;
+        continue;
+      }
+
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        const imagePreview = reader.result as string;
+
+        const dialogRef = this.dialog.open(ImageCroperComponent, {
+          data: {
+            image: imagePreview,
+            customSavedBtnName: 'Save',
+            customAspectRatio: !isCoverPic ? 1 : 3,
+          },
+          maxHeight: '90vh',
+        });
+
+        dialogRef.afterClosed().subscribe((data: any) => {
+          if (data) {
+            this.compressFile(data, isCoverPic);
+          }
+        });
+      };
+
+      reader.readAsDataURL(files[i]);
+    }
+  }
+
+  private compressFile(imagePreview: any, isCoverImage: boolean) {
+    if (isCoverImage) {
+      this.coverImagePreview = imagePreview;
+    } else {
+      this.profileImagePreview = imagePreview;
+    }
+
+    const imageFile = this.dataURLtoFile(
+      imagePreview as string,
+      this.userProfile.email.split('@')[0]
+    );
+
+    this.compressImageService
+      .compress(imageFile)
+      .pipe(take(1))
+      .subscribe((compressedImage: any) => {
+        if (isCoverImage) {
+          this.saveCoverImage(compressedImage);
+        } else {
+          this.saveProfileImage(compressedImage);
+        }
+      });
+  }
+
+  private dataURLtoFile(dataURL: string, filename: string) {
     const arr = dataURL.split(',');
     const mime = arr[0].match(/:(.*?);/)[1];
     const bstr = atob(arr[1]);
@@ -329,5 +343,54 @@ export class ProfileDetailsComponent implements OnInit {
     }
 
     return new File([u8arr], filename, { type: mime });
+  }
+
+  private saveProfileImage(profileImage: File) {
+    const profile = new FormData();
+    if (profileImage) {
+      profile.append('_id', this.userProfile._id);
+      profile.append('profileImage', profileImage);
+      this.userProfileService.saveProfileImage(profile).subscribe(
+        (updatedUserProfile: UserProfileModel) => {
+          this.userProfileService.setProfile(updatedUserProfile);
+
+          this.snackBar.open('Profile Photo Updated Successfully', null, {
+            duration: 2000,
+            panelClass: ['success-snackbar'],
+          });
+        },
+        (error: any) => {
+          this.snackBar.open(error, null, {
+            duration: 2000,
+            panelClass: ['error-snackbar'],
+          });
+        }
+      );
+    }
+  }
+
+  private saveCoverImage(coverImage: File) {
+    if (coverImage) {
+      const profile = new FormData();
+
+      profile.append('_id', this.userProfile._id);
+      profile.append('coverImage', coverImage);
+
+      this.userProfileService.saveCoverImage(profile).subscribe(
+        (updatedUserProfile: UserProfileModel) => {
+          this.userProfileService.setProfile(updatedUserProfile);
+          this.snackBar.open('Cover Photo Updated Successfully', null, {
+            duration: 2000,
+            panelClass: ['success-snackbar'],
+          });
+        },
+        (error: any) => {
+          this.snackBar.open(error, null, {
+            duration: 2000,
+            panelClass: ['error-snackbar'],
+          });
+        }
+      );
+    }
   }
 }

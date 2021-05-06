@@ -1,13 +1,12 @@
 import { DashboardFeedModule } from './../../content/dashboard-feed/dashboard-feed.module';
 import { SharedModule } from './../../../../@shared/shared.module';
 import { NgModule } from '@angular/core';
-
-import { ProfileCommonModule } from './../@shared/profile-common.module';
 import { UserProfileRoutingModule } from './user-profile-routing.module';
 import { UserProfileComponent } from './user-profile.component';
+import { ImageModule } from './../../../../image/image.module';
 
 @NgModule({
   declarations: [UserProfileComponent],
-  imports: [SharedModule, ProfileCommonModule, DashboardFeedModule, UserProfileRoutingModule],
+  imports: [SharedModule, ImageModule, DashboardFeedModule, UserProfileRoutingModule],
 })
 export class UserProfileModule {}

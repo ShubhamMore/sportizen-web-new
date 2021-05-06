@@ -1,12 +1,19 @@
 <ng-container *ngIf="!loading; else loadingData">
   <div class="profile-details-container">
     <div class="cover-photo-container">
-      <input type="file" #coverImagePicker (change)="onImagePicked($event, true)" />
+      <ng-container *ngIf="true">
+        <input
+          type="file"
+          accept=".jpg,.png,.jpeg"
+          #coverImagePicker
+          (change)="onImagePicked($event, true)"
+        />
 
-      <div class="edit-cover-photo-btn" (click)="coverImagePicker.click()">
-        <i class="fa fa-edit"></i>
-        &nbsp;Edit Cover Picture
-      </div>
+        <div class="edit-cover-photo-btn" (click)="coverImagePicker.click()">
+          <i class="fa fa-edit"></i>
+          &nbsp;Edit Cover Picture
+        </div>
+      </ng-container>
 
       <img
         class="cover-photo"
@@ -17,17 +24,24 @@
 
       <div class="profile-image">
         <div class="edit-img-container">
-          <input type="file" #profileImagePicker (change)="onImagePicked($event, false)" />
-
           <img
             [src]="profileImagePreview"
             onerror="this.src='./../../../../../assets/images/user.png'"
             loading="lazy"
           />
 
-          <div class="edit-image-icon" (click)="profileImagePicker.click()">
-            <i class="fa fa-camera" aria-hidden="true"></i>
-          </div>
+          <ng-container *ngIf="true">
+            <input
+              type="file"
+              accept=".jpg,.png,.jpeg"
+              #profileImagePicker
+              (change)="onImagePicked($event, false)"
+            />
+
+            <div class="edit-image-icon" (click)="profileImagePicker.click()">
+              <i class="fa fa-camera" aria-hidden="true"></i>
+            </div>
+          </ng-container>
         </div>
       </div>
 
@@ -48,16 +62,23 @@
             <mat-card-header>
               <mat-card-title>
                 <span class="header-title">About Me</span>
-                <span class="float-right pointer">
-                  <i class="fa fa-edit" *ngIf="!storyEdit" (click)="editStory()"></i>
-                  <i class="fa fa-save" *ngIf="storyEdit" (click)="saveStory()"></i>
-                </span>
+
+                <ng-container *ngIf="true">
+                  <span class="float-right pointer">
+                    <i class="fa fa-edit" *ngIf="!storyEdit" (click)="editStory()"></i>
+                    <i class="fa fa-save" *ngIf="storyEdit" (click)="saveStory()"></i>
+                  </span>
+                </ng-container>
               </mat-card-title>
             </mat-card-header>
+
             <mat-card-content>
-              <mat-form-field class="edit-profile-story" *ngIf="storyEdit">
-                <textarea rows="4" maxlength="380" matInput [(ngModel)]="story"></textarea>
-              </mat-form-field>
+              <ng-container *ngIf="true">
+                <mat-form-field class="edit-profile-story" *ngIf="storyEdit">
+                  <textarea rows="6" maxlength="380" matInput [(ngModel)]="story"></textarea>
+                </mat-form-field>
+              </ng-container>
+
               <p *ngIf="!storyEdit" class="profile-info">
                 {{ userProfile.story }}
               </p>

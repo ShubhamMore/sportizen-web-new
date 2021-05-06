@@ -11,7 +11,12 @@
         <div class="row">
           <div class="col-md-4 col-sm-4">
             <div class="img-container">
-              <input type="file" #filePicker (change)="onImagePicked($event)" />
+              <input
+                type="file"
+                accept=".jpg,.png,.jpeg"
+                #filePicker
+                (change)="onImagePicked($event)"
+              />
 
               <img
                 class="profile-image"
@@ -63,7 +68,7 @@
             <div class="user-profile-form-container">
               <h5>Profile Details</h5>
 
-              <form (ngSubmit)="saveUserProfile()" [formGroup]="form" class="user-profile-form">
+              <form (ngSubmit)="submitUserProfile()" [formGroup]="form" class="user-profile-form">
                 <div class="row">
                   <div class="col-md-6">
                     <mat-form-field class="full-width">
@@ -156,6 +161,7 @@
                   <div class="col-md-6">
                     <mat-radio-group
                       aria-labelledby="gender-label"
+                      color="primary"
                       name="gender"
                       id="gender"
                       formControlName="gender"
