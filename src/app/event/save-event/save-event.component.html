@@ -15,7 +15,7 @@
         <div class="row text-center">
           <div class="col-12">
             <mat-horizontal-stepper [linear]="true" #stepper>
-              <mat-step [stepControl]="eventDetailsForm" [editable]="!compressingImages || submit">
+              <mat-step [stepControl]="eventDetailsForm" [editable]="!submit">
                 <ng-template matStepLabel>
                   <span class="hide-on-mobile">Details</span>
                 </ng-template>
@@ -214,7 +214,7 @@
                         mat-raised-button
                         color="primary"
                         matStepperNext
-                        class="event-btn float-right"
+                        class="control-btn float-right"
                       >
                         Next
                       </button>
@@ -223,7 +223,7 @@
                 </form>
               </mat-step>
 
-              <mat-step [stepControl]="eventScheduleForm" [editable]="!compressingImages || submit">
+              <mat-step [stepControl]="eventScheduleForm" [editable]="!submit">
                 <ng-template matStepLabel>
                   <span class="hide-on-mobile">Schedule</span>
                 </ng-template>
@@ -367,12 +367,12 @@
                         mat-raised-button
                         color="primary"
                         matStepperNext
-                        class="event-btn float-right"
+                        class="control-btn float-right"
                       >
                         Next
                       </button>
 
-                      <button mat-button matStepperPrevious class="event-btn float-left">
+                      <button mat-button matStepperPrevious class="control-btn float-left">
                         Previous
                       </button>
                     </div>
@@ -380,7 +380,7 @@
                 </form>
               </mat-step>
 
-              <mat-step [stepControl]="eventLocationForm" [editable]="!compressingImages || submit">
+              <mat-step [stepControl]="eventLocationForm" [editable]="!submit">
                 <ng-template matStepLabel>
                   <span class="hide-on-mobile">Location</span>
                 </ng-template>
@@ -458,12 +458,12 @@
                         mat-raised-button
                         color="primary"
                         matStepperNext
-                        class="event-btn float-right"
+                        class="control-btn float-right"
                       >
                         Next
                       </button>
 
-                      <button mat-button matStepperPrevious class="event-btn float-left">
+                      <button mat-button matStepperPrevious class="control-btn float-left">
                         Previous
                       </button>
                     </div>
@@ -471,13 +471,13 @@
                 </form>
               </mat-step>
 
-              <mat-step [editable]="!compressingImages || submit">
+              <mat-step [editable]="!submit">
                 <ng-template matStepLabel>
                   <span class="hide-on-mobile">Event Images</span>
                 </ng-template>
 
                 <div class="form-fields">
-                  <div class="row" *ngIf="!compressingImages || deleting; else loadingImages">
+                  <div class="row" *ngIf="!loadingImages; else loadingImagesData">
                     <div class="col-12 text-left">
                       <input
                         class="event-images-file-picker form-control"
@@ -565,25 +565,25 @@
                       mat-raised-button
                       color="primary"
                       matStepperNext
-                      class="event-btn float-right"
-                      [disabled]="compressingImages"
+                      class="control-btn float-right"
                     >
                       Next
                     </button>
 
-                    <button mat-button matStepperPrevious class="event-btn float-left">
+                    <button mat-button matStepperPrevious class="control-btn float-left">
                       Previous
                     </button>
                   </div>
                 </div>
               </mat-step>
 
-              <mat-step [editable]="!compressingImages || submit">
+              <mat-step [editable]="!submit">
                 <ng-template matStepLabel>
                   <span class="hide-on-mobile">Submit</span>
                 </ng-template>
+
                 <div class="form-fields">
-                  <div class="row">
+                  <div class="row" *ngIf="!submit; else loadingSpinner">
                     <div class="col-12">
                       <h4 class="text-center">You are now done.</h4>
                     </div>
@@ -596,8 +596,8 @@
                       mat-raised-button
                       color="primary"
                       type="button"
-                      class="event-btn float-right"
-                      (click)="saveEvent()"
+                      class="control-btn float-right"
+                      (click)="submitEvent()"
                       [disabled]="submit"
                     >
                       <span class=""> {{ event ? 'Save' : 'Create' }}</span>
@@ -607,7 +607,7 @@
                     <button
                       mat-button
                       matStepperPrevious
-                      class="event-btn float-left"
+                      class="control-btn float-left"
                       [disabled]="submit"
                     >
                       Previous
@@ -629,7 +629,7 @@
   </div>
 </ng-template>
 
-<ng-template #loadingImages>
+<ng-template #loadingImagesData>
   <div class="loading-container">
     <mat-spinner diameter="25"></mat-spinner>
     <div class="text-center">

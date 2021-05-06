@@ -14,7 +14,7 @@
       <div class="row text-center">
         <div class="col-12">
           <mat-horizontal-stepper [linear]="true" #stepper>
-            <mat-step [editable]="!compressingImages || submit" [stepControl]="detailsForm">
+            <mat-step [editable]="!submit" [stepControl]="detailsForm">
               <ng-template matStepLabel>
                 <span class="hide-on-mobile">Details</span>
               </ng-template>
@@ -94,7 +94,7 @@
               </form>
             </mat-step>
 
-            <mat-step [editable]="!compressingImages || submit" [stepControl]="blogForm">
+            <mat-step [editable]="!submit" [stepControl]="blogForm">
               <ng-template matStepLabel>
                 <span class="hide-on-mobile">Write a Blog </span>
               </ng-template>
@@ -146,14 +146,14 @@
               </form>
             </mat-step>
 
-            <mat-step [editable]="!compressingImages || submit">
+            <mat-step [editable]="!submit">
               <ng-template matStepLabel>
                 <span class="hide-on-mobile">Header Images</span>
               </ng-template>
 
               <ng-container>
                 <div class="form-fields">
-                  <div class="row" *ngIf="!compressingImages; else compressingImagesData">
+                  <div class="row" *ngIf="!loadingImages; else loadingImagesData">
                     <div class="col-12 text-left">
                       <input
                         class="blog-images-file-picker form-control"
@@ -239,7 +239,6 @@
                       matStepperNext
                       color="primary"
                       class="control-btn float-right"
-                      [disabled]="compressingImages"
                     >
                       Next
                     </button>
@@ -252,13 +251,13 @@
               </ng-container>
             </mat-step>
 
-            <mat-step [editable]="!compressingImages || submit">
+            <mat-step [editable]="!submit">
               <ng-template matStepLabel>
                 <span class="hide-on-mobile">Submit</span>
               </ng-template>
 
               <div class="form-fields">
-                <div class="row">
+                <div class="row" *ngIf="!submit; else loadingSpinner">
                   <div class="col-12">
                     <h4 class="text-center">You are now done.</h4>
                   </div>
@@ -271,8 +270,8 @@
                     mat-raised-button
                     color="primary"
                     type="button"
-                    class="blog-btn float-right"
-                    (click)="saveBlog()"
+                    class="control-btn float-right"
+                    (click)="submitBlog()"
                     [disabled]="submit"
                   >
                     <span class=""> {{ blog ? 'Save' : 'Create' }}</span>
@@ -298,11 +297,11 @@
   </div>
 </ng-template>
 
-<ng-template #compressingImagesData>
+<ng-template #loadingImagesData>
   <div class="loading-container">
     <mat-spinner diameter="25"></mat-spinner>
     <div class="text-center">
-      <p>Processing Images..</p>
+      <p>Loading Images.., Please Wait...</p>
     </div>
   </div>
 </ng-template>

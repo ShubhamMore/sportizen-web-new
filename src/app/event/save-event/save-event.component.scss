@@ -159,29 +159,6 @@
   }
 }
 
-.event-btn {
-  margin-top: 0.8rem !important;
-  padding: 0rem 2rem !important;
-  width: max-content !important;
-  height: 2.5rem;
-  font-size: 1rem;
-  line-height: 1rem;
-  border-radius: 2rem !important;
-
-  .icon {
-    font-size: 0.8rem;
-  }
-
-  &:focus {
-    outline: none !important;
-  }
-
-  mat-spinner {
-    display: inline-block;
-    left: 50%;
-  }
-}
-
 @media only screen and(max-width:900px) {
   .event-container {
     padding: 0.875rem 1.75rem;
@@ -234,15 +211,6 @@
         }
       }
     }
-  }
-
-  .event-btn {
-    margin-top: 0.75rem !important;
-    padding: 0rem 1.75rem !important;
-    height: 2.375rem;
-    font-size: 0.9375rem;
-    line-height: 0.9375rem;
-    border-radius: 1.875rem !important;
   }
 }
 
@@ -299,15 +267,6 @@
       }
     }
   }
-
-  .event-btn {
-    margin-top: 0.7rem !important;
-    padding: 0rem 1.5rem !important;
-    height: 2.25rem;
-    font-size: 0.875rem;
-    line-height: 0.875rem;
-    border-radius: 1.75rem !important;
-  }
 }
 
 @media only screen and(max-width:600px) {
@@ -363,15 +322,6 @@
       }
     }
   }
-
-  .event-btn {
-    margin-top: 0.65rem !important;
-    padding: 0rem 1.25rem !important;
-    height: 2.125rem;
-    font-size: 0.8125rem;
-    line-height: 0.8125rem;
-    border-radius: 1.625rem !important;
-  }
 }
 
 @media only screen and(max-width:400px) {
@@ -426,14 +376,5 @@
         }
       }
     }
-  }
-
-  .event-btn {
-    margin-top: 0.6rem !important;
-    padding: 0rem 1rem !important;
-    height: 2rem;
-    font-size: 0.75rem;
-    line-height: 0.75rem;
-    border-radius: 1.5rem !important;
   }
 }

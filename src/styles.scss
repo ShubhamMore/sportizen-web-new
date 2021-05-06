@@ -39,6 +39,11 @@ body {
   // padding-bottom: 3rem; //48px
 }
 
+// inputs
+textarea {
+  resize: none;
+}
+
 /* Firefox */
 input[type='number'] {
   -moz-appearance: textfield;
@@ -141,6 +146,94 @@ input::-webkit-inner-spin-button {
   mat-spinner {
     display: inline-block;
     left: 50%;
+  }
+}
+
+// Buttons
+
+.submit-flat-btn {
+  line-height: 0 !important;
+  height: 2rem !important;
+  color: #fff !important;
+  padding: 0 1rem !important;
+  float: right !important;
+
+  @media only screen and (max-width: 900px) {
+    font-size: 97.5% !important;
+    height: 2rem !important;
+    padding: 0 0.75rem !important;
+  }
+
+  @media only screen and (max-width: 767px) {
+    font-size: 95% !important;
+    height: 1.875rem !important;
+    padding: 0 0.75rem !important;
+  }
+
+  @media only screen and (max-width: 600px) {
+    font-size: 92.5% !important;
+    height: 1.75rem !important;
+    padding: 0 0.75rem !important;
+  }
+
+  @media only screen and (max-width: 400px) {
+    font-size: 90% !important;
+    height: 1.5rem !important;
+    padding: 0 0.5rem !important;
+  }
+}
+
+.control-btn {
+  margin-top: 0.8rem !important;
+  padding: 0rem 2rem !important;
+  width: max-content !important;
+  height: 2rem !important;
+  font-size: 1rem !important;
+  line-height: 1rem !important;
+  border-radius: 2rem !important;
+
+  .icon {
+    font-size: 0.8rem !important;
+  }
+
+  &:focus {
+    outline: none !important;
+  }
+
+  @media only screen and(max-width:900px) {
+    margin-top: 0.75rem !important;
+    padding: 0rem 1.75rem !important;
+    height: 1.875rem !important;
+    font-size: 0.9375rem !important;
+    line-height: 0.9375rem !important;
+    border-radius: 1.875rem !important;
+  }
+
+  @media only screen and(max-width:767px) {
+    margin-top: 0.7rem !important;
+    padding: 0rem 1.5rem !important;
+    height: 1.75rem !important;
+    font-size: 0.875rem !important;
+    line-height: 0.875rem !important;
+    border-radius: 1.75rem !important;
+  }
+
+  @media only screen and(max-width:600px) {
+    margin-top: 0.65rem !important;
+    padding: 0rem 1.25rem !important;
+    height: 1.625rem !important;
+    font-size: 0.8125rem !important;
+    line-height: 0.8125rem !important;
+    border-radius: 1.625rem !important;
+  }
+
+  @media only screen and(max-width:400px) {
+    margin-top: 0.6rem !important;
+    padding: 0rem 1rem !important;
+    height: 1.5rem !important;
+    font-size: 0.75rem !important;
+    line-height: 0.75rem !important;
+    border-radius: 1.5rem !important;
   }
 }
 
