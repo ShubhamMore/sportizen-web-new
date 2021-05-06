@@ -28,8 +28,7 @@ export class SaveEventComponent implements OnInit, OnDestroy {
   submit: boolean;
 
   loading: boolean;
-  deleting: boolean;
-  compressingImages: boolean;
+  loadingImages: boolean;
 
   userProfile: UserProfileModel;
 
@@ -62,8 +61,7 @@ export class SaveEventComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
-    this.deleting = false;
-    this.compressingImages = false;
+    this.loadingImages = false;
 
     this.titleService.setTitle(`SPORTIZEN | Event`);
 
@@ -248,12 +246,12 @@ export class SaveEventComponent implements OnInit, OnDestroy {
   }
 
   onImagePicked(event: Event): any {
+    this.loadingImages = true;
+
     const files = (event.target as HTMLInputElement).files;
     const imgExt: string[] = ['jpg', 'jpeg', 'png'];
 
     const n: number = files.length;
-
-    const eventImageFiles: File[] = [];
 
     for (let i = 0; i < n; i++) {
       const fileName = files[i].name;
@@ -264,43 +262,20 @@ export class SaveEventComponent implements OnInit, OnDestroy {
         continue;
       }
 
-      eventImageFiles.push(files[i]);
-    }
+      this.eventImageFiles.push(files[i]);
 
-    this.compressImages(eventImageFiles);
-  }
+      const reader = new FileReader();
 
-  compressImages(imageFiles: File[]) {
-    this.compressingImages = true;
-    this.eventImageFiles = [];
+      reader.onload = () => {
+        const preview = reader.result as string;
+        this.eventImagePreview.push(preview);
 
-    const n = imageFiles.length;
+        if (i === n - 1) {
+          this.loadingImages = false;
+        }
+      };
 
-    if (n === 0) {
-      this.compressingImages = false;
-      return;
-    }
-
-    for (let i = 0; i < n; i++) {
-      this.compressImageService
-        .compress(imageFiles[i])
-        .pipe(take(1))
-        .subscribe((compressedImage) => {
-          this.eventImageFiles.push(compressedImage);
-
-          const reader = new FileReader();
-
-          reader.onload = () => {
-            const preview = reader.result as string;
-            this.eventImagePreview.push(preview);
-
-            if (i === n - 1) {
-              this.compressingImages = false;
-            }
-          };
-
-          reader.readAsDataURL(compressedImage);
-        });
+      reader.readAsDataURL(files[i]);
     }
   }
 
@@ -319,14 +294,14 @@ export class SaveEventComponent implements OnInit, OnDestroy {
     // tslint:disable-next-line: deprecation
     dialogRef.afterClosed().subscribe((confirm: boolean) => {
       if (confirm) {
-        this.deleting = true;
+        this.loadingImages = true;
         this.eventService.deleteEventImage(id, imageId, i).subscribe(
           (res: any) => {
             this.event.images.splice(i, 1);
-            this.deleting = false;
+            this.loadingImages = false;
           },
           (error: any) => {
-            this.deleting = false;
+            this.loadingImages = false;
           }
         );
       }
@@ -342,10 +317,8 @@ export class SaveEventComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((result: any) => {});
   }
 
-  saveEvent() {
-    if (this.compressingImages) {
-      return;
-    } else if (this.eventDetailsForm.invalid) {
+  submitEvent() {
+    if (this.eventDetailsForm.invalid) {
       this.snackBar.open('Form Details are Required', '', {
         duration: 2000,
         panelClass: ['error-snackbar'],
@@ -363,83 +336,111 @@ export class SaveEventComponent implements OnInit, OnDestroy {
         panelClass: ['error-snackbar'],
       });
       return;
-    } else {
-      this.submit = true;
+    }
 
-      const event = new FormData();
-      // Event ID
-      if (this.event) {
-        event.append('_id', this.event._id);
-      }
+    this.submit = true;
 
-      // Event Details
-      event.append('name', this.eventDetailsForm.getRawValue().name);
-      event.append('description', this.eventDetailsForm.getRawValue().description);
-      event.append('sport', this.eventDetailsForm.getRawValue().sport);
-      event.append('eventType', this.eventDetailsForm.getRawValue().eventType);
-      event.append('registrationType', this.eventDetailsForm.getRawValue().registrationType);
-      event.append('noOfRegistrations', this.eventDetailsForm.getRawValue().noOfRegistrations);
-      event.append('noOfPlayers', this.eventDetailsForm.getRawValue().noOfPlayers);
-      event.append('winningPrice', this.eventDetailsForm.getRawValue().winningPrice);
-      event.append('fees', this.eventDetailsForm.getRawValue().fees);
-      // Event Schedule
-      event.append('durationType', this.eventScheduleForm.getRawValue().durationType);
-      event.append('startDate', this.eventScheduleForm.getRawValue().startDate);
-      event.append('endDate', this.eventScheduleForm.getRawValue().endDate);
-      event.append('registerTill', this.eventScheduleForm.getRawValue().registerTill);
-      event.append('time', this.eventScheduleForm.getRawValue().time);
-      // Event Location
-      event.append('address', this.eventLocationForm.getRawValue().address);
-      event.append('state', this.eventLocationForm.getRawValue().state);
-      event.append('city', this.eventLocationForm.getRawValue().city);
-      event.append('latitude', this.city.latitude);
-      event.append('longitude', this.city.longitude);
-      event.append('createdBy', this.userProfile.email);
-      // Event Images
-      const n = this.eventImageFiles.length;
+    const n = this.eventImageFiles.length;
+
+    if (n === 0) {
+      this.saveEvent();
+      return;
+    }
+
+    const eventImageFiles: File[] = [];
+
+    for (let i = 0; i < n; i++) {
+      this.compressImageService
+        .compress(this.eventImageFiles[i])
+        .pipe(take(1))
+        .subscribe((compressedImage) => {
+          eventImageFiles.push(compressedImage);
+
+          if (i === n - 1) {
+            this.saveEvent(eventImageFiles);
+          }
+        });
+    }
+  }
+
+  private saveEvent(eventImageFiles?: File[]) {
+    this.submit = true;
+
+    const event = new FormData();
+    // Event ID
+    if (this.event) {
+      event.append('_id', this.event._id);
+    }
+
+    // Event Details
+    event.append('name', this.eventDetailsForm.getRawValue().name);
+    event.append('description', this.eventDetailsForm.getRawValue().description);
+    event.append('sport', this.eventDetailsForm.getRawValue().sport);
+    event.append('eventType', this.eventDetailsForm.getRawValue().eventType);
+    event.append('registrationType', this.eventDetailsForm.getRawValue().registrationType);
+    event.append('noOfRegistrations', this.eventDetailsForm.getRawValue().noOfRegistrations);
+    event.append('noOfPlayers', this.eventDetailsForm.getRawValue().noOfPlayers);
+    event.append('winningPrice', this.eventDetailsForm.getRawValue().winningPrice);
+    event.append('fees', this.eventDetailsForm.getRawValue().fees);
+    // Event Schedule
+    event.append('durationType', this.eventScheduleForm.getRawValue().durationType);
+    event.append('startDate', this.eventScheduleForm.getRawValue().startDate);
+    event.append('endDate', this.eventScheduleForm.getRawValue().endDate);
+    event.append('registerTill', this.eventScheduleForm.getRawValue().registerTill);
+    event.append('time', this.eventScheduleForm.getRawValue().time);
+    // Event Location
+    event.append('address', this.eventLocationForm.getRawValue().address);
+    event.append('state', this.eventLocationForm.getRawValue().state);
+    event.append('city', this.eventLocationForm.getRawValue().city);
+    event.append('latitude', this.city.latitude);
+    event.append('longitude', this.city.longitude);
+    event.append('createdBy', this.userProfile.email);
+    // Event Images
+    if (eventImageFiles) {
+      const n = eventImageFiles.length;
       for (let i = 0; i < n; i++) {
-        event.append('eventImage', this.eventImageFiles[i]);
+        event.append('eventImage', eventImageFiles[i]);
       }
+    }
 
-      if (!this.event) {
-        this.eventService.saveEvent(event).subscribe(
-          (resEvent: EventModel) => {
-            this.eventDetailsForm.reset();
-            this.eventScheduleForm.reset();
-            this.eventLocationForm.reset();
+    if (!this.event) {
+      this.eventService.saveEvent(event).subscribe(
+        (resEvent: EventModel) => {
+          this.eventDetailsForm.reset();
+          this.eventScheduleForm.reset();
+          this.eventLocationForm.reset();
 
-            this.eventImageFiles = [];
-            this.eventImagePreview = [];
-            this.submit = false;
-            this.close();
-          },
-          (error: any) => {
-            this.snackBar.open(error, '', {
-              duration: 2000,
-              panelClass: ['error-snackbar'],
-            });
-            this.submit = false;
-          }
-        );
-      } else {
-        this.eventService.editEvent(event).subscribe(
-          (resEvent: EventModel) => {
-            this.event = resEvent;
-            this.event.images = resEvent.images;
-            this.eventImageFiles = [];
-            this.eventImagePreview = [];
-            this.submit = false;
-            this.close();
-          },
-          (error: any) => {
-            this.snackBar.open(error, '', {
-              duration: 2000,
-              panelClass: ['error-snackbar'],
-            });
-            this.submit = false;
-          }
-        );
-      }
+          this.eventImageFiles = [];
+          this.eventImagePreview = [];
+          this.submit = false;
+          this.close();
+        },
+        (error: any) => {
+          this.snackBar.open(error, '', {
+            duration: 2000,
+            panelClass: ['error-snackbar'],
+          });
+          this.submit = false;
+        }
+      );
+    } else {
+      this.eventService.editEvent(event).subscribe(
+        (resEvent: EventModel) => {
+          this.event = resEvent;
+          this.event.images = resEvent.images;
+          this.eventImageFiles = [];
+          this.eventImagePreview = [];
+          this.submit = false;
+          this.close();
+        },
+        (error: any) => {
+          this.snackBar.open(error, '', {
+            duration: 2000,
+            panelClass: ['error-snackbar'],
+          });
+          this.submit = false;
+        }
+      );
     }
   }
 

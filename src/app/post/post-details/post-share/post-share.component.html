@@ -9,31 +9,40 @@
     <hr />
 
     <form (ngSubmit)="submitPost()" [formGroup]="form">
-      <span class="share-post-label">A preview will added to post after you share it..</span>
+      <ng-container *ngIf="!postUploading; else sharingData">
+        <span class="share-post-label">A preview will added to post after you share it..</span>
 
-      <mat-form-field class="description">
-        <mat-label for="description">Say something about this..</mat-label>
-        <textarea
-          rows="4"
-          matInput
-          type="text"
-          name="description"
-          id="description"
-          formControlName="description"
-        ></textarea>
-      </mat-form-field>
+        <mat-form-field class="description">
+          <mat-label for="description">Say something about this..</mat-label>
+          <textarea
+            rows="4"
+            matInput
+            type="text"
+            name="description"
+            id="description"
+            formControlName="description"
+          ></textarea>
+        </mat-form-field>
+      </ng-container>
 
       <button
         type="submit"
-        class="submit-btn floar-right"
-        mat-raised-button
-        mat-dialog-close
+        class="submit-flat-btn"
+        mat-flat-button
         color="primary"
         [disabled]="postUploading || form.invalid"
       >
         <span class="">Share Now</span>
-        <mat-spinner [diameter]="20" *ngIf="postUploading"></mat-spinner>
       </button>
     </form>
   </mat-dialog-content>
 </div>
+
+<ng-template #sharingData>
+  <div class="loading-container">
+    <mat-spinner diameter="25"></mat-spinner>
+    <div class="text-center">
+      <p>Post Sharing.., Please Wait...</p>
+    </div>
+  </div>
+</ng-template>

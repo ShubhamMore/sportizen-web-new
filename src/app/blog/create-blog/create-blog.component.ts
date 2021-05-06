@@ -24,8 +24,7 @@ import { ConfirmComponent } from '../../@shared/confirm/confirm.component';
 })
 export class CreateBlogComponent implements OnInit {
   loading: boolean;
-  deleting: boolean;
-  compressingImages: boolean;
+  loadingImages: boolean;
 
   blogImageFiles: File[];
   blogImagePreview: string[];
@@ -61,8 +60,7 @@ export class CreateBlogComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    this.deleting = false;
-    this.compressingImages = false;
+    this.loadingImages = false;
 
     this.submit = false;
 
@@ -211,124 +209,6 @@ export class CreateBlogComponent implements OnInit {
     };
   }
 
-  saveBlog() {
-    if (this.detailsForm.invalid) {
-      this.snackBar.open('Form Details are Required', null, {
-        duration: 2000,
-        panelClass: ['error-snackbar'],
-      });
-    } else if (this.blogForm.invalid) {
-      this.snackBar.open('Blog Description is Required', null, {
-        duration: 2000,
-        panelClass: ['error-snackbar'],
-      });
-    } else {
-      this.submit = true;
-
-      const blog = new FormData();
-
-      if (this.blog) {
-        blog.append('_id', this.blog._id);
-      }
-
-      blog.append('title', this.detailsForm.value.title);
-      blog.append('subtitle', this.detailsForm.value.subtitle);
-      blog.append('sport', this.detailsForm.value.sport);
-
-      for (const blogImageFile of this.blogImageFiles) {
-        blog.append('blogImage', blogImageFile);
-      }
-
-      blog.append('description', this.blogForm.value.description);
-
-      this.blogService.saveBlog(blog, !!this.blog).subscribe(
-        (resBlog: BlogModel) => {
-          this.snackBar.open(`Blog ${this.blog ? 'Updated' : 'Created'} Successfully!`, null, {
-            duration: 2000,
-            panelClass: ['success-snackbar'],
-          });
-
-          if (!this.blog) {
-            this.detailsForm.reset();
-            this.blogForm.reset();
-          } else {
-            this.blog = resBlog;
-            this.blog.images = resBlog.images;
-          }
-
-          this.blogImageFiles = [];
-          this.blogImagePreview = [];
-
-          this.submit = false;
-        },
-        (error: any) => {
-          this.snackBar.open(error, null, {
-            duration: 2000,
-            panelClass: ['error-snackbar'],
-          });
-          this.submit = false;
-          this.loading = false;
-        }
-      );
-    }
-  }
-  onImagePicked(event: Event): any {
-    const files = (event.target as HTMLInputElement).files;
-    const imgExt: string[] = ['jpg', 'jpeg', 'png'];
-
-    const n: number = files.length;
-
-    const eventImageFiles: File[] = [];
-
-    for (let i = 0; i < n; i++) {
-      const fileName = files[i].name;
-      const ext = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
-
-      if (!(imgExt.indexOf(ext) !== -1)) {
-        this.invalidImage = true;
-        continue;
-      }
-
-      eventImageFiles.push(files[i]);
-    }
-
-    this.compressImages(eventImageFiles);
-  }
-
-  compressImages(imageFiles: File[]) {
-    this.compressingImages = true;
-    this.blogImageFiles = [];
-
-    const n = imageFiles.length;
-
-    if (n === 0) {
-      this.compressingImages = false;
-      return;
-    }
-
-    for (let i = 0; i < n; i++) {
-      this.compressImageService
-        .compress(imageFiles[i])
-        .pipe(take(1))
-        .subscribe((compressedImage) => {
-          this.blogImageFiles.push(compressedImage);
-
-          const reader = new FileReader();
-
-          reader.onload = () => {
-            const preview = reader.result as string;
-            this.blogImagePreview.push(preview);
-
-            if (i === n - 1) {
-              this.compressingImages = false;
-            }
-          };
-
-          reader.readAsDataURL(compressedImage);
-        });
-    }
-  }
-
   removeImage(i: number) {
     this.blogImageFiles.splice(i, 1);
     this.blogImagePreview.splice(i, 1);
@@ -344,14 +224,14 @@ export class CreateBlogComponent implements OnInit {
     // tslint:disable-next-line: deprecation
     dialogRef.afterClosed().subscribe((confirm: boolean) => {
       if (confirm) {
-        this.deleting = true;
+        this.loadingImages = true;
         this.blogService.deleteBlogImage(id, imageId, i).subscribe(
           (res: any) => {
             this.blog.images.splice(i, 1);
-            this.deleting = false;
+            this.loadingImages = false;
           },
           (error: any) => {
-            this.deleting = false;
+            this.loadingImages = false;
           }
         );
       }
@@ -365,5 +245,127 @@ export class CreateBlogComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {});
+  }
+
+  onImagePicked(event: Event): any {
+    this.loadingImages = true;
+
+    const files = (event.target as HTMLInputElement).files;
+    const imgExt: string[] = ['jpg', 'jpeg', 'png'];
+
+    const n: number = files.length;
+
+    for (let i = 0; i < n; i++) {
+      const fileName = files[i].name;
+      const ext = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
+
+      if (!(imgExt.indexOf(ext) !== -1)) {
+        this.invalidImage = true;
+        continue;
+      }
+
+      this.blogImageFiles.push(files[i]);
+
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        const preview = reader.result as string;
+        this.blogImagePreview.push(preview);
+
+        if (i === n - 1) {
+          this.loadingImages = false;
+        }
+      };
+
+      reader.readAsDataURL(files[i]);
+    }
+  }
+
+  submitBlog() {
+    if (this.detailsForm.invalid) {
+      this.snackBar.open('Form Details are Required', null, {
+        duration: 2000,
+        panelClass: ['error-snackbar'],
+      });
+      return;
+    } else if (this.blogForm.invalid) {
+      this.snackBar.open('Blog Description is Required', null, {
+        duration: 2000,
+        panelClass: ['error-snackbar'],
+      });
+      return;
+    }
+
+    this.submit = true;
+
+    const n = this.blogImageFiles.length;
+
+    if (n === 0) {
+      this.saveBlog();
+      return;
+    }
+
+    const blogImageFiles: File[] = [];
+
+    for (let i = 0; i < n; i++) {
+      this.compressImageService
+        .compress(this.blogImageFiles[i])
+        .pipe(take(1))
+        .subscribe((compressedImage) => {
+          blogImageFiles.push(compressedImage);
+
+          if (i === n - 1) {
+            this.saveBlog(blogImageFiles);
+          }
+        });
+    }
+  }
+
+  private saveBlog(blogImageFiles?: File[]) {
+    const blog = new FormData();
+
+    if (this.blog) {
+      blog.append('_id', this.blog._id);
+    }
+
+    blog.append('title', this.detailsForm.value.title);
+    blog.append('subtitle', this.detailsForm.value.subtitle);
+    blog.append('sport', this.detailsForm.value.sport);
+
+    for (const blogImageFile of blogImageFiles) {
+      blog.append('blogImage', blogImageFile);
+    }
+
+    blog.append('description', this.blogForm.value.description);
+
+    this.blogService.saveBlog(blog, !!this.blog).subscribe(
+      (resBlog: BlogModel) => {
+        this.snackBar.open(`Blog ${this.blog ? 'Updated' : 'Created'} Successfully!`, null, {
+          duration: 2000,
+          panelClass: ['success-snackbar'],
+        });
+
+        if (!this.blog) {
+          this.detailsForm.reset();
+          this.blogForm.reset();
+        } else {
+          this.blog = resBlog;
+          this.blog.images = resBlog.images;
+        }
+
+        this.blogImageFiles = [];
+        this.blogImagePreview = [];
+
+        this.submit = false;
+      },
+      (error: any) => {
+        this.snackBar.open(error, null, {
+          duration: 2000,
+          panelClass: ['error-snackbar'],
+        });
+        this.submit = false;
+        this.loading = false;
+      }
+    );
   }
 }

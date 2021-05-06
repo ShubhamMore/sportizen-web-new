@@ -107,13 +107,6 @@ $grey-color: #838383;
       resize: none;
     }
   }
-
-  .submit-btn {
-    line-height: 0;
-    height: 2rem;
-    padding: 0 1rem;
-    float: right;
-  }
 }
 
 @media only screen and (max-width: 900px) {
@@ -161,12 +154,6 @@ $grey-color: #838383;
     .description {
       font-size: 97.5%;
     }
-
-    .submit-btn {
-      font-size: 97.5%;
-      height: 2rem;
-      padding: 0 0.75rem;
-    }
   }
 }
 
@@ -213,12 +200,6 @@ $grey-color: #838383;
 
     .description {
       font-size: 95%;
-    }
-
-    .submit-btn {
-      font-size: 95%;
-      height: 1.875rem;
-      padding: 0 0.75rem;
     }
   }
 }
@@ -270,12 +251,6 @@ $grey-color: #838383;
     .description {
       font-size: 92.5%;
     }
-
-    .submit-btn {
-      font-size: 92.5%;
-      height: 1.75rem;
-      padding: 0 0.75rem;
-    }
   }
 }
 
@@ -325,12 +300,6 @@ $grey-color: #838383;
 
     .description {
       font-size: 90%;
-    }
-
-    .submit-btn {
-      font-size: 90%;
-      height: 1.5rem;
-      padding: 0 0.5rem;
     }
   }
 }

@@ -1,6 +1,6 @@
 import { UserProfileModel } from './../../../../models/user-profile.model';
 import { UserProfileService } from './../../../../services/user-profile.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PostType } from './../../../../enums/postType';
 import { UploadContentDialogComponent } from './upload-content-dialog/upload-content-dialog.component';
@@ -11,6 +11,7 @@ import { UploadContentDialogComponent } from './upload-content-dialog/upload-con
   styleUrls: ['./upload-content.component.scss'],
 })
 export class UploadContentComponent implements OnInit {
+  @ViewChild('postImage') postImage: any;
   invalidImage: boolean;
   postImageFiles: File[];
   postImagePreview: string[];
@@ -49,7 +50,9 @@ export class UploadContentComponent implements OnInit {
     });
 
     // tslint:disable-next-line: deprecation
-    dialogRef.afterClosed().subscribe((result: any) => {});
+    dialogRef.afterClosed().subscribe((result: any) => {
+      this.postImage.nativeElement.value = '';
+    });
   }
 
   onImagePicked(event: Event): any {
@@ -58,7 +61,7 @@ export class UploadContentComponent implements OnInit {
     this.invalidImage = false;
 
     const files = (event.target as HTMLInputElement).files;
-    const imgExt: string[] = ['jpg', 'png'];
+    const imgExt: string[] = ['jpg', 'jpeg', 'png'];
 
     let ext: string;
 
