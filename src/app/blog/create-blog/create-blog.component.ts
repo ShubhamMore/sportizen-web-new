@@ -16,6 +16,8 @@ import { CompressImageService } from '../../services/shared-services/compress-im
 import { ImageModelComponent } from '../../image/image-model/image-model.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmComponent } from '../../@shared/confirm/confirm.component';
+import { Editor } from 'ngx-editor';
+
 
 @Component({
   selector: 'app-create-blog',
@@ -46,6 +48,9 @@ export class CreateBlogComponent implements OnInit {
 
   public classicEditor: any;
 
+  editor: Editor;
+  html: '';
+
   constructor(
     private sportsService: SportService,
     private blogService: BlogsService,
@@ -65,6 +70,7 @@ export class CreateBlogComponent implements OnInit {
     this.compressingImages = false;
 
     this.submit = false;
+    this.editor = new Editor();
 
     this.ckeditorConfig = {
       toolbar: [
@@ -365,5 +371,9 @@ export class CreateBlogComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {});
+  }
+
+  ngOnDestroy(): void {
+    this.editor.destroy();
   }
 }

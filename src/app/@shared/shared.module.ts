@@ -41,6 +41,7 @@ import { AmountPipe } from './pipe/amount.pipe';
     MomentModule,
     InfiniteScrollModule,
     SharedRoutingModule,
+
   ],
   entryComponents: [ConfirmComponent],
   exports: [
@@ -63,6 +64,7 @@ import { AmountPipe } from './pipe/amount.pipe';
     MomentModule,
     InfiniteScrollModule,
     SharedRoutingModule,
+
   ],
 })
 export class SharedModule {}

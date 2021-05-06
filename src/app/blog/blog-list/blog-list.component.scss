@@ -53,8 +53,8 @@
   justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
-  margin: 1rem 0rem;
-
+  margin: 1rem auto;
+  width: 90%;
   .blog {
     width: 30%;
     // min-width: 20rem;
@@ -148,10 +148,39 @@
   position: relative !important;
   border-radius: 0.5rem 0.5rem 0.5rem 0.5rem !important;
 }
+.blog-main-header {
+  position: relative;
+  height: 15rem;
+  width: 100%;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5)),
+    url('./../../../assets/images/cover-image.jpg');
+  background-size: cover;
+  object-fit: cover;
+  background-position: center;
+
+  .blog-main-header-text {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0 5rem;
+    color: white;
+
+    h1 {
+      font-weight: bold;
+      font-size: 3rem;
+    }
+    .text {
+      padding-bottom: 2rem;
+      font-weight: 600;
+      font-size: 1.2rem;
+      line-height: 1.5rem;
+    }
+  }
+}
 
 @media screen and(max-width:900px) {
   .blogs-container {
-    margin: 0.875rem 0rem;
+    // margin: 0.875rem 0rem;
 
     .blog {
       padding-bottom: 4.75rem;
@@ -211,7 +240,7 @@
 
 @media screen and(max-width:767px) {
   .blogs-container {
-    margin: 0.75rem 0rem;
+    // margin: 0.75rem 0rem;
 
     .blog {
       width: 40%;
@@ -278,7 +307,7 @@
 
 @media screen and(max-width:600px) {
   .blogs-container {
-    margin: 0.625rem 0rem;
+    // margin: 0.625rem 0rem;
 
     .blog {
       width: 85%;
@@ -333,11 +362,17 @@
     bottom: -2.125rem !important;
     border-radius: 0.3125rem 0.3125rem 0.3125rem 0.3125rem !important;
   }
+
+  .blog-main-header {
+    .blog-main-header-text {
+      padding: 0 2rem;
+    }
+  }
 }
 
 @media screen and(max-width:400px) {
   .blogs-container {
-    margin: 0.5rem 0rem;
+    // margin: 0.5rem 0rem;
 
     .blog {
       width: 100%;
