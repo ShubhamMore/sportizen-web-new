@@ -1,0 +1,82 @@
+<ng-container *ngIf="!loading; else loadingData">
+  <div class="profile-details-container">
+    <div class="cover-photo-container">
+      <ng-container *ngIf="!userProfileId">
+        <input
+          type="file"
+          accept=".jpg,.png,.jpeg"
+          #coverImagePicker
+          (change)="onImagePicked($event, true)"
+        />
+
+        <div class="edit-cover-photo-btn" (click)="coverImagePicker.click()">
+          <i class="fa fa-edit"></i>
+          &nbsp;Edit Cover Picture
+        </div>
+      </ng-container>
+
+      <img
+        class="cover-photo"
+        [src]="coverImagePreview"
+        loading="lazy"
+        onerror="this.src='./../../../../../assets/images/cover-image.jpg'"
+      />
+
+      <div class="profile-image">
+        <div class="edit-img-container">
+          <img
+            [src]="profileImagePreview"
+            onerror="this.src='./../../../../../assets/images/user.png'"
+            loading="lazy"
+          />
+
+          <ng-container *ngIf="!userProfileId">
+            <input
+              type="file"
+              accept=".jpg,.png,.jpeg"
+              #profileImagePicker
+              (change)="onImagePicked($event, false)"
+            />
+
+            <div class="edit-image-icon" (click)="profileImagePicker.click()">
+              <i class="fa fa-camera" aria-hidden="true"></i>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="profile-name">{{ userProfile.name | capitalizeEachWord }}</div>
+    </div>
+
+    <div class="profile-btn float-right">
+      <button
+        mat-raised-button
+        color="primary"
+        class="semi-rounded-btn"
+        (click)="editProfile()"
+        *ngIf="!userProfileId"
+      >
+        <i class="fa fa-edit"></i>
+        <span class="edit-profile-text">&nbsp;Edit Profile</span>
+      </button>
+
+      <button
+        mat-raised-button
+        color="primary"
+        class="semi-rounded-btn"
+        (click)="followUnfollow()"
+        *ngIf="userProfileId"
+      >
+        {{ connectionStatus }}
+      </button>
+    </div>
+  </div>
+
+  <router-outlet></router-outlet>
+</ng-container>
+
+<ng-template #loadingData>
+  <div class="loading-container">
+    <mat-spinner diameter="25"></mat-spinner>
+  </div>
+</ng-template>

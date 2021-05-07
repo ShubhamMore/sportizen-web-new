@@ -8,15 +8,9 @@ import { UserProfileModel } from './../models/user-profile.model';
   providedIn: 'root',
 })
 export class UserProfileService {
-  private sportizenId = new BehaviorSubject<string>(null);
   private userProfile = new BehaviorSubject<UserProfileModel>(null);
 
   setProfile(userProfile: any) {
-    if (userProfile) {
-      this.sportizenId.next(userProfile.sportizenId);
-    } else {
-      this.sportizenId.next(null);
-    }
     this.userProfile.next(userProfile);
   }
 
@@ -25,7 +19,14 @@ export class UserProfileService {
   }
 
   getUserSportizenId() {
-    return this.sportizenId;
+    return this.userProfile.pipe(
+      map((userProfile: UserProfileModel) => {
+        if (userProfile) {
+          return userProfile.sportizenId;
+        }
+        return null;
+      })
+    );
   }
 
   constructor(private httpService: HttpService) {}

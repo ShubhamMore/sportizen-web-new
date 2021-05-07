@@ -176,7 +176,9 @@ export class PostDetailsComponent implements OnInit {
     } else {
       this.connectionService.searchedSportizenId = id;
       this.postService.onScreenPostId = postId;
-      this.router.navigate(['/dashboard', 'profile', id], { relativeTo: this.route });
+      this.router.navigate(['/dashboard', 'profile', id], {
+        relativeTo: this.route,
+      });
     }
   }
 

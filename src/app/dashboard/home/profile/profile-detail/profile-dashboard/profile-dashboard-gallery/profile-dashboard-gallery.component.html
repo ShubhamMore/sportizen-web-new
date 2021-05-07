@@ -1,0 +1,35 @@
+<mat-card class="user-info-card">
+  <mat-card-header>
+    <mat-card-title>
+      <span class="header-title">Photos</span>
+      <span class="float-right">
+        <div class="header-btn" (click)="viewAlImages()">See All</div>
+      </span>
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="row" *ngIf="gallery.length > 0; else noGallery">
+      <div class="col-12">
+        <div class="photos-container">
+          <div class="photo-box" *ngFor="let galleryImage of gallery; let i = index">
+            <img
+              class="photo"
+              [src]="galleryImage.secureUrl"
+              loading="lazy"
+              (click)="openImageModel(galleryImage.secureUrl)"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #noGallery>
+  <div class="row">
+    <div class="col-12">
+      <p class="text-center">No Gallery</p>
+    </div>
+  </div>
+</ng-template>

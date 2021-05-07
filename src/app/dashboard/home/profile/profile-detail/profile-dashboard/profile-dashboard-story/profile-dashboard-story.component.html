@@ -1,0 +1,26 @@
+<mat-card class="user-info-card" *ngIf="story || !userId">
+  <mat-card-header>
+    <mat-card-title>
+      <span class="header-title">About Me</span>
+
+      <ng-container *ngIf="true">
+        <span class="float-right pointer" *ngIf="!userId">
+          <i class="fa fa-edit" *ngIf="!storyEdit" (click)="editStory()"></i>
+          <i class="fa fa-save" *ngIf="storyEdit" (click)="saveStory()"></i>
+        </span>
+      </ng-container>
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <ng-container *ngIf="true">
+      <mat-form-field class="edit-profile-story" *ngIf="storyEdit && !userId">
+        <textarea rows="6" maxlength="380" matInput [(ngModel)]="story"></textarea>
+      </mat-form-field>
+    </ng-container>
+
+    <p *ngIf="!storyEdit" class="profile-info">
+      {{ story }}
+    </p>
+  </mat-card-content>
+</mat-card>
