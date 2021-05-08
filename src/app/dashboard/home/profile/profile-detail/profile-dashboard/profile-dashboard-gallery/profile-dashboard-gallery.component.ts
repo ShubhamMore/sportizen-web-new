@@ -31,9 +31,9 @@ export class ProfileDashboardGalleryComponent implements OnInit {
     let postGallerySubscription: any;
 
     if (this.userId) {
-      postGallerySubscription = this.postGalleryService.getUserPostGallery(this.userId, 6);
+      postGallerySubscription = this.postGalleryService.getUserPostGallery(this.userId, 4);
     } else {
-      postGallerySubscription = this.postGalleryService.getMyPostGallery(6);
+      postGallerySubscription = this.postGalleryService.getMyPostGallery(4);
     }
 
     postGallerySubscription.subscribe(

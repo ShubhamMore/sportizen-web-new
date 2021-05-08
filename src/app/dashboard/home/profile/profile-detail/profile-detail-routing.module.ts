@@ -18,7 +18,7 @@ const routes: Routes = [
       {
         path: 'gallery',
         loadChildren: () =>
-          import('./profile-galery/profile-galery.module').then((m) => m.ProfileGalleryModule),
+          import('./profile-galery/profile-gallery.module').then((m) => m.ProfileGalleryModule),
       },
     ],
   },

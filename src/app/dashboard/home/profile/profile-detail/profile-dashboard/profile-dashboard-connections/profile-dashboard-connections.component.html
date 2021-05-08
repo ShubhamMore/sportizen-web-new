@@ -18,14 +18,34 @@
             <div class="friend-mini-name pointer" (click)="viewProfile(follower.sportizenId)">
               {{ follower.name | capitalizeEachWord }}
             </div>
-            <div class="friend-mini-mutual-info">
+            <div class="friend-mini-mutual-info" *ngIf="follower.sportizenId !== sportizenId">
               {{ follower.mutuleConnections ? follower.mutuleConnections : 0 }} Mutual Sportizen
             </div>
             <div
-              class="friend-mini-btn connected"
-              (click)="unfollow(follower.name, follower.sportizenId, i)"
+              class="friend-mini-btn"
+              [ngClass]="
+                !userId
+                  ? 'connected'
+                  : follower.connectionStatus === 'following'
+                  ? 'connected'
+                  : 'not-connected'
+              "
+              *ngIf="follower.sportizenId !== sportizenId"
+              (click)="
+                !userId
+                  ? unfollow(follower.name, follower.sportizenId, i)
+                  : follower.connectionStatus === 'following'
+                  ? unfollowUser(follower.name, follower.sportizenId)
+                  : followUser(follower.name, follower.sportizenId)
+              "
             >
-              Unfollow
+              {{
+                !userId
+                  ? 'Unfollow'
+                  : follower.connectionStatus === 'following'
+                  ? 'Unfollow'
+                  : 'Follow'
+              }}
             </div>
           </div>
         </div>
@@ -54,14 +74,34 @@
             <div class="friend-mini-name pointer" (click)="viewProfile(following.sportizenId)">
               {{ following.name | capitalizeEachWord }}
             </div>
-            <div class="friend-mini-mutual-info">
+            <div class="friend-mini-mutual-info" *ngIf="following.sportizenId !== sportizenId">
               {{ following.mutuleConnections ? following.mutuleConnections : 0 }} Mutual Sportizen
             </div>
             <div
-              class="friend-mini-btn connected"
-              (click)="remove(following.name, following.sportizenId, i)"
+              class="friend-mini-btn"
+              [ngClass]="
+                !userId
+                  ? 'connected'
+                  : following.connectionStatus === 'following'
+                  ? 'connected'
+                  : 'not-connected'
+              "
+              *ngIf="following.sportizenId !== sportizenId"
+              (click)="
+                !userId
+                  ? remove(following.name, following.sportizenId, i)
+                  : following.connectionStatus === 'following'
+                  ? unfollowUser(following.name, following.sportizenId)
+                  : followUser(following.name, following.sportizenId)
+              "
             >
-              Remove
+              {{
+                !userId
+                  ? 'Remove'
+                  : following.connectionStatus === 'following'
+                  ? 'Unfollow'
+                  : 'Follow'
+              }}
             </div>
           </div>
         </div>

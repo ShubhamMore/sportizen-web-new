@@ -1,0 +1,32 @@
+<div class="profile-image-container">
+  <div class="row" *ngIf="!loading; else loadingData">
+    <div class="col-12">
+      <div class="gallery-container" *ngIf="gallery.length > 0; else noGallery">
+        <div class="photos-container">
+          <div class="photo-box" *ngFor="let galleryImage of gallery; let i = index">
+            <img
+              class="photo"
+              [src]="galleryImage.secureUrl"
+              loading="lazy"
+              (click)="openImageModel(galleryImage.secureUrl)"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loadingData>
+  <div class="loading-container">
+    <mat-spinner diameter="25"></mat-spinner>
+  </div>
+</ng-template>
+
+<ng-template #noGallery>
+  <div class="row">
+    <div class="col-12">
+      <p class="text-center">No Gallery</p>
+    </div>
+  </div>
+</ng-template>

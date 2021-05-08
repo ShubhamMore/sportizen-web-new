@@ -23,6 +23,7 @@ export class ProfileDashboardConnectionsComponent implements OnInit {
   userId: string;
   followers: Connection[];
   followings: Connection[];
+  sportizenId: string;
 
   constructor(
     private userProfileService: UserProfileService,
@@ -44,6 +45,10 @@ export class ProfileDashboardConnectionsComponent implements OnInit {
 
     this.getFollowers(this.userId);
     this.getFollowings(this.userId);
+
+    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
+      this.sportizenId = sportizenId;
+    });
   }
 
   getFollowers(userProfileId: string) {
@@ -81,12 +86,78 @@ export class ProfileDashboardConnectionsComponent implements OnInit {
   }
 
   viewProfile(id: string) {
-    if (id === this.userId) {
-      this.router.navigate(['./../', 'profile'], { relativeTo: this.route });
+    if (id === this.sportizenId) {
+      this.router.navigate(['/dashboard', 'profile'], { relativeTo: this.route });
     } else {
       this.connectionService.searchedSportizenId = id;
-      this.router.navigate(['./../../', 'profile', id], { relativeTo: this.route });
+      this.router.navigate(['/dashboard', 'profile', id], { relativeTo: this.route });
     }
+  }
+
+  followUser(name: string, sportizenId: string) {
+    this.connectionService.sendConnectionRequest(sportizenId).subscribe(
+      (res: any) => {
+        const followerIndex = this.followers.findIndex(
+          (follower: Connection) => follower.sportizenId === sportizenId
+        );
+
+        if (followerIndex >= 0) {
+          this.followers[followerIndex].connectionStatus = res.status;
+        }
+
+        const followingIndex = this.followings.findIndex(
+          (following: Connection) => following.sportizenId === sportizenId
+        );
+
+        if (followingIndex >= 0) {
+          this.followings[followingIndex].connectionStatus = res.status;
+        }
+
+        this.snackBar.open(`You are now following ${name}`, null, {
+          duration: 2000,
+          panelClass: ['success-snackbar'],
+        });
+      },
+      (error: any) => {
+        this.snackBar.open(error, null, {
+          duration: 2000,
+          panelClass: ['error-snackbar'],
+        });
+      }
+    );
+  }
+
+  unfollowUser(name: string, sportizenId: string) {
+    this.connectionService.unfollowConnection(sportizenId).subscribe(
+      (res: any) => {
+        const followerIndex = this.followers.findIndex(
+          (follower: Connection) => follower.sportizenId === sportizenId
+        );
+
+        if (followerIndex >= 0) {
+          this.followers[followerIndex].connectionStatus = 'not-connected';
+        }
+
+        const followingIndex = this.followings.findIndex(
+          (following: Connection) => following.sportizenId === sportizenId
+        );
+
+        if (followingIndex >= 0) {
+          this.followings[followingIndex].connectionStatus = 'not-connected';
+        }
+
+        this.snackBar.open(`You unfollowed  ${name}`, null, {
+          duration: 2000,
+          panelClass: ['success-snackbar'],
+        });
+      },
+      (error: any) => {
+        this.snackBar.open(error, null, {
+          duration: 2000,
+          panelClass: ['error-snackbar'],
+        });
+      }
+    );
   }
 
   unfollow(name: string, sportizenId: string, i: number) {
