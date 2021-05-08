@@ -20,6 +20,24 @@ const routes: Routes = [
         loadChildren: () =>
           import('./profile-galery/profile-gallery.module').then((m) => m.ProfileGalleryModule),
       },
+
+      {
+        path: 'followers',
+        loadChildren: () =>
+          import('./profile-connections/profile-connections.module').then(
+            (m) => m.ProfileConnectionsModule
+          ),
+        data: { isFollowers: true },
+      },
+
+      {
+        path: 'followings',
+        loadChildren: () =>
+          import('./profile-connections/profile-connections.module').then(
+            (m) => m.ProfileConnectionsModule
+          ),
+        data: { isFollowers: false },
+      },
     ],
   },
 ];

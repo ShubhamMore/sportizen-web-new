@@ -51,6 +51,14 @@ export class ProfileDashboardConnectionsComponent implements OnInit {
     });
   }
 
+  viewFollowers() {
+    this.router.navigate(['./followers'], { relativeTo: this.route });
+  }
+
+  viewFollowings() {
+    this.router.navigate(['./followings'], { relativeTo: this.route });
+  }
+
   getFollowers(userProfileId: string) {
     let followerSubscription: any;
 

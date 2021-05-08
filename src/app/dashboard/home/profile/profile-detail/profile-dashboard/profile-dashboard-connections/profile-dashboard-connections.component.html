@@ -1,7 +1,9 @@
 <mat-card class="user-info-card">
   <mat-card-header>
     <mat-card-title>
-      <span class="header-title">{{ followers.length }} Followers</span>
+      <span class="header-title pointer" (click)="viewFollowers()"
+        >{{ followers.length }} Followers</span
+      >
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
@@ -57,7 +59,9 @@
 <mat-card class="user-info-card">
   <mat-card-header>
     <mat-card-title>
-      <span class="header-title">{{ followings.length }} Followings</span>
+      <span class="header-title pointer" (click)="viewFollowings()"
+        >{{ followings.length }} Followings</span
+      >
     </mat-card-title>
   </mat-card-header>
   <mat-card-content
