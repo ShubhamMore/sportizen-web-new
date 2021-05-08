@@ -1,8 +1,8 @@
 {
   "name": "sportizen",
   "short_name": "sportizen",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "theme_color": "#05bae3",
+  "background_color": "#fff",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",

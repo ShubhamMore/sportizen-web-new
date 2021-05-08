@@ -1,0 +1,127 @@
+<mat-card class="user-info-card">
+  <mat-card-header>
+    <mat-card-title>
+      <span class="header-title">{{ followers.length }} Followers</span>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content
+    ><div class="row connection-container" *ngIf="followers.length > 0; else noFollowers">
+      <div class="col-12">
+        <div class="friend-mini-card" *ngFor="let follower of followers; let i = index">
+          <img
+            class="friend-mini-photo"
+            [src]="follower.userImageURL"
+            loading="lazy"
+            onerror="this.src='./../../../../../assets/images/user.png'"
+          />
+          <div class="friend-mini-details">
+            <div class="friend-mini-name pointer" (click)="viewProfile(follower.sportizenId)">
+              {{ follower.name | capitalizeEachWord }}
+            </div>
+            <div class="friend-mini-mutual-info" *ngIf="follower.sportizenId !== sportizenId">
+              {{ follower.mutuleConnections ? follower.mutuleConnections : 0 }} Mutual Sportizen
+            </div>
+            <div
+              class="friend-mini-btn"
+              [ngClass]="
+                !userId
+                  ? 'connected'
+                  : follower.connectionStatus === 'following'
+                  ? 'connected'
+                  : 'not-connected'
+              "
+              *ngIf="follower.sportizenId !== sportizenId"
+              (click)="
+                !userId
+                  ? unfollow(follower.name, follower.sportizenId, i)
+                  : follower.connectionStatus === 'following'
+                  ? unfollowUser(follower.name, follower.sportizenId)
+                  : followUser(follower.name, follower.sportizenId)
+              "
+            >
+              {{
+                !userId
+                  ? 'Unfollow'
+                  : follower.connectionStatus === 'following'
+                  ? 'Unfollow'
+                  : 'Follow'
+              }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="user-info-card">
+  <mat-card-header>
+    <mat-card-title>
+      <span class="header-title">{{ followings.length }} Followings</span>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content
+    ><div class="row connection-container" *ngIf="followings.length > 0; else noFollowings">
+      <div class="col-12">
+        <div class="friend-mini-card" *ngFor="let following of followings; let i = index">
+          <img
+            class="friend-mini-photo"
+            [src]="following.userImageURL"
+            loading="lazy"
+            onerror="this.src='./../../../../../assets/images/user.png'"
+          />
+          <div class="friend-mini-details">
+            <div class="friend-mini-name pointer" (click)="viewProfile(following.sportizenId)">
+              {{ following.name | capitalizeEachWord }}
+            </div>
+            <div class="friend-mini-mutual-info" *ngIf="following.sportizenId !== sportizenId">
+              {{ following.mutuleConnections ? following.mutuleConnections : 0 }} Mutual Sportizen
+            </div>
+            <div
+              class="friend-mini-btn"
+              [ngClass]="
+                !userId
+                  ? 'connected'
+                  : following.connectionStatus === 'following'
+                  ? 'connected'
+                  : 'not-connected'
+              "
+              *ngIf="following.sportizenId !== sportizenId"
+              (click)="
+                !userId
+                  ? remove(following.name, following.sportizenId, i)
+                  : following.connectionStatus === 'following'
+                  ? unfollowUser(following.name, following.sportizenId)
+                  : followUser(following.name, following.sportizenId)
+              "
+            >
+              {{
+                !userId
+                  ? 'Remove'
+                  : following.connectionStatus === 'following'
+                  ? 'Unfollow'
+                  : 'Follow'
+              }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #noFollowers>
+  <div class="row">
+    <div class="col-12">
+      <p class="text-center">No Followers</p>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noFollowings>
+  <div class="row">
+    <div class="col-12">
+      <p class="text-center">No Followings</p>
+    </div>
+  </div>
+</ng-template>

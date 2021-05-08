@@ -9,7 +9,7 @@
       [matMenuTriggerFor]="menu"
       [matMenuTriggerData]="{ post: post._id, index: index, createdBy: post.sportizenUser }"
     >
-      ...
+      <mat-icon>more_horiz</mat-icon>
     </span>
 
     <div class="profile-icon" (click)="viewProfile(post.sportizenUser, index)">
@@ -109,7 +109,7 @@
         <div class="post-image" *ngIf="post.sharedPost.secureUrl">
           <img
             [src]="post.sharedPost.secureUrl"
-            onerror="this.src='./../../../../../assets/images/image-loader.png'"
+            onerror="this.src='./../../../assets/images/image-loader.png'"
             loading="lazy"
           />
         </div>
@@ -120,7 +120,7 @@
       <div class="post-image" *ngIf="post.secureUrl">
         <img
           [src]="post.secureUrl"
-          onerror="this.src='./../../../../../assets/images/image-loader.png'"
+          onerror="this.src='./../../../assets/images/image-loader.png'"
           loading="lazy"
         />
       </div>

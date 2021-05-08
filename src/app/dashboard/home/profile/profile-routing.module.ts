@@ -10,7 +10,7 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: () =>
-          import('./profile-details/profile-details.module').then((m) => m.ProfileDetailsModule),
+          import('./profile-detail/profile-detail.module').then((m) => m.ProfileDetailModule),
       },
 
       {
@@ -22,7 +22,8 @@ const routes: Routes = [
       {
         path: ':id',
         loadChildren: () =>
-          import('./user-profile/user-profile.module').then((m) => m.UserProfileModule),
+          import('./profile-detail/profile-detail.module').then((m) => m.ProfileDetailModule),
+        // import('./user-profile/user-profile.module').then((m) => m.UserProfileModule),
       },
     ],
   },

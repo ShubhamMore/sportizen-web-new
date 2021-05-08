@@ -1,4 +1,3 @@
-import { SportsInterestComponent } from './../sports-interest/sports-interest.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageCroperComponent } from '../../../../image/image-croper/image-croper.component';
 import { Validator } from './../../../../@shared/validators';
@@ -15,6 +14,9 @@ import { UserService } from './../../../../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DashboardSideDrawerService } from './../../../../services/dashboard-side-drawer.service';
 import { Title } from '@angular/platform-browser';
+import { SportsComponent } from './../../../../sports/sports.component';
+import { take } from 'rxjs/operators';
+import { CompressImageService } from './../../../../services/shared-services/compress-image.service';
 
 @Component({
   selector: 'app-save-profile',
@@ -27,7 +29,6 @@ export class SaveProfileComponent implements OnInit {
   form: FormGroup;
   changePasswordForm: FormGroup;
 
-  imagePreview: string;
   profileImage: File;
   invalidImage: boolean;
   profileImagePreview: string;
@@ -51,6 +52,7 @@ export class SaveProfileComponent implements OnInit {
     private snackBar: MatSnackBar,
     private titleService: Title,
     public dialog: MatDialog,
+    public compressImageService: CompressImageService,
     private dashboardSideDrawerService: DashboardSideDrawerService
   ) {}
 
@@ -69,7 +71,9 @@ export class SaveProfileComponent implements OnInit {
 
         this.profileImagePreview = this.userProfile.userImageURL;
         this.interestedSports = this.userProfile.sportsInterest;
+
         this.getInterestSports();
+
         this.form = new FormGroup({
           firstName: new FormControl(this.userProfile.name.split(' ')[0], {
             validators: [Validators.required],
@@ -122,8 +126,10 @@ export class SaveProfileComponent implements OnInit {
 
   onImagePicked(event: Event): any {
     this.invalidImage = false;
+
     const files = (event.target as HTMLInputElement).files;
-    const imgExt: string[] = ['jpg', 'png'];
+    const imgExt: string[] = ['jpg', 'jpeg', 'png'];
+
     let ext: string;
     const n: number = files.length;
 
@@ -138,11 +144,13 @@ export class SaveProfileComponent implements OnInit {
 
     for (let i = 0; i < n; i++) {
       const reader = new FileReader();
+
       reader.onload = () => {
-        this.imagePreview = reader.result as string;
+        const imagePreview = reader.result as string;
+
         const dialogRef = this.dialog.open(ImageCroperComponent, {
           data: {
-            image: this.imagePreview,
+            image: imagePreview,
           },
           maxHeight: '90vh',
         });
@@ -150,8 +158,6 @@ export class SaveProfileComponent implements OnInit {
         dialogRef.afterClosed().subscribe((data: any) => {
           if (data) {
             this.saveCroppedImage(data);
-          } else {
-            this.imagePreview = null;
           }
         });
       };
@@ -159,16 +165,16 @@ export class SaveProfileComponent implements OnInit {
     }
   }
 
-  saveCroppedImage(e: any) {
-    this.profileImagePreview = e;
-    this.imagePreview = null;
+  saveCroppedImage(imagePreview: any) {
+    this.profileImagePreview = imagePreview;
+
     this.profileImage = this.dataURLtoFile(
       this.profileImagePreview as string,
       this.userProfile.email.split('@')[0]
     );
   }
 
-  dataURLtoFile(dataURL: string, filename: string) {
+  private dataURLtoFile(dataURL: string, filename: string) {
     const arr = dataURL.split(',');
     const mime = arr[0].match(/:(.*?);/)[1];
     const bstr = atob(arr[1]);
@@ -184,13 +190,14 @@ export class SaveProfileComponent implements OnInit {
 
   getInterestSports() {
     this.sports = [];
+
     this.interestedSports.forEach((sport) => {
       this.sports.push(this.sportService.getSport(sport));
     });
   }
 
   sportsInterest() {
-    const dialogRef = this.dialog.open(SportsInterestComponent, {
+    const dialogRef = this.dialog.open(SportsComponent, {
       data: {
         sportsInterest: this.interestedSports,
       },
@@ -206,8 +213,9 @@ export class SaveProfileComponent implements OnInit {
     });
   }
 
-  saveSportsInterest(e: any) {
-    this.interestedSports = e;
+  saveSportsInterest(interestedSports: any) {
+    this.interestedSports = interestedSports;
+
     this.getInterestSports();
     this.addSportInterest = false;
   }
@@ -217,41 +225,72 @@ export class SaveProfileComponent implements OnInit {
     this.getInterestSports();
   }
 
-  saveUserProfile() {
-    if (this.form.valid && this.interestedSports.length > 0) {
-      this.loading = true;
-      const profile = new FormData();
-      profile.append('_id', this.userProfile._id);
-      profile.append('name', this.form.value.firstName + ' ' + this.form.value.lastName);
-      profile.append('birthDate', this.form.value.birthDate);
-      profile.append('story', this.form.value.story);
-      profile.append('phoneNo', this.form.value.phoneNo);
-      profile.append('gender', this.form.value.gender);
-      profile.append('sportsInterest', this.interestedSports.join(','));
-
-      if (this.profileImage) {
-        profile.append('profileImage', this.profileImage);
-      }
-
-      this.userProfileService.saveProfile(profile).subscribe(
-        (updatedUserProfile: UserProfileModel) => {
-          this.userProfileService.setProfile(updatedUserProfile);
-          this.loading = false;
-          this.snackBar.open('Profile Details Updated Successfully', null, {
-            duration: 2000,
-            panelClass: ['success-snackbar'],
-          });
-          this.loading = false;
-        },
-        (error: any) => {
-          this.snackBar.open(error, null, {
-            duration: 2000,
-            panelClass: ['error-snackbar'],
-          });
-          this.loading = false;
-        }
-      );
+  submitUserProfile() {
+    if (this.form.invalid) {
+      this.snackBar.open('Please Enter Valid Profile Details', null, {
+        duration: 2000,
+        panelClass: ['error-snackbar'],
+      });
+      return;
+    } else if (this.interestedSports.length <= 0) {
+      this.snackBar.open('Please Select at least 1 Sport Interest', null, {
+        duration: 2000,
+        panelClass: ['error-snackbar'],
+      });
+      return;
     }
+
+    this.loading = true;
+
+    if (!this.profileImage) {
+      this.saveUserProfile();
+      return;
+    }
+
+    this.compressImageService
+      .compress(this.profileImage)
+      .pipe(take(1))
+      .subscribe((compressedImage: any) => {
+        this.saveUserProfile(compressedImage);
+      });
+  }
+
+  saveUserProfile(profileImage?: File) {
+    const profile = new FormData();
+
+    profile.append('_id', this.userProfile._id);
+    profile.append('name', this.form.value.firstName + ' ' + this.form.value.lastName);
+    profile.append('birthDate', this.form.value.birthDate);
+    profile.append('story', this.form.value.story);
+    profile.append('phoneNo', this.form.value.phoneNo);
+    profile.append('gender', this.form.value.gender);
+    profile.append('sportsInterest', this.interestedSports.join(','));
+
+    if (profileImage) {
+      profile.append('profileImage', profileImage);
+    }
+
+    this.userProfileService.saveProfile(profile).subscribe(
+      (updatedUserProfile: UserProfileModel) => {
+        this.profileImage = null;
+
+        this.userProfileService.setProfile(updatedUserProfile);
+
+        this.snackBar.open('Profile Details Updated Successfully', null, {
+          duration: 2000,
+          panelClass: ['success-snackbar'],
+        });
+
+        this.loading = false;
+      },
+      (error: any) => {
+        this.snackBar.open(error, null, {
+          duration: 2000,
+          panelClass: ['error-snackbar'],
+        });
+        this.loading = false;
+      }
+    );
   }
 
   changePassword() {

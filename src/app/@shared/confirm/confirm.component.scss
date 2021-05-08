@@ -1,6 +1,5 @@
 $primary-color: #05bae3;
 $secondary-color: #075492;
-$grey-color: #838383;
 
 ::ng-deep .mat-dialog-container {
   padding: 0px !important;
@@ -24,6 +23,7 @@ $grey-color: #838383;
 
   .ok-btn {
     line-height: 0;
+    color: #fff;
     height: 2rem;
     padding: 0 1rem;
   }

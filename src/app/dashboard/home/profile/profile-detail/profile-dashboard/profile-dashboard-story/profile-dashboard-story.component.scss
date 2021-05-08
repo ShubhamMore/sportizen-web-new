@@ -1,0 +1,32 @@
+.edit-profile-story,
+.profile-info {
+  width: 100%;
+}
+
+@media only screen and (max-width: 1080px) {
+  .edit-profile-story,
+  .profile-info {
+    font-size: 97.5%;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .edit-profile-story,
+  .profile-info {
+    font-size: 95%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .edit-profile-story,
+  .profile-info {
+    font-size: 92.5%;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .edit-profile-story,
+  .profile-info {
+    font-size: 90%;
+  }
+}

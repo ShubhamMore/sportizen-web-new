@@ -1,6 +1,5 @@
 $primary-color: #05bae3;
 $secondary-color: #075492;
-$grey-color: #838383;
 
 .connection-list-container {
   padding: 2rem 2rem;
@@ -21,7 +20,7 @@ $grey-color: #838383;
     width: 75%;
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
-    background-color: lighten($grey-color, 40%);
+    background-color: lighten(#787878, 40%);
     border: none;
     margin: 0.4rem 0.5rem;
     padding-right: 1rem;

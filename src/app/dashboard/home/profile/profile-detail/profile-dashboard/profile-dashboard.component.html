@@ -1,0 +1,21 @@
+<div class="profile-info-container">
+  <div class="row">
+    <div class="col-md-5">
+      <app-profile-dashboard-story></app-profile-dashboard-story>
+
+      <app-profile-dashboard-gallery></app-profile-dashboard-gallery>
+
+      <app-profile-dashboard-connections></app-profile-dashboard-connections>
+    </div>
+
+    <div class="col-md-7">
+      <div class="my-posts">
+        <app-dashboard-feed
+          [isMyFeed]="!userId"
+          [isUserFeed]="!!userId"
+          [userId]="userId"
+        ></app-dashboard-feed>
+      </div>
+    </div>
+  </div>
+</div>

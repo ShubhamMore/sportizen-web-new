@@ -1,6 +1,5 @@
 $primary-color: #05bae3;
 $secondary-color: #075492;
-$grey-color: #838383;
 
 .options-bar {
   padding: 0rem;
@@ -51,7 +50,7 @@ $grey-color: #838383;
       }
 
       .profile-id {
-        color: $grey-color;
+        color: #787878;
         margin-bottom: 0.5rem;
 
         &::after {
