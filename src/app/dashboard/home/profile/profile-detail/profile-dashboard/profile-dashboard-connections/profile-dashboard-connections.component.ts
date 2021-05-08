@@ -55,9 +55,9 @@ export class ProfileDashboardConnectionsComponent implements OnInit {
     let followerSubscription: any;
 
     if (userProfileId) {
-      followerSubscription = this.userProfileService.getUserFollowers(userProfileId);
+      followerSubscription = this.userProfileService.getUserFollowers(userProfileId, 4);
     } else {
-      followerSubscription = this.userProfileService.getMyFollowers();
+      followerSubscription = this.userProfileService.getMyFollowers(4);
     }
 
     followerSubscription.subscribe(
@@ -72,9 +72,9 @@ export class ProfileDashboardConnectionsComponent implements OnInit {
     let followingSubscription: any;
 
     if (userProfileId) {
-      followingSubscription = this.userProfileService.getUserFollowings(userProfileId);
+      followingSubscription = this.userProfileService.getUserFollowings(userProfileId, 4);
     } else {
-      followingSubscription = this.userProfileService.getMyFollowings();
+      followingSubscription = this.userProfileService.getMyFollowings(4);
     }
 
     followingSubscription.subscribe(
