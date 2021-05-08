@@ -7,7 +7,7 @@ import { UserProfileModel } from './../../../../models/user-profile.model';
 export class ProfileService {
   private userProfile = new BehaviorSubject<UserProfileModel>(null);
 
-  setProfile(userProfile: UserProfileModel) {
+  setProfile(userProfile: UserProfileModel | any) {
     this.userProfile.next(userProfile);
   }
 

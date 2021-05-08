@@ -25,19 +25,31 @@
                 [ngClass]="
                   !userId && isFollowers
                     ? 'connected'
+                    : !userId && isFollowers
+                    ? 'not-connected'
                     : connection.connectionStatus === 'following'
                     ? 'connected'
                     : 'not-connected'
                 "
                 (click)="
                   !userId && isFollowers
+                    ? unfollowUser(connection.name, connection.sportizenId, i)
+                    : !userId && !isFollowers
                     ? removeUser(connection.name, connection.sportizenId, i)
                     : connection.connectionStatus === 'following'
                     ? unfollowUser(connection.name, connection.sportizenId, i)
                     : followUser(connection.name, connection.sportizenId, i)
                 "
               >
-                {{ connection.connectionStatus === 'following' ? 'Unfollow' : 'Follow' }}
+                {{
+                  !userId && isFollowers
+                    ? 'Unfollow'
+                    : !userId && !isFollowers
+                    ? 'Remove'
+                    : connection.connectionStatus === 'following'
+                    ? 'Unfollow'
+                    : 'Follow'
+                }}
               </div>
             </div>
           </mat-card-content>

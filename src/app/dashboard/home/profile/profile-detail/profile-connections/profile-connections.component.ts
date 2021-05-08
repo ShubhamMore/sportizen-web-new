@@ -99,6 +99,7 @@ export class ProfileConnectionsComponent implements OnInit {
     this.connectionService.sendConnectionRequest(sportizenId).subscribe(
       (res: any) => {
         this.connections[i].connectionStatus = res.status;
+        this.connections.splice(i, 1);
 
         this.snackBar.open(`You are now following ${name}`, null, {
           duration: 2000,
@@ -118,6 +119,7 @@ export class ProfileConnectionsComponent implements OnInit {
     this.connectionService.unfollowConnection(sportizenId).subscribe(
       (res: any) => {
         this.connections[i].connectionStatus = 'not-connected';
+        this.connections.splice(i, 1);
 
         this.snackBar.open(`You unfollowed  ${name}`, null, {
           duration: 2000,

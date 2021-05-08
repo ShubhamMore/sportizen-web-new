@@ -74,7 +74,11 @@ export class ProfileDetailComponent implements OnInit, OnDestroy {
             this.setConnectionStatus(userProfile.connection);
           }
 
-          this.profileService.setProfile(userProfile);
+          if (userProfile.sportizenId === this.sportizenId) {
+            this.profileService.setProfile({ story: userProfile.story });
+          } else {
+            this.profileService.setProfile(userProfile);
+          }
 
           // this.dashboardSideDrawerService.close();
 
