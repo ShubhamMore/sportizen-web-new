@@ -66,8 +66,9 @@
         class="semi-rounded-btn"
         (click)="followUnfollow()"
         *ngIf="userProfileId"
+        [disabled]="connectionRequestLoading"
       >
-        {{ connectionStatus }}
+        {{ connectionStatus | capitalizeEachWord }}
       </button>
     </div>
   </div>
