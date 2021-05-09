@@ -106,23 +106,30 @@ export class ProfileDashboardConnectionsComponent implements OnInit {
     }
   }
 
-  followUser(name: string, sportizenId: string) {
+  followUser(name: string, sportizenId: string, i: number) {
     this.connectionService.sendConnectionRequest(sportizenId).subscribe(
       (res: any) => {
-        const followerIndex = this.followers.findIndex(
-          (follower: Connection) => follower.sportizenId === sportizenId
-        );
+        // this.userProfileService.setConnectionCount(false, true);
 
-        if (followerIndex >= 0) {
-          this.followers[followerIndex].connectionStatus = res.status;
-        }
+        if (!this.userId) {
+          this.followings[i].connectionStatus = res.status;
+          this.noOfFollowings += 1;
+        } else {
+          const followerIndex = this.followers.findIndex(
+            (follower: Connection) => follower.sportizenId === sportizenId
+          );
 
-        const followingIndex = this.followings.findIndex(
-          (following: Connection) => following.sportizenId === sportizenId
-        );
+          if (followerIndex >= 0) {
+            this.followers[followerIndex].connectionStatus = res.status;
+          }
 
-        if (followingIndex >= 0) {
-          this.followings[followingIndex].connectionStatus = res.status;
+          const followingIndex = this.followings.findIndex(
+            (following: Connection) => following.sportizenId === sportizenId
+          );
+
+          if (followingIndex >= 0) {
+            this.followings[followingIndex].connectionStatus = res.status;
+          }
         }
 
         this.snackBar.open(`You are now following ${name}`, null, {
@@ -139,11 +146,14 @@ export class ProfileDashboardConnectionsComponent implements OnInit {
     );
   }
 
-  unfollowUser(name: string, sportizenId: string, i: number, isUser: boolean) {
+  unfollowUser(name: string, sportizenId: string, i: number) {
     this.connectionService.unfollowConnection(sportizenId).subscribe(
       (res: any) => {
-        if (!isUser) {
-          this.followers.splice(i, 1);
+        // this.userProfileService.setConnectionCount(true, false);
+
+        if (!this.userId) {
+          this.followings[i].connectionStatus = 'not-connected';
+          this.noOfFollowings -= 1;
         } else {
           const followerIndex = this.followers.findIndex(
             (follower: Connection) => follower.sportizenId === sportizenId
@@ -179,7 +189,10 @@ export class ProfileDashboardConnectionsComponent implements OnInit {
   remove(name: string, sportizenId: string, i: number) {
     this.connectionService.removeFollowerConnection(sportizenId).subscribe(
       (res: any) => {
-        this.followings.splice(i, 1);
+        this.followers.splice(i, 1);
+        this.noOfFollowers -= 1;
+
+        // this.userProfileService.setConnectionCount(false, false);
         this.snackBar.open(`You Removed ${name}`, null, {
           duration: 2000,
           panelClass: ['success-snackbar'],

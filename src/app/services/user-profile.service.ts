@@ -8,10 +8,48 @@ import { UserProfileModel } from './../models/user-profile.model';
   providedIn: 'root',
 })
 export class UserProfileService {
+  // private userFollowers = new BehaviorSubject<number>(0);
+  // private userFollowings = new BehaviorSubject<number>(0);
   private userProfile = new BehaviorSubject<UserProfileModel>(null);
 
-  setProfile(userProfile: any) {
+  setProfile(userProfile: UserProfileModel) {
     this.userProfile.next(userProfile);
+    // this.setUserFollowers(userProfile ? userProfile.followingsCount : 0);
+    // this.setUserFollowings(userProfile ? userProfile.followingsCount : 0);
+  }
+
+  // private setUserFollowers(followers: number) {
+  //   this.userFollowers.next(followers);
+  // }
+
+  // private setUserFollowings(folloings: number) {
+  //   this.userFollowings.next(folloings);
+  // }
+
+  // setFllowing(isFollow: boolean) {
+  //   this.userFollowers.subscribe((followings: number) => {
+  //     if (followings) {
+  //       if (!isFollow) {
+  //         followings -= 1;
+  //       } else {
+  //         followings += 1;
+  //       }
+  //       this.setUserFollowers(followings);
+  //     }
+  //   });
+  // }
+
+  setFllower() {
+    this.getProfile().subscribe((userProfile: any) => {
+      if (userProfile) {
+        console.log(userProfile);
+      }
+      // this.userFollowers.subscribe((followers: number) => {
+      //   if (followers) {
+      //     followers -= 1;
+      //     this.setUserFollowers(followers);
+      //   }
+    });
   }
 
   getProfile() {
@@ -28,6 +66,14 @@ export class UserProfileService {
       })
     );
   }
+
+  // getFollowing() {
+  //   return this.userFollowings;
+  // }
+
+  // getFollower() {
+  //   return this.userFollowers;
+  // }
 
   constructor(private httpService: HttpService) {}
 

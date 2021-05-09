@@ -5,6 +5,7 @@ import { UserProfileService } from 'src/app/services/user-profile.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConnectionService } from '../../../../../services/connection.service';
 import { ProfileService } from './../../@shared/profile.service';
+import { of } from 'rxjs';
 
 interface Connection {
   name: string;
@@ -24,7 +25,7 @@ export class ProfileConnectionsComponent implements OnInit {
   userId: string;
   isFollowers: boolean;
   loading: boolean;
-  noOfConnections: Number;
+  noOfConnections: number;
   connections: Connection[];
 
   sportizenId: string;
@@ -102,6 +103,11 @@ export class ProfileConnectionsComponent implements OnInit {
       (res: any) => {
         this.connections[i].connectionStatus = res.status;
 
+        if (!this.userId) {
+          this.noOfConnections += 1;
+        }
+        // this.userProfileService.setConnectionCount(false, true);
+
         this.snackBar.open(`You are now following ${name}`, null, {
           duration: 2000,
           panelClass: ['success-snackbar'],
@@ -119,10 +125,10 @@ export class ProfileConnectionsComponent implements OnInit {
   unfollowUser(name: string, sportizenId: string, i: number) {
     this.connectionService.unfollowConnection(sportizenId).subscribe(
       (res: any) => {
+        this.connections[i].connectionStatus = 'not-connected';
+
         if (!this.userId) {
-          this.connections.splice(i, 1);
-        } else {
-          this.connections[i].connectionStatus = 'not-connected';
+          this.noOfConnections -= 1;
         }
 
         this.snackBar.open(`You unfollowed  ${name}`, null, {
@@ -143,6 +149,9 @@ export class ProfileConnectionsComponent implements OnInit {
     this.connectionService.removeFollowerConnection(sportizenId).subscribe(
       (res: any) => {
         this.connections.splice(i, 1);
+        this.noOfConnections = +this.noOfConnections - 1;
+
+        // this.userProfileService.setConnectionCount(false, false);
         this.snackBar.open(`You Removed ${name}`, null, {
           duration: 2000,
           panelClass: ['success-snackbar'],

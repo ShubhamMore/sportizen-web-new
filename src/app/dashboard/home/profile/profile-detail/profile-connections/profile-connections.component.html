@@ -5,8 +5,8 @@
         {{ noOfConnections }}&nbsp;{{ isFollowers ? 'Followers' : 'Followings' }}
       </h2>
 
-      <div class="connection-card" *ngFor="let connection of connections; let i = index">
-        <mat-card>
+      <div class="connection-container" *ngFor="let connection of connections; let i = index">
+        <mat-card class="connection-card">
           <mat-card-content>
             <img
               class="connection-photo"
@@ -14,47 +14,46 @@
               loading="lazy"
               onerror="this.src='./../../../../../../assets/images/user.png'"
             />
-            <div class="connection-details">
-              <div class="connection-name pointer" (click)="viewProfile(connection.sportizenId)">
-                {{ connection.name | capitalizeEachWord }}
-              </div>
-              <div class="connection-mutual-info">
-                <span *ngIf="connection.sportizenId !== sportizenId">
-                  {{ connection.mutuleConnections ? connection.mutuleConnections : 0 }} Mutual
-                  Sportizen
-                </span>
-              </div>
-              <div
-                class="connection-btn"
-                *ngIf="connection.sportizenId !== sportizenId"
-                [ngClass]="
-                  !userId && isFollowers
-                    ? 'connected'
-                    : !userId && isFollowers
-                    ? 'not-connected'
-                    : connection.connectionStatus === 'following'
-                    ? 'connected'
-                    : 'not-connected'
-                "
-                (click)="
-                  !userId && isFollowers
-                    ? unfollowUser(connection.name, connection.sportizenId, i)
-                    : !userId && !isFollowers
-                    ? removeUser(connection.name, connection.sportizenId, i)
-                    : connection.connectionStatus === 'following'
-                    ? unfollowUser(connection.name, connection.sportizenId, i)
-                    : followUser(connection.name, connection.sportizenId, i)
-                "
-              >
-                {{
-                  !userId && isFollowers
-                    ? 'Unfollow'
-                    : !userId && !isFollowers
-                    ? 'Remove'
-                    : connection.connectionStatus === 'following'
-                    ? 'Unfollow'
-                    : 'Follow'
-                }}
+            <div class="connection-details-container">
+              <div class="connection-details">
+                <div class="connection-info-container">
+                  <div
+                    class="connection-name pointer"
+                    (click)="viewProfile(connection.sportizenId)"
+                  >
+                    {{ connection.name | capitalizeEachWord }}
+                  </div>
+                  <div class="mutual-connection">
+                    <span *ngIf="connection.sportizenId !== sportizenId">
+                      {{ connection.mutuleConnections ? connection.mutuleConnections : 0 }} Mutual
+                      Sportizen
+                    </span>
+                  </div>
+                </div>
+                <div class="connection-btn-container">
+                  <div
+                    class="connection-btn"
+                    *ngIf="connection.sportizenId !== sportizenId"
+                    [ngClass]="
+                      connection.connectionStatus === 'following' ? 'connected' : 'not-connected'
+                    "
+                    (click)="
+                      connection.connectionStatus === 'following'
+                        ? unfollowUser(connection.name, connection.sportizenId, i)
+                        : !userId && isFollowers
+                        ? removeUser(connection.name, connection.sportizenId, i)
+                        : followUser(connection.name, connection.sportizenId, i)
+                    "
+                  >
+                    {{
+                      connection.connectionStatus === 'following'
+                        ? 'Unfollow'
+                        : !userId && isFollowers
+                        ? 'Remove'
+                        : 'Follow'
+                    }}
+                  </div>
+                </div>
               </div>
             </div>
           </mat-card-content>

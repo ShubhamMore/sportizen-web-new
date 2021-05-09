@@ -26,8 +26,8 @@ export class UserProfileModel {
     // Delete Following Attributes
     public connection: string,
     public profileCompleted: string,
-    public followersCount?: string,
-    public followingsCount?: string
+    public followersCount?: number,
+    public followingsCount?: number
   ) {}
 }
 

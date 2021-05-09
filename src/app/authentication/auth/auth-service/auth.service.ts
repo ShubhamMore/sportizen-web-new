@@ -145,12 +145,11 @@ export class AuthService {
   }
 
   logout() {
-    // tslint:disable-next-line: deprecation
-    return this.http.post(environment.backend + 'logout', {}).subscribe(
+    this.http.post(environment.backend + 'logout', {}).subscribe(
       (res: any) => {
+        sessionStorage.removeItem('userData');
         this.user.next(null);
-        this.router.navigate(['/login'], { relativeTo: this.route });
-        localStorage.removeItem('userData');
+        this.router.navigate(['/'], { relativeTo: this.route });
         if (this.tokenExpirationTimer) {
           clearTimeout(this.tokenExpirationTimer);
         }
@@ -161,8 +160,8 @@ export class AuthService {
   }
 
   removeUser() {
-    if (localStorage.getItem('userData')) {
-      localStorage.removeItem('userData');
+    if (sessionStorage.getItem('userData')) {
+      sessionStorage.removeItem('userData');
     }
     this.user.next(null);
   }
@@ -171,12 +170,12 @@ export class AuthService {
     // tslint:disable-next-line: deprecation
     return this.http.post(environment.backend + 'logoutAll', {}).subscribe(
       (res: any) => {
+        sessionStorage.removeItem('userData');
         this.user.next(null);
-        this.router.navigate(['/login']);
-        localStorage.removeItem('userData');
         if (this.tokenExpirationTimer) {
           clearTimeout(this.tokenExpirationTimer);
         }
+        this.router.navigate(['/'], { relativeTo: this.route });
         this.tokenExpirationTimer = null;
       },
       (error: any) => {}
@@ -201,7 +200,7 @@ export class AuthService {
     const user = new User(email, userId, sportizenId, userType, token, expirationDate);
     this.user.next(user);
     this.autoLogout(expiresIn * 1000);
-    localStorage.setItem('userData', JSON.stringify(user));
+    sessionStorage.setItem('userData', JSON.stringify(user));
   }
 
   private handleError(errorRes: HttpErrorResponse) {

@@ -23,7 +23,7 @@ export class LoginAuthGuard implements CanActivate, CanActivateChild {
     return this.authService.getUser().pipe(
       take(1),
       map((user) => {
-        if (!localStorage.getItem('userData')) {
+        if (!sessionStorage.getItem('userData')) {
           this.authService.removeUser();
         }
         const isAuth = !!user;
