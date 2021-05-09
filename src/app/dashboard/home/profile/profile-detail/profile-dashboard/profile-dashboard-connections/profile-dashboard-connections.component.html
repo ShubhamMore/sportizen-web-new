@@ -1,9 +1,9 @@
 <mat-card class="user-info-card">
   <mat-card-header>
     <mat-card-title>
-      <span class="header-title pointer" (click)="viewFollowers()"
-        >{{ followers.length }} Followers</span
-      >
+      <span class="header-title pointer" (click)="viewFollowers()">
+        {{ noOfFollowers }} Followers
+      </span>
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
@@ -35,9 +35,9 @@
               *ngIf="follower.sportizenId !== sportizenId"
               (click)="
                 !userId
-                  ? unfollow(follower.name, follower.sportizenId, i)
+                  ? unfollowUser(follower.name, follower.sportizenId, i, false)
                   : follower.connectionStatus === 'following'
-                  ? unfollowUser(follower.name, follower.sportizenId)
+                  ? unfollowUser(follower.name, follower.sportizenId, i, true)
                   : followUser(follower.name, follower.sportizenId)
               "
             >
@@ -59,9 +59,9 @@
 <mat-card class="user-info-card">
   <mat-card-header>
     <mat-card-title>
-      <span class="header-title pointer" (click)="viewFollowings()"
-        >{{ followings.length }} Followings</span
-      >
+      <span class="header-title pointer" (click)="viewFollowings()">
+        {{ noOfFollowings }} Followings
+      </span>
     </mat-card-title>
   </mat-card-header>
   <mat-card-content
@@ -95,7 +95,7 @@
                 !userId
                   ? remove(following.name, following.sportizenId, i)
                   : following.connectionStatus === 'following'
-                  ? unfollowUser(following.name, following.sportizenId)
+                  ? unfollowUser(following.name, following.sportizenId, i, true)
                   : followUser(following.name, following.sportizenId)
               "
             >

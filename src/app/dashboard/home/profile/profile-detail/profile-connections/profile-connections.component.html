@@ -1,7 +1,9 @@
 <div class="connection-list-container">
   <div class="row" *ngIf="!loading">
     <div class="col-12">
-      <h2 class="bold-text">{{ userId }}</h2>
+      <h2 class="bold-text">
+        {{ noOfConnections }}&nbsp;{{ isFollowers ? 'Followers' : 'Followings' }}
+      </h2>
 
       <div class="connection-card" *ngFor="let connection of connections; let i = index">
         <mat-card>
@@ -17,11 +19,14 @@
                 {{ connection.name | capitalizeEachWord }}
               </div>
               <div class="connection-mutual-info">
-                {{ connection.mutuleConnections ? connection.mutuleConnections : 0 }} Mutual
-                Sportizen
+                <span *ngIf="connection.sportizenId !== sportizenId">
+                  {{ connection.mutuleConnections ? connection.mutuleConnections : 0 }} Mutual
+                  Sportizen
+                </span>
               </div>
               <div
                 class="connection-btn"
+                *ngIf="connection.sportizenId !== sportizenId"
                 [ngClass]="
                   !userId && isFollowers
                     ? 'connected'

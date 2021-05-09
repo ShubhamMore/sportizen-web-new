@@ -21,6 +21,8 @@ interface Connection {
 })
 export class ProfileDashboardConnectionsComponent implements OnInit {
   userId: string;
+  noOfFollowers: number;
+  noOfFollowings: number;
   followers: Connection[];
   followings: Connection[];
   sportizenId: string;
@@ -69,8 +71,9 @@ export class ProfileDashboardConnectionsComponent implements OnInit {
     }
 
     followerSubscription.subscribe(
-      (followers: Connection[]) => {
-        this.followers = followers;
+      (followersData: { connectionCount: number; connections: Connection[] }) => {
+        this.noOfFollowers = followersData.connectionCount;
+        this.followers = followersData.connections;
       },
       (error: any) => {}
     );
@@ -86,8 +89,9 @@ export class ProfileDashboardConnectionsComponent implements OnInit {
     }
 
     followingSubscription.subscribe(
-      (followings: Connection[]) => {
-        this.followings = followings;
+      (followingsData: { connectionCount: number; connections: Connection[] }) => {
+        this.noOfFollowings = followingsData.connectionCount;
+        this.followings = followingsData.connections;
       },
       (error: any) => {}
     );
@@ -135,44 +139,30 @@ export class ProfileDashboardConnectionsComponent implements OnInit {
     );
   }
 
-  unfollowUser(name: string, sportizenId: string) {
+  unfollowUser(name: string, sportizenId: string, i: number, isUser: boolean) {
     this.connectionService.unfollowConnection(sportizenId).subscribe(
       (res: any) => {
-        const followerIndex = this.followers.findIndex(
-          (follower: Connection) => follower.sportizenId === sportizenId
-        );
+        if (!isUser) {
+          this.followers.splice(i, 1);
+        } else {
+          const followerIndex = this.followers.findIndex(
+            (follower: Connection) => follower.sportizenId === sportizenId
+          );
 
-        if (followerIndex >= 0) {
-          this.followers[followerIndex].connectionStatus = 'not-connected';
+          if (followerIndex >= 0) {
+            this.followers[followerIndex].connectionStatus = 'not-connected';
+          }
+
+          const followingIndex = this.followings.findIndex(
+            (following: Connection) => following.sportizenId === sportizenId
+          );
+
+          if (followingIndex >= 0) {
+            this.followings[followingIndex].connectionStatus = 'not-connected';
+          }
         }
 
-        const followingIndex = this.followings.findIndex(
-          (following: Connection) => following.sportizenId === sportizenId
-        );
-
-        if (followingIndex >= 0) {
-          this.followings[followingIndex].connectionStatus = 'not-connected';
-        }
-
-        this.snackBar.open(`You unfollowed  ${name}`, null, {
-          duration: 2000,
-          panelClass: ['success-snackbar'],
-        });
-      },
-      (error: any) => {
-        this.snackBar.open(error, null, {
-          duration: 2000,
-          panelClass: ['error-snackbar'],
-        });
-      }
-    );
-  }
-
-  unfollow(name: string, sportizenId: string, i: number) {
-    this.connectionService.unfollowConnection(sportizenId).subscribe(
-      (res: any) => {
-        this.followers.splice(i, 1);
-        this.snackBar.open(`You unfollowed  ${name}`, null, {
+        this.snackBar.open(`You unfollowed ${name}`, null, {
           duration: 2000,
           panelClass: ['success-snackbar'],
         });
