@@ -75,7 +75,7 @@ export class SearchBarComponent implements OnInit {
 
   @Input() minified: boolean;
 
-  filteredOptions: any;
+  filteredOptions: any[];
 
   myControl = new FormControl();
   options: any[];
@@ -95,6 +95,7 @@ export class SearchBarComponent implements OnInit {
     this.isLoading = false;
     this.isSearchBarOpen = false;
     this.searchKeyWord = '';
+    this.filteredOptions = [];
     this.options = [];
 
     this.userProfileService.getUserSportizenId().subscribe((sortizenId: string) => {
@@ -112,7 +113,7 @@ export class SearchBarComponent implements OnInit {
             .pipe(finalize(() => (this.isLoading = false)));
         })
       )
-      .subscribe((users: any) => (this.filteredOptions = users));
+      .subscribe((users: any[]) => (this.filteredOptions = users));
 
     this.emitSearchBarToggle.emit(true);
   }

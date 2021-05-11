@@ -20,6 +20,7 @@ import { Location } from '@angular/common';
 })
 export class ProfileDetailComponent implements OnInit, OnDestroy {
   loading: boolean;
+  connectionRequestLoading: boolean;
 
   userProfile: UserProfileModel;
 
@@ -52,6 +53,7 @@ export class ProfileDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
+    this.connectionRequestLoading = false;
 
     this.titleService.setTitle('SPORTIZEN | Profile');
 
@@ -74,7 +76,11 @@ export class ProfileDetailComponent implements OnInit, OnDestroy {
             this.setConnectionStatus(userProfile.connection);
           }
 
-          this.profileService.setProfile(userProfile);
+          if (userProfile.sportizenId === this.sportizenId) {
+            this.profileService.setProfile({ story: userProfile.story });
+          } else {
+            this.profileService.setProfile(userProfile);
+          }
 
           // this.dashboardSideDrawerService.close();
 
@@ -104,19 +110,26 @@ export class ProfileDetailComponent implements OnInit, OnDestroy {
   }
 
   followUnfollow() {
+    this.connectionRequestLoading = true;
+
     if (this.connectionStatus === ConnectionStatus.following) {
       this.connectionService.unfollowConnection(this.userProfileId).subscribe(
         (res: any) => {
           this.setConnectionStatus(ConnectionStatus.notConnected);
           this.snackBar.open(`You unfollowed  ${this.userProfile.name}`, null, {
             duration: 2000,
+            panelClass: ['success-snackbar'],
           });
+
+          this.connectionRequestLoading = false;
         },
         (error: any) => {
           this.snackBar.open(error, null, {
             duration: 2000,
             panelClass: ['error-snackbar'],
           });
+
+          this.connectionRequestLoading = false;
         }
       );
     } else {
@@ -125,13 +138,18 @@ export class ProfileDetailComponent implements OnInit, OnDestroy {
           this.setConnectionStatus(res.status);
           this.snackBar.open(`You are now following ${this.userProfile.name}`, null, {
             duration: 2000,
+            panelClass: ['success-snackbar'],
           });
+
+          this.connectionRequestLoading = false;
         },
         (error: any) => {
           this.snackBar.open(error, null, {
             duration: 2000,
             panelClass: ['error-snackbar'],
           });
+
+          this.connectionRequestLoading = false;
         }
       );
     }

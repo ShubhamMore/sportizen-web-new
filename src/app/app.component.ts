@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    const userData: UserData = JSON.parse(localStorage.getItem('userData'));
+    const userData: UserData = JSON.parse(sessionStorage.getItem('userData'));
     if (!userData) {
       return;
     }

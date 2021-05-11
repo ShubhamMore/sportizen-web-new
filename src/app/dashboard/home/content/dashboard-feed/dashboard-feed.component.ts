@@ -15,7 +15,7 @@ import * as $ from 'jquery';
   templateUrl: './dashboard-feed.component.html',
   styleUrls: ['./dashboard-feed.component.scss'],
 })
-export class DashboardFeedComponent implements OnInit, OnDestroy, AfterViewInit {
+export class DashboardFeedComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() isMyFeed: boolean;
   @Input() isUserFeed: boolean;
   @Input() userId: string;
@@ -66,38 +66,26 @@ export class DashboardFeedComponent implements OnInit, OnDestroy, AfterViewInit 
   loadFeed(limit: number, skip: number) {
     this.loadingFeed = true;
 
+    let postSubscription: any;
+
     if (this.isMyFeed) {
-      this.postService.getMyPosts(limit, skip).subscribe((posts: PostModel[]) => {
-        if (posts.length === 0) {
-          this.noMorePosts = true;
-        } else {
-          this.postService.postList = posts;
-        }
-
-        this.loadingFeed = false;
-      });
+      postSubscription = this.postService.getMyPosts(limit, skip);
     } else if (this.isUserFeed) {
-      this.postService.getUserPosts(this.userId, limit, skip).subscribe((posts: PostModel[]) => {
-        if (posts.length === 0) {
-          this.noMorePosts = true;
-        } else {
-          this.postService.postList = posts;
-        }
-
-        this.loadingFeed = false;
-      });
+      postSubscription = this.postService.getUserPosts(this.userId, limit, skip);
     } else {
-      this.postService.getPosts(limit, skip).subscribe((posts: PostModel[]) => {
-        if (posts.length === 0) {
-          this.noMorePosts = true;
-        } else {
-          this.postService.postList = posts;
-          // this.navigateToOnScreenPost();
-        }
-
-        this.loadingFeed = false;
-      });
+      postSubscription = this.postService.getPosts(limit, skip);
     }
+
+    postSubscription.subscribe((posts: PostModel[]) => {
+      if (posts.length === 0) {
+        this.noMorePosts = true;
+      } else {
+        this.postService.postList = posts;
+        // this.navigateToOnScreenPost();
+      }
+
+      this.loadingFeed = false;
+    });
   }
 
   // navigateToOnScreenPost() {
@@ -115,6 +103,7 @@ export class DashboardFeedComponent implements OnInit, OnDestroy, AfterViewInit 
 
   ngOnDestroy() {
     this.postService.unsetPostList();
+    console.log('destroyed');
     window.removeEventListener('scroll', this.scroll, true);
   }
 }

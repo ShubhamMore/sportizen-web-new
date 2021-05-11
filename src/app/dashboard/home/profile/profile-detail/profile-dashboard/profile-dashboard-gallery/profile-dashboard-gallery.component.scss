@@ -4,10 +4,11 @@
   .photo-box {
     display: inline-block;
     padding: 0 0.25rem 0.25rem 0;
+    width: 50%;
 
     .photo {
       height: 7.5rem;
-      width: 7.5rem;
+      width: 100%;
       object-fit: cover;
       transition: opacity 0.125s;
     }
@@ -22,9 +23,11 @@
 @media only screen and (max-width: 1080px) {
   .photos-container {
     .photo-box {
+      width: 50%;
+
       .photo {
         height: 6.875rem;
-        width: 6.875rem;
+        // width: 6.875rem;
       }
     }
   }
@@ -33,9 +36,11 @@
 @media only screen and (max-width: 767px) {
   .photos-container {
     .photo-box {
+      width: 33.33%;
+
       .photo {
         height: 6.25rem;
-        width: 6.25rem;
+        // width: 6.25rem;
       }
     }
   }
@@ -44,9 +49,11 @@
 @media only screen and (max-width: 600px) {
   .photos-container {
     .photo-box {
+      width: 33.33%;
+
       .photo {
         height: 5.625rem;
-        width: 5.625rem;
+        // width: 5.625rem;
       }
     }
   }
@@ -55,9 +62,11 @@
 @media only screen and (max-width: 400px) {
   .photos-container {
     .photo-box {
+      width: 50%;
+
       .photo {
         height: 5rem;
-        width: 5rem;
+        // width: 5rem;
       }
     }
   }

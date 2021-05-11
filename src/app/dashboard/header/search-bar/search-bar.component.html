@@ -33,7 +33,7 @@
         }}</small>
       </mat-option>
 
-      <mat-option *ngIf="filteredOptions && filteredOptions.length > 0" (click)="allFriends()">
+      <mat-option *ngIf="filteredOptions.length > 0; else noResult" (click)="allFriends()">
         <span class="show-all">{{ 'msg_show_all' | translate }}</span>
       </mat-option>
     </ng-container>
@@ -64,3 +64,9 @@
 >
   <i class="fa fa-search search-icon" aria-hidden="true"></i>
 </div>
+
+<ng-template #noResult>
+  <mat-option>
+    <span class="show-all">No Search Found</span>
+  </mat-option>
+</ng-template>

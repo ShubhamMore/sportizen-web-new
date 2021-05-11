@@ -1,40 +1,58 @@
 <div class="connection-list-container">
   <h2 class="bold-text">Search Results for '{{ searchKeyword }}'</h2>
+
   <!-- <input type="text" class="search-bar" placeholder="Search Sportizen" /> -->
+
   <div class="row">
     <div class="col-12">
-      <div class="connection-card" *ngFor="let searchResult of searchResults; let i = index">
-        <mat-card>
+      <div class="connection-container" *ngFor="let searchResult of searchResults; let i = index">
+        <mat-card class="connection-card">
           <mat-card-content>
             <img
               class="connection-photo"
               [src]="searchResult.userImageURL"
               loading="lazy"
-              onerror="this.src='./../../../../../assets/images/user.png'"
+              onerror="this.src='./../../../../../../assets/images/user.png'"
             />
-            <div class="connection-details">
-              <div class="connection-name pointer" (click)="viewProfile(searchResult.sportizenId)">
-                {{ searchResult.name | capitalizeEachWord }}
-              </div>
-              <div class="connection-mutual-info">
-                {{ searchResult.mutuleConnections ? searchResult.mutuleConnections : 0 }} Mutual
-                Sportizen
-              </div>
-              <div
-                class="connection-btn"
-                [ngClass]="
-                  searchResult.connectionStatus === 'following' ? 'connected' : 'not-connected'
-                "
-                (click)="
-                  followUnfollow(
-                    searchResult.name,
-                    searchResult.sportizenId,
-                    searchResult.connectionStatus,
-                    i
-                  )
-                "
-              >
-                {{ searchResult.connectionStatus === 'following' ? 'Unfollow' : 'Follow' }}
+
+            <div class="connection-details-container">
+              <div class="connection-details">
+                <div class="connection-info-container">
+                  <div
+                    class="connection-name pointer"
+                    (click)="viewProfile(searchResult.sportizenId)"
+                  >
+                    {{ searchResult.name | capitalizeEachWord }}
+                  </div>
+
+                  <div class="mutual-connection">
+                    <span *ngIf="searchResult.sportizenId !== sportizenId">
+                      {{ searchResult.mutulesearchResults ? searchResult.mutulesearchResults : 0 }}
+                      Mutual Sportizen
+                    </span>
+                  </div>
+                </div>
+
+                <div class="connection-btn-container">
+                  <div
+                    class="connection-btn"
+                    [ngClass]="
+                      searchResult.searchResultStatus === 'following'
+                        ? 'connected'
+                        : 'not-connected'
+                    "
+                    (click)="
+                      followUnfollow(
+                        searchResult.name,
+                        searchResult.sportizenId,
+                        searchResult.searchResultStatus,
+                        i
+                      )
+                    "
+                  >
+                    {{ searchResult.searchResultStatus === 'following' ? 'Unfollow' : 'Follow' }}
+                  </div>
+                </div>
               </div>
             </div>
           </mat-card-content>

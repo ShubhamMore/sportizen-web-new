@@ -11,7 +11,7 @@ export class SocketioService {
   constructor() {}
 
   setupSocketConnection() {
-    const token = 'Bearer ' + JSON.parse(localStorage.getItem('userData'))._token;
+    const token = 'Bearer ' + JSON.parse(sessionStorage.getItem('userData'))._token;
     this.socket = io(environment.SOCKET_ENDPOINT, {
       query: {
         token,
