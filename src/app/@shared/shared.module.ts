@@ -20,6 +20,7 @@ import { CapitalizeEachWordPipe } from './pipe/capitalize-each-word.pipe';
 import { TimePipe } from './pipe/time.pipe';
 import { ConfirmComponent } from './confirm/confirm.component';
 import { AmountPipe } from './pipe/amount.pipe';
+import { MaterialElevationDirective } from '../directives/material-elevation.directive';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { AmountPipe } from './pipe/amount.pipe';
     TimePipe,
     AmountPipe,
     SafeHtmlPipe,
-    ConfirmComponent,
+    ConfirmComponent,MaterialElevationDirective
   ],
   imports: [
     CommonModule,
