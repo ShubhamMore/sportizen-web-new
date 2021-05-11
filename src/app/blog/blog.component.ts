@@ -24,6 +24,7 @@ export class BlogComponent implements OnInit {
 
     this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
       this.isSportizenId = !!sportizenId;
+
       if (sportizenId) {
         this.homeService.setRoute('Blogs');
       }

@@ -8,6 +8,6 @@ import { PaymentModule } from 'src/app/payment/payment.module';
 
 @NgModule({
   declarations: [JoinEventComponent],
-  imports: [SharedModule, JoinEventRoutingModule, PaymentModule, EventDetailsModule],
+  imports: [SharedModule, EventDetailsModule, PaymentModule, JoinEventRoutingModule],
 })
 export class JoinEventModule {}

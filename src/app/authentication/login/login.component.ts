@@ -110,9 +110,7 @@ export class LoginComponent implements OnInit {
             panelClass: ['error-snackbar'],
           });
 
-          this.router.navigate(['/login'], {
-            relativeTo: this.route,
-          });
+          this.router.navigate(['/login'], { relativeTo: this.route });
         }
 
         this.loginFormDirective.resetForm();

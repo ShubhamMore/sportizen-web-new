@@ -11,7 +11,7 @@ export class AuthInterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     return this.authService.getUser().pipe(
       take(1),
-      exhaustMap((user) => {
+      exhaustMap((user: any) => {
         if (!user) {
           return next.handle(req);
         }

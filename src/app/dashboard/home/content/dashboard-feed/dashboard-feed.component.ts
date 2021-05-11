@@ -55,6 +55,7 @@ export class DashboardFeedComponent implements OnInit, AfterViewInit, OnDestroy 
     // tslint:disable-next-line: deprecation
     this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
       this.sportizenId = sportizenId;
+
       this.loadFeed(environment.limit, null);
     });
   }
@@ -103,7 +104,6 @@ export class DashboardFeedComponent implements OnInit, AfterViewInit, OnDestroy 
 
   ngOnDestroy() {
     this.postService.unsetPostList();
-    console.log('destroyed');
     window.removeEventListener('scroll', this.scroll, true);
   }
 }

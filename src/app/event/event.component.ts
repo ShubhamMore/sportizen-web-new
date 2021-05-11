@@ -1,7 +1,6 @@
 import { HomeService } from './../services/home.service';
 import { Component, OnInit } from '@angular/core';
 import { UserProfileService } from './../services/user-profile.service';
-import { UserProfileModel } from './../models/user-profile.model';
 
 @Component({
   selector: 'app-event',
@@ -18,6 +17,7 @@ export class EventComponent implements OnInit {
 
     this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
       this.isSportizenId = !!sportizenId;
+
       if (sportizenId) {
         this.homeService.setRoute('Events');
       }

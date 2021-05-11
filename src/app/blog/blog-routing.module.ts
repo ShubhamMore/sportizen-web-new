@@ -11,11 +11,13 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: () => import('./blog-list/blog-list.module').then((m) => m.BlogListModule),
+        data: { type: 'list' },
       },
       {
         path: 'new',
         loadChildren: () =>
           import('./create-blog/create-blog.module').then((m) => m.CreateBlogModule),
+        data: { type: 'new' },
         canActivate: [UserAuthGuard],
         canLoad: [UserAuthGuard],
       },
@@ -23,6 +25,7 @@ const routes: Routes = [
         path: 'edit/:id',
         loadChildren: () =>
           import('./create-blog/create-blog.module').then((m) => m.CreateBlogModule),
+        data: { type: 'edit' },
         canActivate: [UserAuthGuard],
         canLoad: [UserAuthGuard],
       },

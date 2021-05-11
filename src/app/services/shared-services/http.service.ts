@@ -11,7 +11,7 @@ export class HttpService {
   constructor(private http: HttpClient) {}
 
   public httpGet(data: any): any {
-    return this.http.get(environment.backend + data.api, data.data).pipe(
+    return this.http.get<any>(environment.backend + data.api, data.data).pipe(
       map((response: any) => {
         return response;
       }),
@@ -30,7 +30,7 @@ export class HttpService {
   }
 
   public httpPost(data: { api: string; data: any }): any {
-    return this.http.post(environment.backend + data.api, data.data).pipe(
+    return this.http.post<any>(environment.backend + data.api, data.data).pipe(
       map((response: any) => {
         return response;
       }),
@@ -49,7 +49,7 @@ export class HttpService {
   }
 
   public httpPatch(data: any): any {
-    return this.http.patch(environment.backend + data.api, data.data).pipe(
+    return this.http.patch<any>(environment.backend + data.api, data.data).pipe(
       map((response: any) => {
         return response;
       }),
@@ -68,7 +68,7 @@ export class HttpService {
   }
 
   public httpPut(data: any): any {
-    return this.http.put(environment.backend + data.api, data.data).pipe(
+    return this.http.put<any>(environment.backend + data.api, data.data).pipe(
       map((response: any) => {
         return response;
       }),
@@ -87,7 +87,7 @@ export class HttpService {
   }
 
   public httpDelete(data: any): any {
-    return this.http.delete(environment.backend + data.api, data.data).pipe(
+    return this.http.delete<any>(environment.backend + data.api, data.data).pipe(
       map((response: any) => {
         return response;
       }),
