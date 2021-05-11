@@ -213,7 +213,7 @@
                       mat-raised-button
                       color="primary"
                       class="save-changes-btn"
-                      [disabled]="loading"
+                      [disabled]="submitProfile"
                     >
                       Save your changes
                       <!-- <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner> -->
@@ -320,6 +320,7 @@
                       mat-raised-button
                       color="primary"
                       class="save-password-btn"
+                      [disabled]="submitPassword"
                     >
                       {{
                         userProfile.userProvider === 'SPORTIZEN'

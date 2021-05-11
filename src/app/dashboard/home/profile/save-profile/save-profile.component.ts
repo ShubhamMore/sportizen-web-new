@@ -38,6 +38,8 @@ export class SaveProfileComponent implements OnInit {
   sports: SportModel[];
 
   loading: boolean;
+  submitProfile: boolean;
+  submitPassword: boolean;
 
   userProfile: UserProfileModel;
 
@@ -58,6 +60,8 @@ export class SaveProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
+    this.submitProfile = false;
+    this.submitPassword = false;
 
     this.titleService.setTitle('SPORTIZEN | Edit Profile');
 
@@ -165,7 +169,7 @@ export class SaveProfileComponent implements OnInit {
     }
   }
 
-  saveCroppedImage(imagePreview: any) {
+  private saveCroppedImage(imagePreview: any) {
     this.profileImagePreview = imagePreview;
 
     this.profileImage = this.dataURLtoFile(
@@ -188,7 +192,7 @@ export class SaveProfileComponent implements OnInit {
     return new File([u8arr], filename, { type: mime });
   }
 
-  getInterestSports() {
+  private getInterestSports() {
     this.sports = [];
 
     this.interestedSports.forEach((sport) => {
@@ -213,7 +217,7 @@ export class SaveProfileComponent implements OnInit {
     });
   }
 
-  saveSportsInterest(interestedSports: any) {
+  private saveSportsInterest(interestedSports: any) {
     this.interestedSports = interestedSports;
 
     this.getInterestSports();
@@ -240,7 +244,7 @@ export class SaveProfileComponent implements OnInit {
       return;
     }
 
-    this.loading = true;
+    this.submitProfile = true;
 
     if (!this.profileImage) {
       this.saveUserProfile();
@@ -281,23 +285,28 @@ export class SaveProfileComponent implements OnInit {
           panelClass: ['success-snackbar'],
         });
 
-        this.loading = false;
+        this.submitProfile = false;
       },
       (error: any) => {
         this.snackBar.open(error, null, {
           duration: 2000,
           panelClass: ['error-snackbar'],
         });
-        this.loading = false;
+
+        this.submitProfile = false;
       }
     );
   }
 
   changePassword() {
     if (this.form.valid && !this.form.hasError('invalidPassword')) {
+      this.submitPassword = true;
+
       const data = { api: '', data: {} };
+
       if (this.userProfile.userProvider === 'SPORTIZEN') {
         data.api = 'changePassword';
+
         data.data = {
           email: this.userProfile.email,
           password: this.encryptService.encrypt(this.form.value.oldPassword, environment.encKey),
@@ -305,6 +314,7 @@ export class SaveProfileComponent implements OnInit {
         };
       } else {
         data.api = 'setPassword';
+
         data.data = {
           email: this.userProfile.email,
           password: this.encryptService.encrypt(this.form.value.password, environment.encKey),
@@ -314,23 +324,32 @@ export class SaveProfileComponent implements OnInit {
       this.httpService.httpPost(data).subscribe(
         (res: any) => {
           this.changePasswordFormDirective.resetForm();
+
           this.userProfile.userProvider = 'SPORTIZEN';
+
           this.userProfileService.setProfile(this.userProfile);
+
           this.snackBar.open('New Password updated Successfully', null, {
             duration: 2000,
             panelClass: ['success-snackbar'],
           });
-          this.loading = false;
+
+          this.submitPassword = false;
         },
         (error: any) => {
           this.snackBar.open(error, null, {
             duration: 2000,
             panelClass: ['error-snackbar'],
           });
-          this.loading = false;
+
+          this.submitPassword = false;
         }
       );
     } else {
+      this.snackBar.open('Please Enter valid Change Password Details', null, {
+        duration: 2000,
+        panelClass: ['error-snackbar'],
+      });
     }
   }
 
