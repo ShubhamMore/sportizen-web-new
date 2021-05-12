@@ -6,24 +6,28 @@
   </a>
 </span>
 
-<div class="blogs-container">
-  <!-- <div class="primary-blog" (click)="openBlog('1')">
-    <img src="https://picsum.photos/1500/600" />
-    <div class="blog-details">
-      <div class="blog-details-header">
-        <span class="bold-text">Category</span>
-        <span>Date</span>
-        <span class="bold-text">Blog by</span>
-      </div>
-      <div>
-        <h2>Blog Title</h2>
-      </div>
-      <div>Hello Text</div>
+<div class="blog-main-header">
+  <div class="blog-main-header-text">
+    <h1>OUR BLOGS</h1>
+    <div class="text">
+      Sportizen makes sure your time is worth and you are reading one of finest blogs related
+      sports.
     </div>
-  </div> -->
-
+    <button mat-raised-button color="primary">View Recent Blogs</button>
+  </div>
+</div>
+<div class="blogs-container" *ngIf="!loading">
   <ng-container *ngIf="blogsList.length > 0; else noBlogs"> </ng-container>
-  <div class="blog" *ngFor="let blog of blogsList; let i = index">
+
+  <mat-card appMaterialElevation class="blog" *ngFor="let blog of blogsList; let i = index">
+    <mat-card-header>
+      <img mat-card-avatar [src]="blog.createdUserImage" />
+      <mat-card-title>{{ blog.createdUser | capitalizeEachWord }}</mat-card-title>
+      <mat-card-subtitle
+        ><i class="fa fa-calendar icon-blue mr-2" aria-hidden="true"></i
+        >{{ blog.createdAt | amCalendar }}</mat-card-subtitle
+      >
+    </mat-card-header>
     <div class="blog-image-container" *ngIf="blog.images.length > 0">
       <div class="carousel-background">
         <div id="{{ 'blog-image-' + i }}" class="carousel slide" data-ride="carousel">
@@ -50,17 +54,7 @@
       </div>
     </div>
 
-    <div
-      class="blog-details"
-      [ngClass]="blog.images.length > 0 ? '' : 'no-blog-image'"
-      (click)="openBlog(blog._id)"
-    >
-      <div class="blog-details-header">
-        <span class="created-user">{{ blog.createdUser | capitalizeEachWord }}</span>
-
-        <span class="created-at">{{ blog.createdAt | amCalendar }}</span>
-      </div>
-
+    <mat-card-content>
       <div>
         <h2 class="blog-title">{{ blog.title }}</h2>
       </div>
@@ -70,12 +64,17 @@
           {{ blog.subtitle }}
         </div>
       </div>
-
-      <div class="blog-description" [innerHtml]="blog.description | safeHtml"></div>
-    </div>
-  </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" class="ml-2" (click)="openBlog(blog._id)">
+        View Blog
+      </button>
+    </mat-card-actions>
+  </mat-card>
 </div>
-
+<div class="loading-container">
+  <mat-spinner diameter="25" *ngIf="loading"></mat-spinner>
+</div>
 <ng-template #noBlogs>
   <p class="mt-2 text-center">No Blogs Available</p>
 </ng-template>

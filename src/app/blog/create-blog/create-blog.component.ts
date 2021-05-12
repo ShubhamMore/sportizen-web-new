@@ -5,7 +5,7 @@ import { SportService } from '../../services/sport.service';
 import { SportModel } from '../../models/sport.model';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import * as ClassicEditor from '../../../assets/vendor/ckeditor';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { UserProfileService } from '../../services/user-profile.service';
 import { Location } from '@angular/common';
@@ -17,11 +17,13 @@ import { ImageModelComponent } from '../../image/image-model/image-model.compone
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmComponent } from '../../@shared/confirm/confirm.component';
 
+
 @Component({
   selector: 'app-create-blog',
   templateUrl: './create-blog.component.html',
   styleUrls: ['./create-blog.component.scss'],
 })
+
 export class CreateBlogComponent implements OnInit {
   loading: boolean;
   loadingImages: boolean;
@@ -45,6 +47,7 @@ export class CreateBlogComponent implements OnInit {
 
   public classicEditor: any;
 
+
   constructor(
     private sportsService: SportService,
     private blogService: BlogsService,
@@ -64,78 +67,81 @@ export class CreateBlogComponent implements OnInit {
 
     this.submit = false;
 
+
     this.ckeditorConfig = {
-      toolbar: [
-        'heading',
-        // 'fontFamily',
-        // 'fontSize',
-        '|',
-        'bold',
-        'italic',
-        // 'underline',
-        // 'fontColor',
-        // 'fontBackgroundColor',
-        // 'highlight',
-        'link',
-        '|',
-        // 'CKFinder',
-        'imageUpload',
-        // 'mediaEmbed',
-        '|',
-        'blockQuote',
-        // 'alignment',
-        'bulletedList',
-        'numberedList',
-        '|',
-        'indent',
-        'outdent',
-        '|',
-        'undo',
-        'redo',
-        // '|',
-        // 'insertTable',
-        // 'specialCharacters',
-      ],
-      language: 'id',
+
+      toolbar: {
+        items: [
+          'heading',
+          '|',
+          'bold',
+          'italic',
+          'link',
+          'bulletedList',
+          'numberedList',
+          '|',
+          'alignment',
+          '|',
+          'outdent',
+          'indent',
+          '|',
+          'imageUpload',
+          'blockQuote',
+          '|',
+          'codeBlock',
+          'code',
+          'insertTable',
+          'mediaEmbed',
+          'undo',
+          'redo',
+          'horizontalLine',
+          '|',
+          'fontFamily',
+          'fontBackgroundColor',
+          'fontColor',
+          'fontSize',
+          '|',
+          'highlight',
+          'htmlEmbed',
+          'imageInsert',
+          'strikethrough',
+          'superscript',
+          'underline',
+          'todoList',
+          'CKFinder'
+        ]
+      },resizeOptions: [
+        {
+            name: 'resizeImage:original',
+            value: null,
+            icon: 'original'
+        },
+        {
+            name: 'resizeImage:50',
+            value: '50',
+            icon: 'medium'
+        },
+        {
+            name: 'resizeImage:75',
+            value: '75',
+            icon: 'large'
+        }
+    ],
+      language: 'en',
       image: {
-        toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side'],
-        styles: ['full', 'side'],
+        toolbar: [
+          'imageTextAlternative',
+          'imageStyle:full',
+          'imageStyle:side'
+        ]
       },
-      // image: {
-      //   // Configure the available styles.
-      //   styles: ['alignLeft', 'alignCenter', 'alignRight'],
-
-      //   // Configure the available image resize options.
-      //   resizeOptions: [
-      //     {
-      //       name: 'resizeImage:original',
-      //       label: 'Original',
-      //       value: null,
-      //     },
-      //     {
-      //       name: 'resizeImage:50',
-      //       label: '50%',
-      //       value: '50',
-      //     },
-      //     {
-      //       name: 'resizeImage:75',
-      //       label: '75%',
-      //       value: '75',
-      //     },
-      //   ],
-
-      //   // You need to configure the image toolbar, too, so it shows the new style
-      //   // buttons as well as the resize buttons.
-      //   toolbar: [
-      //     'imageStyle:alignLeft',
-      //     'imageStyle:alignCenter',
-      //     'imageStyle:alignRight',
-      //     '|',
-      //     'resizeImage',
-      //     '|',
-      //     'imageTextAlternative',
-      //   ],
-      // },
+      table: {
+        contentToolbar: [
+          'tableColumn',
+          'tableRow',
+          'mergeTableCells'
+        ]
+      }
     };
 
     this.userProfileService
@@ -370,4 +376,5 @@ export class CreateBlogComponent implements OnInit {
       }
     );
   }
+
 }

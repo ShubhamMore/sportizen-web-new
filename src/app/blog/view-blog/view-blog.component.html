@@ -31,13 +31,14 @@
         <div class="created-user">{{ blog.createdUser | capitalizeEachWord }}</div>
 
         <div class="created-at">
+          <i class="fa fa-calendar icon-blue" aria-hidden="true"></i>
           {{ blog.createdAt | amCalendar }}
         </div>
       </div>
     </div>
   </div>
 
-  <div class="blog-content">
+  <div class="blog-content ck-content">
     <h2 class="blog-title">{{ blog.title }}</h2>
 
     <div class="blog-subtitle">{{ blog.subtitle }}</div>

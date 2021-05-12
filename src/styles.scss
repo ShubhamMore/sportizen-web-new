@@ -539,4 +539,9 @@ input::-webkit-inner-spin-button {
     line-height: 0.75rem;
     border-radius: 0.5rem !important;
   }
+  .loading-container {
+    mat-spinner {
+      margin: 0.5rem auto;
+    }
+  }
 }
