@@ -1,28 +1,10 @@
 <div class="blog-container" *ngIf="!loading">
   <div class="blog-image-container">
-    <div class="carousel-background" *ngIf="blog.images.length > 0; else noImage">
-      <div id="blog-image" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-          <div
-            class="carousel-item"
-            *ngFor="let image of blog.images; let k = index"
-            [ngClass]="k == 0 ? 'item active' : 'item'"
-          >
-            <div class="blog-image">
-              <img class="image" [src]="image.secureUrl" [alt]="blog.title" loading="lazy" />
-            </div>
-          </div>
-        </div>
-
-        <a class="carousel-control-prev" href="#blog-image" data-slide="prev">
-          <span class="fa fa-angle-left"></span>
-        </a>
-
-        <a class="carousel-control-next" href="#blog-image" data-slide="next">
-          <span class="fa fa-angle-right"></span>
-        </a>
+    <ng-container *ngIf="blog.secureUrl; else noImage">
+      <div class="blog-image">
+        <img class="image" [src]="blog.secureUrl" [alt]="blog.title" loading="lazy" />
       </div>
-    </div>
+    </ng-container>
 
     <div class="blog-info">
       <div class="profile-image-container">

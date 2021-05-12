@@ -8,11 +8,22 @@ import { throwError } from 'rxjs';
 export class BlogsService {
   constructor(private httpService: HttpService) {}
 
-  saveBlog(blog: FormData, editingMode: boolean) {
-    let data = { api: 'create-blog', data: blog };
-    if (editingMode) {
-      data = { api: 'update-blog', data: blog };
-    }
+  saveBlog(blog: FormData) {
+    const data = { api: 'create-blog', data: blog };
+
+    return this.httpService.httpPost(data).pipe(
+      map((resBlog: BlogModel) => {
+        return resBlog;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      })
+    );
+  }
+
+  updateBlog(blog: FormData) {
+    const data = { api: 'update-blog', data: blog };
+
     return this.httpService.httpPost(data).pipe(
       map((resBlog: BlogModel) => {
         return resBlog;

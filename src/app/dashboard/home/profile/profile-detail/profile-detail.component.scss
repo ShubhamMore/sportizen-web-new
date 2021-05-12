@@ -101,7 +101,7 @@ $secondary-color: #075492;
     .semi-rounded-btn {
       margin: 0 !important;
       padding: 0rem 2rem !important;
-      width: 10rem !important;
+      width: max-content !important;
       height: 2.5rem !important;
       border-radius: 0.75rem !important;
       line-height: 0;
@@ -334,7 +334,7 @@ $secondary-color: #075492;
 
       .semi-rounded-btn {
         padding: 0rem 1rem !important;
-        width: 6.375rem !important;
+        width: max-content !important;
         height: 2rem !important;
         font-size: 90%;
       }
@@ -346,8 +346,6 @@ $secondary-color: #075492;
   .profile-details-container {
     .profile-btn {
       .semi-rounded-btn {
-        width: 2rem !important;
-
         .edit-profile-text {
           display: none;
         }

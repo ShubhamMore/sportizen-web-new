@@ -1,11 +1,8 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BlogsService } from '../../services/blogs.service';
 import { BlogModel } from '../../models/blog.model';
-import { SportService } from '../../services/sport.service';
-import { SportModel } from '../../models/sport.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import * as ClassicEditor from '../../../assets/vendor/ckeditor';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { UserProfileService } from '../../services/user-profile.service';
 import { Location } from '@angular/common';
@@ -13,9 +10,9 @@ import { Title } from '@angular/platform-browser';
 import { UploadAdapter } from './upload-adapter';
 import { take, first } from 'rxjs/operators';
 import { CompressImageService } from '../../services/shared-services/compress-image.service';
-import { ImageModelComponent } from '../../image/image-model/image-model.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmComponent } from '../../@shared/confirm/confirm.component';
+import { ImageCroperComponent } from 'src/app/image/image-croper/image-croper.component';
+import * as ClassicEditor from './../../../assets/vendor/ckeditor';
 
 @Component({
   selector: 'app-create-blog',
@@ -23,30 +20,28 @@ import { ConfirmComponent } from '../../@shared/confirm/confirm.component';
   styleUrls: ['./create-blog.component.scss'],
 })
 export class CreateBlogComponent implements OnInit {
+  @ViewChild('tag') tag: any;
+  @ViewChild('headerImagePicker') headerImagePicker: any;
+
   loading: boolean;
-  loadingImages: boolean;
 
-  blogImageFiles: File[];
-  blogImagePreview: string[];
-  invalidImage: boolean;
+  tags: string[];
 
-  sports: SportModel[];
-
-  detailsForm: FormGroup;
   blogForm: FormGroup;
+
+  headerImageFile: File;
+  headerImagePreview: string;
 
   blog: BlogModel;
 
   submit: boolean;
 
   sportizenId: string;
-
   ckeditorConfig: any;
 
   public classicEditor: any;
 
   constructor(
-    private sportsService: SportService,
     private blogService: BlogsService,
     private location: Location,
     private userProfileService: UserProfileService,
@@ -60,8 +55,6 @@ export class CreateBlogComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    this.loadingImages = false;
-
     this.submit = false;
 
     this.ckeditorConfig = {
@@ -141,28 +134,19 @@ export class CreateBlogComponent implements OnInit {
 
           this.classicEditor = ClassicEditor;
 
-          this.sports = this.sportsService.getSports();
-
-          this.detailsForm = new FormGroup({
-            title: new FormControl(null, {
-              validators: [Validators.required],
-            }),
-            subtitle: new FormControl(null, {
-              validators: [Validators.required],
-            }),
-            sport: new FormControl('', {
-              validators: [Validators.required],
-            }),
-          });
+          this.tags = [];
 
           this.blogForm = new FormGroup({
+            title: new FormControl(null, {
+              validators: [Validators.required, Validators.maxLength(75)],
+            }),
+            subtitle: new FormControl(null, {
+              validators: [Validators.required, Validators.maxLength(150)],
+            }),
             description: new FormControl(null, {
               validators: [Validators.required],
             }),
           });
-
-          this.blogImageFiles = [];
-          this.blogImagePreview = [];
 
           this.route.params.subscribe((param: Params) => {
             const id = param.id;
@@ -172,15 +156,16 @@ export class CreateBlogComponent implements OnInit {
                 (blog: BlogModel) => {
                   this.titleService.setTitle('SPORTIZEN | Edit Blog | ' + blog.title);
                   this.blog = blog;
-                  this.detailsForm.patchValue({
-                    title: blog.title,
-                    subtitle: blog.subtitle,
-                    sport: blog.sport,
-                  });
+
+                  this.tags = blog.tags;
 
                   this.blogForm.patchValue({
+                    title: blog.title,
+                    subtitle: blog.subtitle,
                     description: blog.description,
                   });
+
+                  this.headerImagePreview = this.blog.secureUrl;
 
                   this.loading = false;
                 },
@@ -200,52 +185,34 @@ export class CreateBlogComponent implements OnInit {
       });
   }
 
+  addTag(tag: any) {
+    if (!tag || !tag.value) {
+      return;
+    }
+
+    if (this.tags.length < 5) {
+      this.tags.push(tag.value.toUpperCase());
+      this.tag.nativeElement.value = '';
+      return;
+    }
+
+    this.snackBar.open("Can't add more than 5 tags", null, {
+      duration: 2000,
+      panelClass: ['error-snackbar'],
+    });
+  }
+
+  removeTag(i: number) {
+    this.tags.splice(i, 1);
+  }
+
   onReady(eventData: any) {
     eventData.plugins.get('FileRepository').createUploadAdapter = function (loader: any) {
       return new UploadAdapter(loader);
     };
   }
 
-  removeImage(i: number) {
-    this.blogImageFiles.splice(i, 1);
-    this.blogImagePreview.splice(i, 1);
-  }
-
-  deleteImage(id: string, imageId: string, i: number) {
-    const dialogRef = this.dialog.open(ConfirmComponent, {
-      data: { message: 'Do you want to delete This Image?' },
-      maxHeight: '90vh',
-      disableClose: true,
-    });
-
-    dialogRef.afterClosed().subscribe((confirm: boolean) => {
-      if (confirm) {
-        this.loadingImages = true;
-        this.blogService.deleteBlogImage(id, imageId, i).subscribe(
-          (res: any) => {
-            this.blog.images.splice(i, 1);
-            this.loadingImages = false;
-          },
-          (error: any) => {
-            this.loadingImages = false;
-          }
-        );
-      }
-    });
-  }
-
-  openImageModel(image: any) {
-    const dialogRef = this.dialog.open(ImageModelComponent, {
-      data: { image },
-      maxHeight: '90vh',
-    });
-
-    dialogRef.afterClosed().subscribe((result: any) => {});
-  }
-
   onImagePicked(event: Event): any {
-    this.loadingImages = true;
-
     const files = (event.target as HTMLInputElement).files;
     const imgExt: string[] = ['jpg', 'jpeg', 'png'];
 
@@ -256,85 +223,104 @@ export class CreateBlogComponent implements OnInit {
       const ext = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
 
       if (!(imgExt.indexOf(ext) !== -1)) {
-        this.invalidImage = true;
         continue;
       }
-
-      this.blogImageFiles.push(files[i]);
 
       const reader = new FileReader();
 
       reader.onload = () => {
         const preview = reader.result as string;
-        this.blogImagePreview.push(preview);
 
-        if (i === n - 1) {
-          this.loadingImages = false;
-        }
+        const dialogRef = this.dialog.open(ImageCroperComponent, {
+          data: {
+            image: preview,
+            customSavedBtnName: 'Crop',
+            customAspectRatio: 2,
+          },
+          maxHeight: '90vh',
+        });
+
+        dialogRef.afterClosed().subscribe((data: any) => {
+          if (data) {
+            this.headerImagePreview = data;
+            this.headerImageFile = this.dataURLtoFile(data as string, this.sportizenId);
+          }
+        });
       };
 
       reader.readAsDataURL(files[i]);
     }
   }
 
+  private dataURLtoFile(dataURL: string, filename: string) {
+    const arr = dataURL.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], filename, { type: mime });
+  }
+
   submitBlog() {
-    if (this.detailsForm.invalid) {
-      this.snackBar.open('Form Details are Required', null, {
-        duration: 2000,
-        panelClass: ['error-snackbar'],
-      });
-      return;
-    } else if (this.blogForm.invalid) {
+    if (this.blogForm.invalid) {
       this.snackBar.open('Blog Description is Required', null, {
         duration: 2000,
         panelClass: ['error-snackbar'],
       });
       return;
+    } else if (this.tags.length === 0) {
+      this.snackBar.open('Blog tags are Required', null, {
+        duration: 2000,
+        panelClass: ['error-snackbar'],
+      });
     }
+    return;
 
     this.submit = true;
 
-    const n = this.blogImageFiles.length;
-
-    if (n === 0) {
+    if (!this.headerImageFile) {
       this.saveBlog();
       return;
     }
 
-    const blogImageFiles: File[] = [];
-
-    for (let i = 0; i < n; i++) {
-      this.compressImageService
-        .compress(this.blogImageFiles[i])
-        .pipe(take(1))
-        .subscribe((compressedImage) => {
-          blogImageFiles.push(compressedImage);
-
-          if (i === n - 1) {
-            this.saveBlog(blogImageFiles);
-          }
-        });
-    }
+    this.compressImageService
+      .compress(this.headerImageFile)
+      .pipe(take(1))
+      .subscribe((compressedImage) => {
+        this.saveBlog(compressedImage);
+      });
   }
 
-  private saveBlog(blogImageFiles?: File[]) {
+  private saveBlog(headerImageFile?: File) {
     const blog = new FormData();
 
     if (this.blog) {
       blog.append('_id', this.blog._id);
     }
 
-    blog.append('title', this.detailsForm.value.title);
-    blog.append('subtitle', this.detailsForm.value.subtitle);
-    blog.append('sport', this.detailsForm.value.sport);
-
-    for (const blogImageFile of blogImageFiles) {
-      blog.append('blogImage', blogImageFile);
-    }
-
+    blog.append('title', this.blogForm.value.title);
+    blog.append('subtitle', this.blogForm.value.subtitle);
+    blog.append('tags', this.tags.join('-'));
     blog.append('description', this.blogForm.value.description);
 
-    this.blogService.saveBlog(blog, !!this.blog).subscribe(
+    if (headerImageFile) {
+      blog.append('blogImage', headerImageFile);
+    }
+
+    let saveBlogSubscription: any;
+
+    if (!this.blog) {
+      saveBlogSubscription = this.blogService.saveBlog(blog);
+    } else {
+      saveBlogSubscription = this.blogService.updateBlog(blog);
+    }
+
+    saveBlogSubscription.subscribe(
       (resBlog: BlogModel) => {
         this.snackBar.open(`Blog ${this.blog ? 'Updated' : 'Created'} Successfully!`, null, {
           duration: 2000,
@@ -342,16 +328,16 @@ export class CreateBlogComponent implements OnInit {
         });
 
         if (!this.blog) {
-          this.detailsForm.reset();
           this.blogForm.reset();
-        } else {
-          this.blog = resBlog;
-          this.blog.images = resBlog.images;
+          this.location.back();
+          return;
         }
 
-        this.blogImageFiles = [];
-        this.blogImagePreview = [];
+        this.blog = resBlog;
+        this.headerImagePreview = resBlog.secureUrl;
 
+        this.headerImagePicker.nativeElement.value = '';
+        this.headerImageFile = null;
         this.submit = false;
       },
       (error: any) => {
@@ -360,7 +346,6 @@ export class CreateBlogComponent implements OnInit {
           panelClass: ['error-snackbar'],
         });
         this.submit = false;
-        this.loading = false;
       }
     );
   }

@@ -39,29 +39,9 @@
       </mat-card-header>
 
       <mat-card-content>
-        <div class="blog-image-container" *ngIf="blog.images.length > 0">
-          <div class="carousel-background">
-            <div id="{{ 'blog-image-' + i }}" class="carousel slide" data-ride="carousel">
-              <div class="carousel-inner">
-                <div
-                  class="carousel-item"
-                  *ngFor="let image of blog.images; let k = index"
-                  [ngClass]="k == 0 ? 'item active' : 'item'"
-                >
-                  <div class="blog-image">
-                    <img class="image" [src]="image.secureUrl" [alt]="blog.title" loading="lazy" />
-                  </div>
-                </div>
-              </div>
-
-              <a class="carousel-control-prev" href="{{ '#blog-image-' + i }}" data-slide="prev">
-                <span class="fa fa-angle-left"></span>
-              </a>
-
-              <a class="carousel-control-next" href="{{ '#blog-image-' + i }}" data-slide="next">
-                <span class="fa fa-angle-right"></span>
-              </a>
-            </div>
+        <div class="blog-image-container" *ngIf="blog.secureUrl">
+          <div class="blog-image">
+            <img class="image" [src]="blog.secureUrl" [alt]="blog.title" loading="lazy" />
           </div>
         </div>
 
