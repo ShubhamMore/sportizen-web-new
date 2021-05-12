@@ -38,12 +38,12 @@
     </div>
   </div>
 
-  <div class="blog-content ck-content">
+  <div class="blog-content">
     <h2 class="blog-title">{{ blog.title }}</h2>
 
     <div class="blog-subtitle">{{ blog.subtitle }}</div>
 
-    <div class="blog-description" [innerHtml]="blog.description | safeHtml"></div>
+    <div class="blog-description ck-content" [innerHtml]="blog.description | safeHtml"></div>
   </div>
 </div>
 

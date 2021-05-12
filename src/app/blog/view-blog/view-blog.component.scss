@@ -81,7 +81,7 @@ $primary-color: #05bae3;
       // color: black;
       // font-size: 1.125rem;
       // line-height: 1.5rem;
-      // padding: 0 1rem;
+      padding: 0 1rem;
     }
   }
 }
@@ -133,8 +133,6 @@ $primary-color: #05bae3;
       }
 
       .blog-description {
-        font-size: 1.125rem;
-        line-height: 1.4375rem;
         padding: 0 0.875rem;
       }
     }
@@ -188,8 +186,6 @@ $primary-color: #05bae3;
       }
 
       .blog-description {
-        font-size: 1.0625rem;
-        line-height: 1.375rem;
         padding: 0 0.75rem;
       }
     }
@@ -243,8 +239,6 @@ $primary-color: #05bae3;
       }
 
       .blog-description {
-        font-size: 1rem;
-        line-height: 1.3125rem;
         padding: 0 0.625rem;
       }
     }
@@ -287,6 +281,7 @@ $primary-color: #05bae3;
 
     .blog-content {
       width: 100%;
+      padding: 0 0.5rem;
 
       .blog-title {
         font-size: 1.75rem;
@@ -298,8 +293,6 @@ $primary-color: #05bae3;
       }
 
       .blog-description {
-        font-size: 1rem;
-        line-height: 1.25rem;
         padding: 0 0.5rem;
       }
     }
