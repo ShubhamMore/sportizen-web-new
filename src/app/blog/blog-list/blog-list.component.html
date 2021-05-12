@@ -8,73 +8,90 @@
 
 <div class="blog-main-header">
   <div class="blog-main-header-text">
-    <h1>OUR BLOGS</h1>
-    <div class="text">
+    <h1 class="heading">OUR BLOGS</h1>
+    <div class="sub-heading">
       Sportizen makes sure your time is worth and you are reading one of finest blogs related
       sports.
     </div>
-    <button mat-raised-button color="primary">View Recent Blogs</button>
+    <button class="semi-rounded-btn" mat-raised-button color="primary">View Recent Blogs</button>
   </div>
 </div>
-<div class="blogs-container" *ngIf="!loading">
-  <ng-container *ngIf="blogsList.length > 0; else noBlogs"> </ng-container>
 
-  <mat-card appMaterialElevation class="blog" *ngFor="let blog of blogsList; let i = index">
-    <mat-card-header>
-      <img mat-card-avatar [src]="blog.createdUserImage" />
-      <mat-card-title>{{ blog.createdUser | capitalizeEachWord }}</mat-card-title>
-      <mat-card-subtitle
-        ><i class="fa fa-calendar icon-blue mr-2" aria-hidden="true"></i
-        >{{ blog.createdAt | amCalendar }}</mat-card-subtitle
-      >
-    </mat-card-header>
-    <div class="blog-image-container" *ngIf="blog.images.length > 0">
-      <div class="carousel-background">
-        <div id="{{ 'blog-image-' + i }}" class="carousel slide" data-ride="carousel">
-          <div class="carousel-inner">
-            <div
-              class="carousel-item"
-              *ngFor="let image of blog.images; let k = index"
-              [ngClass]="k == 0 ? 'item active' : 'item'"
-            >
-              <div class="blog-image">
-                <img class="image" [src]="image.secureUrl" [alt]="blog.title" loading="lazy" />
+<div class="blogs-container" *ngIf="!loading">
+  <ng-container *ngIf="blogsList.length > 0; else noBlogs">
+    <mat-card class="blog" *ngFor="let blog of blogsList; let i = index">
+      <mat-card-header class="blog-header">
+        <img
+          class="blog-header-image"
+          mat-card-avatar
+          [src]="blog.createdUserImage"
+          [alt]="blog.createdUser"
+        />
+
+        <mat-card-title class="blog-header-title">{{
+          blog.createdUser | capitalizeEachWord
+        }}</mat-card-title>
+
+        <mat-card-subtitle class="blog-header-sub-title">
+          <i class="fa fa-calendar icon-blue mr-2" aria-hidden="true"> </i>
+          {{ blog.createdAt | amCalendar }}
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="blog-image-container" *ngIf="blog.images.length > 0">
+          <div class="carousel-background">
+            <div id="{{ 'blog-image-' + i }}" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                <div
+                  class="carousel-item"
+                  *ngFor="let image of blog.images; let k = index"
+                  [ngClass]="k == 0 ? 'item active' : 'item'"
+                >
+                  <div class="blog-image">
+                    <img class="image" [src]="image.secureUrl" [alt]="blog.title" loading="lazy" />
+                  </div>
+                </div>
               </div>
+
+              <a class="carousel-control-prev" href="{{ '#blog-image-' + i }}" data-slide="prev">
+                <span class="fa fa-angle-left"></span>
+              </a>
+
+              <a class="carousel-control-next" href="{{ '#blog-image-' + i }}" data-slide="next">
+                <span class="fa fa-angle-right"></span>
+              </a>
             </div>
           </div>
-
-          <a class="carousel-control-prev" href="{{ '#blog-image-' + i }}" data-slide="prev">
-            <span class="fa fa-angle-left"></span>
-          </a>
-
-          <a class="carousel-control-next" href="{{ '#blog-image-' + i }}" data-slide="next">
-            <span class="fa fa-angle-right"></span>
-          </a>
         </div>
-      </div>
-    </div>
 
-    <mat-card-content>
-      <div>
-        <h2 class="blog-title">{{ blog.title }}</h2>
-      </div>
+        <div class="blog-details-container">
+          <h2 class="blog-title">{{ blog.title }}</h2>
 
-      <div>
-        <div class="blog-subtitle">
-          {{ blog.subtitle }}
+          <div class="blog-subtitle">
+            {{ blog.subtitle }}
+          </div>
         </div>
-      </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary" class="ml-2" (click)="openBlog(blog._id)">
-        View Blog
-      </button>
-    </mat-card-actions>
-  </mat-card>
+
+        <div class="view-button-container">
+          <button
+            mat-raised-button
+            color="primary"
+            class="view-button"
+            (click)="openBlog(blog._id)"
+          >
+            View Blog
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
 </div>
+
 <div class="loading-container">
   <mat-spinner diameter="25" *ngIf="loading"></mat-spinner>
 </div>
+
 <ng-template #noBlogs>
   <p class="mt-2 text-center">No Blogs Available</p>
 </ng-template>

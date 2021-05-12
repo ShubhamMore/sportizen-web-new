@@ -17,13 +17,11 @@ import { ImageModelComponent } from '../../image/image-model/image-model.compone
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmComponent } from '../../@shared/confirm/confirm.component';
 
-
 @Component({
   selector: 'app-create-blog',
   templateUrl: './create-blog.component.html',
   styleUrls: ['./create-blog.component.scss'],
 })
-
 export class CreateBlogComponent implements OnInit {
   loading: boolean;
   loadingImages: boolean;
@@ -47,7 +45,6 @@ export class CreateBlogComponent implements OnInit {
 
   public classicEditor: any;
 
-
   constructor(
     private sportsService: SportService,
     private blogService: BlogsService,
@@ -67,9 +64,7 @@ export class CreateBlogComponent implements OnInit {
 
     this.submit = false;
 
-
     this.ckeditorConfig = {
-
       toolbar: {
         items: [
           'heading',
@@ -108,40 +103,33 @@ export class CreateBlogComponent implements OnInit {
           'superscript',
           'underline',
           'todoList',
-          'CKFinder'
-        ]
-      },resizeOptions: [
+          'CKFinder',
+        ],
+      },
+      resizeOptions: [
         {
-            name: 'resizeImage:original',
-            value: null,
-            icon: 'original'
+          name: 'resizeImage:original',
+          value: null,
+          icon: 'original',
         },
         {
-            name: 'resizeImage:50',
-            value: '50',
-            icon: 'medium'
+          name: 'resizeImage:50',
+          value: '50',
+          icon: 'medium',
         },
         {
-            name: 'resizeImage:75',
-            value: '75',
-            icon: 'large'
-        }
-    ],
+          name: 'resizeImage:75',
+          value: '75',
+          icon: 'large',
+        },
+      ],
       language: 'en',
       image: {
-        toolbar: [
-          'imageTextAlternative',
-          'imageStyle:full',
-          'imageStyle:side'
-        ]
+        toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side'],
       },
       table: {
-        contentToolbar: [
-          'tableColumn',
-          'tableRow',
-          'mergeTableCells'
-        ]
-      }
+        contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'],
+      },
     };
 
     this.userProfileService
@@ -376,5 +364,4 @@ export class CreateBlogComponent implements OnInit {
       }
     );
   }
-
 }
