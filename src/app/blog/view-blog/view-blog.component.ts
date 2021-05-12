@@ -4,6 +4,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BlogsService } from '../../services/blogs.service';
 import { UserProfileService } from '../../services/user-profile.service';
 import { Title } from '@angular/platform-browser';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-view-blog',
@@ -26,9 +27,12 @@ export class ViewBlogComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
 
-    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
-      this.sportizenId = sportizenId;
-    });
+    this.userProfileService
+      .getUserSportizenId()
+      .pipe(first())
+      .subscribe((sportizenId: string) => {
+        this.sportizenId = sportizenId;
+      });
 
     this.route.params.subscribe((param: Params) => {
       const id = param.id;

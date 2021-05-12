@@ -48,7 +48,6 @@ export class ResetPasswordComponent implements OnInit {
       }
     );
 
-    // tslint:disable-next-line: deprecation
     this.roure.queryParams.subscribe((params: Params) => {
       if (params.key === undefined) {
         this.router.navigate(['/page-not-found'], { relativeTo: this.roure });
@@ -97,7 +96,6 @@ export class ResetPasswordComponent implements OnInit {
       this.loading = true;
 
       const resetPassword = {
-        // user: this.user,
         password: this.encryptService.encrypt(this.form.value.password, environment.encKey),
         token: this.token,
       };

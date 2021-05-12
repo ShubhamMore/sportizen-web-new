@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ConnectionService } from './../../../../services/connection.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-all-users',
@@ -23,20 +24,23 @@ export class AllUsersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
-      this.sportizenId = sportizenId;
+    this.userProfileService
+      .getUserSportizenId()
+      .pipe(first())
+      .subscribe((sportizenId: string) => {
+        this.sportizenId = sportizenId;
 
-      this.route.params.subscribe((param: Params) => {
-        const searchKeyword = param.searchKeyword;
-        this.searchKeyword = searchKeyword;
-        this.searchResults = [];
-        if (searchKeyword) {
-          this.connectionService.getSearchResults(searchKeyword).subscribe((res: any[]) => {
-            this.searchResults = res;
-          });
-        }
+        this.route.params.subscribe((param: Params) => {
+          const searchKeyword = param.searchKeyword;
+          this.searchKeyword = searchKeyword;
+          this.searchResults = [];
+          if (searchKeyword) {
+            this.connectionService.getSearchResults(searchKeyword).subscribe((res: any[]) => {
+              this.searchResults = res;
+            });
+          }
+        });
       });
-    });
   }
 
   viewProfile(id: string) {

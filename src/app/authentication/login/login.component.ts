@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.titleService.setTitle('SPORTIZEN | Login');
-    // tslint:disable-next-line: deprecation
+
     this.googleAuthService.authState.subscribe((user: any) => {
       this.user = user;
     });
@@ -88,7 +88,6 @@ export class LoginComponent implements OnInit {
   }
 
   authSubscribe() {
-    // tslint:disable-next-line: deprecation
     this.authObs.subscribe(
       (res: any) => {
         this.loading = false;

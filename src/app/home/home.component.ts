@@ -36,8 +36,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   };
 
   ngOnInit(): void {
-    $(window).on('load', function () {
-      $('.js--nav-link').on('click', function () {
+    $(window).on('load', () => {
+      $('.js--nav-link').on('click', () => {
         if ($(window).width() < 768) {
           const nav = $('.js--main-nav');
           const icon = $('.js--nav-icon i');
@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       });
 
-      $('.js--home').on('click', function () {
+      $('.js--home').on('click', () => {
         if ($(window).width() < 768) {
           const icon = $('.js--nav-icon i');
           const nav = $('.js--main-nav');
@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       });
 
-      $(window).on('resize', function () {
+      $(window).on('resize', () => {
         const nav = $('.js--main-nav');
         if ($(window).width() > 767) {
           nav.slideDown(200);

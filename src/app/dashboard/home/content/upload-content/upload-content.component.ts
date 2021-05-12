@@ -23,7 +23,7 @@ export class UploadContentComponent implements OnInit {
     this.invalidImage = false;
     this.postImageFiles = [];
     this.postImagePreview = [];
-    // tslint:disable-next-line: deprecation
+
     this.userProfileService.getProfile().subscribe((userProfile: UserProfileModel) => {
       if (userProfile) {
         this.profileName = userProfile.name;
@@ -49,7 +49,6 @@ export class UploadContentComponent implements OnInit {
       data,
     });
 
-    // tslint:disable-next-line: deprecation
     dialogRef.afterClosed().subscribe((result: any) => {
       this.postImage.nativeElement.value = '';
     });

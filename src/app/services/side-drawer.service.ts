@@ -4,7 +4,7 @@ import { MatDrawer } from '@angular/material/sidenav';
 @Injectable({ providedIn: 'root' })
 export class SideDrawerService {
   private drawer: MatDrawer;
-  private _sideDrawerMode: string = 'side';
+  private _sideDrawerMode = 'side';
 
   public setSideNav(drawer: MatDrawer) {
     this.drawer = drawer;

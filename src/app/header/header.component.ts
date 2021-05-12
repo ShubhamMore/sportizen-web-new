@@ -9,12 +9,12 @@ export class HeaderComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    $(document).ready(function () {
+    $(document).on('ready', () => {
       /** MOBILE NAV */
 
-      $('.js--nav-icon').click(function () {
-        var nav = $('.js--main-nav');
-        var icon = $('.js--nav-icon i');
+      $('.js--nav-icon').on('click', () => {
+        const nav = $('.js--main-nav');
+        const icon = $('.js--nav-icon i');
 
         nav.slideToggle(200);
 
@@ -27,10 +27,10 @@ export class HeaderComponent implements OnInit {
         }
       });
 
-      $('.js--nav-link').click(function () {
+      $('.js--nav-link').on('click', () => {
         if ($(window).width() < 768) {
-          var nav = $('.js--main-nav');
-          var icon = $('.js--nav-icon i');
+          const nav = $('.js--main-nav');
+          const icon = $('.js--nav-icon i');
           nav.slideToggle(200);
           if (icon.hasClass('fa-list')) {
             icon.addClass('fa-close');
@@ -42,18 +42,18 @@ export class HeaderComponent implements OnInit {
         }
       });
 
-      $('.js--home').click(function () {
+      $('.js--home').on('click', () => {
         if ($(window).width() < 768) {
-          var icon = $('.js--nav-icon i');
-          var nav = $('.js--main-nav');
+          const icon = $('.js--nav-icon i');
+          const nav = $('.js--main-nav');
           nav.slideUp(200);
           icon.addClass('fa-list');
           icon.removeClass('fa-close');
         }
       });
 
-      $(window).resize(function () {
-        var nav = $('.js--main-nav');
+      $(window).on('resize', () => {
+        const nav = $('.js--main-nav');
         if ($(window).width() > 1080) {
           nav.slideDown(200);
         } else {

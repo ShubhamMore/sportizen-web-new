@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ConnectionService } from '../../../../../../services/connection.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { first } from 'rxjs/operators';
 
 interface Connection {
   name: string;
@@ -48,9 +49,12 @@ export class ProfileDashboardConnectionsComponent implements OnInit {
     this.getFollowers(this.userId);
     this.getFollowings(this.userId);
 
-    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
-      this.sportizenId = sportizenId;
-    });
+    this.userProfileService
+      .getUserSportizenId()
+      .pipe(first())
+      .subscribe((sportizenId: string) => {
+        this.sportizenId = sportizenId;
+      });
   }
 
   viewFollowers() {

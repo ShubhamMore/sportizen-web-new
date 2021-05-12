@@ -72,7 +72,6 @@ export class ChatMessagesComponent implements OnInit, AfterViewInit {
 
     this.messages = [];
 
-    // tslint:disable-next-line: deprecation
     this.chatService.getChatMember().subscribe((chatMember: ChatMember) => {
       if (chatMember) {
         this.user = chatMember;
@@ -96,7 +95,7 @@ export class ChatMessagesComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.messageScrollContainer = this.messageScrollFrame.nativeElement;
-    // tslint:disable-next-line: deprecation
+
     this.messageElements.changes.subscribe((_) => this.onMessageElementsChanged());
   }
 
@@ -213,7 +212,6 @@ export class ChatMessagesComponent implements OnInit, AfterViewInit {
       disableClose: true,
     });
 
-    // tslint:disable-next-line: deprecation
     dialogRef.afterClosed().subscribe((confirm: boolean) => {
       if (confirm) {
         this.chatService.deleteAllMessages(this.user.sportizenId).subscribe(

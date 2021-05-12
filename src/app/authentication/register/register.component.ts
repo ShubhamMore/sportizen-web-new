@@ -98,13 +98,11 @@ export class RegisterComponent implements OnInit {
 
     const data = {
       name: this.form.value.firstName.toLowerCase() + ' ' + this.form.value.lastName.toLowerCase(),
-      // userType: this.form.value.userType,
       userType: 'user',
       email: this.form.value.email,
       password: this.encryptService.encrypt(this.form.value.password, environment.encKey),
     };
 
-    // tslint:disable-next-line: deprecation
     this.authService.createUser(data).subscribe(
       (res: any) => {
         this.loading = false;

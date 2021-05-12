@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConnectionService } from '../../../../../services/connection.service';
 import { ProfileService } from './../../@shared/profile.service';
 import { of } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 interface Connection {
   name: string;
@@ -43,9 +44,12 @@ export class ProfileConnectionsComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
 
-    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
-      this.sportizenId = sportizenId;
-    });
+    this.userProfileService
+      .getUserSportizenId()
+      .pipe(first())
+      .subscribe((sportizenId: string) => {
+        this.sportizenId = sportizenId;
+      });
 
     this.profileService.getUserSportizenId().subscribe((sportizenId: string) => {
       this.loading = true;

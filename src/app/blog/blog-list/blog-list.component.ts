@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserProfileService } from '../../services/user-profile.service';
 import { Title } from '@angular/platform-browser';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-blog-list',
@@ -28,13 +29,14 @@ export class BlogListComponent implements OnInit {
     this.titleService.setTitle('SPORTIZEN | Blogs');
     this.blogsList = [];
 
-    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
-      this.sportizenId = sportizenId;
+    this.userProfileService
+      .getUserSportizenId()
+      .pipe(first())
+      .subscribe((sportizenId: string) => {
+        this.sportizenId = sportizenId;
+      });
 
-      this.getBlogs(null, null);
-    });
-
-    // this.blogsList = this.blogsService.getBlogsList();
+    this.getBlogs(null, null);
   }
 
   getBlogs(limit: number, skip: number) {

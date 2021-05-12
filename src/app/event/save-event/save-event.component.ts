@@ -291,7 +291,6 @@ export class SaveEventComponent implements OnInit, OnDestroy {
       disableClose: true,
     });
 
-    // tslint:disable-next-line: deprecation
     dialogRef.afterClosed().subscribe((confirm: boolean) => {
       if (confirm) {
         this.loadingImages = true;

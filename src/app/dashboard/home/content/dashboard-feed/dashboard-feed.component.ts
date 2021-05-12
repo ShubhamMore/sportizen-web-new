@@ -9,6 +9,7 @@ import { UserProfileService } from './../../../../services/user-profile.service'
 import { environment } from './../../../../../environments/environment';
 
 import * as $ from 'jquery';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard-feed',
@@ -52,12 +53,14 @@ export class DashboardFeedComponent implements OnInit, AfterViewInit, OnDestroy 
     this.loadingFeed = true;
     this.noMorePosts = false;
 
-    // tslint:disable-next-line: deprecation
-    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
-      this.sportizenId = sportizenId;
+    this.userProfileService
+      .getUserSportizenId()
+      .pipe(first())
+      .subscribe((sportizenId: string) => {
+        this.sportizenId = sportizenId;
 
-      this.loadFeed(environment.limit, null);
-    });
+        this.loadFeed(environment.limit, null);
+      });
   }
 
   ngAfterViewInit() {

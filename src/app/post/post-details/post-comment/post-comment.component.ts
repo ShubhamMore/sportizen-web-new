@@ -11,6 +11,7 @@ import { PostCommentReplyService } from '../../../services/post-comment-reply.se
 import { PostCommentService } from '../../../services/post-comment.service';
 import { UserProfileService } from '../../../services/user-profile.service';
 import { PostLikesComponent } from '../post-likes/post-likes.component';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-post-comment',
@@ -44,10 +45,13 @@ export class PostCommentComponent implements OnInit {
     this.commentsLoading = true;
     this.comments = [];
 
-    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
-      this.sportizenId = sportizenId;
-      this.getComments();
-    });
+    this.userProfileService
+      .getUserSportizenId()
+      .pipe(first())
+      .subscribe((sportizenId: string) => {
+        this.sportizenId = sportizenId;
+        this.getComments();
+      });
   }
 
   private getComments() {
@@ -114,7 +118,6 @@ export class PostCommentComponent implements OnInit {
         disableClose: true,
       });
 
-      // tslint:disable-next-line: deprecation
       dialogRef.afterClosed().subscribe((confirm: boolean) => {
         if (confirm) {
           this.postCommentService.deletePostComment(id).subscribe(
@@ -146,7 +149,6 @@ export class PostCommentComponent implements OnInit {
         disableClose: true,
       });
 
-      // tslint:disable-next-line: deprecation
       dialogRef.afterClosed().subscribe((confirm: boolean) => {
         if (confirm) {
           this.postCommentReplyService.deletePostCommentReply(id).subscribe(

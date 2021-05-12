@@ -11,7 +11,7 @@ import { UserProfileService } from '../../services/user-profile.service';
 import { Location } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 import { UploadAdapter } from './upload-adapter';
-import { take } from 'rxjs/operators';
+import { take, first } from 'rxjs/operators';
 import { CompressImageService } from '../../services/shared-services/compress-image.service';
 import { ImageModelComponent } from '../../image/image-model/image-model.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -138,69 +138,72 @@ export class CreateBlogComponent implements OnInit {
       // },
     };
 
-    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
-      if (sportizenId) {
-        this.sportizenId = sportizenId;
+    this.userProfileService
+      .getUserSportizenId()
+      .pipe(first())
+      .subscribe((sportizenId: string) => {
+        if (sportizenId) {
+          this.sportizenId = sportizenId;
 
-        this.classicEditor = ClassicEditor;
+          this.classicEditor = ClassicEditor;
 
-        this.sports = this.sportsService.getSports();
+          this.sports = this.sportsService.getSports();
 
-        this.detailsForm = new FormGroup({
-          title: new FormControl(null, {
-            validators: [Validators.required],
-          }),
-          subtitle: new FormControl(null, {
-            validators: [Validators.required],
-          }),
-          sport: new FormControl('', {
-            validators: [Validators.required],
-          }),
-        });
+          this.detailsForm = new FormGroup({
+            title: new FormControl(null, {
+              validators: [Validators.required],
+            }),
+            subtitle: new FormControl(null, {
+              validators: [Validators.required],
+            }),
+            sport: new FormControl('', {
+              validators: [Validators.required],
+            }),
+          });
 
-        this.blogForm = new FormGroup({
-          description: new FormControl(null, {
-            validators: [Validators.required],
-          }),
-        });
+          this.blogForm = new FormGroup({
+            description: new FormControl(null, {
+              validators: [Validators.required],
+            }),
+          });
 
-        this.blogImageFiles = [];
-        this.blogImagePreview = [];
+          this.blogImageFiles = [];
+          this.blogImagePreview = [];
 
-        this.route.params.subscribe((param: Params) => {
-          const id = param.id;
+          this.route.params.subscribe((param: Params) => {
+            const id = param.id;
 
-          if (id) {
-            this.blogService.getBlog(id).subscribe(
-              (blog: BlogModel) => {
-                this.titleService.setTitle('SPORTIZEN | Edit Blog | ' + blog.title);
-                this.blog = blog;
-                this.detailsForm.patchValue({
-                  title: blog.title,
-                  subtitle: blog.subtitle,
-                  sport: blog.sport,
-                });
+            if (id) {
+              this.blogService.getBlog(id).subscribe(
+                (blog: BlogModel) => {
+                  this.titleService.setTitle('SPORTIZEN | Edit Blog | ' + blog.title);
+                  this.blog = blog;
+                  this.detailsForm.patchValue({
+                    title: blog.title,
+                    subtitle: blog.subtitle,
+                    sport: blog.sport,
+                  });
 
-                this.blogForm.patchValue({
-                  description: blog.description,
-                });
+                  this.blogForm.patchValue({
+                    description: blog.description,
+                  });
 
-                this.loading = false;
-              },
-              (error: any) => {
-                this.router.navigate(['./../../'], { relativeTo: this.route, replaceUrl: true });
-              }
-            );
-          } else {
-            this.titleService.setTitle('SPORTIZEN | New Blog');
+                  this.loading = false;
+                },
+                (error: any) => {
+                  this.router.navigate(['./../../'], { relativeTo: this.route, replaceUrl: true });
+                }
+              );
+            } else {
+              this.titleService.setTitle('SPORTIZEN | New Blog');
 
-            this.loading = false;
-          }
-        });
-      } else {
-        this.location.back();
-      }
-    });
+              this.loading = false;
+            }
+          });
+        } else {
+          this.location.back();
+        }
+      });
   }
 
   onReady(eventData: any) {
@@ -221,7 +224,6 @@ export class CreateBlogComponent implements OnInit {
       disableClose: true,
     });
 
-    // tslint:disable-next-line: deprecation
     dialogRef.afterClosed().subscribe((confirm: boolean) => {
       if (confirm) {
         this.loadingImages = true;

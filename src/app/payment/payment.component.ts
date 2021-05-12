@@ -15,7 +15,7 @@ export interface PaymentDetails {
 }
 
 @Component({
-  selector: 'ngx-payment',
+  selector: 'app-payment',
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.scss'],
 })
@@ -32,7 +32,9 @@ export class PaymentComponent implements OnInit, OnDestroy {
     private orderService: OrderService,
     private userProfileService: UserProfileService,
     private snackBar: MatSnackBar,
-    public dialogRef: MatDialogRef<PaymentComponent> // private router: Router, // private route: ActivatedRoute,
+    // private router: Router,
+    // private route: ActivatedRoute,
+    public dialogRef: MatDialogRef<PaymentComponent>
   ) {
     dialogRef.disableClose = true;
   }

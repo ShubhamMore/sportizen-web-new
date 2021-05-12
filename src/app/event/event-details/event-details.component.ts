@@ -6,6 +6,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
 import { ConfirmComponent } from 'src/app/@shared/confirm/confirm.component';
 import { MatDialog } from '@angular/material/dialog';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-event-details',
@@ -35,9 +36,12 @@ export class EventDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.isDeleting = false;
 
-    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
-      this.sportizenId = sportizenId;
-    });
+    this.userProfileService
+      .getUserSportizenId()
+      .pipe(first())
+      .subscribe((sportizenId: string) => {
+        this.sportizenId = sportizenId;
+      });
 
     if (this.isList && this.listType === 'list') {
       this.backPosition = './';
@@ -119,7 +123,6 @@ export class EventDetailsComponent implements OnInit {
         disableClose: true,
       });
 
-      // tslint:disable-next-line: deprecation
       dialogRef.afterClosed().subscribe((confirm: boolean) => {
         if (confirm) {
           this.isDeleting = true;

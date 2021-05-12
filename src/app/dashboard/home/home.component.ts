@@ -58,7 +58,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     this.homeService.setRoute(this.navLinks[0].title);
 
-    // tslint:disable-next-line: deprecation
     this.homeService.getRoute().subscribe((route: string) => {
       this.activeNavLink = route;
       this.changeDetectorRef.detectChanges();
@@ -79,7 +78,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     const delta = 5;
     const navbarHeight = $('#dashboard-links').outerHeight();
 
-    $('#dashboard-content').scroll(function (event) {
+    $('#dashboard-content').on('scroll', (event) => {
       didScroll = true;
 
       hasScrolled();

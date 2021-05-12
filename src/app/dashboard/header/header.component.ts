@@ -5,7 +5,6 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserProfileModel } from './../../models/user-profile.model';
 import { DashboardSideDrawerService } from './../../services/dashboard-side-drawer.service';
-import { SideDrawerService } from './../../services/side-drawer.service';
 import { UserProfileService } from './../../services/user-profile.service';
 import { User } from './../../authentication/auth/auth-model/user.model';
 
@@ -44,8 +43,6 @@ import { User } from './../../authentication/auth/auth-model/user.model';
   ],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  id: string;
-  isAuthenticated: boolean;
   user: User;
   logo: string;
   title: string;
@@ -54,7 +51,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   showLogo: boolean;
 
   constructor(
-    private sideDrawerService: SideDrawerService,
     private dashboardSideDrawerService: DashboardSideDrawerService,
     private userProfileService: UserProfileService,
     private authService: AuthService,
@@ -67,13 +63,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.logo = environment.logo;
     this.title = environment.title;
-    this.isAuthenticated = false;
     this.authService.getUser().subscribe((user: User) => {
-      this.isAuthenticated = !!user;
       this.user = user;
-      if (this.user) {
-        this.id = this.user._id;
-      }
     });
 
     this.userProfileService.getProfile().subscribe((profile: UserProfileModel) => {
@@ -95,14 +86,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   isDashboardDrawerOpened() {
     return this.dashboardSideDrawerService.isDrawerOpened();
-  }
-
-  toggleSideDrawer() {
-    this.sideDrawerService.toggle();
-  }
-
-  isDrawerOpened() {
-    return this.sideDrawerService.isDrawerOpened();
   }
 
   toggleSearchBar(isSearchBarOpen: any) {

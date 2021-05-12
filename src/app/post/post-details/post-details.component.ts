@@ -190,7 +190,6 @@ export class PostDetailsComponent implements OnInit {
         disableClose: true,
       });
 
-      // tslint:disable-next-line: deprecation
       dialogRef.afterClosed().subscribe((confirm: boolean) => {
         if (confirm) {
           this.postService.deletePost(post).subscribe(

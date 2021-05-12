@@ -37,20 +37,18 @@
                   <div
                     class="connection-btn"
                     [ngClass]="
-                      searchResult.searchResultStatus === 'following'
-                        ? 'connected'
-                        : 'not-connected'
+                      searchResult.connectionStatus === 'following' ? 'connected' : 'not-connected'
                     "
                     (click)="
                       followUnfollow(
                         searchResult.name,
                         searchResult.sportizenId,
-                        searchResult.searchResultStatus,
+                        searchResult.connectionStatus,
                         i
                       )
                     "
                   >
-                    {{ searchResult.searchResultStatus === 'following' ? 'Unfollow' : 'Follow' }}
+                    {{ searchResult.connectionStatus === 'following' ? 'Unfollow' : 'Follow' }}
                   </div>
                 </div>
               </div>

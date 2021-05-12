@@ -1,6 +1,7 @@
 import { HomeService } from './../services/home.service';
 import { Component, OnInit } from '@angular/core';
 import { UserProfileService } from './../services/user-profile.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-event',
@@ -15,12 +16,15 @@ export class EventComponent implements OnInit {
   ngOnInit(): void {
     this.isSportizenId = true;
 
-    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
-      this.isSportizenId = !!sportizenId;
+    this.userProfileService
+      .getUserSportizenId()
+      .pipe(first())
+      .subscribe((sportizenId: string) => {
+        this.isSportizenId = !!sportizenId;
 
-      if (sportizenId) {
-        this.homeService.setRoute('Events');
-      }
-    });
+        if (sportizenId) {
+          this.homeService.setRoute('Events');
+        }
+      });
   }
 }

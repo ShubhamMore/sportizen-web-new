@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserProfileModel } from './../../../../models/user-profile.model';
 import { UserProfileService } from './../../../../services/user-profile.service';
 import { Title } from '@angular/platform-browser';
-import { take } from 'rxjs/operators';
+import { take, first } from 'rxjs/operators';
 import { CompressImageService } from './../../../../services/shared-services/compress-image.service';
 import { ConnectionStatus } from 'src/app/enums/connectionStatus';
 import { ProfileService } from './../@shared/profile.service';
@@ -57,42 +57,45 @@ export class ProfileDetailComponent implements OnInit, OnDestroy {
 
     this.titleService.setTitle('SPORTIZEN | Profile');
 
-    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
-      this.sportizenId = sportizenId;
+    this.userProfileService
+      .getUserSportizenId()
+      .pipe(first())
+      .subscribe((sportizenId: string) => {
+        this.sportizenId = sportizenId;
 
-      let userProfileSubscription: any;
+        let userProfileSubscription: any;
 
-      if (this.userProfileId) {
-        userProfileSubscription = this.userProfileService.getUserProfile(this.userProfileId);
-      } else {
-        userProfileSubscription = this.userProfileService.getProfile();
-      }
-
-      userProfileSubscription.subscribe((userProfile: UserProfileModel) => {
-        if (userProfile) {
-          this.userProfile = userProfile;
-
-          if (this.userProfileId) {
-            this.setConnectionStatus(userProfile.connection);
-          }
-
-          if (userProfile.sportizenId === this.sportizenId) {
-            this.profileService.setProfile({ story: userProfile.story });
-          } else {
-            this.profileService.setProfile(userProfile);
-          }
-
-          // this.dashboardSideDrawerService.close();
-
-          this.profileImagePreview = this.userProfile.userImageURL;
-          this.coverImagePreview = this.userProfile.userCoverImageURL;
-
-          this.loading = false;
+        if (this.userProfileId) {
+          userProfileSubscription = this.userProfileService.getUserProfile(this.userProfileId);
         } else {
-          this.location.back();
+          userProfileSubscription = this.userProfileService.getProfile();
         }
+
+        userProfileSubscription.subscribe((userProfile: UserProfileModel) => {
+          if (userProfile) {
+            this.userProfile = userProfile;
+
+            if (this.userProfileId) {
+              this.setConnectionStatus(userProfile.connection);
+            }
+
+            if (userProfile.sportizenId === this.sportizenId) {
+              this.profileService.setProfile({ story: userProfile.story });
+            } else {
+              this.profileService.setProfile(userProfile);
+            }
+
+            // this.dashboardSideDrawerService.close();
+
+            this.profileImagePreview = this.userProfile.userImageURL;
+            this.coverImagePreview = this.userProfile.userCoverImageURL;
+
+            this.loading = false;
+          } else {
+            this.location.back();
+          }
+        });
       });
-    });
   }
 
   setConnectionStatus(connectionStatus: any) {

@@ -9,6 +9,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UserProfileService } from './../../services/user-profile.service';
 import { EventPlayerRegistrationService } from './../../services/event-player-registration.service';
 import { Title } from '@angular/platform-browser';
+import { first } from 'rxjs/operators';
 
 interface TeamMember {
   _id: string;
@@ -55,9 +56,12 @@ export class ViewEventComponent implements OnInit, OnDestroy {
     this.loadingPlayers = true;
     this.titleService.setTitle(`SPORTIZEN | Event`);
 
-    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
-      this.sportizenId = sportizenId;
-    });
+    this.userProfileService
+      .getUserSportizenId()
+      .pipe(first())
+      .subscribe((sportizenId: string) => {
+        this.sportizenId = sportizenId;
+      });
 
     this.players = [];
 

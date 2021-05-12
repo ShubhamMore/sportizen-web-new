@@ -26,9 +26,10 @@ export class CompressImageService {
         const imgWH = img.width > img.height ? img.width : img.height;
 
         // Determines the ratios to compress the image
-        let withHeightRatio =
+        const withHeightRatio =
           imgWH > widthHeightMax ? widthHeightMax / imgWH : defaultWidthHeightRatio;
-        let qualityRatio = file.size > fileSizeMax ? fileSizeMax / file.size : defaultQualityRatio;
+        const qualityRatio =
+          file.size > fileSizeMax ? fileSizeMax / file.size : defaultQualityRatio;
 
         // Fires immediately after the browser loads the object
         img.onload = () => {
@@ -61,7 +62,7 @@ export class CompressImageService {
   }
 
   private createImage(ev: any) {
-    let imageContent = ev.target.result;
+    const imageContent = ev.target.result;
     const img = new Image();
     img.src = imageContent;
     return img;

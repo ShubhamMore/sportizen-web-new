@@ -39,18 +39,19 @@ export class UserProfileService {
   //   });
   // }
 
-  setFllower() {
-    this.getProfile().subscribe((userProfile: any) => {
-      if (userProfile) {
-        console.log(userProfile);
-      }
-      // this.userFollowers.subscribe((followers: number) => {
-      //   if (followers) {
-      //     followers -= 1;
-      //     this.setUserFollowers(followers);
-      //   }
-    });
-  }
+  // setFllower() {
+  //   this.getProfile().subscribe((userProfile: any) => {
+  //     if (userProfile) {
+  // console.log(userProfile);
+  // }
+
+  // this.userFollowers.subscribe((followers: number) => {
+  //   if (followers) {
+  //     followers -= 1;
+  //     this.setUserFollowers(followers);
+  //   }
+  //   });
+  // }
 
   getProfile() {
     return this.userProfile;

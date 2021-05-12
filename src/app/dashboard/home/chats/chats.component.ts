@@ -27,8 +27,8 @@ export class ChatsComponent implements OnInit {
 
     this.titleService.setTitle('SPORTIZEN | Chat');
 
-    $(document).ready(() => {
-      $(window).resize(() => {
+    $(document).on('ready', () => {
+      $(window).on('resize', () => {
         if (this.user) {
           if ($(window).width() <= 400) {
             $('.chat-connections').css('display', 'none');
@@ -49,7 +49,6 @@ export class ChatsComponent implements OnInit {
       });
     });
 
-    // tslint:disable-next-line: deprecation
     this.chatService.getChatMember().subscribe((chatMember: ChatMember) => {
       if (chatMember) {
         this.user = chatMember;

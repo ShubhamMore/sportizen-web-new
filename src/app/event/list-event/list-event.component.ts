@@ -7,6 +7,7 @@ import { EventModel } from './../../models/event.model';
 import { environment } from './../../../environments/environment';
 import { Title } from '@angular/platform-browser';
 import * as $ from 'jquery';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list-event',
@@ -62,9 +63,12 @@ export class ListEventComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.titleService.setTitle('SPORTIZEN | Events');
 
-    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
-      this.sportizenId = sportizenId;
-    });
+    this.userProfileService
+      .getUserSportizenId()
+      .pipe(first())
+      .subscribe((sportizenId: string) => {
+        this.sportizenId = sportizenId;
+      });
 
     this.route.data.subscribe((data: any) => {
       this.type = data.type;

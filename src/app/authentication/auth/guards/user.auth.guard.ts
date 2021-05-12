@@ -18,7 +18,6 @@ import { AuthService } from '../auth-service/auth.service';
 export class UserAuthGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(private authService: AuthService, private router: Router) {}
 
-  // tslint:disable-next-line: max-line-length
   canActivate(
     route: ActivatedRouteSnapshot,
     router: RouterStateSnapshot
@@ -32,15 +31,9 @@ export class UserAuthGuard implements CanActivate, CanActivateChild, CanLoad {
         }
         return this.router.createUrlTree(['/login']);
       })
-      // tap(isAuth => {
-      //   if (!isAuth) {
-      //     this.router.navigate(['/auth']);
-      //   }
-      // })
     );
   }
 
-  // tslint:disable-next-line: max-line-length
   canActivateChild(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot

@@ -10,7 +10,7 @@ export class TimePipe implements PipeTransform {
     }
     const timeArr: string[] = time.split(':');
 
-    let hr = parseInt(timeArr[0]);
+    let hr = parseInt(timeArr[0], 10);
     const min = timeArr[1];
 
     if (hr > 12) {

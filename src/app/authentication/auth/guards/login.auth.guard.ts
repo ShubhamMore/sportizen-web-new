@@ -15,7 +15,6 @@ import { AuthService } from '../auth-service/auth.service';
 export class LoginAuthGuard implements CanActivate, CanActivateChild {
   constructor(private authService: AuthService, private router: Router) {}
 
-  // tslint:disable-next-line: max-line-length
   canActivate(
     route: ActivatedRouteSnapshot,
     router: RouterStateSnapshot
@@ -35,11 +34,6 @@ export class LoginAuthGuard implements CanActivate, CanActivateChild {
           return this.router.createUrlTree(['/login']);
         }
       })
-      // tap(isAuth => {
-      //   if (!isAuth) {
-      //     this.router.navigate(['/auth']);
-      //   }
-      // })
     );
   }
 

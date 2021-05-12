@@ -2,6 +2,7 @@ import { HomeService } from './../services/home.service';
 import { Component, OnInit } from '@angular/core';
 import { UserProfileService } from './../services/user-profile.service';
 import { Title } from '@angular/platform-browser';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-blog',
@@ -22,12 +23,15 @@ export class BlogComponent implements OnInit {
 
     this.titleService.setTitle('SPORTIZEN | Blog');
 
-    this.userProfileService.getUserSportizenId().subscribe((sportizenId: string) => {
-      this.isSportizenId = !!sportizenId;
+    this.userProfileService
+      .getUserSportizenId()
+      .pipe(first())
+      .subscribe((sportizenId: string) => {
+        this.isSportizenId = !!sportizenId;
 
-      if (sportizenId) {
-        this.homeService.setRoute('Blogs');
-      }
-    });
+        if (sportizenId) {
+          this.homeService.setRoute('Blogs');
+        }
+      });
   }
 }

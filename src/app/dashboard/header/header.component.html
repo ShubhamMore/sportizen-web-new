@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-xl" *ngIf="isAuthenticated && user.userType == 'user'">
+<nav class="navbar navbar-expand-xl" *ngIf="user && user.userType == 'user'">
   <div class="header-container">
     <div
       class="navbar-header navbar-logo"
@@ -6,7 +6,7 @@
       data-target=".navbar-collapse.show"
     >
       <div
-        *ngIf="isAuthenticated"
+        *ngIf="user"
         class="hamburger hamburger--spin menu-icon"
         type="button"
         [ngClass]="isDashboardDrawerOpened() ? 'is-active' : ''"
@@ -23,20 +23,20 @@
     </div>
 
     <app-search-bar
-      *ngIf="isAuthenticated && user.userType == 'user'"
+      *ngIf="user && user.userType == 'user'"
       (emitSearchBarToggle)="toggleSearchBar($event)"
       [minified]="true"
     >
     </app-search-bar>
 
     <app-search-bar
-      *ngIf="isAuthenticated && user.userType == 'user'"
+      *ngIf="user && user.userType == 'user'"
       (emitSearchBarToggle)="toggleSearchBar($event)"
     >
     </app-search-bar>
 
     <div class="collapse navbar-collapse navbar-links on-desktop" id="navbarSupportedContent">
-      <ul class="navbar-nav justify-content-end" *ngIf="isAuthenticated">
+      <ul class="navbar-nav justify-content-end" *ngIf="user">
         <div class="profile-icon" [matMenuTriggerFor]="menu" *ngIf="userProfile">
           <img
             class="profile-image"

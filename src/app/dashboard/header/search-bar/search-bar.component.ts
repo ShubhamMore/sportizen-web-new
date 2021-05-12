@@ -2,7 +2,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { debounceTime, finalize, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, finalize, switchMap, tap, first } from 'rxjs/operators';
 import { ConnectionService } from './../../../services/connection.service';
 import { UserProfileService } from './../../../services/user-profile.service';
 
@@ -98,9 +98,12 @@ export class SearchBarComponent implements OnInit {
     this.filteredOptions = [];
     this.options = [];
 
-    this.userProfileService.getUserSportizenId().subscribe((sortizenId: string) => {
-      this.sportizenId = this.sportizenId;
-    });
+    this.userProfileService
+      .getUserSportizenId()
+      .pipe(first())
+      .subscribe((sortizenId: string) => {
+        this.sportizenId = this.sportizenId;
+      });
 
     this.myControl.valueChanges
       .pipe(

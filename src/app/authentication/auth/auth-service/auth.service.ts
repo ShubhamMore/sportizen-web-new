@@ -18,13 +18,13 @@ export interface AuthResponseData {
 
 export class UserData {
   email: string;
-  // tslint:disable-next-line: variable-name
+
   _id: string;
   sportizenId: string;
   userType: string;
-  // tslint:disable-next-line: variable-name
+
   _token: string;
-  // tslint:disable-next-line: variable-name
+
   _tokenExpirationDate: string;
 }
 
@@ -134,7 +134,7 @@ export class AuthService {
 
   autoLogin(userData: UserData) {
     this.loadUser(userData);
-    // tslint:disable-next-line: deprecation
+
     this.http.post(environment.backend + 'autoLogin', {}).subscribe(
       (response: any) => {},
       (err: any) => {
@@ -167,15 +167,14 @@ export class AuthService {
   }
 
   logoutAll() {
-    // tslint:disable-next-line: deprecation
     return this.http.post(environment.backend + 'logoutAll', {}).subscribe(
       (res: any) => {
         sessionStorage.removeItem('userData');
         this.user.next(null);
+        this.router.navigate(['/'], { relativeTo: this.route });
         if (this.tokenExpirationTimer) {
           clearTimeout(this.tokenExpirationTimer);
         }
-        this.router.navigate(['/'], { relativeTo: this.route });
         this.tokenExpirationTimer = null;
       },
       (error: any) => {}
