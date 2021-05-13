@@ -118,7 +118,7 @@ export class CreateBlogComponent implements OnInit {
       ],
       language: 'en',
       image: {
-        toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side'],
+        toolbar: ['resizeImage:50', 'resizeImage:75', 'resizeImage:original'],
       },
       table: {
         contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'],
@@ -207,8 +207,8 @@ export class CreateBlogComponent implements OnInit {
   }
 
   onReady(eventData: any) {
-    eventData.plugins.get('FileRepository').createUploadAdapter = function (loader: any) {
-      return new UploadAdapter(loader);
+    eventData.plugins.get('FileRepository').createUploadAdapter = (loader: any) => {
+      return new UploadAdapter(loader, this.compressImageService);
     };
   }
 
@@ -278,8 +278,8 @@ export class CreateBlogComponent implements OnInit {
         duration: 2000,
         panelClass: ['error-snackbar'],
       });
+      return;
     }
-    return;
 
     this.submit = true;
 

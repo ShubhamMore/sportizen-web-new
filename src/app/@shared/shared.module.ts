@@ -29,7 +29,8 @@ import { MaterialElevationDirective } from '../directives/material-elevation.dir
     TimePipe,
     AmountPipe,
     SafeHtmlPipe,
-    ConfirmComponent,MaterialElevationDirective
+    ConfirmComponent,
+    MaterialElevationDirective,
   ],
   imports: [
     CommonModule,
@@ -42,7 +43,6 @@ import { MaterialElevationDirective } from '../directives/material-elevation.dir
     MomentModule,
     InfiniteScrollModule,
     SharedRoutingModule,
-
   ],
   entryComponents: [ConfirmComponent],
   exports: [
@@ -65,7 +65,6 @@ import { MaterialElevationDirective } from '../directives/material-elevation.dir
     MomentModule,
     InfiniteScrollModule,
     SharedRoutingModule,
-
   ],
 })
 export class SharedModule {}

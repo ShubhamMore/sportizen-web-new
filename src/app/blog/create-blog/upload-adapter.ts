@@ -1,6 +1,9 @@
+import { CompressImageService } from './../../services/shared-services/compress-image.service';
+import { take } from 'rxjs/operators';
 export class UploadAdapter {
   private loader: any;
-  constructor(loader: any) {
+
+  constructor(loader: any, public compressImageService: CompressImageService) {
     this.loader = loader;
   }
 
@@ -8,12 +11,22 @@ export class UploadAdapter {
     return this.loader.file.then(
       (file: any) =>
         new Promise((resolve, reject) => {
-          const myReader = new FileReader();
-          myReader.onloadend = (e: any) => {
-            resolve({ default: myReader.result });
-          };
+          console.log(file);
 
-          myReader.readAsDataURL(file);
+          this.compressImageService
+            .compress(file)
+            .pipe(take(1))
+            .subscribe((compressedImage: any) => {
+              console.log(compressedImage);
+              const myReader = new FileReader();
+
+              myReader.onloadend = (e: any) => {
+                // console.log(myReader.result);
+                resolve({ default: myReader.result });
+              };
+
+              myReader.readAsDataURL(compressedImage);
+            });
         })
     );
   }
