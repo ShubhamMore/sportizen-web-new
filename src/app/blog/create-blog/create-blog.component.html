@@ -5,15 +5,15 @@
         mat-raised-button
         color="primary"
         type="button"
-        class="semi-rounded-btn"
+        class="save-blog-btn"
         (click)="submitBlog()"
         [disabled]="submit"
       >
-        <span class=""> {{ blog ? 'Save' : 'Create' }}</span>
+        <span class="">Save</span>
       </button>
     </div>
 
-    <h2 class="header-title">Create Blog</h2>
+    <h2 class="header-title">{{ blog ? 'Edit' : 'Create' }} Blog</h2>
 
     <div class="blog-header-image-container">
       <img
@@ -62,7 +62,7 @@
   <div class="blog-tags" *ngIf="tags.length > 0">
     <mat-chip-list>
       <mat-chip class="btn-tag" *ngFor="let tag of tags; let i = index">
-        SPORTIZEN {{ tag }}
+        {{ tag }}
         <mat-icon class="icon" matTooltip="Remove Tag" (click)="removeTag(i)"> close </mat-icon>
       </mat-chip>
     </mat-chip-list>
