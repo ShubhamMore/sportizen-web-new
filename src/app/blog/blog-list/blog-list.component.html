@@ -8,76 +8,69 @@
 
 <div class="blog-main-header">
   <div class="blog-main-header-text">
-    <h1 class="heading">OUR BLOGS</h1>
+    <h1 class="heading">{{ type === 'manage' ? 'MY' : 'OUR' }} BLOGS</h1>
     <div class="sub-heading">
       Sportizen makes sure your time is worth and you are reading one of finest blogs related
       sports.
     </div>
-    <button class="semi-rounded-btn" mat-raised-button color="primary">View Recent Blogs</button>
+    <!-- <button class="semi-rounded-btn" mat-raised-button color="primary">View Recent Blogs</button> -->
   </div>
 </div>
 
-<div class="blogs-container" *ngIf="!loading">
-  <ng-container *ngIf="blogsList.length > 0; else noBlogs">
-    <mat-card class="blog" *ngFor="let blog of blogsList; let i = index">
-      <mat-card-header class="blog-header">
-        <img
-          class="blog-header-image"
-          mat-card-avatar
-          [src]="blog.createdUserImage"
-          [alt]="blog.createdUser"
-        />
+<div class="blogs-container" *ngIf="loading || blogsList.length > 0; else noBlogs">
+  <mat-card class="blog" *ngFor="let blog of blogsList; let i = index">
+    <mat-card-header class="blog-header">
+      <img
+        class="blog-header-image"
+        mat-card-avatar
+        [src]="blog.createdUserImage"
+        [alt]="blog.createdUser"
+      />
 
-        <mat-card-title class="blog-header-title">{{
-          blog.createdUser | capitalizeEachWord
-        }}</mat-card-title>
+      <mat-card-title class="blog-header-title">{{
+        blog.createdUser | capitalizeEachWord
+      }}</mat-card-title>
 
-        <mat-card-subtitle class="blog-header-sub-title">
-          <i class="fa fa-calendar icon-blue mr-2" aria-hidden="true"> </i>
-          {{ blog.createdAt | amDateFormat: 'LL' }}
-        </mat-card-subtitle>
-      </mat-card-header>
+      <mat-card-subtitle class="blog-header-sub-title">
+        <i class="fa fa-calendar icon-blue mr-2" aria-hidden="true"> </i>
+        {{ blog.createdAt | amDateFormat: 'LL' }}
+      </mat-card-subtitle>
+    </mat-card-header>
 
-      <mat-card-content>
-        <ng-container *ngIf="blog.secureUrl; else noBlogImage">
-          <div class="blog-image-container">
-            <img class="blog-image" [src]="blog.secureUrl" [alt]="blog.title" loading="lazy" />
-          </div>
-        </ng-container>
+    <mat-card-content>
+      <ng-container *ngIf="blog.secureUrl; else noBlogImage">
+        <div class="blog-image-container">
+          <img class="blog-image" [src]="blog.secureUrl" [alt]="blog.title" loading="lazy" />
+        </div>
+      </ng-container>
 
-        <ng-template #noBlogImage>
-          <div class="no-blog-image">
-            <div class="tags">
-              {{ getTags(blog.tags) }}
-            </div>
-          </div>
-        </ng-template>
-
-        <div class="blog-details-container">
-          <h2 class="blog-title">{{ blog.title }}</h2>
-
-          <div class="blog-subtitle">
-            {{ blog.subtitle }}
+      <ng-template #noBlogImage>
+        <div class="no-blog-image">
+          <div class="tags">
+            {{ getTags(blog.tags) }}
           </div>
         </div>
+      </ng-template>
 
-        <div class="view-button-container">
-          <button
-            mat-raised-button
-            color="primary"
-            class="view-button"
-            (click)="openBlog(blog._id)"
-          >
-            View Blog
-          </button>
+      <div class="blog-details-container">
+        <h2 class="blog-title">{{ blog.title }}</h2>
+
+        <div class="blog-subtitle">
+          {{ blog.subtitle }}
         </div>
-      </mat-card-content>
-    </mat-card>
-  </ng-container>
+      </div>
+
+      <div class="view-button-container">
+        <button mat-raised-button color="primary" class="view-button" (click)="openBlog(blog._id)">
+          View Blog
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>
 
 <div class="loading-container">
-  <mat-spinner diameter="25" *ngIf="loading"></mat-spinner>
+  <mat-spinner diameter="25" *ngIf="loadingBlogs"></mat-spinner>
 </div>
 
 <ng-template #noBlogs>

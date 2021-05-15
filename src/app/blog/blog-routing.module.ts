@@ -22,6 +22,13 @@ const routes: Routes = [
         canLoad: [UserAuthGuard],
       },
       {
+        path: 'manage',
+        loadChildren: () => import('./blog-list/blog-list.module').then((m) => m.BlogListModule),
+        data: { type: 'manage' },
+        canActivate: [UserAuthGuard],
+        canLoad: [UserAuthGuard],
+      },
+      {
         path: 'edit/:id',
         loadChildren: () =>
           import('./create-blog/create-blog.module').then((m) => m.CreateBlogModule),

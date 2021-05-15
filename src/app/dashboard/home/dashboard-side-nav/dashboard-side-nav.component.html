@@ -113,6 +113,48 @@
       </mat-list>
     </mat-expansion-panel>
 
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <span class="option-header-title"> Blogs</span>
+      </mat-expansion-panel-header>
+
+      <mat-list>
+        <mat-list-item class="clickable" matRipple (click)="navigateTo('/dashboard/blog')">
+          <h3 matLine>
+            <i class="fa fa-link list-icon icon-grey"></i>
+
+            <span class=""> {{ 'msg_blog' | translate }}</span>
+          </h3>
+        </mat-list-item>
+
+        <mat-divider></mat-divider>
+
+        <mat-list-item class="clickable" matRipple (click)="navigateTo('/dashboard/blog/new')">
+          <h3 matLine>
+            <i class="fa fa-plus-circle list-icon icon-yellow"></i>
+
+            <span class=""> {{ 'msg_create' | translate }}</span>
+
+            <span class=""> {{ 'msg_blog' | translate }}</span>
+          </h3>
+        </mat-list-item>
+
+        <mat-divider></mat-divider>
+
+        <mat-list-item class="clickable" matRipple (click)="navigateTo('/dashboard/blog/manage')">
+          <h3 matLine>
+            <i class="fa fa-pencil list-icon icon-red"></i>
+
+            <span class=""> {{ 'msg_manage' | translate }}</span>
+
+            <span class=""> {{ 'msg_blog' | translate }}</span>
+          </h3>
+        </mat-list-item>
+
+        <mat-divider></mat-divider>
+      </mat-list>
+    </mat-expansion-panel>
+
     <!-- <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header >
         <span class="option-header-title"> Connect to Sports Professionals</span>

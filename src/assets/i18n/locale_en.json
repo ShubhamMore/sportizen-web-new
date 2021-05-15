@@ -1,5 +1,6 @@
 {
   "msg_event": "Event",
+  "msg_blog": "Blog",
   "msg_create": "Create",
   "msg_join": "Joined",
   "msg_view": "View",

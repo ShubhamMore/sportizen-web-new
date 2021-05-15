@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserProfileService } from '../../services/user-profile.service';
 import { Title } from '@angular/platform-browser';
 import { first } from 'rxjs/operators';
+import { environment } from './../../../environments/environment';
 
 @Component({
   selector: 'app-blog-list',
@@ -15,6 +16,10 @@ export class BlogListComponent implements OnInit {
   loading: boolean;
   blogsList: BlogModel[];
   sportizenId: string;
+  type: string;
+
+  loadingBlogs: boolean;
+  noMoreBlogs: boolean;
 
   constructor(
     private blogsService: BlogsService,
@@ -23,6 +28,20 @@ export class BlogListComponent implements OnInit {
     private titleService: Title,
     private route: ActivatedRoute
   ) {}
+
+  scroll = (event: any): void => {
+    if ($('.loading-container')) {
+      const moreFeed = $('.loading-container').offset().top;
+      const threshold = window.innerHeight + 250;
+
+      if (moreFeed <= threshold) {
+        const skip = this.blogsList.length;
+        if (!this.loadingBlogs && !this.noMoreBlogs) {
+          this.getBlogs(environment.limit, skip);
+        }
+      }
+    }
+  };
 
   ngOnInit(): void {
     this.loading = true;
@@ -36,7 +55,13 @@ export class BlogListComponent implements OnInit {
         this.sportizenId = sportizenId;
       });
 
-    this.getBlogs(null, null);
+    this.route.data.subscribe((data: any) => {
+      this.route.data.subscribe((data: any) => {
+        this.type = data.type;
+
+        this.getBlogs(environment.limit, null);
+      });
+    });
   }
 
   getTags(tags: string[]) {
@@ -44,13 +69,27 @@ export class BlogListComponent implements OnInit {
   }
 
   getBlogs(limit: number, skip: number) {
-    this.blogsService.getBlogs(limit, skip).subscribe(
+    let blogSubscription: any;
+
+    if (this.type === 'manage') {
+      blogSubscription = this.blogsService.getMyBlogs(limit, skip);
+    } else {
+      blogSubscription = this.blogsService.getBlogs(limit, skip);
+    }
+
+    blogSubscription.subscribe(
       (blogs: BlogModel[]) => {
-        this.blogsList = blogs;
+        if (blogs.length === 0) {
+          this.noMoreBlogs = true;
+        } else {
+          this.blogsList.push(...blogs);
+        }
         this.loading = false;
+        this.loadingBlogs = false;
       },
       (error: any) => {
         this.loading = false;
+        this.loadingBlogs = false;
       }
     );
   }
