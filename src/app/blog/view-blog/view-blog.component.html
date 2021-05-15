@@ -1,23 +1,6 @@
 <div class="blog-container" *ngIf="!loading">
-  <div class="blog-image-container">
-    <!-- <ng-container *ngIf="blog.secureUrl; else noImage"> -->
-    <div class="blog-image">
-      <img class="image" [src]="blog.secureUrl" [alt]="blog.title" loading="lazy" />
-    </div>
-    <!-- </ng-container> -->
-
-    <!-- <div class="blog-info">
-      <div class="profile-image-container">
-        <img class="profile-image" [src]="blog.createdUserImage" [alt]="blog.createdUser" />
-        
-        <div class="created-user">{{ blog.createdUser | capitalizeEachWord }}</div>
-        
-        <div class="created-at">
-          <i class="fa fa-calendar icon-blue" aria-hidden="true"></i>
-          {{ blog.createdAt | amCalendar }}
-        </div>
-      </div>
-    </div> -->
+  <div class="blog-image-container" *ngIf="blog.secureUrl">
+    <img class="blog-image" [src]="blog.secureUrl" [alt]="blog.title" loading="lazy" />
   </div>
 
   <div class="blog-content">
@@ -32,7 +15,7 @@
 
       <div class="created-at">
         <i class="fa fa-calendar icon-blue" aria-hidden="true"></i>
-        &nbsp;{{ blog.createdAt | amCalendar }}
+        &nbsp;{{ blog.createdAt | amDateFormat: 'LL' }}
       </div>
     </div>
 
@@ -51,15 +34,13 @@
 
     <hr />
 
-    <!-- <h2 class="blog-title">{{ blog.title }}</h2>
+    <div class="ck-content blog-description" [innerHtml]="blog.description | safeHtml"></div>
 
-    <div class="blog-subtitle">{{ blog.subtitle }}</div> -->
-
-    <div class="blog-description ck-content" [innerHtml]="blog.description | safeHtml"></div>
+    <hr />
 
     <div class="blog-tags">
       <mat-chip-list>
-        <mat-chip *ngFor="let tag of blog.tags">
+        <mat-chip class="tag" *ngFor="let tag of blog.tags">
           {{ tag | uppercase }}
         </mat-chip>
       </mat-chip-list>

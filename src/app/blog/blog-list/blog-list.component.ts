@@ -39,6 +39,10 @@ export class BlogListComponent implements OnInit {
     this.getBlogs(null, null);
   }
 
+  getTags(tags: string[]) {
+    return tags.join(' | ');
+  }
+
   getBlogs(limit: number, skip: number) {
     this.blogsService.getBlogs(limit, skip).subscribe(
       (blogs: BlogModel[]) => {
