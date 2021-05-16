@@ -7,8 +7,8 @@
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <div class="row connection-container" *ngIf="followers.length > 0; else noFollowers">
-      <div class="col-12">
+    <div class="row" *ngIf="followers.length > 0; else noFollowers">
+      <div class="col-12 connection-container">
         <div class="connection-card" *ngFor="let follower of followers; let i = index">
           <img
             class="connection-photo"
@@ -71,8 +71,8 @@
   </mat-card-header>
 
   <mat-card-content
-    ><div class="row connection-container" *ngIf="followings.length > 0; else noFollowings">
-      <div class="col-12">
+    ><div class="row" *ngIf="followings.length > 0; else noFollowings">
+      <div class="col-12 connection-container">
         <div class="connection-card" *ngFor="let following of followings; let i = index">
           <img
             class="connection-photo"

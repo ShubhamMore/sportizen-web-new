@@ -35,10 +35,11 @@ export class DashboardSideNavComponent implements OnInit, OnDestroy {
     this.loading = true;
 
     this.screenWidth = window.innerWidth;
-    window.onresize = () => {
+
+    $(window).on('resize', () => {
       // set screenWidth on screen size change
       this.screenWidth = window.innerWidth;
-    };
+    });
 
     this.responsiveWidth = environment.responsiveScreenWidth;
 
@@ -52,23 +53,12 @@ export class DashboardSideNavComponent implements OnInit, OnDestroy {
     this.authService.logout();
   }
 
-  joinedEvents() {
-    this.router.navigate(['/dashboard/event'], {
-      relativeTo: this.route,
-      queryParams: { type: 'joined' },
-    });
-  }
-
-  manageEvents() {
-    this.router.navigate(['/dashboard/event'], {
-      relativeTo: this.route,
-      queryParams: { type: 'manage' },
-    });
-  }
-
   navigateTo(path: any) {
     this.router.navigate([path], { relativeTo: this.route });
+    this.closeSideNav();
+  }
 
+  closeSideNav() {
     if (this.screenWidth <= this.responsiveWidth) {
       this.dashboardSideDrawerService.close();
     }

@@ -4,6 +4,10 @@ td {
   vertical-align: middle;
 }
 
+mat-card {
+  padding: 0;
+}
+
 .events-container {
   padding: 1rem;
 
@@ -28,7 +32,9 @@ td {
       .registered-user-card {
         display: block;
         width: 100%;
-        // margin: 1rem;
+        padding: 1rem;
+        white-space: nowrap;
+        overflow: hidden;
 
         .user-image {
           display: inline-block;
@@ -78,7 +84,7 @@ td {
         }
 
         .registered-user-card {
-          // margin: 0.875rem;
+          padding: 0.875rem;
 
           .user-image {
             width: 3.875rem;
@@ -114,7 +120,7 @@ td {
         }
 
         .registered-user-card {
-          // margin: 0.75rem;
+          padding: 0.75rem;
 
           .user-image {
             width: 3.75rem;
@@ -150,7 +156,7 @@ td {
         }
 
         .registered-user-card {
-          // margin: 0.625rem;
+          padding: 0.625rem;
 
           .user-image {
             width: 3.625rem;
@@ -186,7 +192,7 @@ td {
         }
 
         .registered-user-card {
-          // margin: 0.5rem;
+          padding: 0.5rem;
 
           .user-image {
             width: 3.5rem;

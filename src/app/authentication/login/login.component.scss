@@ -3,7 +3,7 @@ $google-blue: #4285f4;
 $button-active-blue: #1669f2;
 
 .auth-action-container {
-  margin-top: 1rem;
+  margin-top: 1rem !important;
 
   .remember-me {
     float: left;
@@ -15,7 +15,7 @@ $button-active-blue: #1669f2;
 }
 
 .auth-btn-container {
-  padding-top: 1rem;
+  padding-top: 1rem !important;
   display: block;
 
   .login-btn-container {
@@ -30,7 +30,7 @@ $button-active-blue: #1669f2;
 }
 
 .or-container {
-  padding: 1rem;
+  padding: 1rem !important;
 
   .bold-text {
     font-size: 1.2rem;
@@ -48,7 +48,7 @@ $button-active-blue: #1669f2;
     height: 2.625rem;
     background-color: $google-blue;
     border-radius: 0.125rem;
-    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0.125rem 0.25rem 0 rgba(0, 0, 0, 0.25);
     cursor: pointer;
 
     .google-icon-wrapper {
@@ -76,7 +76,7 @@ $button-active-blue: #1669f2;
     }
 
     &:hover {
-      box-shadow: 0 0 6px $google-blue;
+      box-shadow: 0 0 0.375rem $google-blue;
     }
 
     &:active {

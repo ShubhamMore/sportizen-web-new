@@ -82,7 +82,7 @@ $primary-color: #05bae3;
 }
 
 .events-container {
-  padding: 1rem;
+  padding: 1rem !important;
 
   .event-card {
     margin: 1rem auto;
@@ -104,7 +104,7 @@ $primary-color: #05bae3;
   }
 
   .events-container {
-    padding: 0.75rem;
+    padding: 0.75rem !important;
 
     .event-card {
       margin: 0.75rem auto;
@@ -125,7 +125,7 @@ $primary-color: #05bae3;
   }
 
   .events-container {
-    padding: 0.75rem;
+    padding: 0.75rem !important;
 
     .event-card {
       margin: 0.75rem auto;
@@ -146,7 +146,7 @@ $primary-color: #05bae3;
   }
 
   .events-container {
-    padding: 0.625rem;
+    padding: 0.625rem !important;
 
     .event-card {
       margin: 0.625rem auto;
@@ -167,7 +167,7 @@ $primary-color: #05bae3;
   }
 
   .events-container {
-    padding: 0.5rem;
+    padding: 0.5rem !important;
 
     .event-card {
       margin: 0.5rem auto;

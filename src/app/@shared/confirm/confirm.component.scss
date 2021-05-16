@@ -2,7 +2,7 @@ $primary-color: #05bae3;
 $secondary-color: #075492;
 
 ::ng-deep .mat-dialog-container {
-  padding: 0px !important;
+  padding: 0 !important;
   overflow-x: hidden;
 }
 
@@ -33,7 +33,7 @@ $secondary-color: #075492;
     height: 2rem;
     padding: 0 1rem;
     color: #05bae3;
-    border: 1px solid #05bae3;
+    border: 0.0625rem solid #05bae3;
   }
 }
 

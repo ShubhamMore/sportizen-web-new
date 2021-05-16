@@ -1,13 +1,12 @@
 .row {
   width: 100%;
-  margin: 0 auto;
-  padding: 0 4rem;
+  padding: 0 4rem !important;
   font-family: 'Old Standard TT', 'Arial', sans-serif;
   font-weight: 300;
   text-rendering: optimizeLegibility;
 
   .col-12 {
-    padding: 0;
+    padding: 0 !important;
   }
 }
 
@@ -150,7 +149,7 @@
 /* Small tablets to big tablets 768px - 1080px */
 @media only screen and (max-width: 936px) {
   .row {
-    padding: 0 2.5rem;
+    padding: 0 2.5rem !important;
   }
 
   .content-header {
@@ -200,7 +199,7 @@
 /* Small tablets to big tablets 768px - 1080px */
 @media only screen and (max-width: 842px) {
   .row {
-    padding: 0 1.5rem;
+    padding: 0 1.5rem !important;
   }
 
   .content-header {
@@ -214,10 +213,10 @@
   }
 }
 
-/* Small Phones to small tablets 481px - 767px */
+/* Small Phones to small tablets 480.0625rem - 767px */
 @media only screen and (max-width: 767px) {
   .row {
-    padding: 0 2.5rem;
+    padding: 0 2.5rem !important;
   }
 
   .content-header {
@@ -273,7 +272,7 @@
 /* Small Phones 0px - 480px */
 @media only screen and (max-width: 600px) {
   .row {
-    padding: 0 1.75rem;
+    padding: 0 1.75rem !important;
   }
 
   .content-header {
@@ -320,7 +319,7 @@
 /* Small Phones 0px - 480px */
 @media only screen and (max-width: 400px) {
   .row {
-    padding: 0 1rem;
+    padding: 0 1rem !important;
   }
 
   .content-header {
@@ -341,13 +340,13 @@
           a:link,
           a:visited {
             padding: 0.125rem 0 0.5rem 0;
-            border-bottom: 1px solid transparent;
+            border-bottom: 0.0625rem solid transparent;
             font-size: 72%;
           }
 
           a:hover,
           a:active {
-            border-bottom: 1px solid #075492;
+            border-bottom: 0.0625rem solid #075492;
           }
         }
       }

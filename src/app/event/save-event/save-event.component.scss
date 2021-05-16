@@ -17,7 +17,11 @@
 }
 
 .event-container {
-  padding: 2rem 5rem;
+  padding: 2rem 5rem !important;
+}
+
+.event-gallery-container {
+  padding: 0rem !important;
 }
 
 .mat-card,
@@ -63,7 +67,7 @@
 
   .image-upload {
     border-radius: 0.325rem;
-    border: 1px solid #075492;
+    border: 0.0625rem solid #075492;
     border-style: dashed;
     display: block;
     padding: 1.5rem;
@@ -149,7 +153,7 @@
 
 @media only screen and(max-width:900px) {
   .event-container {
-    padding: 0.875rem 1.75rem;
+    padding: 0.875rem 1.75rem !important;
   }
 
   .mat-card,
@@ -204,7 +208,7 @@
 
 @media only screen and(max-width:767px) {
   .event-container {
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem 1.5rem !important;
   }
 
   .mat-card,
@@ -259,7 +263,7 @@
 
 @media only screen and(max-width:600px) {
   .event-container {
-    padding: 0.625rem 1rem;
+    padding: 0.625rem 1rem !important;
   }
 
   .mat-card,
@@ -314,7 +318,7 @@
 
 @media only screen and(max-width:400px) {
   .event-container {
-    padding: 0.5rem 0.5rem;
+    padding: 0.5rem 0.5rem !important;
   }
 
   .mat-card,

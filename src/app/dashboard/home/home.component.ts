@@ -3,9 +3,6 @@ import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '
 import { MatDrawer } from '@angular/material/sidenav';
 import { DashboardSideDrawerService } from './../../services/dashboard-side-drawer.service';
 
-import { UserProfileService } from 'src/app/services/user-profile.service';
-import { ActivatedRoute, Router } from '@angular/router';
-
 import * as $ from 'jquery';
 import { environment } from './../../../environments/environment';
 
@@ -31,20 +28,18 @@ export class HomeComponent implements OnInit, AfterViewInit {
   constructor(
     private homeService: HomeService,
     private dashboardSideDrawerService: DashboardSideDrawerService,
-    private userProfileService: UserProfileService,
-    private router: Router,
-    private route: ActivatedRoute,
     private changeDetectorRef: ChangeDetectorRef
-  ) {
-    this.screenWidth = window.innerWidth;
-    window.onresize = () => {
-      // set screenWidth on screen size change
-      this.screenWidth = window.innerWidth;
-    };
-  }
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
+
+    this.screenWidth = window.innerWidth;
+
+    $(window).on('resize', () => {
+      // set screenWidth on screen size change
+      this.screenWidth = window.innerWidth;
+    });
 
     this.responsiveWidth = environment.responsiveScreenWidth;
 

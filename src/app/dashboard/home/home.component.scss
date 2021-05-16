@@ -33,9 +33,9 @@ $secondary-color: #075492;
     z-index: 1;
     background-color: #fff;
     visibility: visible;
-    -webkit-box-shadow: 0 0.0625px 4px #8e8e8e;
-    -moz-box-shadow: 0 0.0625px 4px #8e8e8e;
-    box-shadow: 0 0.0625px 4px #8e8e8e;
+    -webkit-box-shadow: 0 0.0625rem 0.25rem #8e8e8e;
+    -moz-box-shadow: 0 0.0625rem 0.25rem #8e8e8e;
+    box-shadow: 0 0.0625rem 0.25rem #8e8e8e;
 
     .dashboard-links {
       position: absolute;

@@ -10,16 +10,14 @@
 
   <mat-card-content>
     <div class="row" *ngIf="gallery.length > 0; else noGallery">
-      <div class="col-12">
-        <div class="photos-container">
-          <div class="photo-box" *ngFor="let galleryImage of gallery; let i = index">
-            <img
-              class="photo"
-              [src]="galleryImage.secureUrl"
-              loading="lazy"
-              (click)="openImageModel(galleryImage.secureUrl)"
-            />
-          </div>
+      <div class="col-12 gallery-container">
+        <div class="photo-box" *ngFor="let galleryImage of gallery; let i = index">
+          <img
+            class="photo"
+            [src]="galleryImage.secureUrl"
+            loading="lazy"
+            (click)="openImageModel(galleryImage.secureUrl)"
+          />
         </div>
       </div>
     </div>

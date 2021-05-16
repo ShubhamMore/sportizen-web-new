@@ -26,7 +26,7 @@ textarea {
   background-image: linear-gradient(to bottom, #05bae3, #05bae3),
     linear-gradient(to bottom, #aaa, #aaa);
   /* sizes for the 2 images (default state) */
-  background-size: 0 2px, 100% 1px;
+  background-size: 0 0.125rem, 100% 0.0625rem;
   /* positions for the 2 images. Change both "50%" to "0%" or "100%" and tri again */
   background-position: 50% 100%, 50% 100%;
   /* animation solely on background-size */
@@ -51,7 +51,7 @@ textarea {
 input:focus,
 textarea:focus {
   /* sizes for the 2 images (focus state) */
-  background-size: 100% 2px, 100% 1px;
+  background-size: 100% 0.125rem, 100% 0.0625rem;
   outline: none;
 }
 
@@ -73,7 +73,7 @@ textarea:focus {
 .submit-btn:visited {
   background-color: transparent;
   text-transform: uppercase;
-  border: 1px solid #fff;
+  border: 0.0625rem solid #fff;
   font-weight: 300;
   border-radius: 100px;
   color: #fff;
@@ -82,13 +82,13 @@ textarea:focus {
 
 .submit-btn:hover {
   /* transform: scale(1.1); */
-  transform: translateY(-3px);
+  transform: translateY(-0.1875rem);
   background-color: #075492;
   box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
 }
 
 .submit-btn:active {
-  transform: translateY(-1px);
+  transform: translateY(-0.0625rem);
   box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
 }
 

@@ -1,5 +1,10 @@
 $primary-color: #05bae3;
 
+.accept-tnc {
+  white-space: normal !important;
+  line-height: 0 !important;
+}
+
 .events-container {
   padding: 1rem;
 
@@ -19,6 +24,7 @@ $primary-color: #05bae3;
       .registration-heading {
         font-weight: bold;
         font-size: 1.5rem;
+        line-height: 2.5rem;
 
         .registration {
           padding-bottom: 0.125rem;

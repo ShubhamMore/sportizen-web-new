@@ -16,7 +16,7 @@ ul {
   color: #555;
   font-family: 'Old Standard TT', 'Arial', sans-serif;
   font-weight: 300;
-  font-size: 20px;
+  font-size: 1.25rem;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
   scroll-behavior: smooth;
@@ -25,13 +25,13 @@ ul {
 /* REUSABLE COMPONENTS */
 
 .row {
-  max-width: 1140px;
+  max-width: 71.25rem;
   margin: 0 auto;
   padding: 0;
 }
 
 section {
-  padding: 80px 0 45px 0;
+  padding: 5rem 0 3rem 0;
 }
 
 .box {
@@ -64,14 +64,14 @@ h4 {
   margin: 0;
   color: #fff;
   font-weight: 300;
-  word-spacing: 3px;
-  text-shadow: 2px 2px #ccc;
+  word-spacing: 0.25rem;
+  text-shadow: 0.125rem 0.125rem #ccc;
 }
 
 h1,
 h2,
 h3 {
-  letter-spacing: 1px;
+  letter-spacing: 0.0625rem;
 }
 
 h1,
@@ -88,28 +88,28 @@ h2 {
   font-size: 180%;
   text-align: center;
   color: #000;
-  word-spacing: 2px;
-  margin-bottom: 30px;
+  word-spacing: 0.125rem;
+  margin-bottom: 2rem;
 }
 
 h2:after {
   display: block;
-  height: 2px;
+  height: 0.125rem;
   background-color: #075492;
   content: ' ';
-  width: 100px;
+  width: 6.25rem;
   margin: 0 auto;
-  margin-top: 20px;
+  margin-top: 1.25rem;
 }
 
 h3 {
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
   font-size: 120%;
 }
 
 h4 {
   font-size: 110%;
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
   color: #12395d;
   text-align: center;
 }
@@ -119,7 +119,7 @@ h4 {
 .btn-default:link,
 .btn-default:visited {
   display: inline-block;
-  padding: 10px 30px;
+  padding: 0.5rem 2rem;
   text-decoration: none;
 }
 
@@ -167,14 +167,14 @@ h4 {
 .contact,
 .service,
 .team-member {
-  /* padding-bottom: 35px; */
+  padding: 0 0.5rem;
 }
 
 /* FOOTER */
 
 footer {
   background-color: #333;
-  padding: 50px 0;
+  padding: 3rem 0rem;
 }
 
 /* POINTER */
@@ -194,20 +194,20 @@ footer {
 /*--SCROLL BAR--*/
 /* width */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 0.25rem;
+  height: 0.25rem;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
   box-shadow: transparent;
-  border-radius: 10px;
+  border-radius: 0.5rem;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #c1c1c1;
-  border-radius: 10px;
+  border-radius: 0.5rem;
 }
 
 /* Handle on hover */
@@ -234,11 +234,11 @@ footer {
 /* Small tablets to big tablets 768px - 1023px */
 @media only screen and (max-width: 1023px) {
   .home-page {
-    font-size: 18px;
+    font-size: 1.125rem;
   }
 
   section {
-    padding: 60px 0;
+    padding: 4rem 0;
   }
 
   h3 {
@@ -246,14 +246,14 @@ footer {
   }
 }
 
-/* Small Phones to small tablets 481px - 767px */
+/* Small Phones to small tablets 480.0625rem - 767px */
 @media only screen and (max-width: 767px) {
   .home-page {
-    font-size: 16px;
+    font-size: 1rem;
   }
 
   section {
-    padding: 60px 0 15px 0;
+    padding: 4rem 0 1rem 0;
   }
 
   h1 {
@@ -268,7 +268,7 @@ footer {
   .contact,
   .service,
   .team-member {
-    padding-bottom: 25px;
+    padding-bottom: 1.5rem;
   }
 }
 

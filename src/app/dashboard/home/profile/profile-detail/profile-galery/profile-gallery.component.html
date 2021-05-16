@@ -1,20 +1,18 @@
 <div class="profile-image-container">
-  <div class="row" *ngIf="!loading; else loadingData">
-    <div class="col-12">
-      <div class="gallery-container" *ngIf="gallery.length > 0; else noGallery">
-        <div class="photos-container">
-          <div class="photo-box" *ngFor="let galleryImage of gallery; let i = index">
-            <img
-              class="photo"
-              [src]="galleryImage.secureUrl"
-              loading="lazy"
-              (click)="openImageModel(galleryImage.secureUrl)"
-            />
-          </div>
+  <ng-container *ngIf="!loading; else loadingData">
+    <div class="row" *ngIf="gallery.length > 0; else noGallery">
+      <div class="col-12 gallery-container">
+        <div class="photo-box" *ngFor="let galleryImage of gallery; let i = index">
+          <img
+            class="photo"
+            [src]="galleryImage.secureUrl"
+            loading="lazy"
+            (click)="openImageModel(galleryImage.secureUrl)"
+          />
         </div>
       </div>
     </div>
-  </div>
+  </ng-container>
 </div>
 
 <ng-template #loadingData>

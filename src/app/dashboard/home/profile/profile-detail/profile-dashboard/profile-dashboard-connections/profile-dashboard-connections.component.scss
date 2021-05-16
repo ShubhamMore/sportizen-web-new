@@ -1,12 +1,16 @@
 .connected {
   background-color: white;
   color: #05bae3;
-  border: 1px solid #05bae3;
+  border: 0.0625rem solid #05bae3;
 }
 
 .not-connected {
   background-color: #05bae3;
   color: white;
+}
+
+.connection-container {
+  padding: 0 !important;
 }
 
 .connection-card {

@@ -16,44 +16,42 @@
               <br />
 
               <div class="row">
-                <div class="col-md-6 col-sm-12" *ngFor="let player of players; let i = index">
-                  <div class="registered-user-card">
-                    <mat-card>
-                      <mat-card-content>
-                        <img
-                          class="user-image"
-                          [src]="player.userImageURL"
-                          loading="lazy"
-                          onerror="this.src='./../../../assets/images/user.png'"
-                        />
+                <div class="col-md-6 col-12" *ngFor="let player of players; let i = index">
+                  <mat-card class="registered-user-card">
+                    <mat-card-content>
+                      <img
+                        class="user-image"
+                        [src]="player.userImageURL"
+                        loading="lazy"
+                        onerror="this.src='./../../../assets/images/user.png'"
+                      />
 
-                        <div class="user-details">
-                          <div class="user-name">
-                            {{ player.name | capitalizeEachWord }}
-                          </div>
-
-                          <div class="user-email">
-                            <em>{{ player.email }}</em>
-                          </div>
-
-                          <div class="user-contact">
-                            {{ player.contact }}
-                          </div>
+                      <div class="user-details">
+                        <div class="user-name">
+                          {{ player.name | capitalizeEachWord }}
                         </div>
 
-                        <div class="text-right" *ngIf="event.registrationType === 'team'">
-                          <button
-                            type="button"
-                            mat-button
-                            color="primary"
-                            (click)="viewTeamMembers(player.teamMembers)"
-                          >
-                            Team Members
-                          </button>
+                        <div class="user-email">
+                          <em>{{ player.email }}</em>
                         </div>
-                      </mat-card-content>
-                    </mat-card>
-                  </div>
+
+                        <div class="user-contact">
+                          {{ player.contact }}
+                        </div>
+                      </div>
+
+                      <div class="text-right" *ngIf="event.registrationType === 'team'">
+                        <button
+                          type="button"
+                          mat-button
+                          color="primary"
+                          (click)="viewTeamMembers(player.teamMembers)"
+                        >
+                          Team Members
+                        </button>
+                      </div>
+                    </mat-card-content>
+                  </mat-card>
                 </div>
               </div>
             </div>
