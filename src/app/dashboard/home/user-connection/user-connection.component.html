@@ -1,0 +1,36 @@
+<div class="user-connection">
+  <img
+    class="user-connection-photo"
+    [src]="user.userImageURL"
+    loading="lazy"
+    onerror="this.src='./../../../../../../assets/images/user.png'"
+  />
+
+  <div class="user-connection-details-container">
+    <div class="user-connection-details">
+      <div class="user-connection-info-container">
+        <div class="user-connection-name pointer" (click)="viewProfile(user.sportizenId)">
+          {{ user.name | capitalizeEachWord }}
+        </div>
+
+        <div class="mutual-user-connection">
+          <span *ngIf="!isLoggedInUser">
+            {{ user.mutuleConnections ? user.mutuleConnections : 0 }}
+            Mutual Sportizen
+          </span>
+        </div>
+      </div>
+
+      <div class="user-connection-btn-container">
+        <div
+          class="user-connection-btn"
+          [ngClass]="isConnected ? 'connected' : 'not-connected'"
+          *ngIf="!isLoggedInUser"
+          (click)="clickConnectionBtn()"
+        >
+          {{ connectionBtnText }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -43,15 +43,6 @@ export class AllUsersComponent implements OnInit {
       });
   }
 
-  viewProfile(id: string) {
-    if (id === this.sportizenId) {
-      this.router.navigate(['/dashboard', 'profile'], {});
-    } else {
-      this.connectionService.searchedSportizenId = id;
-      this.router.navigate(['/dashboard', 'profile', id], {});
-    }
-  }
-
   followUnfollow(name: string, sportizenId: string, connectionStatus: string, i: number) {
     if (connectionStatus === 'following') {
       this.connectionService.unfollowConnection(sportizenId).subscribe(

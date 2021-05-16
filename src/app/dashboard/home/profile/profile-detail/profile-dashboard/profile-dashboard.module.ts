@@ -8,6 +8,7 @@ import { SharedModule } from './../../../../../@shared/shared.module';
 import { DashboardFeedModule } from './../../../content/dashboard-feed/dashboard-feed.module';
 import { ProfileDashboardRoutingModule } from './profile-dashboard-routing.module';
 import { ImageModule } from './../../../../../image/image.module';
+import { UserConnectionModule } from './../../../user-connection/user-connection.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,12 @@ import { ImageModule } from './../../../../../image/image.module';
     ProfileDashboardGalleryComponent,
     ProfileDashboardConnectionsComponent,
   ],
-  imports: [SharedModule, DashboardFeedModule, ImageModule, ProfileDashboardRoutingModule],
+  imports: [
+    SharedModule,
+    DashboardFeedModule,
+    UserConnectionModule,
+    ImageModule,
+    ProfileDashboardRoutingModule,
+  ],
 })
 export class ProfileDashboardModule {}

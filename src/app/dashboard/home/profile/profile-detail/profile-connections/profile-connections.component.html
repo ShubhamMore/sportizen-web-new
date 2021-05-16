@@ -8,54 +8,25 @@
       <div class="connection-container" *ngFor="let connection of connections; let i = index">
         <mat-card class="connection-card">
           <mat-card-content>
-            <img
-              class="connection-photo"
-              [src]="connection.userImageURL"
-              loading="lazy"
-              onerror="this.src='./../../../../../../assets/images/user.png'"
-            />
-            <div class="connection-details-container">
-              <div class="connection-details">
-                <div class="connection-info-container">
-                  <div
-                    class="connection-name pointer"
-                    (click)="viewProfile(connection.sportizenId)"
-                  >
-                    {{ connection.name | capitalizeEachWord }}
-                  </div>
-                  <div class="mutual-connection">
-                    <span *ngIf="connection.sportizenId !== sportizenId">
-                      {{ connection.mutuleConnections ? connection.mutuleConnections : 0 }} Mutual
-                      Sportizen
-                    </span>
-                  </div>
-                </div>
-                <div class="connection-btn-container">
-                  <div
-                    class="connection-btn"
-                    *ngIf="connection.sportizenId !== sportizenId"
-                    [ngClass]="
-                      connection.connectionStatus === 'following' ? 'connected' : 'not-connected'
-                    "
-                    (click)="
-                      connection.connectionStatus === 'following'
-                        ? unfollowUser(connection.name, connection.sportizenId, i)
-                        : !userId && isFollowers
-                        ? removeUser(connection.name, connection.sportizenId, i)
-                        : followUser(connection.name, connection.sportizenId, i)
-                    "
-                  >
-                    {{
-                      connection.connectionStatus === 'following'
-                        ? 'Unfollow'
-                        : !userId && isFollowers
-                        ? 'Remove'
-                        : 'Follow'
-                    }}
-                  </div>
-                </div>
-              </div>
-            </div>
+            <app-user-connection
+              [user]="connection"
+              [isLoggedInUser]="connection.sportizenId === sportizenId"
+              [isConnected]="connection.connectionStatus === 'following'"
+              [connectionBtnText]="
+                connection.connectionStatus === 'following'
+                  ? 'Unfollow'
+                  : !userId && isFollowers
+                  ? 'Remove'
+                  : 'Follow'
+              "
+              (connectionAction)="
+                connection.connectionStatus === 'following'
+                  ? unfollowUser(connection.name, connection.sportizenId, i)
+                  : !userId && isFollowers
+                  ? removeUser(connection.name, connection.sportizenId, i)
+                  : followUser(connection.name, connection.sportizenId, i)
+              "
+            ></app-user-connection>
           </mat-card-content>
         </mat-card>
       </div>

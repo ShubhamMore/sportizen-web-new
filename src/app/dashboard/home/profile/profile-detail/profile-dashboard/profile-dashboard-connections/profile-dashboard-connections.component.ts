@@ -151,6 +151,7 @@ export class ProfileDashboardConnectionsComponent implements OnInit {
   }
 
   unfollowUser(name: string, sportizenId: string, i: number) {
+    console.log('clicked');
     this.connectionService.unfollowConnection(sportizenId).subscribe(
       (res: any) => {
         // this.userProfileService.setConnectionCount(true, false);
