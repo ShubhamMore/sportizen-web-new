@@ -126,14 +126,14 @@ export class CreateBlogComponent implements OnInit {
       },
     };
 
+    this.classicEditor = ClassicEditor;
+
     this.userProfileService
       .getUserSportizenId()
       .pipe(first())
       .subscribe((sportizenId: string) => {
         if (sportizenId) {
           this.sportizenId = sportizenId;
-
-          this.classicEditor = ClassicEditor;
 
           this.tags = [];
 

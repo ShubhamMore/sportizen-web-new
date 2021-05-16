@@ -40,10 +40,10 @@
 
     <div class="input-blog-tag">
       <mat-form-field class="full-width tag-input">
-        <mat-label for="title">Tag</mat-label>
+        <mat-label for="tag">Tag</mat-label>
 
         <input
-          class=""
+          class="tag"
           matInput
           type="text"
           name="tag"
@@ -113,6 +113,7 @@
         <br />
         <ckeditor
           matInput
+          class="description"
           tagName="textarea"
           [config]="ckeditorConfig"
           name="description"

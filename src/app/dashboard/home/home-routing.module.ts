@@ -37,6 +37,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('./search-user/search-user.module').then((m) => m.SearchUserModule),
       },
+      {
+        path: 'privacy-policy',
+        loadChildren: () =>
+          import('./../../settings/privacy-policy/privacy-policy.module').then(
+            (m) => m.PrivacyPolicyModule
+          ),
+      },
     ],
   },
 ];

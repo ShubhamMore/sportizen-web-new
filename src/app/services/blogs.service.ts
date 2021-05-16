@@ -36,7 +36,7 @@ export class BlogsService {
 
   getMyBlogs(limit?: number, skip?: number) {
     const data = { api: `get-my-blogs/${limit}/${skip}`, data: { limit, skip } };
-    return this.httpService.httpPost(data).pipe(
+    return this.httpService.httpGet(data).pipe(
       map((response: any) => {
         return response;
       }),

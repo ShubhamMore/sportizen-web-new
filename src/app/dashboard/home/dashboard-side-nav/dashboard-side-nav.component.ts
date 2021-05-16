@@ -5,6 +5,7 @@ import { AuthService } from './../../../authentication/auth/auth-service/auth.se
 import { UserProfileModel } from './../../../models/user-profile.model';
 import { DashboardSideDrawerService } from './../../../services/dashboard-side-drawer.service';
 import { UserProfileService } from './../../../services/user-profile.service';
+import { environment } from './../../../../environments/environment';
 
 @Component({
   selector: 'app-dashboard-side-nav',
@@ -17,10 +18,14 @@ export class DashboardSideNavComponent implements OnInit, OnDestroy {
   profileImagePreview: string;
   coverImagePreview: string;
 
+  screenWidth: number;
+  responsiveWidth: number;
+
   private userProfileSubscription: Subscription;
 
   constructor(
     private userProfileService: UserProfileService,
+    private dashboardSideDrawerService: DashboardSideDrawerService,
     private router: Router,
     private route: ActivatedRoute,
     private authService: AuthService
@@ -28,6 +33,14 @@ export class DashboardSideNavComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
+
+    this.screenWidth = window.innerWidth;
+    window.onresize = () => {
+      // set screenWidth on screen size change
+      this.screenWidth = window.innerWidth;
+    };
+
+    this.responsiveWidth = environment.responsiveScreenWidth;
 
     this.userProfileSubscription = this.userProfileService.getProfile().subscribe((profile) => {
       this.userProfile = profile;
@@ -55,7 +68,10 @@ export class DashboardSideNavComponent implements OnInit, OnDestroy {
 
   navigateTo(path: any) {
     this.router.navigate([path], { relativeTo: this.route });
-    // this.dashboardSideDrawerService.close();
+
+    if (this.screenWidth <= this.responsiveWidth) {
+      this.dashboardSideDrawerService.close();
+    }
   }
 
   ngOnDestroy() {

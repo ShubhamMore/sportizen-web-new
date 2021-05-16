@@ -1,16 +1,5 @@
-.row {
-  margin: 0;
-  padding: 0;
-
-  .col-md-12,
-  .col-12 {
-    margin: 0;
-    padding: 0;
-  }
-}
-
-::ng-deep .ck-content {
-  height: 80vh;
+::ng-deep .ck-editor__editable {
+  min-height: 80vh;
 }
 
 .blog-container {
@@ -114,6 +103,10 @@
 
     .sub-title {
       font-size: 0.9rem;
+    }
+
+    .description {
+      height: 80vh;
     }
   }
 }

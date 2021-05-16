@@ -21,6 +21,8 @@ export class BlogListComponent implements OnInit {
   loadingBlogs: boolean;
   noMoreBlogs: boolean;
 
+  backPosition: string;
+
   constructor(
     private blogsService: BlogsService,
     private router: Router,
@@ -56,11 +58,15 @@ export class BlogListComponent implements OnInit {
       });
 
     this.route.data.subscribe((data: any) => {
-      this.route.data.subscribe((data: any) => {
-        this.type = data.type;
+      this.type = data.type;
 
-        this.getBlogs(environment.limit, null);
-      });
+      if (this.type === 'manage') {
+        this.backPosition = './../';
+      } else {
+        this.backPosition = './';
+      }
+
+      this.getBlogs(environment.limit, null);
     });
   }
 
@@ -96,17 +102,17 @@ export class BlogListComponent implements OnInit {
 
   newBlog() {
     if (this.sportizenId) {
-      this.router.navigate(['./new'], { relativeTo: this.route });
+      this.router.navigate([this.backPosition, 'new'], { relativeTo: this.route });
     }
   }
 
   editBlog(id: string) {
     if (this.sportizenId && id) {
-      this.router.navigate(['./edit', id], { relativeTo: this.route });
+      this.router.navigate([this.backPosition, 'edit', id], { relativeTo: this.route });
     }
   }
 
   openBlog(id: string) {
-    this.router.navigate(['./view', id], { relativeTo: this.route });
+    this.router.navigate([this.backPosition, 'view', id], { relativeTo: this.route });
   }
 }

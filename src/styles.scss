@@ -7,8 +7,6 @@ $primary-color: #05bae3;
 $secondary-color: #075492;
 
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 
   &:focus {
@@ -37,6 +35,22 @@ body {
   position: relative;
   min-height: 100vh;
   // padding-bottom: 3rem; //48px
+}
+
+// row & columns
+
+.row {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+
+  .col-md-9,
+  .col-md-12,
+  .col-sm-11,
+  .col-12 {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 // inputs
@@ -534,5 +548,55 @@ input::-webkit-inner-spin-button {
     mat-spinner {
       margin: 0.5rem auto;
     }
+  }
+}
+
+// FeadIn Annimation
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

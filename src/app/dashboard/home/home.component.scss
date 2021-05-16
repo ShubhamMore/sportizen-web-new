@@ -40,6 +40,8 @@ $secondary-color: #075492;
     .dashboard-links {
       position: absolute;
       width: calc(80%);
+
+      padding: 0;
       margin: 0 10%;
       list-style: none;
 
@@ -195,7 +197,7 @@ $secondary-color: #075492;
 
       .dashboard-links {
         width: calc(100%);
-        margin: 0 0;
+        margin: 0;
 
         .dashboard-link {
           margin: 0.4rem auto;

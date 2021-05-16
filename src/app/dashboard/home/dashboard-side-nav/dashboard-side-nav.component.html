@@ -194,7 +194,11 @@
       </mat-expansion-panel-header>
 
       <mat-list>
-        <mat-list-item class="clickable" matRipple>
+        <mat-list-item
+          class="clickable"
+          matRipple
+          (click)="navigateTo('/dashboard/privacy-policy')"
+        >
           <h3 matLine>
             <i class="fa fa-pencil list-icon icon-red"></i>
 

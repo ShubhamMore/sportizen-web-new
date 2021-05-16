@@ -9,10 +9,10 @@ export class HeaderComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    $(document).on('ready', () => {
+    $(document).ready(() => {
       /** MOBILE NAV */
-
       $('.js--nav-icon').on('click', () => {
+        console.log('clicked');
         const nav = $('.js--main-nav');
         const icon = $('.js--nav-icon i');
 

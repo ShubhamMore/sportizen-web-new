@@ -27,7 +27,7 @@ export class ChatsComponent implements OnInit {
 
     this.titleService.setTitle('SPORTIZEN | Chat');
 
-    $(document).on('ready', () => {
+    $(document).ready(() => {
       $(window).on('resize', () => {
         if (this.user) {
           if ($(window).width() <= 400) {

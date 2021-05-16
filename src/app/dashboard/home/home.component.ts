@@ -7,6 +7,7 @@ import { UserProfileService } from 'src/app/services/user-profile.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import * as $ from 'jquery';
+import { environment } from './../../../environments/environment';
 
 class NavTabLink {
   constructor(public link: string, public title: string, public icon: string) {}
@@ -45,7 +46,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.loading = true;
 
-    this.responsiveWidth = 1200;
+    this.responsiveWidth = environment.responsiveScreenWidth;
 
     this.navLinks = [
       new NavTabLink('/dashboard', 'Home', 'fa-home'),

@@ -18,6 +18,14 @@ const appRoutes: Routes = [
       },
 
       {
+        path: 'privacy-policy',
+        loadChildren: () =>
+          import('./settings/privacy-policy/privacy-policy.module').then(
+            (m) => m.PrivacyPolicyModule
+          ),
+      },
+
+      {
         path: 'dashboard',
         loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
         canActivate: [UserAuthGuard],
