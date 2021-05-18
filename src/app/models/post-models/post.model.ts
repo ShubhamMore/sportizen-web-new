@@ -10,15 +10,14 @@ export class PostModel {
     public createdAt: string,
     public modifiedAt: string,
     public visibility: string,
-    public userImageURL: string,
     public sharedPost?: PostModel,
     public alreadyLiked?: boolean,
-    public alreadySaved?: boolean,
+    public alreadyBookmarked?: boolean,
     public alreadyViewed?: boolean,
     public postLikes?: number,
     public postComments?: number,
     public postViews?: number,
-    public userName?: string,
-    public userProfile?: string
+    public userImageURL?: string,
+    public userName?: string
   ) {}
 }

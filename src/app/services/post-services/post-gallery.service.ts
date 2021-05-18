@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from './shared-services/http.service';
+import { HttpService } from './../shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class PostViewService {
+export class PostGalleryService {
   constructor(private httpService: HttpService) {}
 
-  getPostViews(post: string) {
-    const data = { api: `getPostViews`, data: { post } };
+  getMyPostGallery(limit?: number, skip?: number) {
+    const data = { api: `getMyPostGallery`, data: { limit, skip } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -19,8 +19,8 @@ export class PostViewService {
     );
   }
 
-  viewPost(post: string) {
-    const data = { api: `viewPost`, data: { post } };
+  getUserPostGallery(user: string, limit?: number) {
+    const data = { api: `getUserPostGallery`, data: { user, limit } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

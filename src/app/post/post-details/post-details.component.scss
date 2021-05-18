@@ -1,5 +1,5 @@
-$dark-grey-color: #555454;
-$light-grey-color: #dad8d8;
+$dark-grey-color: #545454;
+$light-grey-color: #dadada;
 
 // /* Hide scrollbar for Chrome, Safari and Opera */
 // .post-container::-webkit-scrollbar {
@@ -70,8 +70,8 @@ hr {
 
 .post-card {
   margin-bottom: 1rem;
-  border-radius: 1rem;
-  // width: 70%;
+  padding: 1rem !important;
+  border-radius: 0.5rem;
 
   .post-content {
     text-align: left;
@@ -79,7 +79,8 @@ hr {
 
     .post-action {
       font-size: 1.5rem;
-      padding: 0.025rem 0.5rem 0.5rem 0;
+      text-align: center;
+      margin: 0.5rem;
     }
 
     .profile-icon {
@@ -139,9 +140,9 @@ hr {
 
     .shared-post {
       padding: 0.25rem;
-      margin: 0.15rem;
-      border: 0.025rem solid #c6c6c6;
-      border-radius: 1rem;
+      margin: 0.5rem 0.25rem;
+      border: 0.0625rem solid #c6c6c6;
+      border-radius: 0.5rem;
 
       .profile-icon {
         display: block;
@@ -192,9 +193,9 @@ hr {
         img {
           max-height: 35rem;
           max-width: 100%;
+          border-radius: 0.5rem;
           background-size: cover;
           vertical-align: middle;
-          border-radius: 0.75rem;
         }
       }
     }
@@ -225,9 +226,13 @@ hr {
         margin-right: 0.5rem;
         display: inline-block;
         cursor: pointer;
+
+        .post-action-icon {
+          padding-right: 0.5rem;
+        }
       }
 
-      .save-post {
+      .bookmark-post {
         font-size: 1.25rem;
       }
     }
@@ -248,13 +253,13 @@ hr {
 @media only screen and (max-width: 900px) {
   .post-card {
     margin-bottom: 0.875rem;
-    border-radius: 0.875rem;
-    // width: 70%;
+    padding: 0.875rem !important;
+    border-radius: 0.4375rem;
 
     .post-content {
       .post-action {
-        font-size: 1.475rem;
-        padding: 0.025rem 0.5rem 0.5rem 0;
+        font-size: 1.4375rem;
+        margin: 0.5rem 0.4375rem;
       }
 
       .profile-icon {
@@ -268,7 +273,7 @@ hr {
         padding-left: 0.975rem;
 
         .profile-name {
-          font-size: 0.995rem;
+          font-size: 0.9875rem;
         }
 
         .modified-time {
@@ -291,8 +296,8 @@ hr {
       }
 
       .shared-post {
-        margin: 0.145rem;
-        border-radius: 0.95rem;
+        margin: 0.4375rem 0.25rem;
+        border-radius: 0.4375rem;
 
         .profile-icon {
           .profile-image {
@@ -305,7 +310,7 @@ hr {
           padding-left: 0.95rem;
 
           .profile-name {
-            font-size: 0.79rem;
+            font-size: 0.7875rem;
           }
 
           .modified-time {
@@ -324,6 +329,7 @@ hr {
 
           img {
             max-height: 33.5rem;
+            border-radius: 0.4375rem;
           }
         }
       }
@@ -342,9 +348,13 @@ hr {
           border-radius: 0.45rem;
           padding: 0.175rem 0.4rem;
           margin-right: 0.45rem;
+
+          .post-action-icon {
+            padding-right: 0.4375rem;
+          }
         }
 
-        .save-post {
+        .bookmark-post {
           font-size: 1.2rem;
         }
       }
@@ -364,13 +374,13 @@ hr {
 @media only screen and (max-width: 767px) {
   .post-card {
     margin-bottom: 0.75rem;
-    border-radius: 0.75rem;
-    // width: 70%;
+    padding: 0.75rem !important;
+    border-radius: 0.375rem;
 
     .post-content {
       .post-action {
-        font-size: 1.425rem;
-        padding: 0.025rem 0.5rem 0.5rem 0;
+        font-size: 1.375rem;
+        margin: 0.5rem 0.375rem;
       }
 
       .profile-icon {
@@ -384,7 +394,7 @@ hr {
         padding-left: 0.95rem;
 
         .profile-name {
-          font-size: 0.985rem;
+          font-size: 0.975rem;
         }
 
         .modified-time {
@@ -407,8 +417,8 @@ hr {
       }
 
       .shared-post {
-        margin: 0.14125rem;
-        border-radius: 0.9rem;
+        margin: 0.375rem 0.1875rem;
+        border-radius: 0.375rem;
 
         .profile-icon {
           .profile-image {
@@ -421,7 +431,7 @@ hr {
           padding-left: 0.9rem;
 
           .profile-name {
-            font-size: 0.7775rem;
+            font-size: 0.775rem;
           }
 
           .modified-time {
@@ -440,6 +450,7 @@ hr {
 
           img {
             max-height: 30.75rem;
+            border-radius: 0.375rem;
           }
         }
       }
@@ -458,9 +469,13 @@ hr {
           border-radius: 0.3875rem;
           padding: 0.15rem 0.4rem;
           margin-right: 0.4125rem;
+
+          .post-action-icon {
+            padding-right: 0.375rem;
+          }
         }
 
-        .save-post {
+        .bookmark-post {
           font-size: 1.175rem;
         }
       }
@@ -480,13 +495,13 @@ hr {
 @media only screen and (max-width: 600px) {
   .post-card {
     margin-bottom: 0.625rem;
-    border-radius: 0.625rem;
-    // width: 70%;
+    padding: 0.625rem !important;
+    border-radius: 0.3125rem;
 
     .post-content {
       .post-action {
-        font-size: 1.375rem;
-        padding: 0.025rem 0.5rem 0.5rem 0;
+        font-size: 1.3125rem;
+        margin: 0.5rem 0.3125rem;
       }
 
       .profile-icon {
@@ -500,7 +515,7 @@ hr {
         padding-left: 0.925rem;
 
         .profile-name {
-          font-size: 0.975rem;
+          font-size: 0.9625rem;
         }
 
         .modified-time {
@@ -523,8 +538,8 @@ hr {
       }
 
       .shared-post {
-        margin: 0.1375rem;
-        border-radius: 0.85rem;
+        margin: 0.3125rem 0.125rem;
+        border-radius: 0.3125rem;
 
         .profile-icon {
           .profile-image {
@@ -537,7 +552,7 @@ hr {
           padding-left: 0.85rem;
 
           .profile-name {
-            font-size: 0.765rem;
+            font-size: 0.7625rem;
           }
 
           .modified-time {
@@ -556,6 +571,7 @@ hr {
 
           img {
             max-height: 28rem;
+            border-radius: 0.3125rem;
           }
         }
       }
@@ -574,9 +590,13 @@ hr {
           border-radius: 0.325rem;
           padding: 0.125rem 0.4rem;
           margin-right: 0.375rem;
+
+          .post-action-icon {
+            padding-right: 0.3125rem;
+          }
         }
 
-        .save-post {
+        .bookmark-post {
           font-size: 1.15rem;
         }
       }
@@ -596,13 +616,13 @@ hr {
 @media only screen and (max-width: 400px) {
   .post-card {
     margin-bottom: 0.5rem;
-    border-radius: 0.5rem;
-    // width: 70%;
+    padding: 0.5rem !important;
+    border-radius: 0.25rem;
 
     .post-content {
       .post-action {
         font-size: 1.25rem;
-        padding: 0.025rem 0.5rem 0.5rem 0;
+        margin: 0.5rem 0.25rem;
       }
 
       .profile-icon {
@@ -639,8 +659,8 @@ hr {
       }
 
       .shared-post {
-        margin: 0.125rem;
-        border-radius: 0.75rem;
+        margin: 0.25rem 0.125rem;
+        border-radius: 0.25rem;
 
         .profile-icon {
           .profile-image {
@@ -672,6 +692,7 @@ hr {
 
           img {
             max-height: 25rem;
+            border-radius: 0.25rem;
           }
         }
       }
@@ -690,9 +711,13 @@ hr {
           border-radius: 0.25rem;
           padding: 0.1rem 0.4rem;
           margin-right: 0.3rem;
+
+          .post-action-icon {
+            padding-right: 0.25rem;
+          }
         }
 
-        .save-post {
+        .bookmark-post {
           font-size: 1rem;
         }
       }

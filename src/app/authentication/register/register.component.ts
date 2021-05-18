@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { EncryptService } from './../../services/shared-services/encrypt.service';
 import { environment } from './../../../environments/environment';
 import { Validator } from './../../@shared/validators';
-import { UserService } from './../../services/user.service';
+import { UserService } from './../../services/user-services/user.service';
 import { Title } from '@angular/platform-browser';
 
 @Component({

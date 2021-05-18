@@ -1,4 +1,4 @@
-import { SocketioService } from './services/socket.service';
+import { SocketioService } from './services/communication-services/socket.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService, UserData } from './authentication/auth/auth-service/auth.service';

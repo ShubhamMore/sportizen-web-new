@@ -1,6 +1,6 @@
-import { HomeService } from './../services/home.service';
+import { HomeService } from '../services/home-services/home.service';
 import { Component, OnInit } from '@angular/core';
-import { UserProfileService } from './../services/user-profile.service';
+import { UserProfileService } from './../services/user-services/user-profile.service';
 import { Title } from '@angular/platform-browser';
 import { first } from 'rxjs/operators';
 

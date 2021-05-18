@@ -1,5 +1,5 @@
 import { UserProfileModel } from './../../../../models/user-profile.model';
-import { UserProfileService } from './../../../../services/user-profile.service';
+import { UserProfileService } from './../../../../services/user-services/user-profile.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PostType } from './../../../../enums/postType';

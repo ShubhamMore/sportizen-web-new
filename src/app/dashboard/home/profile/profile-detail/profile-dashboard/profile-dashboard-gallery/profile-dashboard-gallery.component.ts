@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PostGalleryService } from '../../../../../../services/post-gallery.service';
+import { PostGalleryService } from '../../../../../../services/post-services/post-gallery.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ImageModelComponent } from 'src/app/image/image-model/image-model.component';
 import { MatDialog } from '@angular/material/dialog';

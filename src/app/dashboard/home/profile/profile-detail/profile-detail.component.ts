@@ -4,13 +4,13 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserProfileModel } from './../../../../models/user-profile.model';
-import { UserProfileService } from './../../../../services/user-profile.service';
+import { UserProfileService } from './../../../../services/user-services/user-profile.service';
 import { Title } from '@angular/platform-browser';
 import { take, first } from 'rxjs/operators';
 import { CompressImageService } from './../../../../services/shared-services/compress-image.service';
 import { ConnectionStatus } from 'src/app/enums/connectionStatus';
 import { ProfileService } from './../@shared/profile.service';
-import { ConnectionService } from './../../../../services/connection.service';
+import { ConnectionService } from '../../../../services/user-services/connection.service';
 import { Location } from '@angular/common';
 
 @Component({

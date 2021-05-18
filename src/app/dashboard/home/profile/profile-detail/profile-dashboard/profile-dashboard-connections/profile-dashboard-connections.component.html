@@ -9,22 +9,23 @@
   <mat-card-content>
     <div class="row" *ngIf="followers.length > 0; else noFollowers">
       <div class="col-12 connection-container">
-        <app-user-connection
-          *ngFor="let follower of followers; let i = index"
-          [user]="follower"
-          [isLoggedInUser]="follower.sportizenId === sportizenId"
-          [isConnected]="follower.connectionStatus === 'following'"
-          [connectionBtnText]="
-            follower.connectionStatus === 'following' ? 'Unfollow' : !userId ? 'Remove' : 'Follow'
-          "
-          (connectionAction)="
-            follower.connectionStatus === 'following'
-              ? unfollowUser(follower.name, follower.sportizenId, i)
-              : !userId
-              ? remove(follower.name, follower.sportizenId, i)
-              : followUser(follower.name, follower.sportizenId, i)
-          "
-        ></app-user-connection>
+        <div class="user-connection" *ngFor="let follower of followers; let i = index">
+          <app-user-connection
+            [user]="follower"
+            [isLoggedInUser]="follower.sportizenId === sportizenId"
+            [isConnected]="follower.connectionStatus === 'following'"
+            [connectionBtnText]="
+              follower.connectionStatus === 'following' ? 'Unfollow' : !userId ? 'Remove' : 'Follow'
+            "
+            (connectionAction)="
+              follower.connectionStatus === 'following'
+                ? unfollowUser(follower.name, follower.sportizenId, i)
+                : !userId
+                ? remove(follower.name, follower.sportizenId, i)
+                : followUser(follower.name, follower.sportizenId, i)
+            "
+          ></app-user-connection>
+        </div>
       </div>
     </div>
   </mat-card-content>
@@ -42,18 +43,19 @@
   <mat-card-content
     ><div class="row" *ngIf="followings.length > 0; else noFollowings">
       <div class="col-12 connection-container">
-        <app-user-connection
-          *ngFor="let following of followings; let i = index"
-          [user]="following"
-          [isLoggedInUser]="following.sportizenId === sportizenId"
-          [isConnected]="following.connectionStatus === 'following'"
-          [connectionBtnText]="following.connectionStatus === 'following' ? 'Unfollow' : 'Follow'"
-          (connectionAction)="
-            following.connectionStatus === 'following'
-              ? unfollowUser(following.name, following.sportizenId, i)
-              : followUser(following.name, following.sportizenId, i)
-          "
-        ></app-user-connection>
+        <div class="user-connection" *ngFor="let following of followings; let i = index">
+          <app-user-connection
+            [user]="following"
+            [isLoggedInUser]="following.sportizenId === sportizenId"
+            [isConnected]="following.connectionStatus === 'following'"
+            [connectionBtnText]="following.connectionStatus === 'following' ? 'Unfollow' : 'Follow'"
+            (connectionAction)="
+              following.connectionStatus === 'following'
+                ? unfollowUser(following.name, following.sportizenId, i)
+                : followUser(following.name, following.sportizenId, i)
+            "
+          ></app-user-connection>
+        </div>
       </div>
     </div>
   </mat-card-content>

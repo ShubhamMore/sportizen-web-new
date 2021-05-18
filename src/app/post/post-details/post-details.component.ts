@@ -1,15 +1,15 @@
-import { PostModel } from '../../models/post.model';
+import { PostModel } from '../../models/post-models/post.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LikeType } from '../../enums/likeType';
-import { ConnectionService } from '../../services/connection.service';
-import { PostLikeService } from '../../services/post-like.service';
-import { PostSaveService } from '../../services/post-save.service';
-import { PostViewService } from '../../services/post-view.service';
-import { PostService } from '../../services/post.service';
+import { ConnectionService } from '../../services/user-services/connection.service';
+import { PostLikeService } from '../../services/post-services/post-like.service';
+import { PostBookmarkService } from '../../services/post-services/post-bookmark.service';
+import { PostViewService } from '../../services/post-services/post-view.service';
+import { PostService } from '../../services/post-services/post.service';
 import { PostCommentComponent } from './post-comment/post-comment.component';
 import { PostLikesComponent } from './post-likes/post-likes.component';
 import { PostViewComponent } from './post-view/post-view.component';
@@ -30,7 +30,7 @@ export class PostDetailsComponent implements OnInit {
   constructor(
     public postService: PostService,
     public postLikeService: PostLikeService,
-    public postSaveService: PostSaveService,
+    public postBookmarkService: PostBookmarkService,
     private postViewService: PostViewService,
     private router: Router,
     private route: ActivatedRoute,
@@ -73,15 +73,15 @@ export class PostDetailsComponent implements OnInit {
     }
   }
 
-  saveUnsavePost(postId: string, alreadySaved: boolean, postIndex: number): void {
+  bookmarkPost(postId: string, alreadyBookmarked: boolean, postIndex: number): void {
     if (this.sportizenId) {
-      if (!alreadySaved) {
-        this.postSaveService.savePost(postId).subscribe((res: any) => {
-          this.updateBookmarkIcon(postId, alreadySaved, postIndex);
+      if (!alreadyBookmarked) {
+        this.postBookmarkService.addPostBookmark(postId).subscribe((res: any) => {
+          this.updateBookmarkIcon(postId, alreadyBookmarked, postIndex);
         });
       } else {
-        this.postSaveService.unsavePost(postId).subscribe((res: any) => {
-          this.updateBookmarkIcon(postId, alreadySaved, postIndex);
+        this.postBookmarkService.removePostBookmark(postId).subscribe((res: any) => {
+          this.updateBookmarkIcon(postId, alreadyBookmarked, postIndex);
         });
       }
     }
@@ -108,15 +108,15 @@ export class PostDetailsComponent implements OnInit {
     }
   }
 
-  updateBookmarkIcon(postId: string, alreadySaved: boolean, postIndex: number) {
+  updateBookmarkIcon(postId: string, alreadyBookmarked: boolean, postIndex: number) {
     if (this.sportizenId) {
-      if (!alreadySaved) {
-        if (!this.postService.postList[postIndex].alreadySaved) {
-          this.postService.postList[postIndex].alreadySaved = false;
+      if (!alreadyBookmarked) {
+        if (!this.postService.postList[postIndex].alreadyBookmarked) {
+          this.postService.postList[postIndex].alreadyBookmarked = false;
         }
-        this.postService.postList[postIndex].alreadySaved = true;
+        this.postService.postList[postIndex].alreadyBookmarked = true;
       } else {
-        this.postService.postList[postIndex].alreadySaved = false;
+        this.postService.postList[postIndex].alreadyBookmarked = false;
       }
     }
   }

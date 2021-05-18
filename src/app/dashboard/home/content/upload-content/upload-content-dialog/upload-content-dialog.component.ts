@@ -1,7 +1,7 @@
-import { PostModel } from './../../../../../models/post.model';
+import { PostModel } from './../../../../../models/post-models/post.model';
 import { PostType } from './../../../../../enums/postType';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { PostService } from './../../../../../services/post.service';
+import { PostService } from './../../../../../services/post-services/post.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, Inject } from '@angular/core';
 import { take } from 'rxjs/operators';

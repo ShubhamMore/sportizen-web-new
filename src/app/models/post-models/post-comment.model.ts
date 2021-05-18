@@ -1,4 +1,4 @@
-import { ReplyCommentModel } from './reply-comment.model';
+import { ReplyCommentModel } from './post-reply-comment.model';
 
 export class CommentModel {
   constructor(

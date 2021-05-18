@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UserProfileService } from 'src/app/services/user-profile.service';
+import { UserProfileService } from 'src/app/services/user-services/user-profile.service';
 import { UserProfileModel } from 'src/app/models/user-profile.model';
 
 @Component({

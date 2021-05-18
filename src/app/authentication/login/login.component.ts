@@ -11,7 +11,7 @@ import { EncryptService } from './../../services/shared-services/encrypt.service
 import { SocialAuthService as GoogleAuthService } from 'angularx-social-login';
 import { SocialUser } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
-import { UserService } from './../../services/user.service';
+import { UserService } from './../../services/user-services/user.service';
 import { Title } from '@angular/platform-browser';
 
 @Component({

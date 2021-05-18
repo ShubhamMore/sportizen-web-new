@@ -1,11 +1,11 @@
-import { PostModel } from './../../../../models/post.model';
+import { PostModel } from './../../../../models/post-models/post.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, Input, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { PostLikeService } from './../../../../services/post-like.service';
-import { PostSaveService } from './../../../../services/post-save.service';
-import { PostService } from './../../../../services/post.service';
-import { UserProfileService } from './../../../../services/user-profile.service';
+import { PostLikeService } from './../../../../services/post-services/post-like.service';
+import { PostBookmarkService } from '../../../../services/post-services/post-bookmark.service';
+import { PostService } from './../../../../services/post-services/post.service';
+import { UserProfileService } from './../../../../services/user-services/user-profile.service';
 import { environment } from './../../../../../environments/environment';
 
 import * as $ from 'jquery';
@@ -29,7 +29,7 @@ export class DashboardFeedComponent implements OnInit, AfterViewInit, OnDestroy 
   constructor(
     public postService: PostService,
     public postLikeService: PostLikeService,
-    public postSaveService: PostSaveService,
+    public postBookmarkService: PostBookmarkService,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
     private userProfileService: UserProfileService

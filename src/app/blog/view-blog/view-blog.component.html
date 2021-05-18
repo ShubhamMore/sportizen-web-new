@@ -24,10 +24,10 @@
 
       <div class="author-profile">
         <div class="author-profile-image">
-          <img class="profile-image" [src]="blog.createdUserImage" [alt]="blog.createdUser" />
+          <img class="profile-image" [src]="blog.userImageURL" [alt]="blog.userName" />
         </div>
         <div class="author-profile-name">
-          {{ blog.createdUser | capitalizeEachWord }}
+          {{ blog.userName | capitalizeEachWord }}
         </div>
       </div>
     </div>
@@ -44,6 +44,55 @@
           {{ tag | uppercase }}
         </mat-chip>
       </mat-chip-list>
+    </div>
+
+    <hr />
+
+    <div class="blog-actions" *ngIf="sportizenId">
+      <span class="blog-action-btn">
+        <span class="blog-action-icon" (click)="likeUnlikeBlog(blog._id, blog.alreadyLiked)">
+          <i
+            class="fa fa-thumbs-up"
+            [ngClass]="[blog.alreadyLiked ? 'icon-blue' : 'icon-grey']"
+            aria-hidden="true"
+          ></i>
+        </span>
+        <span class="blog-action-text" (click)="showLikeDetails(blog._id)">
+          {{ blog.blogLikes ? blog.blogLikes : 0 }}&nbsp;{{ blog.blogLikes > 1 ? 'Likes' : 'Like' }}
+        </span>
+      </span>
+
+      <span class="blog-action-btn" (click)="openCommentsSheet(blog._id)">
+        <span class="blog-action-icon">
+          <i class="fa fa-comment icon-yellow" aria-hidden="true"></i>
+        </span>
+        <span class="blog-action-text">
+          {{ blog.blogComments ? blog.blogComments : 0 }}&nbsp;{{
+            blog.blogComments > 1 ? 'Comments' : 'Comment'
+          }}
+        </span>
+      </span>
+
+      <span class="blog-action-btn" (click)="showViewDetails(blog._id)">
+        <span class="blog-action-icon">
+          <i class="fa fa-eye icon-grey" aria-hidden="true"></i>
+        </span>
+        <span class="blog-action-text">
+          {{ blog.blogViews ? blog.blogViews : 0 }}&nbsp;{{ blog.blogViews > 1 ? 'Views' : 'View' }}
+        </span>
+      </span>
+
+      <span
+        class="float-right pointer bookmark-blog"
+        (click)="bookmarkBlog(blog._id, blog.alreadyBookmarked)"
+      >
+        <i
+          [ngClass]="[
+            blog.alreadyBookmarked ? 'fa fa-bookmark icon-blue' : 'fa fa-bookmark icon-light-grey'
+          ]"
+          aria-hidden="true"
+        ></i>
+      </span>
     </div>
   </div>
 </div>

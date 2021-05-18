@@ -11,17 +11,13 @@ export class UploadAdapter {
     return this.loader.file.then(
       (file: any) =>
         new Promise((resolve, reject) => {
-          console.log(file);
-
           this.compressImageService
             .compress(file)
             .pipe(take(1))
             .subscribe((compressedImage: any) => {
-              console.log(compressedImage);
               const myReader = new FileReader();
 
               myReader.onloadend = (e: any) => {
-                // console.log(myReader.result);
                 resolve({ default: myReader.result });
               };
 

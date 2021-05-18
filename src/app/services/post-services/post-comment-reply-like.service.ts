@@ -1,14 +1,23 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from './shared-services/http.service';
+import { HttpService } from './../shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class PostSaveService {
+export class PostCommentReplyLikeService {
   constructor(private httpService: HttpService) {}
 
-  getSavedPosts() {
-    const data = { api: `getSavedPosts`, data: {} };
+  getPostReplyCommentLikes(
+    post: string,
+    comment: string,
+    replyComment: string,
+    limit?: number,
+    skip?: number
+  ) {
+    const data = {
+      api: `getPostReplyCommentLikes`,
+      data: { post, comment, replyComment, limit, skip },
+    };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -19,8 +28,8 @@ export class PostSaveService {
     );
   }
 
-  savePost(post: string) {
-    const data = { api: `savePost`, data: { post } };
+  likePostReplyComment(post: string, comment: string, replyComment: string) {
+    const data = { api: `likePostReplyComment`, data: { post, comment, replyComment } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -31,8 +40,8 @@ export class PostSaveService {
     );
   }
 
-  unsavePost(post: string) {
-    const data = { api: `unsavePost`, data: { post } };
+  unlikePostReplyComment(post: string, comment: string, replyComment: string) {
+    const data = { api: `unlikePostReplyComment`, data: { post, comment, replyComment } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

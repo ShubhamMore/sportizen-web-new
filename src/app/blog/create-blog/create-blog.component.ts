@@ -1,10 +1,10 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { BlogsService } from '../../services/blogs.service';
+import { BlogsService } from '../../services/blog-services/blogs.service';
 import { BlogModel } from '../../models/blog.model';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { UserProfileService } from '../../services/user-profile.service';
+import { UserProfileService } from '../../services/user-services/user-profile.service';
 import { Location } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 import { UploadAdapter } from './upload-adapter';

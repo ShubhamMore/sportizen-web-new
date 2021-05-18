@@ -1,4 +1,4 @@
-import { SocketioService } from './../../../../services/socket.service';
+import { SocketioService } from '../../../../services/communication-services/socket.service';
 import { ChatService, ChatMember } from './../@services/chat.service';
 import { Component, OnInit } from '@angular/core';
 

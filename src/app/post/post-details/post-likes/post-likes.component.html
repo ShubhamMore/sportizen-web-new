@@ -8,30 +8,30 @@
 
     <hr />
 
-    <div class="users-container" *ngIf="!loading; else loadingLikes">
-      <ng-container *ngIf="likes && likes.length > 0; else noLikes">
-        <div *ngFor="let like of likes" class="user-container">
-          <div class="profile-icon">
-            <img
-              class="profile-image"
-              [src]="like.userImageURL"
-              onerror="this.src='./../../../assets/images/user.png'"
-            />
-          </div>
-
-          <div class="user-details">
-            <div class="user-name">
-              <span class="">{{ like.name | capitalizeEachWord }}</span>
+    <div class="users-container">
+      <ng-container *ngIf="!loading; else loadingLikes">
+        <ng-container *ngIf="likes && likes.length > 0; else noLikes">
+          <div *ngFor="let like of likes" class="user-container">
+            <div class="profile-icon">
+              <img
+                class="profile-image"
+                [src]="like.userImageURL"
+                onerror="this.src='./../../../assets/images/user.png'"
+              />
             </div>
 
-            <div class="liked-at">
-              <i class="fa fa-clock-o icon-blue mr-2"></i>
-              <span class="">{{ like.createdAt | amTimeAgo }}</span>
+            <div class="user-details">
+              <div class="user-name">
+                <span class="">{{ like.name | capitalizeEachWord }}</span>
+              </div>
+
+              <div class="liked-at">
+                <i class="fa fa-clock-o icon-blue mr-2"></i>
+                <span class="">{{ like.createdAt | amTimeAgo }}</span>
+              </div>
             </div>
           </div>
-
-          <br />
-        </div>
+        </ng-container>
       </ng-container>
     </div>
 

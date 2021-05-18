@@ -1,7 +1,7 @@
-import { HomeService } from './../../services/home.service';
+import { HomeService } from '../../services/home-services/home.service';
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
-import { DashboardSideDrawerService } from './../../services/dashboard-side-drawer.service';
+import { DashboardSideDrawerService } from '../../services/dashboard-services/dashboard-side-drawer.service';
 
 import * as $ from 'jquery';
 import { environment } from './../../../environments/environment';

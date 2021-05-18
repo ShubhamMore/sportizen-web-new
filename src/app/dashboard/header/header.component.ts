@@ -4,8 +4,8 @@ import { environment } from './../../../environments/environment.prod';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserProfileModel } from './../../models/user-profile.model';
-import { DashboardSideDrawerService } from './../../services/dashboard-side-drawer.service';
-import { UserProfileService } from './../../services/user-profile.service';
+import { DashboardSideDrawerService } from '../../services/dashboard-services/dashboard-side-drawer.service';
+import { UserProfileService } from './../../services/user-services/user-profile.service';
 import { User } from './../../authentication/auth/auth-model/user.model';
 
 @Component({

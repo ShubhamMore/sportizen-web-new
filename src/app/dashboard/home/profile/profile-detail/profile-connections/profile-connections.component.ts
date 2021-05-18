@@ -1,21 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { UserProfileService } from 'src/app/services/user-profile.service';
+import { UserProfileService } from 'src/app/services/user-services/user-profile.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ConnectionService } from '../../../../../services/connection.service';
+import { ConnectionService } from '../../../../../services/user-services/connection.service';
 import { ProfileService } from './../../@shared/profile.service';
-import { of } from 'rxjs';
 import { first } from 'rxjs/operators';
-
-interface Connection {
-  name: string;
-  email: string;
-  userImageURL: string;
-  sportizenId: string;
-  mutuleConnections?: string;
-  connectionStatus?: string;
-}
+import { UserConnection } from './../../../user-connection/user-connection.component';
 
 @Component({
   selector: 'app-profile-connections',
@@ -27,7 +18,7 @@ export class ProfileConnectionsComponent implements OnInit {
   isFollowers: boolean;
   loading: boolean;
   noOfConnections: number;
-  connections: Connection[];
+  connections: UserConnection[];
 
   sportizenId: string;
 
@@ -82,7 +73,7 @@ export class ProfileConnectionsComponent implements OnInit {
     }
 
     connectionSubscription.subscribe(
-      (connectionData: { connectionCount: number; connections: Connection[] }) => {
+      (connectionData: { connectionCount: number; connections: UserConnection[] }) => {
         this.noOfConnections = connectionData.connectionCount;
         this.connections = connectionData.connections;
         this.loading = false;
@@ -91,15 +82,6 @@ export class ProfileConnectionsComponent implements OnInit {
         this.loading = false;
       }
     );
-  }
-
-  viewProfile(id: string) {
-    if (id === this.sportizenId) {
-      this.router.navigate(['/dashboard', 'profile'], { relativeTo: this.route });
-    } else {
-      this.connectionService.searchedSportizenId = id;
-      this.router.navigate(['/dashboard', 'profile', id], { relativeTo: this.route });
-    }
   }
 
   followUser(name: string, sportizenId: string, i: number) {

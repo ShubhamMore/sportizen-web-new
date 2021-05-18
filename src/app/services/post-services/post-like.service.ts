@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from './shared-services/http.service';
+import { HttpService } from './../shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class PostCommentLikeService {
+export class PostLikeService {
   constructor(private httpService: HttpService) {}
 
-  getCommentLikes(post: string, comment: string) {
-    const data = { api: `getCommentLikes`, data: { post, comment } };
+  getPostLikes(post: string, limit?: number, skip?: number) {
+    const data = { api: `getPostLikes`, data: { post, limit, skip } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -19,8 +19,8 @@ export class PostCommentLikeService {
     );
   }
 
-  likeComment(post: string, comment: string) {
-    const data = { api: `likeComment`, data: { post, comment } };
+  likePost(post: string) {
+    const data = { api: `likePost`, data: { post } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -31,8 +31,8 @@ export class PostCommentLikeService {
     );
   }
 
-  unlikeComment(post: string, comment: string) {
-    const data = { api: `unlikeComment`, data: { post, comment } };
+  unlikePost(post: string) {
+    const data = { api: `unlikePost`, data: { post } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

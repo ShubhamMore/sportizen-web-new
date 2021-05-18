@@ -1,7 +1,7 @@
-import { HomeService } from './../../../services/home.service';
+import { HomeService } from '../../../services/home-services/home.service';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { DashboardSideDrawerService } from './../../../services/dashboard-side-drawer.service';
+import { DashboardSideDrawerService } from '../../../services/dashboard-services/dashboard-side-drawer.service';
 
 @Component({
   selector: 'app-content',

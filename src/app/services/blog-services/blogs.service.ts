@@ -1,7 +1,7 @@
 import { map, catchError } from 'rxjs/operators';
-import { BlogModel } from './../models/blog.model';
+import { BlogModel } from '../../models/blog.model';
 import { Injectable } from '@angular/core';
-import { HttpService } from './shared-services/http.service';
+import { HttpService } from '../shared-services/http.service';
 import { throwError } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -58,18 +58,6 @@ export class BlogsService {
     );
   }
 
-  // getBlogForUser(id: string) {
-  //   const data = { api: 'get-blog', data: { id } };
-  //   return this.httpService.httpPost(data).pipe(
-  //     map((response: any) => {
-  //       return response;
-  //     }),
-  //     catchError((err: any) => {
-  //       return throwError(err);
-  //     })
-  //   );
-  // }
-
   getBlog(id: string) {
     const data = { api: `get-blog/${id}`, data: { id } };
     return this.httpService.httpGet(data).pipe(
@@ -86,23 +74,6 @@ export class BlogsService {
     const data = { api: 'delete-blog', data: { id } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
-        return response;
-      }),
-      catchError((err: any) => {
-        return throwError(err);
-      })
-    );
-  }
-
-  deleteBlogImage(id: string, imageId: string, index: number) {
-    const data = {
-      api: 'delete-blog-image',
-      data: { id, imageId, index },
-    };
-    return this.httpService.httpPost(data).pipe(
-      map((response: any) => {
-        // const eventIndex = this.events.findIndex((event) => event._id === id);
-        // this.events[eventIndex].images.splice(index, 1);
         return response;
       }),
       catchError((err: any) => {

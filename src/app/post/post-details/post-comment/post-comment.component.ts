@@ -4,12 +4,12 @@ import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LikeType } from '../../../enums/likeType';
-import { CommentModel } from '../../../models/comment.model';
-import { PostCommentLikeService } from '../../../services/post-comment-like.service';
-import { PostCommentReplyLikeService } from '../../../services/post-comment-reply-like.service';
-import { PostCommentReplyService } from '../../../services/post-comment-reply.service';
-import { PostCommentService } from '../../../services/post-comment.service';
-import { UserProfileService } from '../../../services/user-profile.service';
+import { CommentModel } from '../../../models/post-models/post-comment.model';
+import { PostCommentLikeService } from '../../../services/post-services/post-comment-like.service';
+import { PostCommentReplyLikeService } from '../../../services/post-services/post-comment-reply-like.service';
+import { PostCommentReplyService } from '../../../services/post-services/post-comment-reply.service';
+import { PostCommentService } from '../../../services/post-services/post-comment.service';
+import { UserProfileService } from '../../../services/user-services/user-profile.service';
 import { PostLikesComponent } from '../post-likes/post-likes.component';
 import { first } from 'rxjs/operators';
 
@@ -175,13 +175,13 @@ export class PostCommentComponent implements OnInit {
     if (this.sportizenId) {
       if (!alreadyLiked) {
         this.postCommentLikeService
-          .likeComment(this.data.postId, commentId)
+          .likePostComment(this.data.postId, commentId)
           .subscribe((res: any) => {
             this.updateCommentLikesCount(commentId, alreadyLiked, index);
           });
       } else {
         this.postCommentLikeService
-          .unlikeComment(this.data.postId, commentId)
+          .unlikePostComment(this.data.postId, commentId)
           .subscribe((res: any) => {
             this.updateCommentLikesCount(commentId, alreadyLiked, index);
           });
@@ -217,7 +217,7 @@ export class PostCommentComponent implements OnInit {
     if (this.sportizenId) {
       if (!alreadyLiked) {
         this.postCommentReplyLikeService
-          .likeReplyComment(this.data.postId, commentId, replyCommentId)
+          .likePostReplyComment(this.data.postId, commentId, replyCommentId)
           .subscribe((res: any) => {
             this.updateReplyCommentLikesCount(
               commentId,
@@ -228,7 +228,7 @@ export class PostCommentComponent implements OnInit {
           });
       } else {
         this.postCommentReplyLikeService
-          .unlikeReplyComment(this.data.postId, commentId, replyCommentId)
+          .unlikePostReplyComment(this.data.postId, commentId, replyCommentId)
           .subscribe((res: any) => {
             this.updateReplyCommentLikesCount(
               commentId,

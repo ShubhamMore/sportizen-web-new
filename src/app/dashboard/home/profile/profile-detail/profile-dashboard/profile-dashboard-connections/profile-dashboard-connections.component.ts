@@ -1,19 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { UserProfileService } from 'src/app/services/user-profile.service';
+import { UserProfileService } from 'src/app/services/user-services/user-profile.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { ConnectionService } from '../../../../../../services/connection.service';
+import { ConnectionService } from '../../../../../../services/user-services/connection.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { first } from 'rxjs/operators';
-
-interface Connection {
-  name: string;
-  email: string;
-  userImageURL: string;
-  sportizenId: string;
-  mutuleConnections?: string;
-  connectionStatus?: string;
-}
+import { UserConnection } from './../../../../user-connection/user-connection.component';
 
 @Component({
   selector: 'app-profile-dashboard-connections',
@@ -24,8 +16,8 @@ export class ProfileDashboardConnectionsComponent implements OnInit {
   userId: string;
   noOfFollowers: number;
   noOfFollowings: number;
-  followers: Connection[];
-  followings: Connection[];
+  followers: UserConnection[];
+  followings: UserConnection[];
   sportizenId: string;
 
   constructor(
@@ -75,7 +67,7 @@ export class ProfileDashboardConnectionsComponent implements OnInit {
     }
 
     followerSubscription.subscribe(
-      (followersData: { connectionCount: number; connections: Connection[] }) => {
+      (followersData: { connectionCount: number; connections: UserConnection[] }) => {
         this.noOfFollowers = followersData.connectionCount;
         this.followers = followersData.connections;
       },
@@ -93,7 +85,7 @@ export class ProfileDashboardConnectionsComponent implements OnInit {
     }
 
     followingSubscription.subscribe(
-      (followingsData: { connectionCount: number; connections: Connection[] }) => {
+      (followingsData: { connectionCount: number; connections: UserConnection[] }) => {
         this.noOfFollowings = followingsData.connectionCount;
         this.followings = followingsData.connections;
       },
@@ -101,26 +93,15 @@ export class ProfileDashboardConnectionsComponent implements OnInit {
     );
   }
 
-  viewProfile(id: string) {
-    if (id === this.sportizenId) {
-      this.router.navigate(['/dashboard', 'profile'], { relativeTo: this.route });
-    } else {
-      this.connectionService.searchedSportizenId = id;
-      this.router.navigate(['/dashboard', 'profile', id], { relativeTo: this.route });
-    }
-  }
-
   followUser(name: string, sportizenId: string, i: number) {
     this.connectionService.sendConnectionRequest(sportizenId).subscribe(
       (res: any) => {
-        // this.userProfileService.setConnectionCount(false, true);
-
         if (!this.userId) {
           this.followings[i].connectionStatus = res.status;
           this.noOfFollowings += 1;
         } else {
           const followerIndex = this.followers.findIndex(
-            (follower: Connection) => follower.sportizenId === sportizenId
+            (follower: UserConnection) => follower.sportizenId === sportizenId
           );
 
           if (followerIndex >= 0) {
@@ -128,7 +109,7 @@ export class ProfileDashboardConnectionsComponent implements OnInit {
           }
 
           const followingIndex = this.followings.findIndex(
-            (following: Connection) => following.sportizenId === sportizenId
+            (following: UserConnection) => following.sportizenId === sportizenId
           );
 
           if (followingIndex >= 0) {
@@ -151,7 +132,6 @@ export class ProfileDashboardConnectionsComponent implements OnInit {
   }
 
   unfollowUser(name: string, sportizenId: string, i: number) {
-    console.log('clicked');
     this.connectionService.unfollowConnection(sportizenId).subscribe(
       (res: any) => {
         // this.userProfileService.setConnectionCount(true, false);
@@ -161,7 +141,7 @@ export class ProfileDashboardConnectionsComponent implements OnInit {
           this.noOfFollowings -= 1;
         } else {
           const followerIndex = this.followers.findIndex(
-            (follower: Connection) => follower.sportizenId === sportizenId
+            (follower: UserConnection) => follower.sportizenId === sportizenId
           );
 
           if (followerIndex >= 0) {
@@ -169,7 +149,7 @@ export class ProfileDashboardConnectionsComponent implements OnInit {
           }
 
           const followingIndex = this.followings.findIndex(
-            (following: Connection) => following.sportizenId === sportizenId
+            (following: UserConnection) => following.sportizenId === sportizenId
           );
 
           if (followingIndex >= 0) {

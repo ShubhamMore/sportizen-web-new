@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from './shared-services/http.service';
+import { HttpService } from './../shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
 import { BehaviorSubject, throwError } from 'rxjs';
-import { UserProfileModel } from './../models/user-profile.model';
+import { UserProfileModel } from './../../models/user-profile.model';
 
 @Injectable({
   providedIn: 'root',
@@ -42,7 +42,6 @@ export class UserProfileService {
   // setFllower() {
   //   this.getProfile().subscribe((userProfile: any) => {
   //     if (userProfile) {
-  // console.log(userProfile);
   // }
 
   // this.userFollowers.subscribe((followers: number) => {

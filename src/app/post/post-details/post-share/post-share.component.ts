@@ -1,6 +1,6 @@
-import { PostModel } from '../../../models/post.model';
+import { PostModel } from '../../../models/post-models/post.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PostService } from '../../../services/post.service';
+import { PostService } from '../../../services/post-services/post.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Component, Input, OnInit, Inject } from '@angular/core';
 

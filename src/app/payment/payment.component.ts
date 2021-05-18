@@ -1,9 +1,9 @@
-import { OrderService } from './../services/order.service';
+import { OrderService } from './../services/payment-services/order.service';
 import { environment } from './../../environments/environment.prod';
-import { PaymentService } from './../services/payment.service';
+import { PaymentService } from '../services/payment-services/payment.service';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { UserProfileService } from '../services/user-profile.service';
+import { UserProfileService } from '../services/user-services/user-profile.service';
 import { UserProfileModel } from './../models/user-profile.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 

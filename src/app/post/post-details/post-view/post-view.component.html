@@ -1,36 +1,37 @@
 <div class="view-container">
-  <div mat-dialog-content>
+  <div mat-dialog-content class="">
     <span class="float-right pointer close" mat-dialog-close>
       <mat-icon>close</mat-icon>
     </span>
+
     <h2 mat-dialog-title>Views</h2>
 
     <hr />
 
-    <div *ngIf="!loading; else loadingViews">
-      <ng-container *ngIf="views && views.length > 0; else noViews">
-        <div *ngFor="let view of views" class="user-container">
-          <div class="profile-icon">
-            <img
-              class="profile-image"
-              [src]="view.userImageURL"
-              onerror="this.src='./../../../assets/images/user.png'"
-            />
-          </div>
-
-          <div class="user-details">
-            <div class="user-name">
-              <span class="">{{ view.name | capitalizeEachWord }}</span>
+    <div class="users-container">
+      <ng-container *ngIf="!loading; else loadingViews">
+        <ng-container *ngIf="views && views.length > 0; else noViews">
+          <div *ngFor="let view of views" class="user-container">
+            <div class="profile-icon">
+              <img
+                class="profile-image"
+                [src]="view.userImageURL"
+                onerror="this.src='./../../../assets/images/user.png'"
+              />
             </div>
 
-            <div class="viewed-at">
-              <i class="fa fa-clock-o icon-blue mr-2"></i>
-              <span class="">{{ view.createdAt | amTimeAgo }}</span>
+            <div class="user-details">
+              <div class="user-name">
+                <span class="">{{ view.name | capitalizeEachWord }}</span>
+              </div>
+
+              <div class="viewed-at">
+                <i class="fa fa-clock-o icon-blue mr-2"></i>
+                <span class="">{{ view.createdAt | amTimeAgo }}</span>
+              </div>
             </div>
           </div>
-
-          <br />
-        </div>
+        </ng-container>
       </ng-container>
     </div>
 
@@ -53,7 +54,7 @@
           </div>
 
           <div class="viewed-at">
-            <span class="no-viewed-at"> </span>
+            <span class="no-view-at"> </span>
           </div>
         </div>
 
@@ -61,6 +62,8 @@
       </div> -->
     </ng-template>
 
-    <ng-template #noViews>No Views Yet</ng-template>
+    <ng-template #noViews>
+      <p class="text-center">No Views Yet</p>
+    </ng-template>
   </div>
 </div>

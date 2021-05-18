@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from './shared-services/http.service';
+import { HttpService } from './../shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { AuthService } from './../authentication/auth/auth-service/auth.service';
+import { AuthService } from './../../authentication/auth/auth-service/auth.service';
 
 @Injectable({
   providedIn: 'root',

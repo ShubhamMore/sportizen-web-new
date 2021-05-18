@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from './shared-services/http.service';
+import { HttpService } from './../shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class PostCommentReplyService {
+export class PostCommentLikeService {
   constructor(private httpService: HttpService) {}
 
-  getPostReplyComments(post: string, comment: string) {
-    const data = { api: `getPostReplyComments`, data: { post, comment } };
+  getPostCommentLikes(post: string, comment: string, limit?: number, skip?: number) {
+    const data = { api: `getPostCommentLikes`, data: { post, comment, limit, skip } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -19,8 +19,8 @@ export class PostCommentReplyService {
     );
   }
 
-  addPostCommentReply(post: string, comment: string, replyComment: string) {
-    const data = { api: `addPostCommentReply`, data: { post, comment, replyComment } };
+  likePostComment(post: string, comment: string) {
+    const data = { api: `likePostComment`, data: { post, comment } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -31,8 +31,8 @@ export class PostCommentReplyService {
     );
   }
 
-  deletePostCommentReply(id: string) {
-    const data = { api: `deletePostCommentReply`, data: { id } };
+  unlikePostComment(post: string, comment: string) {
+    const data = { api: `unlikePostComment`, data: { post, comment } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

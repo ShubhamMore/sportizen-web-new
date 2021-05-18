@@ -28,8 +28,15 @@ hr {
 }
 
 .view-container {
-  width: 25rem;
+  width: 30vw;
   padding: 1rem;
+  // min-height: 90vh !important;
+}
+
+.users-container {
+  height: 55vh;
+  overflow-y: auto;
+  padding-right: 0.5rem;
 }
 
 .user-container {
@@ -50,33 +57,16 @@ hr {
 
   .user-details {
     display: inline-block;
-    width: 16.5rem;
+    width: calc(100% - 3.5rem);
 
     .user-name {
       font-size: 1.2rem;
       font-weight: 600;
 
-      .no-user-name {
+      .viewed-at {
         display: block;
-        content: ' ';
-        background-image: linear-gradient(to right bottom, #ddd, #eee);
-        height: 1.2rem;
-        width: 75%;
-        margin: 0.25rem 0rem;
-      }
-    }
-
-    .viewed-at {
-      display: block;
-      font-size: 1rem;
-      margin-top: 0rem;
-
-      .no-viewed-at {
-        display: block;
-        content: ' ';
-        background-color: #eee;
-        height: 1rem;
-        width: 50%;
+        font-size: 1rem;
+        margin-top: 0rem;
       }
     }
   }
@@ -101,7 +91,7 @@ hr {
   }
 
   .view-container {
-    width: 20.25rem;
+    width: 40vw;
     padding: 0.9375rem;
   }
 
@@ -119,24 +109,15 @@ hr {
     }
 
     .user-details {
-      width: 14.75rem;
+      width: calc(100% - 3.25rem);
 
       .user-name {
-        font-size: 1.15rem;
-
-        .no-user-name {
-          height: 1.15rem;
-          margin: 0.21875rem 0rem;
-        }
+        font-size: 1.125rem;
       }
 
       .viewed-at {
-        font-size: 0.95rem;
+        font-size: 0.925rem;
         margin-top: -0.125rem;
-
-        .no-viewed-at {
-          height: 0.95rem;
-        }
       }
     }
   }
@@ -161,7 +142,7 @@ hr {
   }
 
   .view-container {
-    width: 18.5rem;
+    width: 50vw;
     padding: 0.875rem;
   }
 
@@ -179,24 +160,15 @@ hr {
     }
 
     .user-details {
-      width: 13.5rem;
+      width: calc(100% - 3rem);
 
       .user-name {
-        font-size: 1.1rem;
-
-        .no-user-name {
-          height: 1.1rem;
-          margin: 0.1875rem 0rem;
-        }
+        font-size: 1.05rem;
       }
 
       .viewed-at {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         margin-top: -0.15rem;
-
-        .no-viewed-at {
-          height: 0.9rem;
-        }
       }
     }
   }
@@ -222,7 +194,7 @@ hr {
   }
 
   .view-container {
-    width: 17rem;
+    width: 60vw;
     padding: 0.75rem;
   }
 
@@ -240,24 +212,15 @@ hr {
     }
 
     .user-details {
-      width: 12.25rem;
+      width: calc(100% - 2.75rem);
 
       .user-name {
-        font-size: 1rem;
-
-        .no-user-name {
-          height: 1rem;
-          margin: 0.15625rem 0rem;
-        }
+        font-size: 0.975rem;
       }
 
       .viewed-at {
-        font-size: 0.8rem;
+        font-size: 0.775rem;
         margin-top: -0.25rem;
-
-        .no-viewed-at {
-          height: 0.8rem;
-        }
       }
     }
   }
@@ -283,7 +246,7 @@ hr {
   }
 
   .view-container {
-    width: 14rem;
+    width: 70vw;
     padding: 0.5rem;
   }
 
@@ -301,25 +264,23 @@ hr {
     }
 
     .user-details {
-      width: 10rem;
+      width: calc(100% - 2.5rem);
 
       .user-name {
         font-size: 0.9rem;
-
-        .no-user-name {
-          height: 1rem;
-          margin: 0.125rem 0rem;
-        }
       }
 
       .viewed-at {
         font-size: 0.7rem;
         margin-top: -0.35rem;
-
-        .no-viewed-at {
-          height: 0.7rem;
-        }
       }
     }
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .view-container {
+    width: 80vw;
+    padding: 0.375rem;
   }
 }

@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LikeType } from '../../../enums/likeType';
-import { LikeModel } from '../../../models/like.model';
-import { PostCommentLikeService } from '../../../services/post-comment-like.service';
-import { PostCommentReplyLikeService } from '../../../services/post-comment-reply-like.service';
-import { PostLikeService } from '../../../services/post-like.service';
+import { LikeModel } from '../../../models/post-models/post-like.model';
+import { PostCommentLikeService } from '../../../services/post-services/post-comment-like.service';
+import { PostCommentReplyLikeService } from '../../../services/post-services/post-comment-reply-like.service';
+import { PostLikeService } from '../../../services/post-services/post-like.service';
 
 export interface LikeDialogData {
   likeType: LikeType;
@@ -40,14 +40,14 @@ export class PostLikesComponent implements OnInit {
       });
     } else if (this.data.likeType === LikeType.PostComment) {
       this.postCommentLikeService
-        .getCommentLikes(this.data.postId, this.data.commentId)
+        .getPostCommentLikes(this.data.postId, this.data.commentId)
         .subscribe((res: any) => {
           this.likes = res;
           this.loading = false;
         });
     } else if (this.data.likeType === LikeType.PostReplyComment) {
       this.postCommentReplyLikeService
-        .getReplyCommentLikes(this.data.postId, this.data.commentId, this.data.replyCommentId)
+        .getPostReplyCommentLikes(this.data.postId, this.data.commentId, this.data.replyCommentId)
         .subscribe((res: any) => {
           this.likes = res;
           this.loading = false;

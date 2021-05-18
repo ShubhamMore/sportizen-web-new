@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ProfileService } from '../../../@shared/profile.service';
 import { UserProfileModel } from '../../../../../../models/user-profile.model';
-import { UserProfileService } from 'src/app/services/user-profile.service';
+import { UserProfileService } from 'src/app/services/user-services/user-profile.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

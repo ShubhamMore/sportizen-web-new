@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from './shared-services/http.service';
+import { HttpService } from './../shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
@@ -7,8 +7,8 @@ import { throwError } from 'rxjs';
 export class PostCommentService {
   constructor(private httpService: HttpService) {}
 
-  getPostComments(post: string) {
-    const data = { api: `getPostComments`, data: { post } };
+  getPostComments(post: string, limit?: number, skip?: number) {
+    const data = { api: `getPostComments`, data: { post, limit, skip } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;

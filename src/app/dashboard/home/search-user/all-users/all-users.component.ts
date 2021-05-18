@@ -1,9 +1,10 @@
-import { UserProfileService } from './../../../../services/user-profile.service';
+import { UserProfileService } from './../../../../services/user-services/user-profile.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { ConnectionService } from './../../../../services/connection.service';
+import { ConnectionService } from '../../../../services/user-services/connection.service';
 import { first } from 'rxjs/operators';
+import { UserConnection } from './../../user-connection/user-connection.component';
 
 @Component({
   selector: 'app-all-users',
@@ -11,7 +12,7 @@ import { first } from 'rxjs/operators';
   styleUrls: ['./all-users.component.scss'],
 })
 export class AllUsersComponent implements OnInit {
-  searchResults: any[];
+  searchResults: UserConnection[];
   sportizenId: string;
   searchKeyword: string;
 
@@ -35,9 +36,11 @@ export class AllUsersComponent implements OnInit {
           this.searchKeyword = searchKeyword;
           this.searchResults = [];
           if (searchKeyword) {
-            this.connectionService.getSearchResults(searchKeyword).subscribe((res: any[]) => {
-              this.searchResults = res;
-            });
+            this.connectionService
+              .getSearchResults(searchKeyword)
+              .subscribe((res: UserConnection[]) => {
+                this.searchResults = res;
+              });
           }
         });
       });

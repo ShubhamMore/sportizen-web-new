@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PostViewModel } from '../../../models/post-view.model';
-import { PostViewService } from '../../../services/post-view.service';
+import { PostViewModel } from '../../../models/post-models/post-view.model';
+import { PostViewService } from '../../../services/post-services/post-view.service';
 
 export interface ViewDialogData {
   postId: string;

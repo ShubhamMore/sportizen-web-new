@@ -12,7 +12,6 @@ export class HeaderComponent implements OnInit {
     $(document).ready(() => {
       /** MOBILE NAV */
       $('.js--nav-icon').on('click', () => {
-        console.log('clicked');
         const nav = $('.js--main-nav');
         const icon = $('.js--nav-icon i');
 

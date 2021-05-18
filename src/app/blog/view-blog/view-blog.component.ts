@@ -1,8 +1,8 @@
 import { BlogModel } from '../../models/blog.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { BlogsService } from '../../services/blogs.service';
-import { UserProfileService } from '../../services/user-profile.service';
+import { BlogsService } from '../../services/blog-services/blogs.service';
+import { UserProfileService } from '../../services/user-services/user-profile.service';
 import { Title } from '@angular/platform-browser';
 import { first } from 'rxjs/operators';
 
@@ -53,4 +53,14 @@ export class ViewBlogComponent implements OnInit {
       }
     });
   }
+
+  showViewDetails(blogId: string) {}
+
+  showLikeDetails(blogId: string) {}
+
+  openCommentsSheet(blogId: string) {}
+
+  likeUnlikeBlog(blogId: string, alredyLiked?: boolean) {}
+
+  bookmarkBlog(blogId: string, alredyBookmarked?: boolean) {}
 }

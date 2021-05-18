@@ -1,8 +1,8 @@
 import { BlogModel } from '../../models/blog.model';
-import { BlogsService } from '../../services/blogs.service';
+import { BlogsService } from '../../services/blog-services/blogs.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserProfileService } from '../../services/user-profile.service';
+import { UserProfileService } from '../../services/user-services/user-profile.service';
 import { Title } from '@angular/platform-browser';
 import { first } from 'rxjs/operators';
 import { environment } from './../../../environments/environment';

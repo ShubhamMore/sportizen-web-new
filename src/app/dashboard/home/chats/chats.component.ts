@@ -1,5 +1,5 @@
-import { HomeService } from './../../../services/home.service';
-import { SocketioService } from './../../../services/socket.service';
+import { HomeService } from '../../../services/home-services/home.service';
+import { SocketioService } from '../../../services/communication-services/socket.service';
 import { ChatService, ChatMember } from './@services/chat.service';
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';

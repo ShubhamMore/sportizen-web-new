@@ -23,12 +23,12 @@
       <img
         class="blog-header-image"
         mat-card-avatar
-        [src]="blog.createdUserImage"
-        [alt]="blog.createdUser"
+        [src]="blog.userImageURL"
+        [alt]="blog.userName"
       />
 
       <mat-card-title class="blog-header-title">{{
-        blog.createdUser | capitalizeEachWord
+        blog.userName | capitalizeEachWord
       }}</mat-card-title>
 
       <mat-card-subtitle class="blog-header-sub-title">

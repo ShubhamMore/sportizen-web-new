@@ -1,4 +1,4 @@
-import { SocketioService } from './../../../../services/socket.service';
+import { SocketioService } from '../../../../services/communication-services/socket.service';
 import { ChatMember, ChatService, Message } from './../@services/chat.service';
 import {
   Component,
@@ -9,7 +9,7 @@ import {
   ViewChildren,
   AfterViewInit,
 } from '@angular/core';
-import { UserProfileService } from './../../../../services/user-profile.service';
+import { UserProfileService } from './../../../../services/user-services/user-profile.service';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { ConfirmComponent } from './../../../../@shared/confirm/confirm.component';
 import { MatDialog } from '@angular/material/dialog';

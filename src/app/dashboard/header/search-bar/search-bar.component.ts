@@ -3,9 +3,9 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { debounceTime, finalize, switchMap, tap, first } from 'rxjs/operators';
-import { ConnectionService } from './../../../services/connection.service';
-import { UserProfileService } from './../../../services/user-profile.service';
-
+import { ConnectionService } from '../../../services/user-services/connection.service';
+import { UserProfileService } from './../../../services/user-services/user-profile.service';
+import * as $ from 'jquery';
 @Component({
   selector: 'app-search-bar',
   templateUrl: './search-bar.component.html',
@@ -97,6 +97,12 @@ export class SearchBarComponent implements OnInit {
     this.searchKeyWord = '';
     this.filteredOptions = [];
     this.options = [];
+
+    $(window).on('resize', () => {
+      if (window.innerWidth > 833 && this.isSearchBarOpen) {
+        this.toggleSearchBar();
+      }
+    });
 
     this.userProfileService
       .getUserSportizenId()

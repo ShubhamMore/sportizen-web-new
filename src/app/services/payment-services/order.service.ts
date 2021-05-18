@@ -1,4 +1,4 @@
-import { HttpService } from './shared-services/http.service';
+import { HttpService } from './../shared-services/http.service';
 import { Injectable } from '@angular/core';
 import { catchError, map } from 'rxjs/operators';
 import { throwError } from 'rxjs';

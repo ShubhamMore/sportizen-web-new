@@ -1,11 +1,11 @@
 import { DateService } from './../../services/shared-services/date.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { EventService } from './../../services/event.service';
+import { EventService } from './../../services/event-services/event.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { UserProfileModel } from './../../models/user-profile.model';
-import { UserProfileService } from './../../services/user-profile.service';
+import { UserProfileService } from './../../services/user-services/user-profile.service';
 import { EventModel } from './/../../models/event.model';
 import { SportModel } from './../../models/sport.model';
 import { SportService } from './../../services/sport.service';

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from './shared-services/http.service';
+import { HttpService } from './../shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { PostModel } from './../models/post.model';
+import { PostModel } from './../../models/post-models/post.model';
 
 @Injectable({ providedIn: 'root' })
 export class PostService {

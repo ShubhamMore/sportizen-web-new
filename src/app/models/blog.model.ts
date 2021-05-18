@@ -9,11 +9,17 @@ export class BlogModel {
     public imageName: string,
     public secureUrl: string,
     public publicId: string,
-    public createdBy: string,
+    public sportizenUser: string,
     public createdAt: string,
     public modifiedAt: string,
-    public createdUserImage?: string,
-    public createdUser?: string
+    public alreadyLiked?: boolean,
+    public alreadyBookmarked?: boolean,
+    public alreadyViewed?: boolean,
+    public blogLikes?: number,
+    public blogComments?: number,
+    public blogViews?: number,
+    public userName?: string,
+    public userImageURL?: string
   ) {}
 }
 

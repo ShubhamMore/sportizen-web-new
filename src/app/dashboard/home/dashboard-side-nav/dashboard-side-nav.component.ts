@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from './../../../authentication/auth/auth-service/auth.service';
 import { UserProfileModel } from './../../../models/user-profile.model';
-import { DashboardSideDrawerService } from './../../../services/dashboard-side-drawer.service';
-import { UserProfileService } from './../../../services/user-profile.service';
+import { DashboardSideDrawerService } from '../../../services/dashboard-services/dashboard-side-drawer.service';
+import { UserProfileService } from './../../../services/user-services/user-profile.service';
 import { environment } from './../../../../environments/environment';
 
 @Component({

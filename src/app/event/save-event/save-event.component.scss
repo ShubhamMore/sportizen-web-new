@@ -6,14 +6,24 @@
   }
 }
 
+// Angular Material
+
+::ng-deep .mat-horizontal-stepper-header,
+::ng-deep .mat-horizontal-content-container {
+  padding: 0 0.5rem !important;
+}
+
 ::ng-deep .mat-card-header-text {
   width: 100%;
   margin: 0px;
 }
 
 .form-fields {
-  // height: 43vh;
   min-height: 43vh;
+}
+
+.btn-container {
+  padding-bottom: 0.5rem !important;
 }
 
 .event-container {

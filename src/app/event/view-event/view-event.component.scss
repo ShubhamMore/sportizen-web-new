@@ -13,9 +13,9 @@ mat-card {
 
   .event-card {
     margin: 1rem auto;
-    padding: 1rem;
+    padding: 1rem !important;
     background-color: #fff;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
 
     .bold-text {
       font-weight: bold;
@@ -73,8 +73,9 @@ mat-card {
     padding: 0.75rem;
 
     .event-card {
-      margin: 0.75rem auto;
-      border-radius: 0.875rem;
+      margin: 0.875rem auto;
+      padding: 0.875rem !important;
+      border-radius: 0.4375rem;
 
       .registrations-container {
         font-size: 97.5%;
@@ -110,7 +111,8 @@ mat-card {
 
     .event-card {
       margin: 0.75rem auto;
-      border-radius: 0.75rem;
+      padding: 0.75rem !important;
+      border-radius: 0.375rem;
 
       .registrations-container {
         font-size: 95%;
@@ -146,7 +148,8 @@ mat-card {
 
     .event-card {
       margin: 0.625rem auto;
-      border-radius: 0.625rem;
+      padding: 0.625rem !important;
+      border-radius: 0.3125rem;
 
       .registrations-container {
         font-size: 92.5%;
@@ -182,7 +185,8 @@ mat-card {
 
     .event-card {
       margin: 0.5rem auto;
-      border-radius: 0.5rem;
+      padding: 0.5rem !important;
+      border-radius: 0.25rem;
 
       .registrations-container {
         font-size: 90%;
