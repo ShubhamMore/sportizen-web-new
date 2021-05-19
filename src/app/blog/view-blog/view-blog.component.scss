@@ -9,12 +9,6 @@ $light-grey-color: #dadada;
   border-radius: 0.25rem;
   box-shadow: 0.125rem 0.125rem 1rem $light-grey-color;
 
-  -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
-  -moz-animation: fadein 1s; /* Firefox < 16 */
-  -ms-animation: fadein 1s; /* Internet Explorer */
-  -o-animation: fadein 1s; /* Opera < 12.1 */
-  animation: fadein 1s;
-
   .blog-image-container {
     display: block;
     position: relative;
@@ -114,9 +108,9 @@ $light-grey-color: #dadada;
     }
 
     .blog-actions {
-      margin-top: 0.5rem;
+      margin: 0.5rem 0;
 
-      .blog-action-btn {
+      .blog-action {
         border-radius: 0.5rem;
         padding: 0.2rem 0.4rem;
         margin-right: 0.5rem;
@@ -126,6 +120,77 @@ $light-grey-color: #dadada;
 
       .bookmark-blog {
         font-size: 1.25rem;
+      }
+    }
+
+    .blog-comment-container {
+      margin: 0.5rem 0;
+
+      .blog-comment-input {
+        margin: 1rem 0;
+
+        .comment-input {
+          font-size: 0.9rem;
+          line-height: 1rem;
+          // min-height: 2rem;
+        }
+
+        .submit-comment-btn {
+          text-align: right;
+
+          .control-btn {
+            color: #fff;
+            margin: 0 !important;
+          }
+        }
+      }
+
+      .comment-text {
+        font-size: 1.5rem;
+        margin: 0.5rem;
+      }
+
+      .blog-comment {
+        display: block;
+        padding: 1.5rem;
+        border-bottom: 0.0625rem solid #dadada;
+
+        .commented-user-image-container {
+          display: inline-block;
+          width: 4.5rem;
+          height: 3.5rem;
+          vertical-align: top;
+
+          .commented-user-image {
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 100%;
+          }
+        }
+
+        .comment-details {
+          display: inline-block;
+          width: calc(100% - 4.5rem);
+
+          .commented-user-name {
+            display: block;
+            font-size: 1rem;
+            font-weight: bold;
+          }
+
+          .commented-on {
+            display: block;
+            font-size: 0.8rem;
+            padding: 0.5rem 0;
+            font-weight: 600;
+            color: #787878;
+          }
+
+          .comment {
+            display: block;
+            font-size: 0.9 rem;
+          }
+        }
       }
     }
   }
@@ -208,7 +273,7 @@ $light-grey-color: #dadada;
       .blog-actions {
         margin-top: 0.45rem;
 
-        .blog-action-btn {
+        .blog-action {
           font-size: 97.5%;
           border-radius: 0.45rem;
           padding: 0.175rem 0.4rem;
@@ -217,6 +282,55 @@ $light-grey-color: #dadada;
 
         .bookmark-blog {
           font-size: 1.2rem;
+        }
+      }
+
+      .blog-comment-container {
+        margin: 0.4375rem 0;
+
+        .blog-comment-input {
+          margin: 0.875rem 0;
+
+          .comment-input {
+            font-size: 0.875rem;
+            line-height: 0.975rem;
+          }
+        }
+
+        .comment-text {
+          font-size: 1.4375rem;
+          margin: 0.4375rem;
+        }
+
+        .blog-comment {
+          padding: 1.25rem;
+
+          .commented-user-image-container {
+            width: 4.25rem;
+            height: 3.375rem;
+
+            .commented-user-image {
+              width: 3.375rem;
+              height: 3.375rem;
+            }
+          }
+
+          .comment-details {
+            width: calc(100% - 4.25rem);
+
+            .commented-user-name {
+              font-size: 0.975rem;
+            }
+
+            .commented-on {
+              font-size: 0.775rem;
+              padding: 0.4375rem 0;
+            }
+
+            .comment {
+              font-size: 0.875rem;
+            }
+          }
         }
       }
     }
@@ -300,7 +414,7 @@ $light-grey-color: #dadada;
       .blog-actions {
         margin-top: 0.3875rem;
 
-        .blog-action-btn {
+        .blog-action {
           font-size: 95%;
           border-radius: 0.3875rem;
           padding: 0.15rem 0.4rem;
@@ -309,6 +423,55 @@ $light-grey-color: #dadada;
 
         .bookmark-blog {
           font-size: 1.175rem;
+        }
+      }
+
+      .blog-comment-container {
+        margin: 0.375rem 0;
+
+        .blog-comment-input {
+          margin: 0.75rem 0;
+
+          .comment-input {
+            font-size: 0.85rem;
+            line-height: 0.95rem;
+          }
+        }
+
+        .comment-text {
+          font-size: 1.375rem;
+          margin: 0.375rem;
+        }
+
+        .blog-comment {
+          padding: 1rem;
+
+          .commented-user-image-container {
+            width: 4rem;
+            height: 3.25rem;
+
+            .commented-user-image {
+              width: 3.25rem;
+              height: 3.25rem;
+            }
+          }
+
+          .comment-details {
+            width: calc(100% - 4rem);
+
+            .commented-user-name {
+              font-size: 0.95rem;
+            }
+
+            .commented-on {
+              font-size: 0.75rem;
+              padding: 0.375rem 0;
+            }
+
+            .comment {
+              font-size: 0.85rem;
+            }
+          }
         }
       }
     }
@@ -392,7 +555,7 @@ $light-grey-color: #dadada;
       .blog-actions {
         margin-top: 0.325rem;
 
-        .blog-action-btn {
+        .blog-action {
           font-size: 92.5%;
           border-radius: 0.325rem;
           padding: 0.125rem 0.4rem;
@@ -401,6 +564,55 @@ $light-grey-color: #dadada;
 
         .bookmark-blog {
           font-size: 1.15rem;
+        }
+      }
+
+      .blog-comment-container {
+        margin: 0.3125rem 0;
+
+        .blog-comment-input {
+          margin: 0.625rem 0;
+
+          .comment-input {
+            font-size: 0.825rem;
+            line-height: 0.925rem;
+          }
+        }
+
+        .comment-text {
+          font-size: 1.3125rem;
+          margin: 0.3125rem;
+        }
+
+        .blog-comment {
+          padding: 0.75rem;
+
+          .commented-user-image-container {
+            width: 3.75rem;
+            height: 3.125rem;
+
+            .commented-user-image {
+              width: 3.125rem;
+              height: 3.125rem;
+            }
+          }
+
+          .comment-details {
+            width: calc(100% - 3.75rem);
+
+            .commented-user-name {
+              font-size: 0.925rem;
+            }
+
+            .commented-on {
+              font-size: 0.725rem;
+              padding: 0.3125rem 0;
+            }
+
+            .comment {
+              font-size: 0.825rem;
+            }
+          }
         }
       }
     }
@@ -484,7 +696,7 @@ $light-grey-color: #dadada;
       .blog-actions {
         margin-top: 0.25rem;
 
-        .blog-action-btn {
+        .blog-action {
           font-size: 90%;
           border-radius: 0.25rem;
           padding: 0.1rem 0.4rem;
@@ -493,6 +705,55 @@ $light-grey-color: #dadada;
 
         .bookmark-blog {
           font-size: 1rem;
+        }
+      }
+
+      .blog-comment-container {
+        margin: 0.25rem 0;
+
+        .blog-comment-input {
+          margin: 0.5rem 0;
+
+          .comment-input {
+            font-size: 0.8rem;
+            line-height: 0.9rem;
+          }
+        }
+
+        .comment-text {
+          font-size: 1.25rem;
+          margin: 0.25rem;
+        }
+
+        .blog-comment {
+          padding: 0.5rem;
+
+          .commented-user-image-container {
+            width: 3.5rem;
+            height: 3rem;
+
+            .commented-user-image {
+              width: 3rem;
+              height: 3rem;
+            }
+          }
+
+          .comment-details {
+            width: calc(100% - 3.5rem);
+
+            .commented-user-name {
+              font-size: 0.9 rem;
+            }
+
+            .commented-on {
+              font-size: 0.7rem;
+              padding: 0.25rem 0;
+            }
+
+            .comment {
+              font-size: 0.8rem;
+            }
+          }
         }
       }
     }

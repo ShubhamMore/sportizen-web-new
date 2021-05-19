@@ -3,7 +3,7 @@ import { ConnectionService } from '../../services/user-services/connection.servi
 import { EventTeamRegistrationService } from './../../services/event-services/event-team-registration.service';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { EventModel } from './../../models/event.model';
+import { EventModel } from './../../models/event-models/event.model';
 import { EventService } from './../../services/event-services/event.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';

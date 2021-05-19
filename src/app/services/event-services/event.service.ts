@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpService } from './../shared-services/http.service';
 import { map, catchError } from 'rxjs/operators';
 import { BehaviorSubject, throwError } from 'rxjs';
-import { EventModel } from './../../models/event.model';
+import { EventModel } from './../../models/event-models/event.model';
 
 @Injectable({ providedIn: 'root' })
 export class EventService {

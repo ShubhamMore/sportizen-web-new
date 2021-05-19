@@ -1,8 +1,4 @@
-<div class="loading-comments" *ngIf="commentsLoading">
-  <mat-spinner style="margin: 0 auto" diameter="25"></mat-spinner>
-</div>
-
-<div class="comment-container" *ngIf="!commentsLoading">
+<div class="comment-container">
   <!-- <img class="comment-image" [src]="data.imageUrl"  loading="lazy" /> -->
   <div class="comments-list-container" [ngClass]="!sportizenId ? 'full-comment-list' : ''">
     <div *ngIf="comments && comments.length > 0; else noComments">
@@ -34,7 +30,10 @@
           </div>
 
           <div class="action-links" *ngIf="sportizenId">
-            <span class="pr-2" (click)="replyComment(singleComment._id, singleComment.name)">
+            <span
+              class="pr-2"
+              (click)="replyComment(singleComment._id, singleComment.name, commentIndex)"
+            >
               <i class="fa fa-reply icon-yellow" aria-hidden="true"></i>
               <span class="">&nbsp;Reply</span>
             </span>
@@ -125,7 +124,7 @@
                 <div class="action-links" *ngIf="sportizenId">
                   <span
                     class="pr-2"
-                    (click)="replyComment(singleComment._id, singleReplyComment.name)"
+                    (click)="replyComment(singleComment._id, singleReplyComment.name, commentIndex)"
                   >
                     <i class="fa fa-reply icon-yellow" aria-hidden="true"></i>
                     <span class="">&nbsp;Reply</span>
@@ -190,8 +189,12 @@
       </div>
     </div>
 
+    <div class="loading-container">
+      <mat-spinner diameter="25" *ngIf="commentsLoading"></mat-spinner>
+    </div>
+
     <ng-template #noComments>
-      <p class="text-center">You are the first one to comment</p>
+      <p class="text-center" *ngIf="!commentsLoading">You are the first one to comment</p>
     </ng-template>
   </div>
 

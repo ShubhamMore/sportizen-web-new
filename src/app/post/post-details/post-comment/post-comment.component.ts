@@ -1,10 +1,19 @@
 import { ConfirmComponent } from '../../../@shared/confirm/confirm.component';
-import { ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Inject,
+  OnInit,
+  ViewChild,
+  OnDestroy,
+  AfterViewInit,
+} from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LikeType } from '../../../enums/likeType';
-import { CommentModel } from '../../../models/post-models/post-comment.model';
+import { PostCommentModel } from '../../../models/post-models/post-comment.model';
 import { PostCommentLikeService } from '../../../services/post-services/post-comment-like.service';
 import { PostCommentReplyLikeService } from '../../../services/post-services/post-comment-reply-like.service';
 import { PostCommentReplyService } from '../../../services/post-services/post-comment-reply.service';
@@ -12,21 +21,41 @@ import { PostCommentService } from '../../../services/post-services/post-comment
 import { UserProfileService } from '../../../services/user-services/user-profile.service';
 import { PostLikesComponent } from '../post-likes/post-likes.component';
 import { first } from 'rxjs/operators';
+import { environment } from './../../../../environments/environment.prod';
 
 @Component({
   selector: 'app-post-comment',
   templateUrl: './post-comment.component.html',
   styleUrls: ['./post-comment.component.scss'],
 })
-export class PostCommentComponent implements OnInit {
+export class PostCommentComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('commentInput') commentInput: ElementRef;
 
   postComment: string;
-  comments: CommentModel[];
+  comments: PostCommentModel[];
   commentsLoading: boolean;
   sportizenId: string;
   replyCommentFlag: boolean;
   replyCommentId: string;
+  commentIndex: number;
+
+  noMoreComments: boolean;
+
+  limit = environment.limit;
+
+  scroll = (event: any): void => {
+    if ($('.loading-container')) {
+      const moreFeed = $('.loading-container').offset().top;
+      const threshold = window.innerHeight + 100;
+
+      if (moreFeed <= threshold) {
+        const skip = this.comments.length;
+        if (!this.commentsLoading && !this.noMoreComments) {
+          this.getComments(this.limit, skip);
+        }
+      }
+    }
+  };
 
   constructor(
     @Inject(MAT_BOTTOM_SHEET_DATA)
@@ -43,6 +72,8 @@ export class PostCommentComponent implements OnInit {
 
   ngOnInit(): void {
     this.commentsLoading = true;
+    this.noMoreComments = false;
+
     this.comments = [];
 
     this.userProfileService
@@ -50,15 +81,26 @@ export class PostCommentComponent implements OnInit {
       .pipe(first())
       .subscribe((sportizenId: string) => {
         this.sportizenId = sportizenId;
-        this.getComments();
+        this.getComments(this.limit, 0);
       });
   }
 
-  private getComments() {
+  ngAfterViewInit() {
+    window.addEventListener('scroll', this.scroll, true);
+  }
+
+  private getComments(limit: number, skip: number) {
+    this.commentsLoading = true;
+
     this.postCommentService
-      .getPostComments(this.data.postId)
-      .subscribe((comments: CommentModel[]) => {
-        this.comments = comments;
+      .getPostComments(this.data.postId, limit, skip)
+      .subscribe((comments: PostCommentModel[]) => {
+        if (comments.length === 0) {
+          this.noMoreComments = true;
+        } else {
+          this.comments.push(...comments);
+        }
+
         this.commentsLoading = false;
         this.changeDetectorRef.markForCheck();
       });
@@ -67,47 +109,53 @@ export class PostCommentComponent implements OnInit {
   submitComment() {
     if (this.sportizenId) {
       if (this.postComment) {
+        let postCommentSubscription: any;
+
         if (this.replyCommentFlag) {
-          this.postCommentReplyService
-            .addPostCommentReply(this.data.postId, this.replyCommentId, this.postComment)
-            .subscribe(
-              (res: any) => {
-                this.commentPostedSuccessfully();
-              },
-              (error: any) => {
-                this.commentPostedError(error);
-              }
-            );
+          postCommentSubscription = this.postCommentReplyService.addPostCommentReply(
+            this.data.postId,
+            this.replyCommentId,
+            this.postComment
+          );
         } else {
-          this.postCommentService.addPostComment(this.data.postId, this.postComment).subscribe(
-            (res: any) => {
-              this.commentPostedSuccessfully();
-            },
-            (error: any) => {
-              this.commentPostedError(error);
-            }
+          postCommentSubscription = this.postCommentService.addPostComment(
+            this.data.postId,
+            this.postComment
           );
         }
+
+        postCommentSubscription.subscribe(
+          (res: any) => {
+            this.postComment = '';
+            if (this.replyCommentFlag) {
+              if (!this.comments[this.commentIndex].replyComments) {
+                this.comments[this.commentIndex].postReplyComments = 1;
+                this.comments[this.commentIndex].replyComments = [res];
+              } else {
+                this.comments[this.commentIndex].postReplyComments += 1;
+                this.comments[this.commentIndex].replyComments.unshift(res);
+              }
+
+              this.updateReplyCommentFlag();
+            } else {
+              this.comments.unshift(res);
+            }
+
+            this.changeDetectorRef.markForCheck();
+            this.snackBar.open('Comment Posted Successfully', null, {
+              duration: 2000,
+              panelClass: ['success-snackbar'],
+            });
+          },
+          (error: any) => {
+            this.snackBar.open(error, null, {
+              duration: 2000,
+              panelClass: ['error-snackbar'],
+            });
+          }
+        );
       }
     }
-  }
-
-  private commentPostedSuccessfully() {
-    this.postComment = '';
-    this.replyCommentFlag = false;
-    this.getComments();
-    this.changeDetectorRef.markForCheck();
-    this.snackBar.open('Comment Posted Successfully', null, {
-      duration: 2000,
-      panelClass: ['success-snackbar'],
-    });
-  }
-
-  private commentPostedError(error: string) {
-    this.snackBar.open(error, null, {
-      duration: 2000,
-      panelClass: ['error-snackbar'],
-    });
   }
 
   deleteComment(id: string, index: number) {
@@ -154,6 +202,7 @@ export class PostCommentComponent implements OnInit {
           this.postCommentReplyService.deletePostCommentReply(id).subscribe(
             (res: any) => {
               this.comments[commentIndex].replyComments.splice(replyCommentIndex, 1);
+              this.comments[commentIndex].postReplyComments -= 1;
               this.changeDetectorRef.markForCheck();
               this.snackBar.open('Reply Comment Deleted Successfully', null, {
                 duration: 2000,
@@ -268,19 +317,25 @@ export class PostCommentComponent implements OnInit {
     if (!this.postComment) {
       this.replyCommentFlag = false;
       this.replyCommentId = null;
+      this.commentIndex = null;
     }
   }
 
-  replyComment(commentId: string, userName: string) {
+  replyComment(commentId: string, userName: string, commentIndex: number) {
     if (this.sportizenId) {
       this.postComment = '@' + userName + ' ';
       this.commentInput.nativeElement.focus();
       this.replyCommentFlag = true;
       this.replyCommentId = commentId;
+      this.commentIndex = commentIndex;
     }
   }
 
   viewCommentDetails(commentId: string, index: number) {
+    this.getPostReplyComments(commentId, index);
+  }
+
+  private getPostReplyComments(commentId: string, index: number) {
     this.postCommentReplyService
       .getPostReplyComments(this.data.postId, commentId)
       .subscribe((res: any) => {
@@ -310,5 +365,10 @@ export class PostCommentComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {});
+  }
+
+  ngOnDestroy() {
+    this.comments = [];
+    window.removeEventListener('scroll', this.scroll, true);
   }
 }

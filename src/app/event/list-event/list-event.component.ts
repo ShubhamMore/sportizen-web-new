@@ -3,7 +3,7 @@ import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EventService } from './../../services/event-services/event.service';
 import { UserProfileService } from './../../services/user-services/user-profile.service';
-import { EventModel } from './../../models/event.model';
+import { EventModel } from './../../models/event-models/event.model';
 import { environment } from './../../../environments/environment';
 import { Title } from '@angular/platform-browser';
 import * as $ from 'jquery';

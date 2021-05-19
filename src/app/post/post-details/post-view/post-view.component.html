@@ -9,61 +9,36 @@
     <hr />
 
     <div class="users-container">
-      <ng-container *ngIf="!loading; else loadingViews">
-        <ng-container *ngIf="views && views.length > 0; else noViews">
-          <div *ngFor="let view of views" class="user-container">
-            <div class="profile-icon">
-              <img
-                class="profile-image"
-                [src]="view.userImageURL"
-                onerror="this.src='./../../../assets/images/user.png'"
-              />
+      <ng-container *ngIf="views && views.length > 0; else noViews">
+        <div *ngFor="let view of views" class="user-container">
+          <div class="profile-icon">
+            <img
+              class="profile-image"
+              [src]="view.userImageURL"
+              onerror="this.src='./../../../assets/images/user.png'"
+            />
+          </div>
+
+          <div class="user-details">
+            <div class="user-name">
+              <span class="">{{ view.name | capitalizeEachWord }}</span>
             </div>
 
-            <div class="user-details">
-              <div class="user-name">
-                <span class="">{{ view.name | capitalizeEachWord }}</span>
-              </div>
-
-              <div class="viewed-at">
-                <i class="fa fa-clock-o icon-blue mr-2"></i>
-                <span class="">{{ view.createdAt | amTimeAgo }}</span>
-              </div>
+            <div class="viewed-at">
+              <i class="fa fa-clock-o icon-blue mr-2"></i>
+              <span class="">{{ view.createdAt | amTimeAgo }}</span>
             </div>
           </div>
-        </ng-container>
+        </div>
       </ng-container>
+
+      <div class="loading-container">
+        <mat-spinner diameter="25" *ngIf="loadingViews"></mat-spinner>
+      </div>
     </div>
 
-    <ng-template #loadingViews>
-      <div class="loading-container">
-        <mat-spinner diameter="25"></mat-spinner>
-      </div>
-      <!-- <div class="user-container">
-        <div class="profile-icon">
-          <img
-            class="profile-image"
-            src="../../../../../../assets/images/loading-user.png"
-            onerror="this.src='./../../../../../../assets/images/user.png'"
-          />
-        </div>
-
-        <div class="user-details">
-          <div class="user-name">
-            <span class="no-user-name"> </span>
-          </div>
-
-          <div class="viewed-at">
-            <span class="no-view-at"> </span>
-          </div>
-        </div>
-
-        <br />
-      </div> -->
-    </ng-template>
-
     <ng-template #noViews>
-      <p class="text-center">No Views Yet</p>
+      <p class="text-center" *ngIf="!loadingViews">No Views Yet</p>
     </ng-template>
   </div>
 </div>

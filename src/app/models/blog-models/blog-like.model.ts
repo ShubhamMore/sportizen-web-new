@@ -1,8 +1,8 @@
-export class PostLikeModel {
+export class BlogLikeModel {
   constructor(
     public _id: string,
     public sportizenId: string,
-    public post: string,
+    public blog: string,
     public postLike: boolean,
     public createdAt: string,
     public name?: string,

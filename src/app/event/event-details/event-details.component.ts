@@ -1,7 +1,7 @@
 import { ConnectionService } from '../../services/user-services/connection.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserProfileService } from './../../services/user-services/user-profile.service';
-import { EventModel } from './../../models/event.model';
+import { EventModel } from './../../models/event-models/event.model';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { EventService } from 'src/app/services/event-services/event.service';
 import { ConfirmComponent } from 'src/app/@shared/confirm/confirm.component';

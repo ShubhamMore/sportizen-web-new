@@ -1,8 +1,8 @@
-export class PostCommentLikeModel {
+export class BlogCommentLikeModel {
   constructor(
     public _id: string,
     public sportizenUser: string,
-    public post: string,
+    public blog: string,
     public comment: string,
     public commentLike: boolean,
     public createdAt: string,

@@ -1,6 +1,6 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BlogsService } from '../../services/blog-services/blogs.service';
-import { BlogModel } from '../../models/blog.model';
+import { BlogModel } from '../../models/blog-models/blog.model';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';

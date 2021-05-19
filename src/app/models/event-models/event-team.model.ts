@@ -1,4 +1,4 @@
-import { PlayerModel } from './player.model';
+import { PlayerModel } from '../player.model';
 
 export class EventTeamModel {
   constructor(

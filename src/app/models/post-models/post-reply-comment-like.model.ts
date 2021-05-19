@@ -1,4 +1,4 @@
-export class ReplyCommentLikeModel {
+export class PostReplyCommentLikeModel {
   constructor(
     public _id: string,
     public sportizenUser: string,
@@ -8,6 +8,6 @@ export class ReplyCommentLikeModel {
     public replyCommentLike: boolean,
     public createdAt: string,
     public userName?: string,
-    public userProfile?: string
+    public userImageURL?: string
   ) {}
 }

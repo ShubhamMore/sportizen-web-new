@@ -1,25 +1,24 @@
 import { Component, Inject, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LikeType } from '../../../enums/likeType';
-import { PostLikeModel as LikeModel } from '../../../models/post-models/post-like.model';
-import { PostCommentLikeService } from '../../../services/post-services/post-comment-like.service';
-import { PostCommentReplyLikeService } from '../../../services/post-services/post-comment-reply-like.service';
-import { PostLikeService } from '../../../services/post-services/post-like.service';
+import { BlogLikeModel as LikeModel } from '../../../models/blog-models/blog-like.model';
+import { BlogCommentLikeService } from '../../../services/blog-services/blog-comment-like.service';
+import { BlogLikeService } from '../../../services/blog-services/blog-like.service';
 import { environment } from './../../../../environments/environment';
 
 export interface LikeDialogData {
   likeType: LikeType;
-  postId: string;
+  blogId: string;
   commentId: string;
   replyCommentId: string;
 }
 
 @Component({
-  selector: 'app-post-likes',
-  templateUrl: './post-likes.component.html',
-  styleUrls: ['./post-likes.component.scss'],
+  selector: 'app-blog-likes',
+  templateUrl: './blog-likes.component.html',
+  styleUrls: ['./blog-likes.component.scss'],
 })
-export class PostLikesComponent implements OnInit, AfterViewInit, OnDestroy {
+export class BlogLikesComponent implements OnInit, AfterViewInit, OnDestroy {
   loadingLikes: boolean;
   noMoreLikes: boolean;
   likes: LikeModel[];
@@ -41,10 +40,9 @@ export class PostLikesComponent implements OnInit, AfterViewInit, OnDestroy {
   };
 
   constructor(
-    private postLikeService: PostLikeService,
-    private postCommentLikeService: PostCommentLikeService,
-    private postCommentReplyLikeService: PostCommentReplyLikeService,
-    public dialogRef: MatDialogRef<PostLikesComponent>,
+    private blogLikeService: BlogLikeService,
+    private blogCommentLikeService: BlogCommentLikeService,
+    public dialogRef: MatDialogRef<BlogLikesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: LikeDialogData
   ) {}
 
@@ -64,20 +62,12 @@ export class PostLikesComponent implements OnInit, AfterViewInit, OnDestroy {
 
     let likeSubscription: any;
 
-    if (this.data.likeType === LikeType.Post) {
-      likeSubscription = this.postLikeService.getPostLikes(this.data.postId, limit, skip);
-    } else if (this.data.likeType === LikeType.PostComment) {
-      likeSubscription = this.postCommentLikeService.getPostCommentLikes(
-        this.data.postId,
+    if (this.data.likeType === LikeType.Blog) {
+      likeSubscription = this.blogLikeService.getBlogLikes(this.data.blogId, limit, skip);
+    } else if (this.data.likeType === LikeType.BlogComment) {
+      likeSubscription = this.blogCommentLikeService.getBlogCommentLikes(
+        this.data.blogId,
         this.data.commentId,
-        limit,
-        skip
-      );
-    } else if (this.data.likeType === LikeType.PostReplyComment) {
-      likeSubscription = this.postCommentReplyLikeService.getPostReplyCommentLikes(
-        this.data.postId,
-        this.data.commentId,
-        this.data.replyCommentId,
         limit,
         skip
       );
@@ -88,7 +78,7 @@ export class PostLikesComponent implements OnInit, AfterViewInit, OnDestroy {
         this.noMoreLikes = true;
       } else {
         this.likes.push(...likes);
-        // this.navigateToOnScreenPost();
+        // this.navigateToOnScreenBlog();
       }
 
       this.loadingLikes = false;

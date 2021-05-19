@@ -1,5 +1,5 @@
 import { map, catchError } from 'rxjs/operators';
-import { BlogModel } from '../../models/blog.model';
+import { BlogModel } from '../../models/blog-models/blog.model';
 import { Injectable } from '@angular/core';
 import { HttpService } from '../shared-services/http.service';
 import { throwError } from 'rxjs';

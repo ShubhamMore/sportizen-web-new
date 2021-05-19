@@ -1,4 +1,4 @@
-import { BlogModel } from '../../models/blog.model';
+import { BlogModel } from '../../models/blog-models/blog.model';
 import { BlogsService } from '../../services/blog-services/blogs.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';

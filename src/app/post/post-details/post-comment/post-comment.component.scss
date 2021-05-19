@@ -24,11 +24,6 @@
   }
 }
 
-.loading-comments {
-  padding: 1rem 0rem;
-  height: 80vh;
-}
-
 .full-comment-list {
   height: 100%;
 }
@@ -190,11 +185,6 @@
 }
 
 @media only screen and (max-width: 900px) {
-  .loading-comments {
-    padding: 1rem 0rem;
-    height: 80vh;
-  }
-
   .comment-container {
     padding: 0.875rem 0rem;
 
@@ -311,11 +301,6 @@
 }
 
 @media only screen and (max-width: 767px) {
-  .loading-comments {
-    padding: 1rem 0rem;
-    height: 80vh;
-  }
-
   .comment-container {
     padding: 0.75rem 0rem;
 
@@ -432,11 +417,6 @@
 }
 
 @media only screen and (max-width: 600px) {
-  .loading-comments {
-    padding: 1rem 0rem;
-    height: 80vh;
-  }
-
   .comment-container {
     padding: 0.625rem 0rem;
 
@@ -553,11 +533,6 @@
 }
 
 @media only screen and (max-width: 400px) {
-  .loading-comments {
-    padding: 1rem 0rem;
-    height: 80vh;
-  }
-
   .comment-container {
     padding: 0.5rem 0rem;
 

@@ -3,7 +3,7 @@ import { ViewRegistrationComponent } from './view-registration/view-registration
 import { ConnectionService } from '../../services/user-services/connection.service';
 import { EventTeamRegistrationService } from './../../services/event-services/event-team-registration.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { EventModel } from './../../models/event.model';
+import { EventModel } from './../../models/event-models/event.model';
 import { EventService } from './../../services/event-services/event.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UserProfileService } from './../../services/user-services/user-profile.service';

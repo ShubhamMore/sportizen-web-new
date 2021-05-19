@@ -590,6 +590,14 @@ input::-webkit-inner-spin-button {
   }
 }
 
+.fade-in-animation {
+  -webkit-animation: fadeIn 0.5s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadeIn 0.5s; /* Firefox < 16 */
+  -ms-animation: fadeIn 0.5s; /* Internet Explorer */
+  -o-animation: fadeIn 0.5s; /* Opera < 12.1 */
+  animation: fadeIn 0.5s;
+}
+
 // FeadIn Annimation
 @keyframes fadeIn {
   from {

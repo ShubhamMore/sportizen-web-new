@@ -6,7 +6,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { UserProfileModel } from './../../models/user-profile.model';
 import { UserProfileService } from './../../services/user-services/user-profile.service';
-import { EventModel } from './/../../models/event.model';
+import { EventModel } from './/../../models/event-models/event.model';
 import { SportModel } from './../../models/sport.model';
 import { SportService } from './../../services/sport.service';
 import { CountryService } from './../../services/shared-services/country.service';

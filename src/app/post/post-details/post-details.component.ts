@@ -111,9 +111,9 @@ export class PostDetailsComponent implements OnInit {
   updateBookmarkIcon(postId: string, alreadyBookmarked: boolean, postIndex: number) {
     if (this.sportizenId) {
       if (!alreadyBookmarked) {
-        if (!this.postService.postList[postIndex].alreadyBookmarked) {
-          this.postService.postList[postIndex].alreadyBookmarked = false;
-        }
+        // if (!this.postService.postList[postIndex].alreadyBookmarked) {
+        //   this.postService.postList[postIndex].alreadyBookmarked = false;
+        // }
         this.postService.postList[postIndex].alreadyBookmarked = true;
       } else {
         this.postService.postList[postIndex].alreadyBookmarked = false;
@@ -122,13 +122,15 @@ export class PostDetailsComponent implements OnInit {
   }
 
   openCommentsSheet(postId: string, imageUrl: string) {
-    this.commentsSheet.open(PostCommentComponent, {
+    const dialogRef = this.commentsSheet.open(PostCommentComponent, {
       panelClass: 'comment-bottom-sheet',
       data: {
         postId,
         imageUrl,
       },
     });
+
+    dialogRef.afterDismissed().subscribe((result: any) => {});
   }
 
   sharePost(postId: string) {
