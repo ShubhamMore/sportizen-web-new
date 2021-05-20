@@ -1,5 +1,5 @@
 import { BlogModel } from '../../models/blog-models/blog.model';
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BlogsService } from '../../services/blog-services/blogs.service';
 import { UserProfileService } from '../../services/user-services/user-profile.service';
@@ -13,6 +13,9 @@ import { BlogBookmarkService } from './../../services/blog-services/blog-bookmar
 import { LikeType } from 'src/app/enums/likeType';
 import { BlogLikesComponent } from './blog-likes/blog-likes.component';
 import { MatDialog } from '@angular/material/dialog';
+import { _isNumberValue } from '@angular/cdk/coercion';
+import { ConfirmComponent } from 'src/app/@shared/confirm/confirm.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-view-blog',
@@ -20,7 +23,9 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./view-blog.component.scss'],
 })
 export class ViewBlogComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('commentInput') commentInput: ElementRef;
   loading: boolean;
+  deletingBlog: boolean;
   blog: BlogModel;
   sportizenId: string;
   comment: string;
@@ -31,7 +36,7 @@ export class ViewBlogComponent implements OnInit, AfterViewInit, OnDestroy {
   limit = environment.limit;
 
   scroll = (event: any): void => {
-    if ($('.loading-container')) {
+    if (!this.loading && $('.loading-container')) {
       const moreFeed = $('.loading-container').offset().top;
       const threshold = window.innerHeight + 100;
 
@@ -51,6 +56,7 @@ export class ViewBlogComponent implements OnInit, AfterViewInit, OnDestroy {
     private blogCommentServie: BlogCommentService,
     private blogLikeService: BlogLikeService,
     private dialog: MatDialog,
+    private snackBar: MatSnackBar,
     private blogBookmarkService: BlogBookmarkService,
     private router: Router,
     private route: ActivatedRoute
@@ -58,6 +64,7 @@ export class ViewBlogComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
+    this.deletingBlog = false;
     this.loadingComments = true;
     this.noMoreComments = false;
     this.submitComment = false;
@@ -99,7 +106,13 @@ export class ViewBlogComponent implements OnInit, AfterViewInit, OnDestroy {
       this.submitComment = true;
       this.blogCommentServie.addBlogComment(this.blog._id, this.comment).subscribe(
         (comment: BlogCommentModel) => {
+          if (!this.blog.blogComments) {
+            this.blog.blogComments = 1;
+          } else {
+            this.blog.blogComments++;
+          }
           this.blogComments.unshift(comment);
+          this.commentInput.nativeElement.value = '';
           this.submitComment = false;
         },
         (error: any) => {
@@ -111,6 +124,47 @@ export class ViewBlogComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     window.addEventListener('scroll', this.scroll, true);
+  }
+
+  viewTag(tag: string) {
+    this.router.navigate(['../../tag', tag], { relativeTo: this.route });
+  }
+
+  editBlog() {
+    if (this.blog.sportizenUser === this.sportizenId) {
+      this.router.navigate(['../../edit', this.blog._id], { relativeTo: this.route });
+    }
+  }
+
+  deleteBlog() {
+    if (this.blog.sportizenUser === this.sportizenId) {
+      const dialogRef = this.dialog.open(ConfirmComponent, {
+        data: { message: 'Do yoy really want to delete this Blog?' },
+        maxHeight: '90vh',
+        disableClose: true,
+      });
+
+      dialogRef.afterClosed().subscribe((confirm: boolean) => {
+        if (confirm) {
+          this.deletingBlog = true;
+          this.blogService.deleteBlog(this.blog._id).subscribe(
+            (res: any) => {
+              this.snackBar.open('Blog Deleted Successfully!', null, {
+                duration: 2000,
+                panelClass: ['success-snackbar'],
+              });
+              this.router.navigate(['../../'], { relativeTo: this.route });
+            },
+            (error: any) => {
+              this.snackBar.open(error, null, {
+                duration: 2000,
+                panelClass: ['error-snackbar'],
+              });
+            }
+          );
+        }
+      });
+    }
   }
 
   showLikeDetails() {
@@ -161,6 +215,16 @@ export class ViewBlogComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       }
     }
+  }
+
+  deleteComment(blogId: string, i: number) {
+    this.blogCommentServie.deleteBlogComment(blogId).subscribe(
+      (res: any) => {
+        this.blog.blogComments--;
+        this.blogComments.splice(i, 1);
+      },
+      (error: any) => {}
+    );
   }
 
   bookmarkBlog() {

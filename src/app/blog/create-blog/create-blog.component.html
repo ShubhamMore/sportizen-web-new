@@ -62,7 +62,7 @@
   <div class="blog-tags" *ngIf="tags.length > 0">
     <mat-chip-list>
       <mat-chip class="btn-tag" *ngFor="let tag of tags; let i = index">
-        {{ tag }}
+        {{ tag | uppercase }}
         <mat-icon class="icon" matTooltip="Remove Tag" (click)="removeTag(i)"> close </mat-icon>
       </mat-chip>
     </mat-chip-list>

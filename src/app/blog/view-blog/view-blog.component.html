@@ -19,6 +19,25 @@
       </div>
     </div>
 
+    <div class="blog-auther-actions" *ngIf="blog.sportizenUser === sportizenId">
+      <div class="blog-btn-container">
+        <button mat-falt-button matRipple class="semi-rounded-btn edit-btn" (click)="editBlog()">
+          Edit
+        </button>
+      </div>
+      <div class="blog-btn-container">
+        <button
+          mat-falt-button
+          matRipple
+          class="semi-rounded-btn delete-btn"
+          (click)="deleteBlog()"
+          [disabled]="deletingBlog"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+
     <div class="blog-author">
       <div class="auther-heading">Written By:</div>
 
@@ -40,7 +59,7 @@
 
     <div class="blog-tags">
       <mat-chip-list>
-        <mat-chip class="tag" *ngFor="let tag of blog.tags">
+        <mat-chip class="tag" *ngFor="let tag of blog.tags" (click)="viewTag(tag)">
           {{ tag | uppercase }}
         </mat-chip>
       </mat-chip-list>
@@ -100,6 +119,7 @@
             class="comment-input"
             name="commentInput"
             id="commentInput"
+            #commentInput
             [(ngModel)]="comment"
             matInput
           ></textarea>
@@ -124,7 +144,7 @@
           }}
         </h2>
 
-        <div class="blog-comment" *ngFor="let blogComment of blogComments">
+        <div class="blog-comment" *ngFor="let blogComment of blogComments; let i = index">
           <div class="commented-user-image-container">
             <img
               class="commented-user-image"
@@ -134,10 +154,17 @@
           </div>
           <div class="comment-details">
             <div class="commented-user-name">
-              {{ blogComment.name }}
+              <span
+                class="float-right"
+                *ngIf="sportizenId && blogComment.sportizenId === sportizenId"
+                (click)="deleteComment(blogComment._id, i)"
+              >
+                <i class="fa fa-trash"> </i>
+              </span>
+              <span>{{ blogComment.name }}</span>
             </div>
             <div class="commented-on">
-              {{ blogComment.createdAt }}
+              {{ blogComment.createdAt | amDateFormat: 'LL' }}
             </div>
             <div class="comment">
               {{ blogComment.comment }}

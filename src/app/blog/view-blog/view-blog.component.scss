@@ -49,6 +49,29 @@ $light-grey-color: #dadada;
       }
     }
 
+    .blog-auther-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin: 0.5rem 0rem;
+
+      .blog-btn-container {
+        .semi-rounded-btn {
+          margin: 0;
+          color: #fff;
+          border: none;
+        }
+
+        .edit-btn {
+          background-color: #054792;
+        }
+
+        .delete-btn {
+          background-color: #da1b3e;
+        }
+      }
+    }
+
     .blog-author {
       display: block;
       margin: 1rem 0;

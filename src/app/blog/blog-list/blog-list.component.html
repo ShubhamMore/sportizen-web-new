@@ -17,27 +17,29 @@
   </div>
 </div>
 
-<div class="blogs-container" *ngIf="loading || blogsList.length > 0; else noBlogs">
+<div class="blogs-container" *ngIf="blogsList && blogsList.length > 0; else noBlogs">
   <mat-card class="blog" *ngFor="let blog of blogsList; let i = index">
-    <mat-card-header class="blog-header">
-      <img
-        class="blog-header-image"
-        mat-card-avatar
-        [src]="blog.userImageURL"
-        [alt]="blog.userName"
-      />
-
-      <mat-card-title class="blog-header-title">{{
-        blog.userName | capitalizeEachWord
-      }}</mat-card-title>
-
-      <mat-card-subtitle class="blog-header-sub-title">
-        <i class="fa fa-calendar icon-blue mr-2" aria-hidden="true"> </i>
-        {{ blog.createdAt | amDateFormat: 'LL' }}
-      </mat-card-subtitle>
-    </mat-card-header>
-
     <mat-card-content>
+      <div class="blog-header">
+        <div class="blog-header-image-container">
+          <img
+            class="blog-header-image"
+            mat-card-avatar
+            [src]="blog.userImageURL"
+            [alt]="blog.userName"
+          />
+        </div>
+
+        <div class="blog-header-details">
+          <div class="blog-header-title">{{ blog.userName | capitalizeEachWord }}</div>
+
+          <div class="blog-header-sub-title">
+            <i class="fa fa-calendar icon-blue mr-2" aria-hidden="true"> </i>
+            {{ blog.createdAt | amDateFormat: 'LL' }}
+          </div>
+        </div>
+      </div>
+
       <ng-container *ngIf="blog.secureUrl; else noBlogImage">
         <div class="blog-image-container">
           <img class="blog-image" [src]="blog.secureUrl" [alt]="blog.title" loading="lazy" />
@@ -47,7 +49,7 @@
       <ng-template #noBlogImage>
         <div class="no-blog-image">
           <div class="tags">
-            {{ getTags(blog.tags) }}
+            {{ getTags(blog.tags) | uppercase }}
           </div>
         </div>
       </ng-template>

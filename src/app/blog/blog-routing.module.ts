@@ -40,6 +40,11 @@ const routes: Routes = [
         path: 'view/:id',
         loadChildren: () => import('./view-blog/view-blog.module').then((m) => m.ViewBlogModule),
       },
+      {
+        path: 'tag/:tag',
+        loadChildren: () =>
+          import('./blog-tag-list/blog-tag-list.module').then((m) => m.BlogTagListModule),
+      },
     ],
   },
 ];

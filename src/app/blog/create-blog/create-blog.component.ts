@@ -155,6 +155,11 @@ export class CreateBlogComponent implements OnInit {
             if (id) {
               this.blogService.getBlog(id).subscribe(
                 (blog: BlogModel) => {
+                  if (blog.sportizenUser !== sportizenId) {
+                    this.location.back();
+                    return;
+                  }
+
                   this.titleService.setTitle('SPORTIZEN | Edit Blog | ' + blog.title);
                   this.blog = blog;
 
@@ -192,7 +197,7 @@ export class CreateBlogComponent implements OnInit {
     }
 
     if (this.tags.length < 5) {
-      this.tags.push(tag.value.toUpperCase());
+      this.tags.push(tag.value.toLowerCase());
       this.tag.nativeElement.value = '';
       return;
     }

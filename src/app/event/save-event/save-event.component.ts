@@ -147,6 +147,11 @@ export class SaveEventComponent implements OnInit, OnDestroy {
 
             this.eventService.getEvent(id).subscribe(
               (event: EventModel) => {
+                if (event.createdBy !== userProfile.sportizenId) {
+                  this.location.back();
+                  return;
+                }
+
                 this.titleService.setTitle(`SPORTIZEN | Edit Event | ${event.name}`);
                 this.event = event;
 

@@ -34,6 +34,18 @@ export class BlogsService {
     );
   }
 
+  getBlogsByTag(tag: string, limit?: number, skip?: number) {
+    const data = { api: `search-blogs-by-tag/${tag}/${limit}/${skip}`, data: { tag, limit, skip } };
+    return this.httpService.httpGet(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      })
+    );
+  }
+
   getMyBlogs(limit?: number, skip?: number) {
     const data = { api: `get-my-blogs/${limit}/${skip}`, data: { limit, skip } };
     return this.httpService.httpGet(data).pipe(
