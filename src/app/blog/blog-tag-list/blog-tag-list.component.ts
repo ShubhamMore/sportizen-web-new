@@ -26,14 +26,7 @@ export class BlogTagListComponent implements OnInit, AfterViewInit, OnDestroy {
     private userProfileService: UserProfileService,
     private titleService: Title,
     private route: ActivatedRoute
-  ) {
-    this.route.params.subscribe((param: Params) => {
-      this.tag = param.tag;
-
-      this.titleService.setTitle('SPORTIZEN | Blogs | ' + this.tag);
-      this.ngOnInit();
-    });
-  }
+  ) {}
 
   scroll = (event: any): void => {
     if ($('.loading-container')) {
@@ -51,16 +44,22 @@ export class BlogTagListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadingBlogs = true;
-    this.blogsList = [];
 
     this.userProfileService
       .getUserSportizenId()
       .pipe(first())
       .subscribe((sportizenId: string) => {
         this.sportizenId = sportizenId;
-      });
 
-    this.getBlogs(environment.limit, null);
+        this.route.params.subscribe((param: Params) => {
+          this.tag = param.tag;
+          this.blogsList = [];
+
+          this.titleService.setTitle('SPORTIZEN | Blogs | ' + this.tag);
+
+          this.getBlogs(environment.limit, null);
+        });
+      });
   }
 
   ngAfterViewInit() {
