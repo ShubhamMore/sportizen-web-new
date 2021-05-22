@@ -1,6 +1,9 @@
 {
   "name": "sportizen",
   "version": "1.0.0",
+  "author": "SPORTIZEN SPORTS SOLUTION LLP",
+  "homepage": "https://www.sportizemn.in/",
+  "description": "For the Love of Sport",
   "scripts": {
     "ng": "ng",
     "conventional-changelog": "conventional-changelog",

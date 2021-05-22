@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
       });
 
       $('.js--nav-link').on('click', () => {
-        if ($(window).width() < 768) {
+        if ($(window).width() < 1080) {
           const nav = $('.js--main-nav');
           const icon = $('.js--nav-icon i');
           nav.slideToggle(200);
@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit {
       });
 
       $('.js--home').on('click', () => {
-        if ($(window).width() < 768) {
+        if ($(window).width() < 1080) {
           const icon = $('.js--nav-icon i');
           const nav = $('.js--main-nav');
           nav.slideUp(200);
@@ -52,10 +52,15 @@ export class HeaderComponent implements OnInit {
       });
 
       $(window).on('resize', () => {
+        const icon = $('.js--nav-icon i');
         const nav = $('.js--main-nav');
         if ($(window).width() > 1080) {
           nav.slideDown(200);
         } else {
+          if (icon.hasClass('fa-close')) {
+            icon.removeClass('fa-close');
+            icon.addClass('fa-list');
+          }
           nav.slideUp(200);
         }
       });

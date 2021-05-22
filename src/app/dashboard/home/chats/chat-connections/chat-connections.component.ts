@@ -25,6 +25,15 @@ export class ChatConnectionsComponent implements OnInit {
       },
       (error: any) => {}
     );
+
+    this.socket.on('isOnline', (isOnline: { sportizenId: string; isOnline: boolean }) => {
+      console.log(isOnline);
+      const chatMember = this.chatMembers.find(
+        (curChatMember: ChatMember) => curChatMember.sportizenId === isOnline.sportizenId
+      );
+
+      chatMember.isOnline = isOnline.isOnline;
+    });
   }
 
   chatMember(chatMember: ChatMember) {

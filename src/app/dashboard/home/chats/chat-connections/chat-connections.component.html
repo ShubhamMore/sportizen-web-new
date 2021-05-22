@@ -3,6 +3,10 @@
     <span>Sportizen</span>
   </div>
   <div class="connection-body">
+    <div class="message-search-container">
+      <input class="search-input" type="text" />
+    </div>
+
     <div class="connection-user" *ngFor="let member of chatMembers" (click)="chatMember(member)">
       <span class="profile-icon-container">
         <img
@@ -12,7 +16,7 @@
           [alt]="member.name"
           onerror="this.src='./../../../../../assets/images/user.png'"
         />
-        <span class="online"></span>
+        <span class="online" *ngIf="member.isOnline"></span>
       </span>
       <span class="profile-name">{{ member.name | capitalizeEachWord }}</span>
     </div>

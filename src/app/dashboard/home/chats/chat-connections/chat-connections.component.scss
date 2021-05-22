@@ -18,6 +18,17 @@
     max-height: calc(100vh - 10rem);
     overflow-y: auto;
 
+    .message-search-container {
+      padding: 1rem;
+
+      .search-input {
+        width: 100%;
+        border-radius: 0.125rem;
+        outline: none;
+        padding: 0.125rem;
+      }
+    }
+
     .connection-user {
       cursor: pointer;
       padding: 0.5rem;
